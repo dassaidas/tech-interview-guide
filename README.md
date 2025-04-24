@@ -153,3 +153,70 @@ cd path\to\crack-interview
 mkdocs build --clean
 mkdocs serve -a 127.0.0.1:8088
 ```
+
+### Deploy application into github
+
+## Step 1: Find the Python Installation Path
+
+1. install suing below command in terminal
+
+```
+ pip install mkdocs-material
+ pip install mkdocs-git-revision-date-localized-plugin
+```
+
+2. delpy using buitin command
+
+```
+ mkdocs gh-deploy
+```
+
+### applicationn url
+
+**https://dassaidas.github.io/tech-interview-guide/Angular/migration/**
+
+---
+
+### step-by0step: push prject into git hib
+
+1. initialize yopur Repo Locally(if not done already)
+
+```
+ cd ypur- project-folder
+ git init
+```
+
+2. delpy using buitin command
+
+```
+ git add .
+ git commit -m "intitial commit"
+```
+
+3. create a git hub repo
+
+```
+Go to https://github.com/new
+ Name it (e.g., tech-interview-guide)
+
+Do NOT initialize with README or license (since we already have files locally)
+
+Click Create Repository
+```
+
+4. link to git hub repo
+
+```
+git remote add origin https://github.com/your-username/tech-interview-guide.git
+```
+
+5.  Push to GitHub
+
+```
+git branch -M main
+git push -u origin main
+```
+
+---
+
+### Thanks
