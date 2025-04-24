@@ -21,8 +21,12 @@ extra_javascript:
 
 nav:
   - Home: index.md
+
   - .NET:
-      - C#: Dotnet/csharp.md
+      - C#:
+          - Basics: Dotnet/csharp/basics.md
+          - OOP Concepts: Dotnet/csharp/oop.md
+          - Advanced Topics: Dotnet/csharp/advanced.md
       - .NET Core: Dotnet/dotnet-core.md
       - Entity Framework: Dotnet/ef-core.md
   - Angular:
