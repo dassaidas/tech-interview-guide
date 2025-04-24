@@ -177,12 +177,12 @@ mkdocs serve -a 127.0.0.1:8088
 
 ---
 
-### step-by0step: push prject into git hib
+### step-by step: push project into git hib
 
-1. initialize yopur Repo Locally(if not done already)
+1. initialize your Repo Locally(if not done already)
 
 ```
- cd ypur- project-folder
+ cd your- project-folder
  git init
 ```
 
