@@ -1,0 +1,40 @@
+site_name: Tech Interview Guide
+
+theme:
+  name: material
+  features:
+    - navigation.expand
+      - navigation.sections
+      - navigation.prune
+      - navigation.indexes
+      - content.code.copy
+  palette:
+    scheme: default
+    toggle:
+      icon: material/weather-night
+      name: Switch to dark mode
+
+extra_css:
+  - extra.css
+extra_javascript:
+  - extra.js
+
+nav:
+  - Home: index.md
+  - .NET:
+      - C#: Dotnet/csharp.md
+      - .NET Core: Dotnet/dotnet-core.md
+      - Entity Framework: Dotnet/ef-core.md
+  - Angular:
+      - Fundamentals: Angular/fundamentals.md
+      - Forms: Angular/forms.md
+      - Migration Guide: Angular/migration.md
+  - React:
+      - Hooks: React/hooks.md
+      - State Management: React/state.md
+  - Azure:
+      - Functions: Azure/functions.md
+      - DevOps: Azure/devops.md
+  - Scenarios:
+      - Legacy Migration: Scenarios/migration.md
+      - Real-World QA: Scenarios/realworld.md
