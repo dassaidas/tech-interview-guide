@@ -220,3 +220,59 @@ git push -u origin main
 ---
 
 ### Thanks
+
+GitHub Actions is using the github-actions[bot] user behind the scenes, and it doesn't have permission to push to your repo unless you give it a personal access token (PAT).
+
+## solution: Use a Secure Deployment Token
+
+1. Generate a GitHub Token (with repo access)
+
+```
+Go to: GitHub → Developer Settings → Tokens → Fine-grained tokens
+
+Click "Generate new token" (classic is fine too)
+
+Give it:
+
+repo scope (full control)
+
+Expire in 90 days or longer
+
+Copy the token (you won't be able to view it again)
+```
+
+2.  Add the Token as a Secret in GitHub
+
+```
+Go to your repo → Settings → Secrets and variables → Actions
+
+Click New repository secret
+
+Name it: GH_TOKEN
+
+Paste the token
+```
+
+3. update your deploy.yml
+
+```
+- name: Deploy to GitHub Pages
+  run: mkdocs gh-deploy --force --remote-name origin
+  env:
+    GIT_AUTHOR_NAME: github-actions
+    GIT_AUTHOR_EMAIL: github-actions@github.com
+    GIT_COMMITTER_NAME: github-actions
+    GIT_COMMITTER_EMAIL: github-actions@github.com
+    GH_TOKEN: ${{ secrets.GH_TOKEN }}
+```
+
+4. Also, set the remote URL inside your workflow using the token:
+
+```
+- name: Set GitHub remote with token
+  run: |
+    git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}
+
+```
+
+## Thanks
