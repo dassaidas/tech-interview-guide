@@ -28,11 +28,9 @@ Each instruction typically serves a distinct purpose, such as:
 
 Together, these instructions form the **logic** of an application. When compiled or interpreted, they become executable commands that the computer understands and performs sequentially or conditionally based on the logic flow.
 
-## 2. What is debugging?
+## 3. What is debugging?
 
 **Answer:**
-
-# What is Debugging?
 
 **Debugging** is the process of identifying, analyzing, and fixing bugs or errors in a software program.
 
@@ -49,13 +47,13 @@ A **bug** is any issue in a program that causes it to behave unexpectedly or inc
 
 ---
 
-## 🛠️ What is Debugging?
+## What is Debugging?
 
 > Debugging is the step-by-step process developers use to detect, isolate, and resolve issues in their code to ensure the software behaves as intended.
 
 ---
 
-## ⚙️ Key Steps in Debugging
+## Key Steps in Debugging
 
 1. **Reproduce the Problem**  
    Run the application to observe the issue in action.
@@ -82,7 +80,7 @@ A **bug** is any issue in a program that causes it to behave unexpectedly or inc
 
 ---
 
-## 🧠 Why is Debugging Important?
+## Why is Debugging Important?
 
 - Ensures **code correctness** and **application reliability**
 - Improves **user experience** by preventing unexpected behavior
