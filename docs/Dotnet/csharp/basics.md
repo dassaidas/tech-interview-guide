@@ -1,3 +1,6 @@
 # Basics of C#
 
-This section covers basic syntax, variables, data types, and control structures in C#.
+## 1. What is Computer programming?
+
+**Answer:**  
+Computer Programming is also known as programming or coding. Programming is a process which includes processes such as coding, maintaining, updating, debugging, writing, designing (algorithm), etc.
