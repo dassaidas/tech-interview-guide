@@ -117,7 +117,7 @@ What Is a Resource Group Location?
 The **location** of a resource group refers to the **region where the metadata** for that group is stored.  
 It does **not dictate** where all the resources inside must reside.
 
-## Why Is Resource Group Location Important?
+Why Is Resource Group Location Important?
 
 **Metadata Storage**
 
