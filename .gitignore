@@ -1,0 +1,45 @@
+bin/
+obj/
+out/
+
+# === User & IDE Files ===
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+.vscode/
+.idea/
+
+# === Logs & Temp ===
+*.log
+TestResults/
+*.tmp
+
+# === ASP.NET Scaffolding ===
+ScaffoldingReadMe.txt
+
+# === Azure Publish Settings ===
+*.PublishSettings
+*.pubxml
+*.publishproj
+
+# === Azure Generated Site Folder ===
+site/
+site/*
+
+# === Config Files (Optional) ===
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+.env
+
+# === npm/Yarn (if using frontend) ===
+node_modules/
+dist/
+build/
+coverage/
+
+# === System Files ===
+.DS_Store
+Thumbs.db
