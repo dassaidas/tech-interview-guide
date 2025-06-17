@@ -34,9 +34,12 @@ nav:
   - React:
       - Hooks: React/hooks.md
       - State Management: React/state.md
-  - Azure:
-      - Functions: Azure/functions.md
-      - DevOps: Azure/devops.md
+  - Project Management:
+      - Jira:
+          - Basics: Poject_Management/Jira/basics.md
+  - Cloud:
+      - Azure:
+          - Basics: Cloud/Azure/basics.md
   - Scenarios:
       - Legacy Migration: Scenarios/migration.md
       - Real-World QA: Scenarios/realworld.md
