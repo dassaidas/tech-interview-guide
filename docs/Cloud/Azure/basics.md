@@ -1,6 +1,6 @@
 # Azure step by step
 
-## 1. Define SSAS, PAAS and IAAS ?
+### 1. Define SSAS, PAAS and IAAS ?
 
 Cloud computing offers different levels of service models to fit various needs. The three primary models are:
 
@@ -62,29 +62,29 @@ A **Resource Group** is a **logical container** that holds related cloud resourc
 
 **Why Do We Need Resource Groups?**
 
-### 1. **Logical Organization**
+**1. Logical Organization**
 
 Group resources by application, environment (dev/test/prod), or project. Makes it easier to locate and manage related items.
 
-### 2. **Unified Management**
+**2. Unified Management**
 
 Apply permissions, tags, and policies at the group level. This ensures consistency across all resources inside it.
 
-### 3. **Simplified Monitoring & Billing**
+**3. Simplified Monitoring & Billing**
 
 Monitor usage, set budgets, and track costs at the resource group level.
 
-### 4. **Efficient Deployment**
+**4. Efficient Deployment**
 
 Deploy, update, or delete all resources in a group together using templates (e.g., ARM or Bicep templates).
 
-### 5. **Access Control**
+**5. Access Control**
 
 Assign **role-based access** (RBAC) to an entire group, ensuring users can only interact with the resources they’re allowed to manage.
 
 ---
 
-## Example
+Example
 
 Let’s say you’re building a web application called `MyApp`.
 
@@ -99,7 +99,7 @@ All of these resources will be grouped logically, and you can manage them togeth
 
 ---
 
-## Summary
+Summary
 
 | Term               | Description                               | Example                        |
 | ------------------ | ----------------------------------------- | ------------------------------ |
@@ -112,39 +112,39 @@ All of these resources will be grouped logically, and you can manage them togeth
 
 When creating a **Resource Group** in Azure, you're asked to specify a **location (region)** — but why does it matter?
 
-## What Is a Resource Group Location?
+What Is a Resource Group Location?
 
 The **location** of a resource group refers to the **region where the metadata** for that group is stored.  
 It does **not dictate** where all the resources inside must reside.
 
 ## Why Is Resource Group Location Important?
 
-### 1. **Metadata Storage**
+**Metadata Storage**
 
 The region determines where the **deployment data, management info, and tags** for the resource group are stored.
 
-### 2. **Resource Deployment**
+**Resource Deployment**
 
 - Resources **can be deployed in any region**, regardless of the resource group's location.
 - But some **services (like Azure Managed Identity, automation, or policy enforcement)** may rely on the resource group’s region.
 
-### 3. **Compliance & Governance**
+**Compliance & Governance**
 
 If your organization has **data residency** or **compliance requirements**, storing metadata in a specific region may be necessary.
 
-### 4. **Availability & Disaster Recovery**
+**Availability & Disaster Recovery**
 
 In case of a regional outage:
 
 - The ability to **manage or update** resources might be affected if the **resource group’s location is down**, even if the actual resource is in a healthy region.
 
-### 5. **Consistency in Deployment Templates**
+**Consistency in Deployment Templates**
 
 Some ARM templates or scripts may use the resource group’s location as a default value for deploying resources.
 
 ---
 
-## Example Scenario
+Example Scenario
 
 You create a resource group `MyApp-RG` in **East US**.
 
@@ -154,14 +154,14 @@ You create a resource group `MyApp-RG` in **East US**.
 
 ---
 
-## Best Practice
+Best Practice
 
 - Choose a **stable and compliant region** for the resource group location.
 - If most of your resources are in a specific region, align the resource group with that region to reduce latency and simplify deployment.
 
 ---
 
-## Summary Table
+Summary Table
 
 | Aspect                  | Impact of Resource Group Location            |
 | ----------------------- | -------------------------------------------- |
@@ -191,7 +191,7 @@ It supports multiple programming languages and frameworks, including:
 
 ---
 
-## ✅ Key Benefits
+✅ Key Benefits
 
 | Feature                            | Description                                                                                              |
 | ---------------------------------- | -------------------------------------------------------------------------------------------------------- |
@@ -205,7 +205,7 @@ It supports multiple programming languages and frameworks, including:
 
 ---
 
-## 🧱 App Service Types
+🧱 App Service Types
 
 | Type            | Description                                                                     |
 | --------------- | ------------------------------------------------------------------------------- |
@@ -216,7 +216,7 @@ It supports multiple programming languages and frameworks, including:
 
 ---
 
-## 🛠️ Hosting Plans
+🛠️ Hosting Plans
 
 | Plan                    | Use Case                                                      |
 | ----------------------- | ------------------------------------------------------------- |
@@ -229,7 +229,7 @@ It supports multiple programming languages and frameworks, including:
 
 ---
 
-## 🚀 Use Cases
+🚀 Use Cases
 
 - Hosting public-facing websites and portals
 - Deploying RESTful APIs
@@ -239,7 +239,7 @@ It supports multiple programming languages and frameworks, including:
 
 ---
 
-## 📦 Supported Deployment Methods
+📦 Supported Deployment Methods
 
 - Visual Studio / VS Code
 - Azure CLI / PowerShell
@@ -250,7 +250,7 @@ It supports multiple programming languages and frameworks, including:
 
 ---
 
-## 🔐 Security Features
+🔐 Security Features
 
 - Managed Identity integration for secure Azure resource access
 - VNET integration (Premium/Isolated tiers)
@@ -260,7 +260,7 @@ It supports multiple programming languages and frameworks, including:
 
 ---
 
-## 📈 Monitoring and Diagnostics
+📈 Monitoring and Diagnostics
 
 Azure App Services integrates with:
 
@@ -275,7 +275,7 @@ Provides insights into:
 - Memory and CPU usage
 - Dependency tracking (e.g., DB calls)
 
-## Summary
+Summary
 
 Azure App Services is ideal for developers and teams who want to focus on **code**, not infrastructure. It delivers a fast, secure, and scalable environment for hosting modern web applications and APIs.
 
@@ -287,14 +287,14 @@ Azure App Service provides different types of hosting plans to suit a variety of
 
 ✅ Recommended App Service Plan for Hosting a Website
 
-### **App Service Plan: Basic / Standard / Premium (Windows or Linux)**
+**App Service Plan: Basic / Standard / Premium (Windows or Linux)**
 
 - **Use Case**: Hosting production websites with moderate to high traffic, requiring custom domains, SSL, scaling, and deployment slots.
 - **Recommendation**: Use **Standard (S1/S2/S3)** or **Premium (P1v3/P2v3)** for best performance and features.
 
 ---
 
-## 🔍 App Service Plan Options
+🔍 App Service Plan Options
 
 | Plan Type                    | Description                                                     | Ideal For                            |
 | ---------------------------- | --------------------------------------------------------------- | ------------------------------------ |
@@ -308,14 +308,14 @@ Azure App Service provides different types of hosting plans to suit a variety of
 
 ---
 
-## 🎯 Hosting Static Sites?
+🎯 Hosting Static Sites?
 
 - Use **Azure Static Web Apps** if you are hosting a static site (HTML/CSS/JS) with optional backend via Azure Functions.
 - Benefits: Global CDN, GitHub/Azure DevOps integration, custom domain & SSL.
 
 ---
 
-## ✅ Example: Ideal App Services for Common Website Types
+✅ Example: Ideal App Services for Common Website Types
 
 | Website Type            | Recommended Plan              |
 | ----------------------- | ----------------------------- |
@@ -327,7 +327,7 @@ Azure App Service provides different types of hosting plans to suit a variety of
 
 ---
 
-## 📌 Additional Considerations
+📌 Additional Considerations
 
 - **Platform**: Choose **Linux** for Node.js, Python, PHP apps or Dockerized apps. Use **Windows** for .NET Framework apps.
 - **Scaling**: Standard and above support **Auto Scaling** and **Deployment Slots**.
@@ -335,7 +335,7 @@ Azure App Service provides different types of hosting plans to suit a variety of
 
 ---
 
-## 💡 Final Recommendation
+💡 Final Recommendation
 
 If you're deploying a typical production-ready website (e.g. using React, Angular, or ASP.NET), go with:
 
@@ -351,7 +351,7 @@ When deploying a web application on **Azure App Services**, choosing the **right
 
 ---
 
-## 📌 1. What is an App Service Plan?
+📌 1. What is an App Service Plan?
 
 An **App Service Plan** defines:
 
@@ -362,9 +362,9 @@ An **App Service Plan** defines:
 
 ---
 
-## 💡 2. Importance of Choosing the Right Pricing Tier
+💡 2. Importance of Choosing the Right Pricing Tier
 
-### ✅ **Performance and Resources**
+✅ **Performance and Resources**
 
 - Higher tiers offer **more CPU, memory, and storage**.
 - Directly affects how many users your site can handle without crashing.
@@ -379,7 +379,7 @@ An **App Service Plan** defines:
 
 ---
 
-### 🔐 **Features and Capabilities**
+🔐 **Features and Capabilities**
 
 - Only certain tiers support **custom domains**, **SSL**, **auto-scaling**, **staging slots**, **VNet integration**, etc.
 
@@ -393,7 +393,7 @@ An **App Service Plan** defines:
 
 ---
 
-### 💰 **Cost Optimization**
+💰 **Cost Optimization**
 
 - Underprovisioning can lead to **performance issues**, while overprovisioning leads to **unnecessary cost**.
 - Pricing tier affects **billing per hour** whether the app is being used or not.
@@ -402,21 +402,21 @@ An **App Service Plan** defines:
 
 ---
 
-### 🔄 **Scalability**
+🔄 **Scalability**
 
 - Only Standard and higher tiers support **horizontal scaling** (adding more instances).
 - Needed when your website gets **high traffic** or needs **high availability**.
 
 ---
 
-### 🛠️ **DevOps and CI/CD Support**
+🛠️ **DevOps and CI/CD Support**
 
 - Deployment slots (Standard+) allow **zero-downtime deployments** and easy **rollback**.
 - Premium tiers support **more slots**, ideal for **multi-stage environments** (dev/stage/prod).
 
 ---
 
-## 🎯 Final Thoughts
+🎯 Final Thoughts
 
 Choosing the right App Service Plan and Pricing Tier ensures:
 
@@ -436,7 +436,7 @@ Azure App Service provides FTP/S access to deploy website files manually. This m
 
 ---
 
-## 📁 Prerequisites
+📁 Prerequisites
 
 - An Azure App Service Web App is already created.
 - Your website files (e.g., HTML, CSS, JS, etc.) are ready.
@@ -444,7 +444,7 @@ Azure App Service provides FTP/S access to deploy website files manually. This m
 
 ---
 
-## 🔐 Step 1: Get FTP Deployment Credentials
+🔐 Step 1: Get FTP Deployment Credentials
 
 1. Go to the **Azure Portal** → **App Services** → Select your Web App.
 2. Under **Deployment** > click **Deployment Center** (or **FTP** tab).
@@ -458,7 +458,7 @@ Alternatively, under **"Overview" → "Essentials"**, note down the **FTP/FTPS h
 
 ---
 
-## 💾 Step 2: Prepare FTP Client (Example: FileZilla)
+💾 Step 2: Prepare FTP Client (Example: FileZilla)
 
 1. Open **FileZilla**.
 2. Go to **File → Site Manager** and add a new site:
@@ -474,7 +474,7 @@ Alternatively, under **"Overview" → "Essentials"**, note down the **FTP/FTPS h
 
 ---
 
-## 📂 Step 3: Upload Website Files
+📂 Step 3: Upload Website Files
 
 1. Once connected, navigate to: /site/wwwroot/
 
@@ -488,7 +488,7 @@ This is the root folder of your web app.
 
 ---
 
-## ✅ Step 4: Verify the Upload
+✅ Step 4: Verify the Upload
 
 - Go to your web app's URL in a browser: This is the root folder of your web app.
 
@@ -500,7 +500,7 @@ This is the root folder of your web app.
 
 ---
 
-## ✅ Step 4: Verify the Upload
+✅ Step 4: Verify the Upload
 
 - Go to your web app's URL in a browser: https://<yourappname>.azurewebsites.net
 
@@ -508,7 +508,7 @@ This is the root folder of your web app.
 
 ---
 
-## 🔄 Optional: Enable FTP Logs
+🔄 Optional: Enable FTP Logs
 
 If facing issues, enable diagnostic logs:
 
@@ -517,7 +517,7 @@ If facing issues, enable diagnostic logs:
 
 ---
 
-## 📌 Notes
+📌 Notes
 
 - FTP is convenient for quick uploads but **not recommended** for production CI/CD workflows.
 - Use **Azure DevOps, GitHub Actions, or ZipDeploy** for automated and secure deployments.
@@ -525,14 +525,14 @@ If facing issues, enable diagnostic logs:
 
 ---
 
-## 📚 Related Docs
+📚 Related Docs
 
 - [Deploy via FTP](https://learn.microsoft.com/en-us/azure/app-service/deploy-ftp)
 - [Configure deployment credentials](https://learn.microsoft.com/en-us/azure/app-service/deploy-configure-credentials)
 
 ---
 
-## ✅ Summary
+✅ Summary
 
 | Step | Action                                |
 | ---- | ------------------------------------- |
@@ -547,7 +547,7 @@ The `wwwroot` folder is a **critical directory** in Azure App Service and many w
 
 ---
 
-## 📁 What is `wwwroot`?
+📁 What is `wwwroot`?
 
 `wwwroot` is the **web root** directory for a hosted web app.
 
@@ -563,14 +563,14 @@ The `wwwroot` folder is a **critical directory** in Azure App Service and many w
 
 ---
 
-## 🎯 Why is `wwwroot` Important?
+🎯 Why is `wwwroot` Important?
 
-### 1. 📤 Deployment Target
+1.  📤 Deployment Target
 
 - All **FTP**, **zip deployment**, or **build pipelines** upload your app to `wwwroot`.
 - It’s the **entry point** for your app on Azure App Service.
 
-### 2. 🌍 Public Access Area
+2. 🌍 Public Access Area
 
 - Files in `wwwroot` are **exposed to users**.
 - Ideal for placing:
@@ -593,9 +593,9 @@ Azure provides a built-in **Kudu Console** (also known as SCM) for App Services.
 
 ---
 
-## 🧭 Steps to Access the Azure Console for App Service
+🧭 Steps to Access the Azure Console for App Service
 
-### ✅ Method 1: Using Azure Portal
+✅ Method 1: Using Azure Portal
 
 1. **Login to Azure Portal**  
    Go to [https://portal.azure.com](https://portal.azure.com)
@@ -620,7 +620,7 @@ Azure provides a built-in **Kudu Console** (also known as SCM) for App Services.
 
 ---
 
-### ✅ Method 2: Direct URL Access to Kudu
+✅ Method 2: Direct URL Access to Kudu
 
 You can directly access the console using this URL format:
 
@@ -630,7 +630,7 @@ https://<yourappname>.scm.azurewebsites.net/DebugConsole
 
 ---
 
-## 🔧 What Can You Do in Azure Console?
+🔧 What Can You Do in Azure Console?
 
 - Browse and edit files (e.g., wwwroot)
 - Run PowerShell or CMD commands
@@ -640,7 +640,7 @@ https://<yourappname>.scm.azurewebsites.net/DebugConsole
 
 ---
 
-## 🚫 Limitations
+🚫 Limitations
 
 - Only available for **App Service** (not for VMs or AKS).
 - Has access only to the App Service sandboxed environment.
@@ -648,13 +648,13 @@ https://<yourappname>.scm.azurewebsites.net/DebugConsole
 
 ---
 
-## 🛡️ Security Note
+🛡️ Security Note
 
 Only users with proper Azure portal access (e.g., Contributor or higher role) can access the console.
 
 ---
 
-## ✅ Summary
+✅ Summary
 
 | Feature       | Description                                            |
 | ------------- | ------------------------------------------------------ |
@@ -668,13 +668,13 @@ Only users with proper Azure portal access (e.g., Contributor or higher role) ca
 
 ### 12. What is the need to App Service editor ?
 
-# ✍️ What is the Need for Azure App Service Editor?
+✍️ What is the Need for Azure App Service Editor?
 
 The **App Service Editor** in Azure is a **browser-based IDE** that allows you to **edit your web app’s code directly** in the cloud — without needing to re-deploy from a local machine.
 
 ---
 
-## 🚀 What is App Service Editor?
+🚀 What is App Service Editor?
 
 - A lightweight web-based **code editor**, built on **Monaco** (same engine as VS Code).
 - Runs directly inside your App Service environment.
@@ -682,9 +682,9 @@ The **App Service Editor** in Azure is a **browser-based IDE** that allows you t
 
 ---
 
-## 🧠 Why Do You Need It?
+🧠 Why Do You Need It?
 
-### ✅ 1. Quick Fixes in Production
+✅ 1. Quick Fixes in Production
 
 You can:
 
@@ -695,35 +695,35 @@ You can:
 
 ---
 
-### ✅ 2. Real-Time Editing
+✅ 2. Real-Time Editing
 
 - Live preview and edit of files deployed in your app.
 - Immediate effect without rebuilding or publishing.
 
 ---
 
-### ✅ 3. No Local Setup Required
+✅ 3. No Local Setup Required
 
 - No need to clone repo or set up a development environment.
 - Works entirely in the browser from any location.
 
 ---
 
-### ✅ 4. Debug and Inspect Files
+✅ 4. Debug and Inspect Files
 
 - Browse the complete file system of your app.
 - Useful for checking deployed builds or log files.
 
 ---
 
-### ✅ 5. Developer Convenience
+✅ 5. Developer Convenience
 
 - Ideal for small frontend changes in static sites or single-page apps.
 - Especially useful for demos, proof-of-concepts, and MVP apps.
 
 ---
 
-## 🔓 How to Open App Service Editor
+🔓 How to Open App Service Editor
 
 1. Go to **Azure Portal** → **App Services**
 2. Select your App → Under **Development Tools**, click **App Service Editor**
@@ -731,7 +731,7 @@ You can:
 
 ---
 
-## ⚠️ Limitations
+⚠️ Limitations
 
 | Limitation             | Notes                                                  |
 | ---------------------- | ------------------------------------------------------ |
@@ -742,7 +742,7 @@ You can:
 
 ---
 
-## ✅ When to Use App Service Editor
+✅ When to Use App Service Editor
 
 | Scenario                    | Use App Service Editor?  |
 | --------------------------- | ------------------------ |
@@ -754,7 +754,7 @@ You can:
 
 ---
 
-## 📌 Summary
+📌 Summary
 
 The **App Service Editor** is a **lightweight, web-based code editor** useful for:
 
@@ -768,13 +768,13 @@ The **App Service Editor** is a **lightweight, web-based code editor** useful fo
 
 ### 13. Explain the importance of publish profile of Azure ?
 
-# 📤 Importance of Azure Publish Profile
+📤 Importance of Azure Publish Profile
 
 An **Azure Publish Profile** is an XML configuration file that contains all the necessary settings and credentials needed to **deploy your web application to Azure App Service** directly from development tools like Visual Studio, VS Code, or CI/CD pipelines.
 
 ---
 
-## 🧾 What is a Publish Profile?
+🧾 What is a Publish Profile?
 
 - A `.PublishSettings` file downloaded from the Azure Portal.
 - Contains:
@@ -788,9 +788,9 @@ An **Azure Publish Profile** is an XML configuration file that contains all the 
 
 ---
 
-## 🎯 Why is a Publish Profile Important?
+🎯 Why is a Publish Profile Important?
 
-### ✅ 1. **Simplifies Deployment**
+✅ 1. **Simplifies Deployment**
 
 - Enables **one-click publishing** from Visual Studio or VS Code.
 - No need to manually configure FTP or deployment endpoints.
@@ -799,14 +799,14 @@ An **Azure Publish Profile** is an XML configuration file that contains all the 
 
 ---
 
-### ✅ 2. **Secure Deployment Credentials**
+✅ 2. **Secure Deployment Credentials**
 
 - Includes **deployment credentials** for FTP/WebDeploy in encrypted form.
 - You don’t need to remember or manually enter credentials each time.
 
 ---
 
-### ✅ 3. **Supports Multiple Deployment Methods**
+✅ 3. **Supports Multiple Deployment Methods**
 
 - Works with:
   - **Web Deploy (MSDeploy)**: Common for .NET apps via Visual Studio.
@@ -815,21 +815,21 @@ An **Azure Publish Profile** is an XML configuration file that contains all the 
 
 ---
 
-### ✅ 4. **Consistent and Repeatable Deployments**
+✅ 4. **Consistent and Repeatable Deployments**
 
 - Developers and build servers use the **same configuration**, reducing setup errors.
 - Ideal for teams where multiple people deploy the same app.
 
 ---
 
-### ✅ 5. **Integrates with Dev Tools**
+✅ 5. **Integrates with Dev Tools**
 
 - Visual Studio automatically reads and configures deployment settings after importing the profile.
 - Works with MSBuild, GitHub Actions, Azure DevOps, etc.
 
 ---
 
-#### 🔐 Security Considerations
+🔐 Security Considerations
 
 - ⚠️ **Do not commit** the publish profile file to source control (e.g., GitHub).
 - Treat it like a **password file** — it contains encoded credentials.
@@ -837,7 +837,7 @@ An **Azure Publish Profile** is an XML configuration file that contains all the 
 
 ---
 
-## 🧭 How to Download Publish Profile
+🧭 How to Download Publish Profile
 
 1. Go to **Azure Portal** → **App Services**
 2. Select your app
@@ -846,7 +846,7 @@ An **Azure Publish Profile** is an XML configuration file that contains all the 
 
 ---
 
-## 🛠️ How to Use in Visual Studio
+🛠️ How to Use in Visual Studio
 
 1. In Visual Studio, right-click your project → **Publish**
 2. Click **"Import Profile"**
@@ -855,7 +855,7 @@ An **Azure Publish Profile** is an XML configuration file that contains all the 
 
 ---
 
-## ✅ Summary
+✅ Summary
 
 | Feature                    | Benefit                                      |
 | -------------------------- | -------------------------------------------- |
