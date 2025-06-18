@@ -877,39 +877,39 @@ An **Azure Publish Profile** is an XML configuration file that contains all the 
 - Please find the below tutorial do deploy application in Azure Web App.
   [Deployment link](https://www.youtube.com/watch?v=VLTNyM8DGds)
 
-# SQL Server on Azure ( DTU & EDTU)
-
 ### 15. What is the problem of mapping work load with Azure configuration ?
 
 Problem of Mapping Workload with Azure Configuration
 
 Mapping workloads correctly with Azure configurations is critical to ensure optimal performance, cost-efficiency, and reliability. However, there are several challenges and problems that organizations face during this process:
+
 ⚠️ Common Problems
 
-1.  **Incorrect Sizing of Resources**
+**1. Incorrect Sizing of Resources**
 
 - **Issue**: Choosing VM sizes or App Service plans that are too small or too large.
 - **Impact**: Under-provisioning leads to performance bottlenecks; over-provisioning causes unnecessary costs.
 
-2.  **Lack of Understanding of Workload Characteristics**
+**2. Lack of Understanding of Workload Characteristics**
 
 - **Issue**: Not analyzing CPU, memory, I/O, and scaling behavior of the workload.
 - **Impact**: Results in misaligned service selection, such as using an App Service when a Function App would be more cost-effective.
 
-3. **Improper Use of Service Tiers**
+**3. Improper Use of Service Tiers**
 
 - **Issue**: Selecting wrong pricing tiers (e.g., Basic instead of Premium).
 - **Impact**: Missing out on features like auto-scaling, staging slots, or high availability.
 
-4.  **Ignoring Network and Storage Needs**
+**4. Ignoring Network and Storage Needs**
 
 - **Issue**: Workload requires specific networking or storage configurations not accounted for.
 - **Impact**: Leads to network bottlenecks or data latency issues.
 
-5.  **Overlooking Compliance and Security Requirements**
+**5. Overlooking Compliance and Security Requirements**
 
 - **Issue**: Not mapping workloads to services that meet regulatory or security needs.
 - **Impact**: Non-compliance with industry standards (e.g., HIPAA, GDPR).
+
   🛠 Best Practices for Mapping
 
 - **Use Azure Advisor**: Get real-time suggestions for performance and cost optimizations.
@@ -927,6 +927,7 @@ Mapping workloads with the correct Azure configurations is not a one-time task. 
 Understanding DTU and eDTU in Azure SQL Database
 
 When using Azure SQL Database, it's important to understand how Microsoft defines and allocates performance using **DTUs** and **eDTUs**. These units simplify resource management but can be confusing without proper context.
+
 💡 What is a DTU?
 
 **DTU (Database Transaction Unit)** is a blended measure of:
@@ -1155,56 +1156,66 @@ Azure bundles CPU, memory, and I/O into DTUs. Understanding the **individual con
 
 🔍 Factor-by-Factor Measurement
 
-1. **CPU Usage**
+**1. CPU Usage**
 
-- **Metric**: `% Processor Time` (instance-wide)
-- **How to Measure**:
-  - PerfMon counter: `Processor(_Total)\% Processor Time`
-  - DMV:
-    ```sql
-    SELECT record_id, SQLProcessUtilization FROM sys.dm_os_ring_buffers
-    ```
+**Metric**: `% Processor Time` (instance-wide)
 
-2.  **Memory Usage**
+**How to Measure**:
 
-- **Metric**: Buffer cache usage / memory grants
-- **How to Measure**:
-  - PerfMon counter: `SQLServer:Memory Manager\Target Server Memory` & `Total Server Memory`
-  - DMV:
-    ```sql
-    SELECT total_physical_memory_kb, available_physical_memory_kb FROM sys.dm_os_sys_memory;
-    ```
+- PerfMon counter: `Processor(_Total)\% Processor Time`
+- DMV:
+  ```sql
+  SELECT record_id, SQLProcessUtilization FROM sys.dm_os_ring_buffers
+  ```
 
-3.  **Data Reads (Logical/Physical)**
+**2. Memory Usage**
 
-- **Metric**: `Disk Reads/sec`, `Page Reads/sec`
-- **How to Measure**:
-  - PerfMon counter: `LogicalDisk(_Total)\Disk Reads/sec`
-  - DMV:
-    ```sql
-    SELECT * FROM sys.dm_io_virtual_file_stats(NULL, NULL);
-    ```
+**Metric**: Buffer cache usage / memory grants
 
-4. **Data Writes**
+**How to Measure**:
 
-- **Metric**: `Disk Writes/sec`
-- **How to Measure**:
-  - PerfMon counter: `LogicalDisk(_Total)\Disk Writes/sec`
-  - DMV:
-    ```sql
-    SELECT * FROM sys.dm_io_virtual_file_stats(NULL, NULL);
-    ```
+- PerfMon counter: `SQLServer:Memory Manager\Target Server Memory` & `Total Server Memory`
+- DMV:
+  ```sql
+  SELECT total_physical_memory_kb, available_physical_memory_kb FROM sys.dm_os_sys_memory;
+  ```
 
-5. **Transaction Log Writes**
+**3. Data Reads (Logical/Physical)**
 
-- **Metric**: Log I/O throughput
-- **How to Measure**:
-  - PerfMon: `SQLServer:Databases\Log Bytes Flushed/sec`
-  - DMV:
-    ```sql
-    SELECT database_id, log_write_percent, log_bytes_flushed FROM sys.dm_db_log_space_usage;
-    ```
-    📊 Suggested PerfMon Counters for DTU Estimation
+**Metric**: `Disk Reads/sec`, `Page Reads/sec`
+
+**How to Measure**:
+
+- PerfMon counter: `LogicalDisk(_Total)\Disk Reads/sec`
+- DMV:
+  ```sql
+  SELECT * FROM sys.dm_io_virtual_file_stats(NULL, NULL);
+  ```
+
+**4. Data Writes**
+
+**Metric**: `Disk Writes/sec`
+
+**How to Measure**:
+
+- PerfMon counter: `LogicalDisk(_Total)\Disk Writes/sec`
+- DMV:
+  ```sql
+  SELECT * FROM sys.dm_io_virtual_file_stats(NULL, NULL);
+  ```
+
+**5. Transaction Log Writes**
+
+**Metric**: Log I/O throughput
+
+**How to Measure**:
+
+- PerfMon: `SQLServer:Databases\Log Bytes Flushed/sec`
+- DMV:
+  ```sql
+  SELECT database_id, log_write_percent, log_bytes_flushed FROM sys.dm_db_log_space_usage;
+  ```
+  📊 Suggested PerfMon Counters for DTU Estimation
 
 | Category           | Counter                    |
 | ------------------ | -------------------------- |
@@ -1238,44 +1249,58 @@ Azure bundles CPU, memory, and I/O into DTUs. Understanding the **individual con
 
 ### 20. How can you create SQL Server DB on Azure ?
 
-# 🛠️ How to Create a SQL Server Database on Azure
+🛠️ How to Create a SQL Server Database on Azure
 
 You can create an Azure SQL Database (PaaS) via the **Azure Portal**, **Azure CLI**, **ARM Templates**, or **PowerShell**. Below is the most common and beginner-friendly method: **Azure Portal**.
 
 🌐 Option 1: Create via Azure Portal (GUI)
 ✅ Step-by-Step
 
-### 1. **Sign in to Azure Portal**
+**1. Sign in to Azure Portal**
 
 Go to 👉 https://portal.azure.com
 
-2. **Create a SQL Server (Logical Server)**
-1. Search for `SQL Server` in the search bar.
-1. Click **Create** > **SQL Server**.
-1. Fill in the following:
-   - **Server Name**: globally unique
-   - **Admin Username** & **Password**
-   - **Region**: where the server will reside
-1. Click **Review + Create** → **Create**
+**Create a SQL Server (Logical Server)**
 
-1. **Create SQL Database**
-1. Go to the **SQL databases** service.
-1. Click **Create** → **SQL Database**.
-1. Fill in:
-   - **Database Name**
-   - **Subscription** and **Resource Group**
-   - **Select SQL Server** (use the one you just created)
-   - **Compute + Storage**: choose DTU or vCore model
-   - **Backup and Geo-redundancy** options
-1. Click **Review + Create** → **Create**
+-Search for `SQL Server` in the search bar.
 
-1. **Configure Firewall & Networking**
-1. After creation, go to the SQL Server resource.
-1. Open **Networking > Firewalls and virtual networks**.
-1. Add your **client IP address** to allow external access.
-1. Save changes.
+- Click **Create** > **SQL Server**.
 
-1. **Connect to the Database**
+**1. Fill in the following:**
+
+- **Server Name**: globally unique
+- **Admin Username** & **Password**
+- **Region**: where the server will reside
+
+- Click **Review + Create** → **Create**
+
+**Create SQL Database**
+
+- Go to the **SQL databases** service.
+
+- Click **Create** → **SQL Database**.
+
+Fill in:
+
+- **Database Name**
+- **Subscription** and **Resource Group**
+- **Select SQL Server** (use the one you just created)
+- **Compute + Storage**: choose DTU or vCore model
+- **Backup and Geo-redundancy** options
+
+- Click **Review + Create** → **Create**
+
+**Configure Firewall & Networking**
+
+- After creation, go to the SQL Server resource.
+
+- Open **Networking > Firewalls and virtual networks**.
+
+- Add your **client IP address** to allow external access.
+
+- Save changes.
+
+**Connect to the Database**
 
 - Use **SQL Server Management Studio (SSMS)** or **Azure Data Studio**
 - Server name format: <your-server-name>.database.windows.net
@@ -1305,7 +1330,97 @@ az sql db create \
 --service-objective S0
 ```
 
-# Azure Function Apps
+### 21. Error while connecting to the azure database from SSMS
+
+**ERROR**
+
+```
+An instance-specific error occurred while establishing a connection to SQL Server.
+Connection was denied since Deny Public Network Access is set to
+Yes (https://docs.microsoft.com/azure/azure-sql/database/connectivity-settings#deny-public-network-access).
+To connect to this server, use the Private Endpoint from inside your virtual network (https://docs.microsoft.com/azure/sql-database/sql-database-private-endpoint-overview#how-to-set-up-private-link-for-azure-sql-database). (Microsoft SQL Server, Error: 47073)
+```
+
+Azure SQL Connectivity Setup
+
+This document outlines how to configure connectivity to an Azure SQL Server for **Production** and **Development/Test** environments.
+
+🔒 Production: Secure Access via Private Endpoint
+
+✅ Use Case:
+For production environments where public access is not permitted.
+
+🔧 Steps:
+
+**1. Create a Private Endpoint**
+
+- Go to the Azure Portal → SQL Server (not database).
+- Navigate to **Networking** → **Private endpoint connections**.
+- Click **+ Private endpoint** and follow the wizard.
+- Associate it with the correct **Virtual Network (VNet)** and **subnet**.
+
+**2. Configure Private DNS**
+
+- Use Azure Private DNS Zone: `privatelink.database.windows.net`
+- Link it to your VNet.
+- Ensure the DNS resolves the SQL Server name to the private IP.
+
+**3. Access from Azure Resources**
+
+- Ensure clients (VMs, App Services, Functions) are in the same VNet or peered VNet.
+- Use the regular server name (e.g., `yourserver.database.windows.net`) — it will resolve to the private IP.
+
+**4. Test Connection**
+
+- RDP into a VM within the VNet (or use VNet-integrated app).
+- Use SSMS or app connection string to verify access.
+
+**5. Ensure Public Access is Disabled**
+
+- Navigate to **SQL Server** → **Networking**.
+- Set **Public network access** to **Deny**.
+
+📘 [Private Link Setup Guide](https://learn.microsoft.com/azure/sql-database/sql-database-private-endpoint-overview)
+
+---
+
+🧪 Development/Test: Controlled Public Access
+
+⚠️ Use Case:
+For local development or testing scenarios where secure access is relaxed.
+
+🔧 Steps:
+
+**1. Allow Public Network Access**
+
+- Go to **SQL Server** → **Networking**.
+- Set **Public network access** to **Yes**.
+
+**3. Add Client IP to Firewall Rules**
+
+- Under **Firewall and virtual networks**, add your current IP address.
+- Use `0.0.0.0 - 255.255.255.255` only for testing (not recommended).
+
+**3. Test SQL Connection**
+
+- Use SSMS, Azure Data Studio, or your application with:
+  - Server: `yourserver.database.windows.net`
+  - Authentication: SQL Auth / Azure AD / Managed Identity
+
+**4. Restrict When Done**
+
+- Remove test IPs and reset **Public network access** to **Deny** when testing is complete.
+
+📘 [Firewall Configuration Guide](https://learn.microsoft.com/azure/azure-sql/database/firewall-configure)
+
+---
+
+🧠 Best Practices
+
+- ✅ Always use **Private Endpoints** in production.
+- ✅ Monitor and alert on unexpected public access attempts.
+- ✅ Periodically review firewall rules and audit access.
+- 🚫 Never use `Allow All` IP range in production.
 
 ### 1. Explain function apps ?
 
