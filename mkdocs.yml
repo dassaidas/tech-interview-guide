@@ -39,7 +39,12 @@ nav:
           - Basics: Poject_Management/Jira/basics.md
   - Cloud:
       - Azure:
-          - Basics: Cloud/Azure/basics.md
+          - IASS_PASS_SAAS: Cloud/Azure/IAAS_PASS_SAAS.md
+          - DTU_EDTU: Cloud/Azure/DTU_EDTU.md
+          - AzureFunctions: Cloud/Azure/AzureFunctions.md
+          - AzureStorage: Cloud/Azure/Azure_storage.md
+          - AzureCosmosDB: Cloud/Azure/Azure_Cosmos_DB.md
+          - AzureFabricandMicroServices: Cloud/Azure/Azure_Fabric_microservices.md
   - Scenarios:
       - Legacy Migration: Scenarios/migration.md
       - Real-World QA: Scenarios/realworld.md
