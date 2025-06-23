@@ -26,14 +26,15 @@ Azure provides two deployment models for resources: **Resource Manager (ARM)** a
 
 3.  Use Cases
 
-- **ARM Model**:
+**ARM Model**:
 
-  - Recommended for all new resources and services
-  - Supports CI/CD, DevOps, automation, and modern governance
+- Recommended for all new resources and services
+- Supports CI/CD, DevOps, automation, and modern governance3
 
-- **Classic Model**:
-  - Legacy workloads or services not yet migrated
-  - Not recommended for new deployments
+  **Classic Model**:
+
+- Legacy workloads or services not yet migrated
+- Not recommended for new deployments
 
 4.  Migration
 

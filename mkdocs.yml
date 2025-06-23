@@ -45,6 +45,9 @@ nav:
           - AzureStorage: Cloud/Azure/Azure_storage.md
           - AzureCosmosDB: Cloud/Azure/Azure_Cosmos_DB.md
           - AzureFabricandMicroServices: Cloud/Azure/Azure_Fabric_microservices.md
+          - AzureTables: Cloud/Azure/Azure_Tables.md
+          - AzureBlobs(block,append,page): Cloud/Azure/Azure_blobs(block,append,page).md
+          - Azure_Queues: Cloud/Azure/Azure_Queues(Azure Queues , visibility timeouts ,Peek & De-Queue).md
   - Scenarios:
       - Legacy Migration: Scenarios/migration.md
       - Real-World QA: Scenarios/realworld.md
