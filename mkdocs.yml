@@ -48,6 +48,8 @@ nav:
           - AzureTables: Cloud/Azure/Azure_Tables.md
           - AzureBlobs(block,append,page): Cloud/Azure/Azure_blobs(block,append,page).md
           - Azure_Queues: Cloud/Azure/Azure_Queues(Azure Queues , visibility timeouts ,Peek & De-Queue).md
+          - Azure_Services: Cloud/Azure/Azure_Services(App services and Cloud services).md
+          - Azure_WebJobs: Cloud/Azure/Azure_WebJobs(WebJob and background processing.).md
   - Scenarios:
       - Legacy Migration: Scenarios/migration.md
       - Real-World QA: Scenarios/realworld.md
