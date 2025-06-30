@@ -37,6 +37,7 @@ nav:
   - Project Management:
       - Jira:
           - Basics: Poject_Management/Jira/basics.md
+          - JiraDetailed: Poject_Management/Jira/Jira_detailed_course.md
   - Cloud:
       - Azure:
           - IASS_PASS_SAAS: Cloud/Azure/IAAS_PASS_SAAS.md
@@ -53,3 +54,5 @@ nav:
   - Scenarios:
       - Legacy Migration: Scenarios/migration.md
       - Real-World QA: Scenarios/realworld.md
+  - BrowserStack:
+      - Basics: browserstack/bascis.md
