@@ -1,0 +1,2139 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../Azure_Queues%28Azure%20Queues%20%2C%20visibility%20timeouts%20%2CPeek%20%26%20De-Queue%29/">
+      
+      
+        <link rel="next" href="../Azure_WebJobs%28WebJob%20and%20background%20processing.%29/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>Azure_Services - Tech Interview Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-different-ways-of-publishing-on-azure" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Tech Interview Guide" class="md-header__button md-logo" aria-label="Tech Interview Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Tech Interview Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Azure_Services
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Tech Interview Guide" class="md-nav__button md-logo" aria-label="Tech Interview Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Tech Interview Guide
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    .NET
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            .NET
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    C#
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            C#
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Dotnet/csharp/basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Dotnet/csharp/oop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    OOP Concepts
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Dotnet/csharp/advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Advanced Topics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Angular
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Angular
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Angular/fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fundamentals
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Angular/forms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Forms
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Angular/migration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Migration Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    React
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            React
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../React/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Hooks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../React/state/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    State Management
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Project Management
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Project Management
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Jira
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            Jira
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Poject_Management/Jira/basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Poject_Management/Jira/Jira_detailed_course/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    JiraDetailed
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Cloud
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Cloud
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Azure
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            Azure
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IAAS_PASS_SAAS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    IASS_PASS_SAAS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DTU_EDTU/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DTU_EDTU
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AzureFunctions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureFunctions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureStorage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Cosmos_DB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureCosmosDB
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Fabric_microservices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureFabricandMicroServices
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Tables/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureTables
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_blobs%28block%2Cappend%2Cpage%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureBlobs(block,append,page)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Queues%28Azure%20Queues%20%2C%20visibility%20timeouts%20%2CPeek%20%26%20De-Queue%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Azure_Queues
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Azure_Services
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Azure_Services
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-different-ways-of-publishing-on-azure" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Different ways of publishing on Azure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-cloud-vs-app-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Cloud vs App services
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-impact-on-resource-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Impact on resource groups
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-web-role-worker-roles-and-web-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Web role , Worker roles and Web jobs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-loosely-coupled-vs-tightly-couples-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Loosely coupled vs tightly couples deployment
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-configuration-files-in-azure-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Configuration files in Azure deployment
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-doing-rdp-in-virtual-machines" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Doing RDP in virtual machines.
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_WebJobs%28WebJob%20and%20background%20processing.%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Azure_WebJobs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Scenarios
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Scenarios
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Scenarios/migration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Legacy Migration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Scenarios/realworld/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Real-World QA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    BrowserStack
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            BrowserStack
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../browserstack/bascis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-different-ways-of-publishing-on-azure" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Different ways of publishing on Azure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-cloud-vs-app-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Cloud vs App services
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-impact-on-resource-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Impact on resource groups
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-web-role-worker-roles-and-web-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Web role , Worker roles and Web jobs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-loosely-coupled-vs-tightly-couples-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Loosely coupled vs tightly couples deployment
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-configuration-files-in-azure-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Configuration files in Azure deployment
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-doing-rdp-in-virtual-machines" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Doing RDP in virtual machines.
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>Azure_Services</h1>
+
+<p><strong>Azure App services and Cloud serives</strong></p>
+<h3 id="1-different-ways-of-publishing-on-azure">1. Different ways of publishing on Azure</h3>
+<p>🚀 Different Ways of Publishing on Azure</p>
+<p><strong>1. 🔧 Visual Studio</strong></p>
+<ul>
+<li>Direct deployment from IDE.</li>
+<li>Supports:</li>
+<li>Web Apps</li>
+<li>Azure Functions</li>
+<li>Azure App Service</li>
+<li>Easy for developers with built-in wizards.</li>
+</ul>
+<p>✅ Best For: Rapid dev/test deployments.</p>
+<p>** 2. 🌐 Azure Portal**</p>
+<ul>
+<li>Manual upload or configuration via browser.</li>
+<li>Use for:</li>
+<li>ARM template deployments</li>
+<li>App Service ZIP Deploy</li>
+<li>Function App package uploads</li>
+</ul>
+<p>✅ Best For: One-time setups and admin tasks.</p>
+<p><strong>3. 🧱 Azure CLI</strong></p>
+<pre><code>az webapp up --name myapp --resource-group myrg --location eastus
+</code></pre>
+<ul>
+<li>Scriptable deployment via command line.</li>
+<li>Works on Linux, macOS, Windows.</li>
+</ul>
+<p>✅ Best For: DevOps, automation, scripting.</p>
+<ul>
+<li>
+<ol>
+<li>📦 Azure DevOps (Pipelines)*</li>
+</ol>
+</li>
+<li>
+<p>CI/CD pipelines for:</p>
+</li>
+<li>Web Apps</li>
+<li>Azure Functions</li>
+<li>Containers</li>
+<li>Supports YAML &amp; Classic UI-based pipelines.</li>
+</ul>
+<p>✅ Best For: Enterprise-grade DevOps workflows.</p>
+<p><strong>5. 🐙 GitHub Actions</strong></p>
+<ul>
+<li>CI/CD workflows using GitHub.</li>
+<li>Direct integration with Azure using actions like:</li>
+</ul>
+<pre><code>- uses: azure/webapps-deploy@v2
+</code></pre>
+<p>✅ Best For: GitHub-hosted repositories.</p>
+<p><strong>6. 📁 FTP/SFTP Deployment</strong></p>
+<ul>
+<li>Use FTP credentials to manually upload files to Azure Web Apps or App Service.</li>
+</ul>
+<p>✅ Best For: Legacy or emergency hotfixes.</p>
+<p><strong>7. 🐳 Docker &amp; Containers</strong></p>
+<ul>
+<li>Push container images to:</li>
+<li>Azure Container Registry (ACR)</li>
+<li>Docker Hub</li>
+<li>Deploy using:</li>
+<li>Azure App Service for Containers</li>
+<li>Azure Kubernetes Service (AKS)</li>
+</ul>
+<p>✅ Best For: Containerized microservices &amp; scale.</p>
+<p><strong>8. 🧾 ARM Templates / Bicep</strong></p>
+<ul>
+<li>Infrastructure-as-Code (IaC) method.</li>
+<li>Declaratively deploy Azure resources.</li>
+<li>Repeatable and version-controllable.</li>
+</ul>
+<p>✅ Best For: Repeatable infra deployments, governance.</p>
+<hr />
+<p><strong>9. 📜 Terraform</strong></p>
+<ul>
+<li>Popular open-source IaC tool.</li>
+<li>Azure support via the <code>azurerm</code> provider.</li>
+</ul>
+<p>✅ Best For: Multi-cloud IaC setups.</p>
+<hr />
+<p><strong>10. 🛰️ Azure Resource Manager REST API</strong></p>
+<ul>
+<li>Advanced programmatic deployments using RESTful API endpoints.</li>
+</ul>
+<p>✅ Best For: Custom apps or tools automating Azure.</p>
+<p>✅ Summary Table</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Type</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Visual Studio</td>
+<td>Manual</td>
+<td>Dev/testing workflows</td>
+</tr>
+<tr>
+<td>Azure Portal</td>
+<td>Manual</td>
+<td>Admin tasks, monitoring, quick deploy</td>
+</tr>
+<tr>
+<td>Azure CLI</td>
+<td>Scripted</td>
+<td>Automation &amp; scripting</td>
+</tr>
+<tr>
+<td>Azure DevOps</td>
+<td>CI/CD</td>
+<td>Enterprise deployments</td>
+</tr>
+<tr>
+<td>GitHub Actions</td>
+<td>CI/CD</td>
+<td>GitHub-based automation</td>
+</tr>
+<tr>
+<td>FTP/SFTP</td>
+<td>Manual</td>
+<td>Legacy or emergency deploy</td>
+</tr>
+<tr>
+<td>Docker/Containers</td>
+<td>Container</td>
+<td>Microservices, cloud-native apps</td>
+</tr>
+<tr>
+<td>ARM Templates/Bicep</td>
+<td>IaC</td>
+<td>Repeatable, structured deployments</td>
+</tr>
+<tr>
+<td>Terraform</td>
+<td>IaC</td>
+<td>Multi-cloud infrastructure management</td>
+</tr>
+<tr>
+<td>REST API</td>
+<td>Programmatic</td>
+<td>Deep automation and integrations</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-cloud-vs-app-services">2. Cloud vs App services</h3>
+<p>☁️ Azure Cloud Services vs Azure App Services</p>
+<p><strong>1. Azure Cloud Services</strong></p>
+<ul>
+<li><strong>Type:</strong> Platform as a Service (PaaS)</li>
+<li><strong>Use Case:</strong> Hosting scalable, multi-tier web applications and background processing.</li>
+<li>
+<p><strong>Architecture:</strong></p>
+<pre><code>- Uses **Web Roles** (for web apps) and **Worker Roles** (for background tasks).
+- Supports full OS control and startup tasks.
+</code></pre>
+</li>
+<li>
+<p><strong>Management:</strong> Requires managing VM instances, OS updates (though managed by Azure), and configuration.</p>
+</li>
+<li><strong>Scaling:</strong> Manual or automatic scaling of instances.</li>
+<li><strong>Deployment:</strong> Deploys via packages (.cspkg) and configuration (.cscfg).</li>
+<li><strong>Customization:</strong> Higher control over environment and installed software.</li>
+<li><strong>Ideal for:</strong> Legacy cloud apps needing OS-level access, or apps needing custom startup tasks.</li>
+</ul>
+<p><strong>2. Azure App Services</strong></p>
+<ul>
+<li><strong>Type:</strong> Platform as a Service (PaaS)</li>
+<li><strong>Use Case:</strong> Hosting web apps, REST APIs, mobile backends, and serverless functions.</li>
+<li>
+<p><strong>Architecture:</strong></p>
+<pre><code>    - Fully managed app hosting environment.
+    - No OS-level management required.
+</code></pre>
+</li>
+<li>
+<p><strong>Management:</strong> Azure manages patching, scaling, and infrastructure.</p>
+</li>
+<li><strong>Scaling:</strong> Built-in autoscaling and load balancing.</li>
+<li><strong>Deployment:</strong> Supports Git, FTP, ZIP deploy, Azure DevOps, GitHub Actions.</li>
+<li><strong>Customization:</strong> Limited OS access but easy integration with Azure services.</li>
+<li><strong>Ideal for:</strong> Modern web apps, APIs, mobile backends needing fast deployment and easy scaling.</li>
+</ul>
+<p>✅ Summary Table</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Azure Cloud Services</th>
+<th>Azure App Services</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Service Type</td>
+<td>PaaS</td>
+<td>PaaS</td>
+</tr>
+<tr>
+<td>OS Control</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Scaling</td>
+<td>Manual or auto</td>
+<td>Built-in autoscaling</td>
+</tr>
+<tr>
+<td>Deployment Method</td>
+<td>Packages (.cspkg/.cscfg)</td>
+<td>Git, FTP, ZIP, DevOps, Actions</td>
+</tr>
+<tr>
+<td>Management Overhead</td>
+<td>Higher (VM and OS management)</td>
+<td>Lower (fully managed)</td>
+</tr>
+<tr>
+<td>Use Cases</td>
+<td>Legacy apps, complex setups</td>
+<td>Modern web apps, APIs, functions</td>
+</tr>
+<tr>
+<td>Customization</td>
+<td>High</td>
+<td>Moderate</td>
+</tr>
+</tbody>
+</table>
+<p>📌 Notes</p>
+<ul>
+<li>Azure Cloud Services is considered a <strong>classic model</strong>, with many scenarios now better suited to App Services or Azure Kubernetes Service.</li>
+<li>App Services offer easier and faster deployment with less management effort.</li>
+</ul>
+<h3 id="3-impact-on-resource-groups">3. Impact on resource groups</h3>
+<p>🔄 Impact on Resource Groups: Azure Cloud Services vs Azure App Services</p>
+<p>Azure Resource Groups Overview</p>
+<ul>
+<li>A <strong>Resource Group</strong> is a logical container in Azure that holds related resources for an application or workload.</li>
+<li>It helps manage, deploy, and monitor resources as a single entity.</li>
+</ul>
+<p><strong>Impact on Resource Groups</strong></p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Azure Cloud Services</th>
+<th>Azure App Services</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Resource Group Scope</td>
+<td>Cloud Services (web roles, worker roles) and associated VMs, storage, networking grouped together</td>
+<td>App Service plan and all related apps grouped within the resource group</td>
+</tr>
+<tr>
+<td>Granularity</td>
+<td>Multiple related resources (VMs, roles) bundled, sometimes across resource groups if not carefully planned</td>
+<td>Typically simpler, with App Service Plan + apps in one resource group</td>
+</tr>
+<tr>
+<td>Management Complexity</td>
+<td>Higher — more resources to manage within or across groups due to multiple roles and VMs</td>
+<td>Lower — fewer resource types, easier to organize and maintain</td>
+</tr>
+<tr>
+<td>Deployment Impact</td>
+<td>Updates may affect multiple related resources, requiring coordinated deployment</td>
+<td>App Services deploy as single unit, simplified deployment in resource group</td>
+</tr>
+<tr>
+<td>Monitoring &amp; Billing</td>
+<td>Can be complex due to multiple associated resources</td>
+<td>Easier aggregation of usage and costs per resource group</td>
+</tr>
+<tr>
+<td>Resource Dependencies</td>
+<td>Needs careful planning to avoid resource sprawl across groups</td>
+<td>Usually contained within fewer resources in a group</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Summary</strong></p>
+<ul>
+<li>Both Cloud Services and App Services use resource groups as containers, but Cloud Services often involve <strong>more complex resource structures</strong>.</li>
+<li>App Services simplify resource group management by consolidating app components under fewer resources.</li>
+<li>Proper planning of resource groups is important for <strong>cost management, access control, and deployment orchestration</strong>.</li>
+</ul>
+<h3 id="4-web-role-worker-roles-and-web-jobs">4. Web role , Worker roles and Web jobs</h3>
+<p><strong>1. Web Role</strong></p>
+<ul>
+<li>Part of <strong>Azure Cloud Services</strong> (classic PaaS).</li>
+<li>Designed to host <strong>web applications</strong> and <strong>web APIs</strong>.</li>
+<li>Runs IIS (Internet Information Services) by default.</li>
+<li>Supports HTTP/HTTPS requests.</li>
+<li>Can be scaled by increasing the number of instances.</li>
+<li>Used for <strong>front-end web workloads</strong>.</li>
+</ul>
+<p><strong>2. Worker Role</strong></p>
+<ul>
+<li>Also part of <strong>Azure Cloud Services</strong>.</li>
+<li>Designed to run <strong>background processing</strong> or <strong>asynchronous tasks</strong>.</li>
+<li>Does <strong>not</strong> run IIS and cannot serve HTTP requests directly.</li>
+<li>Runs custom code continuously or triggered by a schedule.</li>
+<li>Typically used for tasks like:</li>
+<li>Queue processing</li>
+<li>Batch jobs</li>
+<li>Data processing</li>
+<li>Can be scaled independently of Web Roles.</li>
+</ul>
+<p><strong>3. WebJobs</strong></p>
+<ul>
+<li>Feature of <strong>Azure App Services</strong> (modern PaaS).</li>
+<li>Runs background or scheduled jobs within an <strong>App Service Plan</strong>.</li>
+<li>Supports continuous, triggered (on-demand), or scheduled execution.</li>
+<li>Can run any executable or script (e.g., .exe, PowerShell, Python).</li>
+<li>Easy to deploy and manage alongside web apps.</li>
+<li>Ideal for lightweight background tasks without managing separate roles or VMs.</li>
+</ul>
+<p>✅ Summary Table</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Web Role</th>
+<th>Worker Role</th>
+<th>WebJobs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Platform</td>
+<td>Azure Cloud Services</td>
+<td>Azure Cloud Services</td>
+<td>Azure App Services</td>
+</tr>
+<tr>
+<td>Purpose</td>
+<td>Host web applications</td>
+<td>Background processing</td>
+<td>Background jobs/tasks</td>
+</tr>
+<tr>
+<td>Runs IIS?</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Deployment Model</td>
+<td>Package-based (.cspkg)</td>
+<td>Package-based (.cspkg)</td>
+<td>Deployed within App Service</td>
+</tr>
+<tr>
+<td>Scalability</td>
+<td>Scalable instances</td>
+<td>Scalable instances</td>
+<td>Scales with App Service Plan</td>
+</tr>
+<tr>
+<td>Use Cases</td>
+<td>Web front-end apps</td>
+<td>Queues, batch jobs</td>
+<td>Scheduled/continuous tasks</td>
+</tr>
+</tbody>
+</table>
+<p>📌 Notes</p>
+<ul>
+<li><strong>Web Roles and Worker Roles</strong> belong to the classic Azure Cloud Services model and are less commonly used for new projects.</li>
+<li><strong>WebJobs</strong> provide a simpler, more flexible way to run background tasks within App Services.</li>
+</ul>
+<h3 id="5-loosely-coupled-vs-tightly-couples-deployment">5. Loosely coupled vs tightly couples deployment</h3>
+<p><strong>1. Tightly Coupled Deployment</strong></p>
+<ul>
+<li>
+<p><strong>Definition:</strong> Components or services are highly dependent on each other.</p>
+</li>
+<li>
+<p><strong>Characteristics:</strong></p>
+<pre><code> - Changes in one component often require changes in others.
+ - Deployment must be coordinated; often deployed together as a single unit.
+ - Harder to scale or update parts independently.
+ - Common in monolithic applications.
+</code></pre>
+</li>
+<li>
+<p><strong>Pros:</strong></p>
+<pre><code>- Simpler initial development.
+- Easier to test as a whole.
+</code></pre>
+</li>
+<li>
+<p><strong>Cons:</strong></p>
+<pre><code>- Difficult to maintain and evolve.
+- Higher risk of downtime during updates.
+- Poor scalability and flexibility.
+</code></pre>
+</li>
+</ul>
+<p><strong>2. Loosely Coupled Deployment</strong></p>
+<ul>
+<li>
+<p><strong>Definition:</strong> Components or services operate independently with minimal dependencies.</p>
+</li>
+<li>
+<p><strong>Characteristics:</strong></p>
+<pre><code>- Each service/component can be deployed, scaled, updated independently.
+- Communicate through well-defined APIs or messaging.
+- Supports microservices architecture.
+</code></pre>
+</li>
+<li>
+<p><strong>Pros:</strong></p>
+<pre><code>- Greater flexibility and scalability.
+- Easier maintenance and faster deployments.
+- Fault isolation — one component failure less likely to impact others.
+</code></pre>
+</li>
+<li>
+<p><strong>Cons:</strong></p>
+<pre><code>- More complex to design and implement.
+- Requires robust inter-service communication mechanisms.
+</code></pre>
+</li>
+</ul>
+<p>✅ Summary Table</p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Tightly Coupled</th>
+<th>Loosely Coupled</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dependency</td>
+<td>High dependency between components</td>
+<td>Minimal dependencies, independent</td>
+</tr>
+<tr>
+<td>Deployment</td>
+<td>Monolithic, coordinated deployment</td>
+<td>Independent deployments</td>
+</tr>
+<tr>
+<td>Scalability</td>
+<td>Limited, whole system scales</td>
+<td>Each component scales individually</td>
+</tr>
+<tr>
+<td>Flexibility</td>
+<td>Low, difficult to change parts</td>
+<td>High, easy to modify and evolve</td>
+</tr>
+<tr>
+<td>Fault Isolation</td>
+<td>Poor — one failure affects entire system</td>
+<td>Good — isolated failures</td>
+</tr>
+<tr>
+<td>Complexity</td>
+<td>Simpler initially</td>
+<td>More complex design and infrastructure</td>
+</tr>
+</tbody>
+</table>
+<p>📌 Notes</p>
+<pre><code>    - Loosely coupled deployment is preferred for modern cloud-native and microservices applications.
+    - Tightly coupled deployment might still be used for simple or legacy systems.
+</code></pre>
+<h3 id="6-configuration-files-in-azure-deployment">6. Configuration files in Azure deployment</h3>
+<p><strong>Overview</strong></p>
+<p>Configuration files store settings and parameters that control application behavior and deployment environment without changing code. Azure supports multiple types of configuration files depending on the service and deployment model.</p>
+<p><strong>Common Configuration Files in Azure</strong></p>
+<table>
+<thead>
+<tr>
+<th>File Type</th>
+<th>Purpose</th>
+<th>Typical Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>appsettings.json</strong></td>
+<td>Application-specific settings (e.g., connection strings, API keys)</td>
+<td>ASP.NET Core and other modern apps</td>
+</tr>
+<tr>
+<td><strong>web.config</strong></td>
+<td>IIS and .NET Framework app configuration</td>
+<td>Traditional ASP.NET apps on Azure App Service</td>
+</tr>
+<tr>
+<td><strong>ARM Templates</strong></td>
+<td>Infrastructure-as-Code for deploying Azure resources</td>
+<td>Declarative deployment of resources and configs</td>
+</tr>
+<tr>
+<td><strong>Bicep Files</strong></td>
+<td>Simplified ARM templates</td>
+<td>Infrastructure deployments with more readable syntax</td>
+</tr>
+<tr>
+<td><strong>.env files</strong></td>
+<td>Environment variables for local development</td>
+<td>Local development and containerized app configuration</td>
+</tr>
+<tr>
+<td><strong>applicationHost.config</strong></td>
+<td>IIS server-level settings</td>
+<td>Azure App Service advanced IIS configuration</td>
+</tr>
+<tr>
+<td><strong>host.json</strong></td>
+<td>Azure Functions runtime configuration</td>
+<td>Configure triggers, logging, retry policies</td>
+</tr>
+<tr>
+<td><strong>local.settings.json</strong></td>
+<td>Local settings for Azure Functions development</td>
+<td>Local development environment variables</td>
+</tr>
+<tr>
+<td><strong>service.json / config.json</strong></td>
+<td>Custom app config files</td>
+<td>App-specific custom configurations</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Deployment Configuration Approaches</strong></p>
+<ul>
+<li><strong>Slot Settings:</strong> In Azure App Services, deployment slots can have slot-specific settings to avoid overriding production values.</li>
+<li><strong>Azure App Configuration:</strong> Centralized service to manage app settings and feature flags dynamically.</li>
+<li><strong>Azure Key Vault:</strong> Secure storage for sensitive configuration data like secrets, keys, and certificates.</li>
+<li><strong>Environment Variables:</strong> Supported in all Azure services for injecting configurations dynamically.</li>
+</ul>
+<p>Best Practices</p>
+<ul>
+<li>Keep sensitive data out of config files; use Key Vault or environment variables.</li>
+<li>Use separate config files or slots for dev, test, and prod environments.</li>
+<li>Use ARM/Bicep templates for infrastructure config versioning and automation.</li>
+<li>Validate configuration files locally before deployment.</li>
+</ul>
+<p>📌 Notes</p>
+<ul>
+<li>Many Azure SDKs and services have native support to load configs from these files or services.</li>
+<li>Configurations can be overridden at runtime via portal, CLI, or API for flexibility.</li>
+</ul>
+<h3 id="7-doing-rdp-in-virtual-machines">7. Doing RDP in virtual machines.</h3>
+<p>🖥️ How to Use RDP to Connect to Azure Virtual Machines</p>
+<p><strong>What is RDP?</strong></p>
+<ul>
+<li><strong>Remote Desktop Protocol (RDP)</strong> allows you to remotely connect to a Windows virtual machine (VM) and interact with its desktop environment.</li>
+</ul>
+<p><strong>Prerequisites</strong></p>
+<ul>
+<li>Azure VM must be <strong>running Windows OS</strong>.</li>
+<li>VM should have <strong>RDP port (TCP 3389)</strong> open in its Network Security Group (NSG).</li>
+<li>You need the VM's <strong>public IP address</strong> or DNS name.</li>
+<li>A valid <strong>username and password</strong> (or SSH key for Linux, but RDP is for Windows).</li>
+</ul>
+<p><strong>Steps to Connect via RDP</strong></p>
+<p><strong>1. Enable RDP Access</strong></p>
+<ul>
+<li>When creating the VM, ensure <strong>RDP port 3389</strong> is allowed in the <strong>Inbound security rules</strong> of the VM’s Network Security Group (NSG).</li>
+<li>If the VM is behind a firewall, make sure port 3389 is open.</li>
+</ul>
+<p><strong>2. Obtain Connection Details</strong></p>
+<ul>
+<li>Go to the Azure Portal.</li>
+<li>Navigate to <strong>Virtual Machines &gt; Your VM</strong>.</li>
+<li>Find the <strong>Public IP address</strong> or <strong>DNS name</strong>.</li>
+</ul>
+<p><strong>3. Launch Remote Desktop Client</strong></p>
+<ul>
+<li>On Windows: Use built-in <strong>Remote Desktop Connection</strong> (<code>mstsc.exe</code>).</li>
+<li>On macOS/Linux: Use Microsoft Remote Desktop app or compatible RDP client.</li>
+</ul>
+<p><strong>4. Connect to the VM</strong></p>
+<ul>
+<li>Open the RDP client.</li>
+<li>Enter the <strong>public IP address</strong> or <strong>DNS name</strong>.</li>
+<li>Enter your <strong>VM username and password</strong>.</li>
+<li>Click <strong>Connect</strong>.</li>
+</ul>
+<p><strong>5. Accept the Security Certificate (if prompted)</strong></p>
+<ul>
+<li>Confirm and proceed with the connection.</li>
+</ul>
+<p><strong>Troubleshooting Tips</strong></p>
+<ul>
+<li><strong>Port blocked:</strong> Verify NSG and firewall settings allow inbound traffic on port 3389.</li>
+<li><strong>Incorrect credentials:</strong> Make sure username and password are correct.</li>
+<li><strong>VM not running:</strong> Ensure the VM is started.</li>
+<li><strong>Public IP change:</strong> If the VM uses a dynamic IP, the address might have changed.</li>
+</ul>
+<p><strong>Security Best Practices</strong></p>
+<ul>
+<li>Use <strong>Just-In-Time (JIT) VM Access</strong> to limit RDP exposure.</li>
+<li>Restrict RDP access by <strong>IP address ranges</strong>.</li>
+<li>Use <strong>Azure Bastion</strong> for secure RDP access without exposing port 3389 publicly.</li>
+<li>Enable <strong>Network Security Groups (NSGs)</strong> properly.</li>
+</ul>
+<p><strong>Summary</strong></p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Enable port 3389</td>
+<td>Open in NSG for inbound RDP traffic</td>
+</tr>
+<tr>
+<td>Get public IP/DNS</td>
+<td>From Azure portal VM overview</td>
+</tr>
+<tr>
+<td>Use RDP client</td>
+<td>Windows MSTSC or compatible client</td>
+</tr>
+<tr>
+<td>Connect &amp; login</td>
+<td>Provide credentials and accept cert</td>
+</tr>
+<tr>
+<td>Secure access</td>
+<td>Use JIT, Bastion, NSGs for security</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.expand - navigation.sections - navigation.prune - navigation.indexes - content.code.copy"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="../../../extra.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2627 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../Azure_Fabric_microservices/">
+      
+      
+        <link rel="next" href="../Azure_blobs%28block%2Cappend%2Cpage%29/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>AzureTables - Tech Interview Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-define-azure-tables" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Tech Interview Guide" class="md-header__button md-logo" aria-label="Tech Interview Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Tech Interview Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              AzureTables
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Tech Interview Guide" class="md-nav__button md-logo" aria-label="Tech Interview Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Tech Interview Guide
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    .NET
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            .NET
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    C#
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            C#
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Dotnet/csharp/basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Dotnet/csharp/oop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    OOP Concepts
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Dotnet/csharp/advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Advanced Topics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Angular
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Angular
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Angular/fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fundamentals
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Angular/forms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Forms
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Angular/migration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Migration Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    React
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            React
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../React/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Hooks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../React/state/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    State Management
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Project Management
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Project Management
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Jira
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            Jira
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Poject_Management/Jira/basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Poject_Management/Jira/Jira_detailed_course/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    JiraDetailed
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Cloud
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Cloud
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Azure
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            Azure
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IAAS_PASS_SAAS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    IASS_PASS_SAAS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DTU_EDTU/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DTU_EDTU
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AzureFunctions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureFunctions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureStorage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Cosmos_DB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureCosmosDB
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Fabric_microservices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureFabricandMicroServices
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    AzureTables
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureTables
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-define-azure-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Define Azure Tables ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-explain-the-importance-of-partition-and-row-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Explain the importance of Partition and Row key ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-azure-tables-are-same-like-rdbms-database-true-or-false" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Azure tables are same like RDBMS database , true or false ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-explain-the-architecture-of-azure-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Explain the architecture of Azure tables ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-how-to-connect-to-azure-tables-using-c-language" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. How to connect to Azure tables using C# language ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-c-entity-classes-should-inherit-from-_-to-receive-azure-records" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. C# Entity classes should inherit from _ to receive Azure records ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-what-are-tablequery-classes-in-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. What are TableQuery classes in C# ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-how-to-perform-insertupdate-and-delete-using-c-on-azure-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. How to perform insert,update and delete using C# on Azure tables?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-how-to-do-batch-inserts-using-azure-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. How to do batch inserts using Azure API ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-what-is-the-consequence-of-not-writing-point-queries" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. What is the consequence of not writing point queries ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-how-does-duplicate-data-increase-search-performance-in-azure-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. How does duplicate data increase search performance in Azure tables ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-how-does-storing-aggregate-data-benefit-in-terms-of-performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      12. How does storing aggregate data benefit in terms of performance ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-when-should-we-use-compound-key-in-azure-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      13. When should we use compound key in Azure tables ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-what-is-egt-can-egt-be-done-across-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      14. What is EGT , can EGT be done across tables ?
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_blobs%28block%2Cappend%2Cpage%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureBlobs(block,append,page)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Queues%28Azure%20Queues%20%2C%20visibility%20timeouts%20%2CPeek%20%26%20De-Queue%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Azure_Queues
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Services%28App%20services%20and%20Cloud%20services%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Azure_Services
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_WebJobs%28WebJob%20and%20background%20processing.%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Azure_WebJobs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Scenarios
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Scenarios
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Scenarios/migration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Legacy Migration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Scenarios/realworld/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Real-World QA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    BrowserStack
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            BrowserStack
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../browserstack/bascis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-define-azure-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Define Azure Tables ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-explain-the-importance-of-partition-and-row-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Explain the importance of Partition and Row key ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-azure-tables-are-same-like-rdbms-database-true-or-false" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Azure tables are same like RDBMS database , true or false ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-explain-the-architecture-of-azure-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Explain the architecture of Azure tables ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-how-to-connect-to-azure-tables-using-c-language" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. How to connect to Azure tables using C# language ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-c-entity-classes-should-inherit-from-_-to-receive-azure-records" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. C# Entity classes should inherit from _ to receive Azure records ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-what-are-tablequery-classes-in-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. What are TableQuery classes in C# ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-how-to-perform-insertupdate-and-delete-using-c-on-azure-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. How to perform insert,update and delete using C# on Azure tables?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-how-to-do-batch-inserts-using-azure-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. How to do batch inserts using Azure API ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-what-is-the-consequence-of-not-writing-point-queries" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. What is the consequence of not writing point queries ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-how-does-duplicate-data-increase-search-performance-in-azure-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. How does duplicate data increase search performance in Azure tables ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-how-does-storing-aggregate-data-benefit-in-terms-of-performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      12. How does storing aggregate data benefit in terms of performance ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-when-should-we-use-compound-key-in-azure-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      13. When should we use compound key in Azure tables ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-what-is-egt-can-egt-be-done-across-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      14. What is EGT , can EGT be done across tables ?
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>AzureTables</h1>
+
+<h3 id="1-define-azure-tables">1. Define Azure Tables ?</h3>
+<p><strong>Azure Tables</strong> is a NoSQL key-value store that allows applications to store and query large amounts of structured, non-relational data. It is part of <strong>Azure Table Storage</strong> and is optimized for fast access and high availability.</p>
+<p>🔍 Key Features</p>
+<ul>
+<li>Schema-less data storage: flexible and scalable</li>
+<li>Stores data as key-value pairs in a structured format (entities and properties)</li>
+<li>Supports <strong>OData protocol</strong> for querying</li>
+<li>PartitionKey and RowKey used for indexing and efficient access</li>
+<li>Integrated with <strong>Azure Storage Account</strong></li>
+</ul>
+<p>🧱 Core Concepts</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Table</td>
+<td>A collection of entities</td>
+</tr>
+<tr>
+<td>Entity</td>
+<td>A set of properties, like a row in traditional database</td>
+</tr>
+<tr>
+<td>Property</td>
+<td>A name-value pair, like a column in traditional databases</td>
+</tr>
+<tr>
+<td>PartitionKey</td>
+<td>Determines the partition (used for scalability and performance)</td>
+</tr>
+<tr>
+<td>RowKey</td>
+<td>Uniquely identifies an entity within a partition</td>
+</tr>
+</tbody>
+</table>
+<p>📦 Use Cases</p>
+<ul>
+<li>Audit logs and telemetry data</li>
+<li>IoT device data storage</li>
+<li>User metadata storage</li>
+<li>Lightweight, scalable app backends</li>
+</ul>
+<p>🛠️ Sample Code (C# using Azure.Data.Tables SDK)</p>
+<pre><code class="language-csharp">var client = new TableClient(&quot;UseYourConnectionString&quot;, &quot;MyTable&quot;);
+var entity = new TableEntity(&quot;Partition1&quot;, &quot;Row1&quot;)
+{
+    { &quot;Name&quot;, &quot;John Doe&quot; },
+    { &quot;Email&quot;, &quot;john@example.com&quot; }
+};
+client.AddEntity(entity);
+
+</code></pre>
+<p>🔗 Related Services</p>
+<ul>
+<li>
+<p>Azure Cosmos DB Table API (for global distribution and richer querying)</p>
+</li>
+<li>
+<p>Azure Blob Storage (for unstructured data)</p>
+</li>
+<li>
+<p>Azure Queue Storage (for messaging)</p>
+</li>
+</ul>
+<h3 id="2-explain-the-importance-of-partition-and-row-key">2. Explain the importance of Partition and Row key ?</h3>
+<p>🔑 Importance of PartitionKey and RowKey in Azure Tables</p>
+<p>Azure Table Storage uses <strong>PartitionKey</strong> and <strong>RowKey</strong> as a <strong>composite primary key</strong> to uniquely identify each entity and enable fast data access and scalability.</p>
+<p>📌 PartitionKey</p>
+<p>✅ What is it?</p>
+<ul>
+<li>A string value that <strong>groups entities</strong> within the same partition.</li>
+<li>Entities with the same PartitionKey are <strong>stored together</strong>, improving query performance.</li>
+</ul>
+<p>🚀 Why is it important?</p>
+<ul>
+<li>Enables <strong>horizontal partitioning</strong> (sharding) for scalability.</li>
+<li>Efficient range queries and batch transactions are only possible <strong>within the same partition</strong>.</li>
+<li>Controls <strong>data locality</strong> and <strong>read/write throughput</strong>.</li>
+</ul>
+<p>📌 RowKey</p>
+<p>✅ What is it?</p>
+<ul>
+<li>A unique identifier for an entity <strong>within a given partition</strong>.</li>
+<li>Acts like the <strong>primary key</strong> in a relational database.</li>
+</ul>
+<p>🚀 Why is it important?</p>
+<ul>
+<li>Together with PartitionKey, it ensures <strong>uniqueness</strong> of each entity.</li>
+<li>Used to <strong>directly retrieve a specific entity</strong> without scanning the entire table.</li>
+</ul>
+<hr />
+<p>🧠 Together: Composite Primary Key</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Purpose</th>
+<th>Example Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PartitionKey</td>
+<td>Defines the partition/shard</td>
+<td>"CustomerUSA"</td>
+</tr>
+<tr>
+<td>RowKey</td>
+<td>Unique per entity in partition</td>
+<td>"Cust12345"</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Composite Key = <code>"CustomerUSA"</code> + <code>"Cust12345"</code></p>
+</blockquote>
+<hr />
+<p>📈 Performance Benefits</p>
+<ul>
+<li>Fast <strong>point lookups</strong> using both keys.</li>
+<li>Optimal <strong>query routing</strong> to the correct partition.</li>
+<li>Supports <strong>batch operations</strong> on entities with the same PartitionKey.</li>
+</ul>
+<hr />
+<p>❗ Best Practices</p>
+<ul>
+<li>Design PartitionKey to <strong>balance load</strong> across partitions.</li>
+<li>Avoid <strong>hot partitions</strong> (many writes to the same PartitionKey).</li>
+<li>Keep PartitionKey and RowKey <strong>immutable</strong> if possible.</li>
+</ul>
+<hr />
+<p>📦 Sample Retrieval Code (C#)</p>
+<pre><code class="language-csharp">var entity = client.GetEntity&lt;TableEntity&gt;(&quot;CustomerUSA&quot;, &quot;Cust12345&quot;);
+</code></pre>
+<h3 id="3-azure-tables-are-same-like-rdbms-database-true-or-false">3. Azure tables are same like RDBMS database , true or false ?</h3>
+<p>❓ Are Azure Tables same as RDBMS?</p>
+<p><strong>Answer:</strong> ❌ <strong>False</strong></p>
+<p>Azure Tables and Relational Database Management Systems (RDBMS) serve different purposes and follow different data models.</p>
+<p>🔄 Key Differences</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th><strong>Azure Table Storage</strong></th>
+<th><strong>RDBMS (e.g., SQL Server, MySQL)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Data Model</strong></td>
+<td>NoSQL, key-value pair (schema-less)</td>
+<td>Relational, schema-based (tables, rows)</td>
+</tr>
+<tr>
+<td><strong>Schema</strong></td>
+<td>Flexible, no enforced schema</td>
+<td>Fixed schema (defined columns, types)</td>
+</tr>
+<tr>
+<td><strong>Query Language</strong></td>
+<td>OData, REST, LINQ</td>
+<td>SQL (Structured Query Language)</td>
+</tr>
+<tr>
+<td><strong>Transactions</strong></td>
+<td>Limited (only within a partition)</td>
+<td>Full ACID support</td>
+</tr>
+<tr>
+<td><strong>Relationships</strong></td>
+<td>Not supported (no JOINs)</td>
+<td>Supported (foreign keys, joins)</td>
+</tr>
+<tr>
+<td><strong>Scalability</strong></td>
+<td>Horizontally scalable</td>
+<td>Typically vertically scalable</td>
+</tr>
+<tr>
+<td><strong>Use Case</strong></td>
+<td>Lightweight, fast-access data (e.g., IoT, logs)</td>
+<td>Complex relational operations</td>
+</tr>
+<tr>
+<td><strong>Indexing</strong></td>
+<td>PartitionKey + RowKey</td>
+<td>Custom indexes, primary &amp; foreign keys</td>
+</tr>
+</tbody>
+</table>
+<p>📌 Conclusion</p>
+<blockquote>
+<p>Azure Tables are <strong>not the same</strong> as RDBMS.<br />
+They are best suited for <strong>large-scale, unstructured, and semi-structured data</strong> where schema flexibility and horizontal scalability are important.</p>
+</blockquote>
+<h3 id="4-explain-the-architecture-of-azure-tables">4. Explain the architecture of Azure tables ?</h3>
+<p>🏗️ Azure Table Storage Architecture</p>
+<p>Azure Table Storage is a <strong>NoSQL key-value datastore</strong> that provides highly available, scalable, and schema-less storage for structured data. It’s part of the <strong>Azure Storage Account</strong> services.</p>
+<p>🔧 Core Components</p>
+<p><strong>1.Storage Account</strong></p>
+<ul>
+<li>The entry point for all storage services (Blob, Table, Queue, File).</li>
+<li>All tables live inside a <strong>single storage account</strong>.</li>
+</ul>
+<p><strong>2. Table</strong></p>
+<ul>
+<li>A collection of entities (similar to rows).</li>
+<li>Tables do <strong>not enforce schema</strong>; each entity can have different properties.</li>
+</ul>
+<p><strong>3. Entity</strong></p>
+<ul>
+<li>A single data item (like a row in a relational DB).</li>
+<li>Consists of a <strong>PartitionKey</strong>, <strong>RowKey</strong>, <strong>Timestamp</strong>, and other custom properties.</li>
+</ul>
+<p><strong>4. PartitionKey</strong></p>
+<ul>
+<li>Determines how entities are grouped and stored.</li>
+<li>Used for <strong>scalability and load balancing</strong> across servers.</li>
+</ul>
+<p><strong>5. RowKey</strong></p>
+<ul>
+<li>Uniquely identifies an entity within a partition.</li>
+<li>Together with PartitionKey forms a <strong>composite primary key</strong>.</li>
+</ul>
+<p>🧠 Logical Architecture Diagram</p>
+<pre><code class="language-plaintext">+----------------------+
+|  Azure Storage       |
+|  (Storage Account)   |
++----------+-----------+
+           |
+        Tables
+           |
+    +------+-------+
+    |              |
++-------+      +-------+
+| Table1|      | Table2|
++---+---+      +---+---+
+    |              |
++---v---+      +---v---+
+|Entity1|      |Entity1|
+| P: A  |      | P: B  |
+| R: 1  |      | R: 1  |
++-------+      +-------+
+</code></pre>
+<p><strong>How It Works</strong></p>
+<ul>
+<li>
+<p>Client Application uses Azure SDK or REST API to interact with tables.</p>
+</li>
+<li>
+<p>PartitionKey routes the request to the correct partition server.</p>
+</li>
+<li>
+<p>RowKey locates the exact entity within that partition.</p>
+</li>
+<li>
+<p>Azure Storage Backend ensures durability, replication, and availability.</p>
+</li>
+</ul>
+<p>🚀 <strong>Key Features of the Architecture</strong></p>
+<ul>
+<li>
+<p>Massive Scalability: Partitions distributed across many servers.</p>
+</li>
+<li>
+<p>High Availability: Automatic replication and geo-redundancy.</p>
+</li>
+<li>
+<p>Efficient Querying: Optimized for point lookups via PartitionKey + RowKey.</p>
+</li>
+<li>
+<p>Cost-Effective: Pay only for what you use (no complex schema or indexing).</p>
+</li>
+</ul>
+<p>📦 <strong>Sample Use Case</strong></p>
+<p>Azure Table Storage allows you to organize data using <code>PartitionKey</code> and <code>RowKey</code>. Here's a simple example:</p>
+<table>
+<thead>
+<tr>
+<th>PartitionKey</th>
+<th>RowKey</th>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"USA-Cust"</td>
+<td>"001"</td>
+<td>Name</td>
+<td>John Doe</td>
+</tr>
+<tr>
+<td>"USA-Cust"</td>
+<td>"002"</td>
+<td>Name</td>
+<td>Jane Smith</td>
+</tr>
+<tr>
+<td>"EU-Cust"</td>
+<td>"003"</td>
+<td>Name</td>
+<td>Erik Muller</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Each row is uniquely identified and grouped logically by <code>PartitionKey</code>.</p>
+</blockquote>
+<hr />
+<p>🛡️ <strong>Security &amp; Access</strong></p>
+<ul>
+<li>Supports <strong>Shared Access Signature (SAS)</strong> for granular delegated access.</li>
+<li>Integrates with <strong>Azure Role-Based Access Control (RBAC)</strong> for secure resource-level authorization.</li>
+<li>Uses <strong>HTTPS</strong> for all data transmission, ensuring encryption in transit.</li>
+</ul>
+<p>🔗 <strong>Integration</strong></p>
+<p>Azure Table Storage can be seamlessly integrated with:</p>
+<ul>
+<li>⚙️ <strong>Azure Functions</strong> – for serverless processing and triggers</li>
+<li>🔄 <strong>Azure Logic Apps</strong> – for low-code automation workflows</li>
+<li>🌐 <strong>Custom APIs and Web Apps</strong> – for building scalable backend services</li>
+</ul>
+<hr />
+<p>✅ <strong>Summary</strong></p>
+<p>Azure Table Storage uses a <strong>partitioned, distributed architecture</strong> to store massive volumes of semi-structured data efficiently. It is:</p>
+<ul>
+<li>🚀 <strong>Fast</strong> – optimized for high-throughput operations</li>
+<li>📈 <strong>Scalable</strong> – automatically handles large datasets</li>
+<li>💰 <strong>Cost-effective</strong> – pay only for what you use</li>
+<li>🧩 <strong>Flexible</strong> – ideal for scenarios like logging, telemetry, user data, and IoT workloads</li>
+</ul>
+<h3 id="5-how-to-connect-to-azure-tables-using-c-language">5. How to connect to Azure tables using C# language ?</h3>
+<p>This guide demonstrates how to connect to <strong>Azure Table Storage</strong> using <strong>C#</strong> with the <code>Azure.Data.Tables</code> SDK.</p>
+<p>📦 <strong>Prerequisites</strong></p>
+<ul>
+<li>✔️ .NET SDK installed (preferably .NET 6 or later)</li>
+<li>✔️ An active <strong>Azure Storage Account</strong></li>
+<li>✔️ A table created in Azure (e.g., <code>Customers</code>)</li>
+<li>✔️ NuGet package: <code>Azure.Data.Tables</code></li>
+</ul>
+<p>📥 <strong>Install NuGet Package</strong></p>
+<p>Use the following command to install the required SDK:</p>
+<pre><code class="language-bash">dotnet add package Azure.Data.Tables
+</code></pre>
+<p><strong>Sample Code: Connect and Insert Data</strong></p>
+<pre><code>using System;
+using Azure;
+using Azure.Data.Tables;
+
+// Define the entity model
+public class CustomerEntity : ITableEntity
+{
+    public string PartitionKey { get; set; }
+    public string RowKey { get; set; }
+    public DateTimeOffset? Timestamp { get; set; }
+    public ETag ETag { get; set; }
+
+    // Custom properties
+    public string Name { get; set; }
+    public string Email { get; set; }
+}
+
+class Program
+{
+    static void Main()
+    {
+        // 🔐 Replace with your actual connection string from Azure Portal
+        string connectionString = &quot;&lt;Your_Storage_Account_Connection_String&gt;&quot;;
+        string tableName = &quot;Customers&quot;;
+
+        // Create the TableClient
+        var serviceClient = new TableServiceClient(connectionString);
+        var tableClient = serviceClient.GetTableClient(tableName);
+
+        // Create the table if it doesn't exist
+        tableClient.CreateIfNotExists();
+
+        // Create a new entity
+        var customer = new CustomerEntity
+        {
+            PartitionKey = &quot;USA&quot;,
+            RowKey = Guid.NewGuid().ToString(),
+            Name = &quot;John Doe&quot;,
+            Email = &quot;john@example.com&quot;
+        };
+
+        // Insert the entity into the table
+        tableClient.AddEntity(customer);
+
+        Console.WriteLine(&quot;Customer inserted successfully.&quot;);
+    }
+}
+</code></pre>
+<p><strong>🔐 How to Get the Connection String</strong></p>
+<ul>
+<li>
+<p>Go to the Azure Portal</p>
+</li>
+<li>
+<p>Navigate to your Storage Account</p>
+</li>
+<li>
+<p>Select Access Keys under Security + networking</p>
+</li>
+<li>
+<p>Copy the Connection string</p>
+</li>
+</ul>
+<p><strong>Other Useful Operations</strong></p>
+<ul>
+<li>Update or Upsert an Entity</li>
+</ul>
+<pre><code>tableClient.UpsertEntity(customer);
+</code></pre>
+<p><strong>🔍 Query Entities</strong></p>
+<pre><code>var customers = tableClient.Query&lt;CustomerEntity&gt;(c =&gt; c.PartitionKey == &quot;USA&quot;);
+foreach (var c in customers)
+{
+    Console.WriteLine($&quot;{c.Name} - {c.Email}&quot;);
+}
+
+</code></pre>
+<p><strong>❌ Delete an Entity</strong></p>
+<pre><code>tableClient.DeleteEntity(&quot;USA&quot;, &quot;rowKeyValue&quot;);
+
+</code></pre>
+<p><strong>✅ Summary</strong></p>
+<ul>
+<li>
+<p>Azure Table Storage is easy to access in C# using the Azure.Data.Tables SDK.</p>
+</li>
+<li>
+<p>You can perform full CRUD operations using simple, strongly-typed models.</p>
+</li>
+<li>
+<p>Use PartitionKey and RowKey for fast and scalable access patterns.</p>
+</li>
+</ul>
+<h3 id="6-c-entity-classes-should-inherit-from-_-to-receive-azure-records">6. C# Entity classes should inherit from _ to receive Azure records ?</h3>
+<p><strong>C# entity classes should inherit from _ to receive Azure Table records?</strong></p>
+<p>✅ Answer</p>
+<p>C# entity classes should <strong>implement the <code>ITableEntity</code> interface</strong> to work with Azure Table Storage.</p>
+<pre><code class="language-csharp">public class MyEntity : ITableEntity
+{
+    public string PartitionKey { get; set; }
+    public string RowKey { get; set; }
+    public DateTimeOffset? Timestamp { get; set; }
+    public ETag ETag { get; set; }
+
+    // Custom properties
+    public string Name { get; set; }
+    public int Age { get; set; }
+}
+</code></pre>
+<p><strong>Why ITableEntity?</strong></p>
+<ul>
+<li>
+<p>Implementing ITableEntity enables the entity to:</p>
+</li>
+<li>
+<p>Map directly to a record in Azure Table Storage</p>
+</li>
+<li>
+<p>Support serialization/deserialization</p>
+</li>
+<li>
+<p>Include system properties:</p>
+<pre><code>- PartitionKey
+
+-RowKey
+
+-Timestamp
+
+-ETag
+</code></pre>
+</li>
+</ul>
+<p><strong>Alternative: Use TableEntity (Dynamic)</strong></p>
+<p>If you don’t want a strongly-typed class, you can use the built-in TableEntity:</p>
+<pre><code>var entity = new TableEntity(&quot;Partition1&quot;, &quot;Row1&quot;)
+{
+    { &quot;Name&quot;, &quot;John&quot; },
+    { &quot;Age&quot;, 30 }
+};
+</code></pre>
+<p><strong>Summary</strong></p>
+<p>To receive and manipulate records from Azure Table Storage in a strongly-typed manner:</p>
+<pre><code>- Implement the ITableEntity interface
+
+- Define custom properties for your entity
+
+- Ensure PartitionKey and RowKey are always set
+</code></pre>
+<h3 id="7-what-are-tablequery-classes-in-c">7. What are TableQuery classes in C# ?</h3>
+<p>🔍 TableQuery Classes in C#</p>
+<p>📘 Overview</p>
+<p>In older Azure SDKs (like <code>Microsoft.Azure.Cosmos.Table</code> or <code>WindowsAzure.Storage</code>), the <code>TableQuery&lt;T&gt;</code> class was used to <strong>query entities</strong> from Azure Table Storage using <strong>LINQ-like expressions</strong> or filter strings.</p>
+<blockquote>
+<p>⚠️ In the <strong>latest SDK</strong> (<code>Azure.Data.Tables</code>), <code>TableQuery&lt;T&gt;</code> is no longer used. Instead, queries are made directly via <code>TableClient.Query&lt;T&gt;()</code>.</p>
+</blockquote>
+<p>🧾 TableQuery<T> (Legacy SDK)</p>
+<p>✅ Namespace</p>
+<pre><code class="language-csharp">using Microsoft.Azure.Cosmos.Table;
+</code></pre>
+<p>🧱 <strong>Example Entity</strong></p>
+<pre><code>public class CustomerEntity : TableEntity
+{
+    public string Name { get; set; }
+    public string Email { get; set; }
+}
+</code></pre>
+<p><strong>Example Query Using TableQuery</strong></p>
+<pre><code>CloudTable table = tableClient.GetTableReference(&quot;Customers&quot;);
+
+TableQuery&lt;CustomerEntity&gt; query = new TableQuery&lt;CustomerEntity&gt;()
+    .Where(TableQuery.GenerateFilterCondition(&quot;PartitionKey&quot;, QueryComparisons.Equal, &quot;USA&quot;));
+
+foreach (CustomerEntity customer in table.ExecuteQuery(query))
+{
+    Console.WriteLine($&quot;{customer.Name} - {customer.Email}&quot;);
+}
+</code></pre>
+<p><strong>Deprecated in New SDK (Azure.Data.Tables)</strong></p>
+<p>In the modern SDK, the approach is simpler and more LINQ-friendly:</p>
+<p>✅ Modern Query Example</p>
+<pre><code>var tableClient = new TableClient(connectionString, &quot;Customers&quot;);
+
+var customers = tableClient.Query&lt;CustomerEntity&gt;(entity =&gt; entity.PartitionKey == &quot;USA&quot;);
+
+foreach (var customer in customers)
+{
+    Console.WriteLine($&quot;{customer.Name} - {customer.Email}&quot;);
+}
+</code></pre>
+<p>✅ Summary: TableQuery<T> vs TableClient.Query<T>()</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>TableQuery<T></th>
+<th>TableClient.Query<T>()</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SDK</strong></td>
+<td>Legacy (<code>Microsoft.Azure.Cosmos.Table</code>)</td>
+<td>Modern (<code>Azure.Data.Tables</code>)</td>
+</tr>
+<tr>
+<td><strong>Query Style</strong></td>
+<td>Filter string or LINQ</td>
+<td>LINQ-style expression</td>
+</tr>
+<tr>
+<td><strong>Recommended for New Apps?</strong></td>
+<td>❌ No</td>
+<td>✅ Yes</td>
+</tr>
+</tbody>
+</table>
+<h3 id="8-how-to-perform-insertupdate-and-delete-using-c-on-azure-tables">8. How to perform insert,update and delete using C# on Azure tables?</h3>
+<p>🔄 Performing Insert, Update, and Delete Operations on Azure Tables Using C#</p>
+<p>This guide explains how to perform <strong>CRUD</strong> operations on Azure Table Storage using the <strong>Azure.Data.Tables</strong> SDK in C#.</p>
+<p>📦 Prerequisites</p>
+<ul>
+<li>.NET SDK installed (e.g., .NET 6+)</li>
+<li>Azure Storage Account with Table service enabled</li>
+<li>NuGet package: <code>Azure.Data.Tables</code></li>
+</ul>
+<p>Install SDK</p>
+<pre><code class="language-bash">dotnet add package Azure.Data.Tables
+</code></pre>
+<p><strong>Entity Definition Example</strong></p>
+<pre><code>using Azure;
+using Azure.Data.Tables;
+using System;
+
+public class CustomerEntity : ITableEntity
+{
+    public string PartitionKey { get; set; }
+    public string RowKey { get; set; }
+    public DateTimeOffset? Timestamp { get; set; }
+    public ETag ETag { get; set; }
+
+    public string Name { get; set; }
+    public string Email { get; set; }
+}
+
+</code></pre>
+<p>➕ <strong>Insert Entity</strong></p>
+<pre><code>var tableClient = new TableClient(connectionString, &quot;Customers&quot;);
+tableClient.CreateIfNotExists();
+
+var newCustomer = new CustomerEntity
+{
+    PartitionKey = &quot;USA&quot;,
+    RowKey = Guid.NewGuid().ToString(),
+    Name = &quot;John Doe&quot;,
+    Email = &quot;john@example.com&quot;
+};
+
+// Insert the entity
+tableClient.AddEntity(newCustomer);
+Console.WriteLine(&quot;Entity inserted successfully.&quot;);
+</code></pre>
+<p><strong>Update or Upsert Entity</strong></p>
+<ul>
+<li>
+<p>Update: Use UpdateEntity to modify an existing entity.</p>
+</li>
+<li>
+<p>Upsert: Use UpsertEntity to insert if not exists, or update if exists.</p>
+</li>
+</ul>
+<pre><code>// Fetch existing entity or create new one
+var customer = new CustomerEntity
+{
+    PartitionKey = &quot;USA&quot;,
+    RowKey = &quot;existing-row-key&quot;,
+    Name = &quot;John Smith&quot;,
+    Email = &quot;john.smith@example.com&quot;
+};
+
+// Update existing entity - must provide ETag for concurrency control
+tableClient.UpdateEntity(customer, customer.ETag, TableUpdateMode.Replace);
+
+// Or Upsert (insert or update)
+tableClient.UpsertEntity(customer);
+Console.WriteLine(&quot;Entity updated/upserted successfully.&quot;);
+</code></pre>
+<p><strong>❌ Delete Entity</strong></p>
+<pre><code>string partitionKey = &quot;USA&quot;;
+string rowKey = &quot;existing-row-key&quot;;
+
+// Delete the entity
+tableClient.DeleteEntity(partitionKey, rowKey);
+Console.WriteLine(&quot;Entity deleted successfully.&quot;);
+
+</code></pre>
+<p><strong>Notes</strong></p>
+<ul>
+<li>
+<p>AddEntity throws if the entity already exists.</p>
+</li>
+<li>
+<p>UpdateEntity requires the current ETag for optimistic concurrency.</p>
+</li>
+<li>
+<p>UpsertEntity simplifies insert or update logic.</p>
+</li>
+<li>
+<p>DeleteEntity requires both PartitionKey and RowKey.</p>
+</li>
+</ul>
+<p>✅ Summary: Azure Table Storage CRUD Operations in C#</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Method</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Insert</td>
+<td><code>AddEntity()</code></td>
+<td>Adds new entity, fails if exists</td>
+</tr>
+<tr>
+<td>Update</td>
+<td><code>UpdateEntity()</code></td>
+<td>Requires ETag, updates existing</td>
+</tr>
+<tr>
+<td>Upsert</td>
+<td><code>UpsertEntity()</code></td>
+<td>Insert or update without error</td>
+</tr>
+<tr>
+<td>Delete</td>
+<td><code>DeleteEntity()</code></td>
+<td>Deletes by PartitionKey + RowKey</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Use the <code>Azure.Data.Tables</code> SDK for efficient and simple Azure Table Storage CRUD operations in C#.</p>
+</blockquote>
+<h3 id="9-how-to-do-batch-inserts-using-azure-api">9. How to do batch inserts using Azure API ?</h3>
+<p>🚀 How to Perform Batch Inserts Using Azure Table Storage API in C#</p>
+<p>Azure Table Storage supports batch operations to perform multiple insert, update, or delete operations in a single atomic transaction <strong>within the same partition</strong>.</p>
+<p>📌 Important Notes</p>
+<ul>
+<li>All entities in a batch must share the <strong>same PartitionKey</strong>.</li>
+<li>Maximum of <strong>100 entities</strong> per batch.</li>
+<li>Batch operations are atomic: either all succeed or all fail.</li>
+</ul>
+<p>📦 Prerequisites</p>
+<ul>
+<li>Azure.Data.Tables SDK installed</li>
+</ul>
+<pre><code class="language-bash">dotnet add package Azure.Data.Tables
+</code></pre>
+<p><strong>Sample Code: Batch Insert</strong></p>
+<pre><code>using Azure;
+using Azure.Data.Tables;
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        string connectionString = &quot;&lt;Your_Storage_Account_Connection_String&gt;&quot;;
+        string tableName = &quot;Customers&quot;;
+
+        var tableClient = new TableClient(connectionString, tableName);
+        tableClient.CreateIfNotExists();
+
+        // Create a list of entities with the same PartitionKey
+        var entities = new List&lt;TableEntity&gt;
+        {
+            new TableEntity(&quot;USA&quot;, Guid.NewGuid().ToString())
+            {
+                { &quot;Name&quot;, &quot;John Doe&quot; },
+                { &quot;Email&quot;, &quot;john.doe@example.com&quot; }
+            },
+            new TableEntity(&quot;USA&quot;, Guid.NewGuid().ToString())
+            {
+                { &quot;Name&quot;, &quot;Jane Smith&quot; },
+                { &quot;Email&quot;, &quot;jane.smith@example.com&quot; }
+            }
+            // Add more entities as needed (max 100)
+        };
+
+        // Create a batch
+        var batch = new List&lt;TableTransactionAction&gt;();
+
+        foreach (var entity in entities)
+        {
+            batch.Add(new TableTransactionAction(TableTransactionActionType.Add, entity));
+        }
+
+        // Submit the batch
+        tableClient.SubmitTransaction(batch);
+
+        Console.WriteLine(&quot;Batch insert completed successfully.&quot;);
+    }
+}
+</code></pre>
+<p><strong>🔍 Explanation</strong></p>
+<ul>
+<li>
+<p>TableTransactionAction defines the action type (Add, Update, Delete, etc.) and the entity.</p>
+</li>
+<li>
+<p>Use SubmitTransaction() to execute the batch.</p>
+</li>
+<li>
+<p>All entities must share the same PartitionKey, otherwise the batch will fail.</p>
+</li>
+</ul>
+<h3 id="10-what-is-the-consequence-of-not-writing-point-queries">10. What is the consequence of not writing point queries ?</h3>
+<p>🔍 What Are Point Queries?</p>
+<ul>
+<li><strong>Point queries</strong> retrieve an entity using its <strong>PartitionKey</strong> and <strong>RowKey</strong>.</li>
+<li>They provide <strong>direct, efficient access</strong> to a single entity without scanning the table.</li>
+</ul>
+<p>❌ Consequences of Not Using Point Queries</p>
+<table>
+<thead>
+<tr>
+<th>Consequence</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Poor Performance</strong></td>
+<td>Queries without PartitionKey and RowKey may scan many partitions, causing high latency and slow responses.</td>
+</tr>
+<tr>
+<td><strong>Increased Cost</strong></td>
+<td>Scanning large amounts of data leads to higher transaction and bandwidth costs.</td>
+</tr>
+<tr>
+<td><strong>Limited Scalability</strong></td>
+<td>Inefficient queries can overload partitions and reduce overall system scalability.</td>
+</tr>
+<tr>
+<td><strong>Higher Resource Consumption</strong></td>
+<td>Increased CPU, memory, and network usage on Azure servers.</td>
+</tr>
+<tr>
+<td><strong>No Transactional Guarantees</strong></td>
+<td>Complex queries across partitions can’t benefit from atomic batch transactions.</td>
+</tr>
+</tbody>
+</table>
+<p>✅ Best Practice</p>
+<p>Always design your queries to use <strong>PartitionKey</strong> and <strong>RowKey</strong> whenever possible to ensure:</p>
+<ul>
+<li>⚡ Fast, direct lookups</li>
+<li>💰 Cost-effective operations</li>
+<li>📈 High scalability and throughput</li>
+<li>🔒 Consistent and reliable data access</li>
+</ul>
+<p>🔗 Additional Notes</p>
+<ul>
+<li>If you must query by other properties, consider <strong>secondary indexing</strong> strategies or <strong>Azure Cosmos DB</strong> with richer query capabilities.</li>
+<li>Use <strong>filters</strong> that include PartitionKey for more efficient scans.</li>
+</ul>
+<h3 id="11-how-does-duplicate-data-increase-search-performance-in-azure-tables">11. How does duplicate data increase search performance in Azure tables ?</h3>
+<p>🔍 Concept Overview</p>
+<p>In Azure Table Storage, <strong>duplicate data</strong> (also known as <strong>denormalization</strong>) involves storing redundant copies of the same data in multiple entities or partitions to optimize query performance.</p>
+<p>✅ Benefits of Duplicate Data for Search Performance</p>
+<table>
+<thead>
+<tr>
+<th>Benefit</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Faster Queries</strong></td>
+<td>Duplicate data enables queries to use <strong>PartitionKey + RowKey</strong> for direct lookups, avoiding costly scans.</td>
+</tr>
+<tr>
+<td><strong>Improved Partitioning</strong></td>
+<td>Data duplication across different partitions allows queries to target a specific partition efficiently.</td>
+</tr>
+<tr>
+<td><strong>Reduced Joins/Complex Queries</strong></td>
+<td>Since Azure Tables don’t support joins, duplicating data eliminates the need to combine data from multiple tables.</td>
+</tr>
+<tr>
+<td><strong>Optimized Access Patterns</strong></td>
+<td>Data is stored in the shape most suitable for read operations, improving latency and throughput.</td>
+</tr>
+</tbody>
+</table>
+<p>⚠️ Trade-offs</p>
+<ul>
+<li><strong>Increased Storage Costs:</strong> More data stored means higher storage costs.</li>
+<li><strong>Data Consistency Challenges:</strong> Keeping duplicated data in sync requires additional logic.</li>
+<li><strong>Write Amplification:</strong> More write operations are needed when data changes.</li>
+</ul>
+<p>📌 When to Use Duplicate Data</p>
+<ul>
+<li>When your application requires <strong>fast read/query performance</strong>.</li>
+<li>When <strong>query patterns</strong> are known and predictable.</li>
+<li>When you can handle the <strong>additional complexity</strong> in data maintenance.</li>
+</ul>
+<hr />
+<p>📝 Summary</p>
+<p>Denormalization via duplicate data is a common pattern in Azure Table Storage to optimize for <strong>fast, scalable searches</strong> by leveraging efficient partition keys and avoiding costly queries.</p>
+<h3 id="12-how-does-storing-aggregate-data-benefit-in-terms-of-performance">12. How does storing aggregate data benefit in terms of performance ?</h3>
+<p>🔍 Concept Overview</p>
+<p>Storing <strong>aggregate data</strong> means precomputing and saving summarized or combined data (e.g., totals, counts, averages) to optimize query performance and reduce computation overhead at runtime.</p>
+<p>✅ Performance Benefits of Storing Aggregate Data</p>
+<table>
+<thead>
+<tr>
+<th>Benefit</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Faster Queries</strong></td>
+<td>Queries retrieving aggregate values are instantaneous, avoiding expensive real-time calculations.</td>
+</tr>
+<tr>
+<td><strong>Reduced Compute Load</strong></td>
+<td>Offloads aggregation work from the application or database to a pre-calculation step.</td>
+</tr>
+<tr>
+<td><strong>Lower Latency</strong></td>
+<td>Results are ready to serve, improving user experience in time-sensitive scenarios.</td>
+</tr>
+<tr>
+<td><strong>Improved Scalability</strong></td>
+<td>Reduces resource consumption on storage and compute layers, allowing handling of more requests.</td>
+</tr>
+</tbody>
+</table>
+<p>⚠️ Considerations</p>
+<ul>
+<li>Aggregates must be <strong>updated carefully</strong> when underlying data changes to avoid stale results.</li>
+<li>Additional storage is required to maintain aggregate tables or fields.</li>
+<li>Logic complexity increases to keep aggregates in sync.</li>
+</ul>
+<p>📌 Use Cases</p>
+<ul>
+<li>Dashboards showing totals, averages, or counts.</li>
+<li>Real-time analytics.</li>
+<li>Reporting systems needing fast response times.
+  📝 Summary</li>
+</ul>
+<p>Pre-storing aggregate data significantly boosts performance by enabling quick access to summarized information, reducing on-the-fly processing and resource usage.</p>
+<h3 id="13-when-should-we-use-compound-key-in-azure-tables">13. When should we use compound key in Azure tables ?</h3>
+<p>📌 What is a Compound Key?</p>
+<ul>
+<li>In Azure Table Storage, the <strong>compound key</strong> is the combination of:</li>
+<li><strong>PartitionKey</strong> (defines the partition)</li>
+<li><strong>RowKey</strong> (unique within the partition)</li>
+<li>Together, they <strong>uniquely identify</strong> each entity.</li>
+</ul>
+<p>✅ When to Use Compound Keys</p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Uniquely Identify Entities</strong></td>
+<td>When you need a unique identifier that involves multiple attributes (e.g., region + user ID).</td>
+</tr>
+<tr>
+<td><strong>Efficient Data Partitioning</strong></td>
+<td>To logically group related entities while keeping uniqueness.</td>
+</tr>
+<tr>
+<td><strong>Fast Lookups</strong></td>
+<td>To enable <strong>point queries</strong> that are highly efficient and cost-effective.</td>
+</tr>
+<tr>
+<td><strong>Batch Operations</strong></td>
+<td>When you want to perform atomic batch transactions on entities in the same partition.</td>
+</tr>
+<tr>
+<td><strong>Hierarchical Data Modeling</strong></td>
+<td>Represent hierarchical or composite relationships via keys.</td>
+</tr>
+</tbody>
+</table>
+<p>⚠️ Considerations</p>
+<ul>
+<li>Choose <code>PartitionKey</code> to maximize scalability by balancing workload across partitions.</li>
+<li>Choose <code>RowKey</code> to uniquely identify items <strong>within</strong> a partition.</li>
+<li>Avoid overly large partitions that can become performance bottlenecks.</li>
+</ul>
+<p>📝 Summary</p>
+<p>Use compound keys (<code>PartitionKey</code> + <code>RowKey</code>) in Azure Tables whenever you need <strong>unique, efficient, and scalable entity identification</strong> that supports fast queries and batch transactions.</p>
+<h3 id="14-what-is-egt-can-egt-be-done-across-tables">14. What is EGT , can EGT be done across tables ?</h3>
+<p>📘 Definition</p>
+<ul>
+<li><strong>ETag</strong> (Entity Tag) is a system-generated string value that represents the <strong>version</strong> of an entity in Azure Table Storage.</li>
+<li>It is used for <strong>optimistic concurrency control</strong> to prevent conflicts when multiple clients update the same entity concurrently.</li>
+</ul>
+<p>🔧 <strong>How ETag Works</strong></p>
+<ul>
+<li>When an entity is retrieved, it comes with an ETag.</li>
+<li>When updating or deleting, the ETag is sent back to ensure the entity has not changed since retrieval.</li>
+<li>If the ETag does not match the current version in the table, the operation fails with a <strong>412 Precondition Failed</strong> error.</li>
+</ul>
+<p>❓ <strong>Can ETag be Used Across Tables?</strong></p>
+<ul>
+<li><strong>No</strong>, ETag is scoped to a <strong>single entity</strong> in a specific table.</li>
+<li>It <strong>cannot be used across different tables</strong> because each table manages its own entities and versions independently.</li>
+<li>Concurrency control with ETag applies only to <strong>individual entities within their own tables</strong>.</li>
+</ul>
+<p>✅ <strong>Summary</strong></p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What is ETag?</td>
+<td>A version identifier for concurrency control</td>
+</tr>
+<tr>
+<td>Purpose</td>
+<td>Prevents conflicting updates on the same entity</td>
+</tr>
+<tr>
+<td>Scope</td>
+<td>Single entity within a single table</td>
+</tr>
+<tr>
+<td>Cross-table use?</td>
+<td>❌ Not supported</td>
+</tr>
+</tbody>
+</table>
+<p>🔗 <strong>Additional Notes</strong></p>
+<ul>
+<li>Use ETag with <code>UpdateEntity</code> or <code>DeleteEntity</code> operations to ensure safe concurrency.</li>
+<li>For cross-entity or cross-table transactions, consider application-level logic or alternative storage solutions.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.expand - navigation.sections - navigation.prune - navigation.indexes - content.code.copy"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="../../../extra.js"></script>
+      
+    
+  </body>
+</html>

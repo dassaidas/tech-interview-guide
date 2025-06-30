@@ -1,0 +1,2242 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../Azure_storage/">
+      
+      
+        <link rel="next" href="../Azure_Fabric_microservices/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>AzureCosmosDB - Tech Interview Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-what-is-the-goal-of-cosmos-db" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Tech Interview Guide" class="md-header__button md-logo" aria-label="Tech Interview Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Tech Interview Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              AzureCosmosDB
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Tech Interview Guide" class="md-nav__button md-logo" aria-label="Tech Interview Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Tech Interview Guide
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    .NET
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            .NET
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    C#
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            C#
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Dotnet/csharp/basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Dotnet/csharp/oop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    OOP Concepts
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Dotnet/csharp/advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Advanced Topics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Angular
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Angular
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Angular/fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fundamentals
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Angular/forms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Forms
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Angular/migration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Migration Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    React
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            React
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../React/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Hooks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../React/state/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    State Management
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Project Management
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Project Management
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Jira
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            Jira
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Poject_Management/Jira/basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Poject_Management/Jira/Jira_detailed_course/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    JiraDetailed
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Cloud
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Cloud
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Azure
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            Azure
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IAAS_PASS_SAAS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    IASS_PASS_SAAS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DTU_EDTU/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DTU_EDTU
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AzureFunctions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureFunctions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureStorage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    AzureCosmosDB
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureCosmosDB
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-what-is-the-goal-of-cosmos-db" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. What is the goal of Cosmos DB ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-explain-the-word-planet-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Explain the word planet-scale ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-explain-consistency-problem-in-cosmos" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Explain consistency problem in Cosmos ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-why-is-dr-bcp-not-the-main-goal-of-cosmos-how-is-it-different" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Why is DR , BCP not the main goal of cosmos , how is it different ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-consistency-is-best-when-performance-is-more-important-than-consistency" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. consistency is best when Performance is more important than consistency.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-consistency-should-be-selected-for-high-consistency-and-for-most-recent-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. consistency should be selected for high consistency and for most recent data.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-explain-session-bounded-and-prefix-consistencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Explain session , bounded and prefix consistencies ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-what-is-multi-api-support-in-cosmos" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. What is multi-api support in cosmos ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-explain-the-hierarchical-structure-of-cosmos-db" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Explain the hierarchical structure of Cosmos DB ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-how-to-connect-to-cosmos-db-using-c-language" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. How to connect to Cosmos DB using C# language ?
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Fabric_microservices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureFabricandMicroServices
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Tables/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureTables
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_blobs%28block%2Cappend%2Cpage%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureBlobs(block,append,page)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Queues%28Azure%20Queues%20%2C%20visibility%20timeouts%20%2CPeek%20%26%20De-Queue%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Azure_Queues
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Services%28App%20services%20and%20Cloud%20services%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Azure_Services
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_WebJobs%28WebJob%20and%20background%20processing.%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Azure_WebJobs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Scenarios
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Scenarios
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Scenarios/migration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Legacy Migration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Scenarios/realworld/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Real-World QA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    BrowserStack
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            BrowserStack
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../browserstack/bascis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-what-is-the-goal-of-cosmos-db" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. What is the goal of Cosmos DB ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-explain-the-word-planet-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Explain the word planet-scale ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-explain-consistency-problem-in-cosmos" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Explain consistency problem in Cosmos ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-why-is-dr-bcp-not-the-main-goal-of-cosmos-how-is-it-different" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Why is DR , BCP not the main goal of cosmos , how is it different ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-consistency-is-best-when-performance-is-more-important-than-consistency" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. consistency is best when Performance is more important than consistency.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-consistency-should-be-selected-for-high-consistency-and-for-most-recent-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. consistency should be selected for high consistency and for most recent data.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-explain-session-bounded-and-prefix-consistencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Explain session , bounded and prefix consistencies ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-what-is-multi-api-support-in-cosmos" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. What is multi-api support in cosmos ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-explain-the-hierarchical-structure-of-cosmos-db" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Explain the hierarchical structure of Cosmos DB ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-how-to-connect-to-cosmos-db-using-c-language" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. How to connect to Cosmos DB using C# language ?
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>AzureCosmosDB</h1>
+
+<h3 id="1-what-is-the-goal-of-cosmos-db">1. What is the goal of Cosmos DB ?</h3>
+<p><strong>Azure Cosmos DB</strong> is Microsoft’s globally distributed, multi-model database service designed to meet the modern application needs of scalability, performance, and availability.</p>
+<p>The <strong>primary goal</strong> of Azure Cosmos DB is to provide a <strong>globally distributed, highly available, low-latency database platform</strong> that supports multiple data models and offers <strong>guaranteed performance</strong> at scale.</p>
+<p>✅ Key Objectives</p>
+<ol>
+<li>
+<p><strong>Global Distribution</strong></p>
+<ul>
+<li>Offer seamless <strong>multi-region replication</strong>.</li>
+<li>Enable users to <strong>read and write data locally</strong> from anywhere in the world.</li>
+<li>Built-in <strong>multi-master replication</strong> for high availability.</li>
+</ul>
+</li>
+<li>
+<p><strong>High Availability</strong></p>
+<ul>
+<li><strong>99.999% availability SLA</strong> for multi-region deployments.</li>
+<li>Automatic failover and redundancy for disaster recovery.</li>
+</ul>
+</li>
+<li>
+<p><strong>Low Latency</strong></p>
+<ul>
+<li>Target <strong>&lt;10ms latency for reads</strong> and <strong>&lt;15ms for writes</strong> at the 99th percentile.</li>
+<li>Optimized for high-performance real-time applications.</li>
+</ul>
+</li>
+<li>
+<p><strong>Elastic Scalability</strong></p>
+<ul>
+<li><strong>Instant and automatic scaling</strong> of throughput (RU/s) and storage.</li>
+<li>Supports millions of transactions per second across regions.</li>
+</ul>
+</li>
+<li>
+<p><strong>Multi-Model Support</strong></p>
+<ul>
+<li>Allows storing and querying data in multiple formats:</li>
+<li>Document (JSON - MongoDB API)</li>
+<li>Key-Value</li>
+<li>Graph (Gremlin)</li>
+<li>Column-family (Cassandra API)</li>
+<li>Table API</li>
+</ul>
+</li>
+<li>
+<p><strong>Multiple APIs</strong></p>
+<ul>
+<li>Supports multiple APIs to integrate with popular databases:</li>
+<li>
+<p><strong>SQL (Core API)</strong></p>
+</li>
+<li>
+<p><strong>MongoDB</strong></p>
+</li>
+<li>
+<p><strong>Cassandra</strong></p>
+</li>
+<li><strong>Gremlin</strong></li>
+<li><strong>Azure Table Storage</strong></li>
+</ul>
+</li>
+<li>
+<p><strong>Comprehensive SLAs</strong></p>
+<ul>
+<li>Only database to offer <strong>guaranteed SLAs</strong> on:</li>
+<li>Availability</li>
+<li>Throughput</li>
+<li>Consistency</li>
+<li>Latency</li>
+</ul>
+</li>
+<li>
+<p><strong>Five Consistency Levels</strong></p>
+<ul>
+<li>Strong</li>
+<li>Bounded Staleness</li>
+<li>Session (default)</li>
+<li>Consistent Prefix</li>
+<li>Eventual</li>
+</ul>
+</li>
+</ol>
+<p>🚀 Real-World Use Cases</p>
+<pre><code>- Global e-commerce platforms
+- IoT &amp; telemetry ingestion
+- Real-time personalization &amp; recommendation engines
+- Gaming leaderboards
+- Financial transaction processing
+- Supply chain and logistics systems
+</code></pre>
+<p>🔗 References</p>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/azure/cosmos-db/introduction">Azure Cosmos DB Overview – Microsoft Docs</a></li>
+<li><a href="https://azure.microsoft.com/en-us/support/legal/sla/cosmos-db/">SLA for Azure Cosmos DB</a></li>
+</ul>
+<h3 id="2-explain-the-word-planet-scale">2. Explain the word planet-scale ?</h3>
+<p>🌍 Definition</p>
+<p><strong>Planet-scale</strong> refers to the ability of a software system — especially databases and cloud applications — to <strong>operate reliably, efficiently, and securely across the entire globe</strong>, serving <strong>millions or billions of users</strong> simultaneously from multiple geographic locations.</p>
+<p>✅ Key Characteristics of Planet-Scale Systems</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Global Distribution</strong></td>
+<td>Data and services are automatically replicated across multiple continents and regions.</td>
+</tr>
+<tr>
+<td><strong>Low Latency Worldwide</strong></td>
+<td>Reads and writes are served from the nearest datacenter to reduce delay for end users globally.</td>
+</tr>
+<tr>
+<td><strong>Elastic Scalability</strong></td>
+<td>Can instantly scale up/down to handle sudden changes in workload or user traffic across countries.</td>
+</tr>
+<tr>
+<td><strong>Multi-Master Write Support</strong></td>
+<td>Allows write operations from multiple regions with automatic conflict resolution.</td>
+</tr>
+<tr>
+<td><strong>High Availability</strong></td>
+<td>Designed for 99.999% uptime using built-in failover and redundancy across regions.</td>
+</tr>
+<tr>
+<td><strong>Geo-Compliance</strong></td>
+<td>Supports data residency, privacy, and compliance requirements in different countries.</td>
+</tr>
+</tbody>
+</table>
+<p>🚀 Example: Planet-Scale in Azure Cosmos DB</p>
+<p>Azure Cosmos DB is called a <strong>"planet-scale" database</strong> because it provides:</p>
+<ul>
+<li>Global data replication across any Azure region.</li>
+<li>Sub-10 ms latency read/write performance at 99th percentile.</li>
+<li>Multi-region writes and automatic failover.</li>
+<li>Support for localized access and compliance (e.g., GDPR, data sovereignty).</li>
+</ul>
+<p>📦 Real-World Scenarios</p>
+<table>
+<thead>
+<tr>
+<th>Use Case</th>
+<th>Why Planet-Scale Matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Global e-commerce platforms</strong></td>
+<td>Users expect fast performance globally.</td>
+</tr>
+<tr>
+<td><strong>Real-time multiplayer gaming</strong></td>
+<td>Millisecond latency is critical.</td>
+</tr>
+<tr>
+<td><strong>IoT/Telemetry across continents</strong></td>
+<td>Devices constantly sending data from all over the world.</td>
+</tr>
+<tr>
+<td><strong>Social networks and messaging apps</strong></td>
+<td>Users from different countries interacting 24/7.</td>
+</tr>
+</tbody>
+</table>
+<p>🧠 Summary</p>
+<blockquote>
+<p><strong>Planet-scale</strong> means building software and systems that perform reliably, quickly, and securely for a <strong>global audience</strong>, no matter where users are located.</p>
+</blockquote>
+<p>It’s about <strong>scaling across the planet</strong>, not just within a single region or datacenter.</p>
+<p>🔗 References</p>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/azure/cosmos-db/introduction">Planet-Scale Databases – Microsoft Azure Cosmos DB</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Distributed_computing">Distributed Systems Principles</a></li>
+</ul>
+<h3 id="3-explain-consistency-problem-in-cosmos">3. Explain consistency problem in Cosmos ?</h3>
+<p>What is Consistency?</p>
+<p>Consistency refers to the <strong>guarantee that all users see the same data at the same time</strong> after a write operation. In distributed databases like Cosmos DB, ensuring consistency across multiple geographically distributed replicas is challenging.</p>
+<p>The Consistency Problem</p>
+<p>In a globally distributed system, data is <strong>replicated across multiple regions</strong> to provide high availability and low latency. However, this replication introduces <strong>challenges in keeping data consistent</strong> everywhere:</p>
+<ul>
+<li>When a client writes data to one region, <strong>other regions may not immediately see that update</strong>.</li>
+<li>This can lead to <strong>conflicting versions</strong> or <strong>stale reads</strong>, where some users see older data.</li>
+<li>The system must <strong>balance trade-offs</strong> between consistency, availability, and latency (the CAP theorem).</li>
+</ul>
+<p>Cosmos DB Consistency Levels</p>
+<p>Azure Cosmos DB addresses the consistency problem by offering <strong>five tunable consistency levels</strong>, allowing developers to choose the right balance for their application:</p>
+<table>
+<thead>
+<tr>
+<th>Consistency Level</th>
+<th>Description</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Strong</strong></td>
+<td>Guarantees linearizability; reads always see the latest committed write.</td>
+<td>Financial transactions, critical apps</td>
+</tr>
+<tr>
+<td><strong>Bounded Staleness</strong></td>
+<td>Reads lag behind writes by a known, fixed amount of time or versions.</td>
+<td>Gaming leaderboards, social feeds</td>
+</tr>
+<tr>
+<td><strong>Session (default)</strong></td>
+<td>Guarantees monotonic reads and writes within a single client session.</td>
+<td>User sessions, personalized apps</td>
+</tr>
+<tr>
+<td><strong>Consistent Prefix</strong></td>
+<td>Reads see updates in the order they were committed, without gaps.</td>
+<td>Event processing</td>
+</tr>
+<tr>
+<td><strong>Eventual</strong></td>
+<td>Reads may see out-of-order or stale data but eventual consistency is guaranteed.</td>
+<td>Non-critical analytics, caching</td>
+</tr>
+</tbody>
+</table>
+<p>Why is Consistency Challenging?</p>
+<ul>
+<li><strong>Network latency:</strong> Propagating changes worldwide takes time.</li>
+<li><strong>Partition tolerance:</strong> In case of network partitions, consistency may be sacrificed for availability.</li>
+<li><strong>Multi-master writes:</strong> Allowing writes in multiple regions simultaneously can cause conflicts.</li>
+</ul>
+<p>Trade-Offs in Cosmos DB</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Strong</th>
+<th>Bounded Staleness</th>
+<th>Session</th>
+<th>Consistent Prefix</th>
+<th>Eventual</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Latency</strong></td>
+<td>High</td>
+<td>Medium</td>
+<td>Low</td>
+<td>Low</td>
+<td>Lowest</td>
+</tr>
+<tr>
+<td><strong>Availability</strong></td>
+<td>Lower</td>
+<td>High</td>
+<td>High</td>
+<td>High</td>
+<td>Highest</td>
+</tr>
+<tr>
+<td><strong>Throughput</strong></td>
+<td>Lower</td>
+<td>Medium</td>
+<td>High</td>
+<td>High</td>
+<td>Highest</td>
+</tr>
+<tr>
+<td><strong>Data Freshness</strong></td>
+<td>Absolute</td>
+<td>Bounded</td>
+<td>Session-scoped</td>
+<td>Ordered</td>
+<td>Eventual</td>
+</tr>
+</tbody>
+</table>
+<p>Summary</p>
+<p>The <strong>consistency problem</strong> in Cosmos DB arises from the need to keep <strong>distributed replicas synchronized</strong> while providing <strong>low latency and high availability</strong> globally. Cosmos DB’s <strong>tunable consistency levels</strong> give developers control over this trade-off to best fit their application's needs.</p>
+<p>References</p>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/azure/cosmos-db/consistency-levels">Azure Cosmos DB Consistency Levels</a></li>
+<li><a href="https://en.wikipedia.org/wiki/CAP_theorem">CAP Theorem Explained</a></li>
+</ul>
+<h3 id="4-why-is-dr-bcp-not-the-main-goal-of-cosmos-how-is-it-different">4. Why is DR , BCP not the main goal of cosmos , how is it different ?</h3>
+<p>Understanding DR and BCP</p>
+<ul>
+<li><strong>Disaster Recovery (DR)</strong> refers to the strategies and processes to <strong>recover data and resume operations after catastrophic events</strong> (e.g., data center failure, natural disasters).</li>
+<li><strong>Business Continuity Planning (BCP)</strong> is a broader approach to ensure that <strong>critical business functions continue during and after a disaster</strong>.</li>
+</ul>
+<p>Both focus on <strong>minimizing downtime and data loss after an incident</strong>.</p>
+<p>Azure Cosmos DB’s Primary Goal</p>
+<p>Azure Cosmos DB is designed to be a <strong>planet-scale, globally distributed, multi-model database</strong> that offers:</p>
+<ul>
+<li><strong>Seamless global distribution</strong> of data with <strong>multi-region replication</strong>.</li>
+<li><strong>Low latency and high availability</strong> with <strong>99.999% SLA</strong>.</li>
+<li>Tunable <strong>consistency models</strong> for application-specific requirements.</li>
+<li><strong>Elastic scalability</strong> across throughput and storage.</li>
+<li><strong>Multi-master writes</strong> and <strong>automatic conflict resolution</strong>.</li>
+</ul>
+<p>Why DR and BCP Are Not Its Main Goal</p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>DR &amp; BCP Focus</th>
+<th>Cosmos DB Focus</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Objective</strong></td>
+<td>Recovery and resumption after failures</td>
+<td>Continuous availability and global scale</td>
+</tr>
+<tr>
+<td><strong>Scope</strong></td>
+<td>Prepare for rare catastrophic events</td>
+<td>Built-in global distribution and availability for everyday use</td>
+</tr>
+<tr>
+<td><strong>Data Availability</strong></td>
+<td>Restore data from backups or replicas post-disaster</td>
+<td>Always-on read/write access across regions</td>
+</tr>
+<tr>
+<td><strong>Latency</strong></td>
+<td>Not primary concern</td>
+<td>Sub-10 ms latency globally</td>
+</tr>
+<tr>
+<td><strong>User Experience</strong></td>
+<td>Possible downtime during failover</td>
+<td>Transparent failover with no downtime</td>
+</tr>
+<tr>
+<td><strong>Consistency Trade-off</strong></td>
+<td>May sacrifice consistency for availability during recovery</td>
+<td>Offers tunable consistency levels with predictable SLAs</td>
+</tr>
+</tbody>
+</table>
+<p>How Cosmos DB Differs from Traditional DR/BCP Solutions</p>
+<ul>
+<li><strong>Built-in Geo-Replication:</strong> Cosmos DB replicates data across regions automatically, providing <strong>continuous data availability</strong>, not just backup copies.</li>
+<li><strong>Multi-Master Writes:</strong> Allows writes in multiple regions simultaneously with <strong>automatic conflict resolution</strong>, reducing failover complexity.</li>
+<li><strong>Automatic Failover:</strong> Cosmos DB provides <strong>automatic and transparent regional failover</strong>, minimizing downtime without manual intervention.</li>
+<li><strong>SLAs Cover Availability &amp; Latency:</strong> Cosmos DB guarantees <strong>99.999% availability</strong> and low latency as a core design goal, not just post-disaster recovery.</li>
+</ul>
+<p>Summary</p>
+<ul>
+<li>DR and BCP are about <strong>recovering from disasters</strong>, often with some downtime or data loss.</li>
+<li>Cosmos DB’s goal is to provide <strong>always-on, globally distributed data access</strong> with <strong>low latency and high availability</strong>, making downtime or data loss a <strong>non-issue</strong> in most scenarios.</li>
+<li>Cosmos DB <strong>enables business continuity as part of its core functionality</strong>, not as an afterthought.</li>
+</ul>
+<p>References</p>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/azure/cosmos-db/introduction">Azure Cosmos DB Overview</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Business_continuity_management">Disaster Recovery and Business Continuity</a></li>
+<li><a href="https://azure.microsoft.com/en-us/support/legal/sla/cosmos-db/">Azure Cosmos DB SLA</a></li>
+</ul>
+<h3 id="5-consistency-is-best-when-performance-is-more-important-than-consistency">5. consistency is best when Performance is more important than consistency.</h3>
+<p>When Is Consistency Relaxed for Better Performance?</p>
+<p>In distributed systems, <strong>there is often a trade-off between consistency and performance</strong> due to network latency and replication delays.</p>
+<ul>
+<li><strong>Consistency is relaxed (weaker consistency levels)</strong> when <strong>performance (latency and throughput) is more important than always reading the latest data</strong>.</li>
+<li>This means the system may return <strong>slightly stale or out-of-date data</strong> to achieve <strong>lower latency and higher availability</strong>.</li>
+<li>Examples include using <strong>Eventual Consistency</strong> or <strong>Consistent Prefix</strong>, where reads may lag behind writes but performance is optimized.</li>
+</ul>
+<p>Summary</p>
+<table>
+<thead>
+<tr>
+<th>Priority</th>
+<th>Choose Consistency Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Strong Consistency</strong></td>
+<td>When correctness and latest data are critical, accepting higher latency</td>
+</tr>
+<tr>
+<td><strong>Relaxed Consistency</strong> (e.g., Session, Eventual)</td>
+<td>When fast response and high availability matter more than immediate consistency</td>
+</tr>
+</tbody>
+</table>
+<p>This trade-off is a key design consideration in systems like <strong>Azure Cosmos DB</strong>, which offers tunable consistency levels to fit your application needs.</p>
+<h3 id="6-consistency-should-be-selected-for-high-consistency-and-for-most-recent-data">6. consistency should be selected for high consistency and for most recent data.</h3>
+<p><strong>Strong consistency</strong> should be selected when your application requires:</p>
+<ul>
+<li><strong>High data accuracy</strong></li>
+<li>Always reading the <strong>most recent and up-to-date data</strong></li>
+<li>Operations where stale or outdated data can cause errors or inconsistencies (e.g., financial transactions, inventory systems)</li>
+</ul>
+<p>Key Benefits of Strong Consistency</p>
+<ul>
+<li>Guarantees that <strong>all reads return the latest committed write</strong></li>
+<li>Ensures <strong>linearizability</strong> across all replicas</li>
+<li>Suitable for <strong>mission-critical applications</strong> demanding correctness over latency</li>
+</ul>
+<p>Trade-Offs</p>
+<ul>
+<li>May incur <strong>higher latency</strong> due to synchronization between replicas</li>
+<li>Potentially lower availability during network partitions (CAP theorem)</li>
+</ul>
+<p>Choose strong consistency when <strong>data correctness is paramount</strong> and slight latency increases are acceptable.</p>
+<h3 id="7-explain-session-bounded-and-prefix-consistencies">7. Explain session , bounded and prefix consistencies ?</h3>
+<p>Azure Cosmos DB offers multiple consistency levels to balance latency, availability, and data freshness. Below are explanations for three commonly used levels:</p>
+<ol>
+<li>
+<p>Session Consistency</p>
+<p><strong>Scope:</strong> Guarantees consistency <strong>within a single client session</strong>.</p>
+<p><strong>Behavior:</strong></p>
+<p>Reads your own writes — after a write completes, subsequent reads from the same client session will see that write or a more recent one.</p>
+<p>Provides <strong>monotonic reads</strong> and <strong>monotonic writes</strong> within a session.</p>
+<p><strong>Use Cases:</strong></p>
+<p>Personalized user experiences (e.g., user profiles, shopping carts).</p>
+<p>Scenarios where clients need to see their latest writes, but strict global consistency is not necessary.</p>
+<p>Performance: Low latency, high availability.</p>
+</li>
+<li>
+<p>Bounded Staleness Consistency</p>
+<p><strong>Scope:</strong> Guarantees reads lag behind writes by at most a <strong>specified time interval</strong> or <strong>number of versions</strong> (staleness window)</p>
+<p><strong>Behavior:</strong></p>
+<p>Reads might not see the most recent writes but will see all writes within the configured staleness bound.</p>
+<p>Provides <strong>global order</strong> of updates within the staleness window.</p>
+<p><strong>Use Cases:</strong></p>
+<p>Applications tolerating slightly stale data but requiring some ordering guarantees, e.g., leaderboards, social feeds.</p>
+<p><strong>Performance:</strong> Moderate latency with stronger consistency guarantees than session.</p>
+</li>
+<li>
+<p>Consistent Prefix Consistency</p>
+<ul>
+<li><strong>Scope:</strong> Guarantees that reads see <strong>writes in the order they were committed</strong> without gaps.</li>
+<li><strong>Behavior:</strong></li>
+<li>Reads never see out-of-order writes. For example, if updates A, B, and C occur in that order, a client will never see C before B.</li>
+<li>However, reads may lag and see earlier writes (e.g., A only), but <strong>never a later write without seeing all previous ones</strong>.</li>
+</ul>
+<p><strong>Use Cases:</strong></p>
+<p>Event processing pipelines, logging systems, or any workload that needs ordered events but can tolerate some staleness.</p>
+<p><strong>Performance:</strong> Lower latency than bounded staleness, but no absolute freshness guarantee.</p>
+</li>
+</ol>
+<p>Summary Table</p>
+<table>
+<thead>
+<tr>
+<th>Consistency Level</th>
+<th>Guarantees</th>
+<th>Typical Use Cases</th>
+<th>Latency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Session</strong></td>
+<td>Monotonic reads/writes per session</td>
+<td>User sessions, personalization</td>
+<td>Low</td>
+</tr>
+<tr>
+<td><strong>Bounded Staleness</strong></td>
+<td>Reads lag behind writes by a fixed time/version window</td>
+<td>Leaderboards, social feeds</td>
+<td>Moderate</td>
+</tr>
+<tr>
+<td><strong>Consistent Prefix</strong></td>
+<td>Reads see writes in order, no gaps</td>
+<td>Event streams, logs</td>
+<td>Low to moderate</td>
+</tr>
+</tbody>
+</table>
+<p>References</p>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/azure/cosmos-db/consistency-levels">Azure Cosmos DB Consistency Levels</a></li>
+<li><a href="https://en.wikipedia.org/wiki/CAP_theorem">CAP Theorem and Distributed Consistency</a></li>
+</ul>
+<h3 id="8-what-is-multi-api-support-in-cosmos">8. What is multi-api support in cosmos ?</h3>
+<p>Azure Cosmos DB is a <strong>multi-model, globally distributed database service</strong> that supports multiple APIs, enabling developers to use familiar data models and query languages while benefiting from Cosmos DB’s scalability and low latency.</p>
+<p>What Does Multi-API Support Mean?</p>
+<p><strong>Multi-API Support</strong> means that Cosmos DB allows you to interact with the same underlying database service using different APIs, each designed for a specific data model or developer ecosystem. This flexibility lets you:</p>
+<ul>
+<li>Use the APIs and tools you already know.</li>
+<li>Migrate existing applications to Cosmos DB with minimal changes.</li>
+<li>Work with multiple data models (document, graph, key-value, column-family) within a single service.</li>
+</ul>
+<p>Supported APIs in Azure Cosmos DB</p>
+<table>
+<thead>
+<tr>
+<th>API Name</th>
+<th>Data Model</th>
+<th>Description</th>
+<th>Use Cases</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Core (SQL) API</strong></td>
+<td>Document (JSON)</td>
+<td>Native Cosmos DB API for querying JSON documents using SQL-like syntax.</td>
+<td>Web apps, mobile apps, IoT data</td>
+</tr>
+<tr>
+<td><strong>MongoDB API</strong></td>
+<td>Document (JSON)</td>
+<td>Enables applications written for MongoDB to run on Cosmos DB without code changes.</td>
+<td>Apps using MongoDB drivers &amp; tools</td>
+</tr>
+<tr>
+<td><strong>Cassandra API</strong></td>
+<td>Column-family</td>
+<td>Supports Cassandra Query Language (CQL) for wide-column data.</td>
+<td>Big data, time series, distributed apps</td>
+</tr>
+<tr>
+<td><strong>Gremlin API</strong></td>
+<td>Graph</td>
+<td>Enables graph database features using Gremlin traversal language.</td>
+<td>Social networks, recommendation engines</td>
+</tr>
+<tr>
+<td><strong>Table API</strong></td>
+<td>Key-Value</td>
+<td>Provides a key-value store compatible with Azure Table Storage API.</td>
+<td>Simple key-value storage, metadata</td>
+</tr>
+</tbody>
+</table>
+<p>Benefits of Multi-API Support</p>
+<ul>
+<li><strong>Flexibility:</strong> Choose the API that best fits your application requirements.</li>
+<li><strong>Compatibility:</strong> Migrate existing workloads easily to Cosmos DB without rewriting application logic.</li>
+<li><strong>Unified Service:</strong> All APIs benefit from Cosmos DB’s global distribution, elastic scalability, and SLAs.</li>
+<li><strong>Simplified Management:</strong> One backend service to manage multiple data models and APIs.</li>
+</ul>
+<p>Summary</p>
+<p>Azure Cosmos DB’s multi-API support enables developers to use their preferred database models and query languages while leveraging Cosmos DB’s globally distributed, scalable, and low-latency architecture — all within a single fully managed service.</p>
+<p>References</p>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/azure/cosmos-db/apis-overview">Azure Cosmos DB APIs</a></li>
+<li><a href="https://learn.microsoft.com/en-us/azure/cosmos-db/choose-api">Choosing the Right API in Cosmos DB</a></li>
+</ul>
+<h3 id="9-explain-the-hierarchical-structure-of-cosmos-db">9. Explain the hierarchical structure of Cosmos DB ?</h3>
+<p>Azure Cosmos DB organizes data and resources in a hierarchy to manage and scale globally distributed applications efficiently.</p>
+<p>Hierarchy Levels</p>
+<ol>
+<li>
+<p><strong>Account</strong></p>
+<ul>
+<li>The top-level resource.</li>
+<li>Represents a Cosmos DB service endpoint.</li>
+<li>Associated with one or more Azure regions for global distribution.</li>
+<li>Contains databases, offers throughput provisioning.</li>
+</ul>
+</li>
+<li>
+<p><strong>Database</strong></p>
+<ul>
+<li>Logical container for a set of containers (collections).</li>
+<li>Acts as a scope for provisioning throughput (manual or shared).</li>
+<li>Can contain multiple containers.</li>
+<li>Similar to a database in traditional database systems.</li>
+</ul>
+</li>
+<li>
+<p><strong>Container</strong></p>
+<ul>
+<li>Core unit of scalability and distribution.</li>
+<li>Also known as <strong>Collection</strong>, <strong>Table</strong>, or <strong>Graph</strong> depending on the API used.</li>
+<li>Stores JSON documents, key-value pairs, or graph data.</li>
+<li>Has a <strong>partition key</strong> to distribute data across physical partitions.</li>
+<li>Provisioned with throughput measured in Request Units (RUs).</li>
+</ul>
+</li>
+<li>
+<p><strong>Item (Document/Row/Vertex/Edge)</strong></p>
+<ul>
+<li>The individual data entity stored in a container.</li>
+<li>For Core (SQL) and MongoDB APIs, an item is a <strong>JSON document</strong>.</li>
+<li>For Cassandra API, an item is a <strong>row</strong>.</li>
+<li>For Gremlin API, items are <strong>vertices</strong> and <strong>edges</strong>.</li>
+<li>Each item is uniquely identified by an <strong>id</strong> (or primary key).</li>
+</ul>
+</li>
+</ol>
+<p>Visualization of the Hierarchy</p>
+<p>Cosmos DB Account
+└── Database
+└── Container (Collection/Table/Graph)
+└── Items (Documents/Rows/Vertices/Edges)</p>
+<p>Additional Notes</p>
+<ul>
+<li><strong>Partitioning:</strong> Containers use partition keys to shard data across multiple physical partitions for scalability.</li>
+<li><strong>Throughput:</strong> Throughput (RU/s) can be provisioned at the account, database, or container level depending on configuration.</li>
+<li><strong>Global Distribution:</strong> Cosmos DB accounts can replicate data across multiple regions transparently.</li>
+</ul>
+<p>References</p>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/azure/cosmos-db/introduction">Azure Cosmos DB Core Concepts</a></li>
+<li><a href="https://learn.microsoft.com/en-us/azure/cosmos-db/data-model">Data Model in Azure Cosmos DB</a></li>
+</ul>
+<h3 id="10-how-to-connect-to-cosmos-db-using-c-language">10. How to connect to Cosmos DB using C# language ?</h3>
+<p>This guide shows you how to connect to Azure Cosmos DB using the <strong>Azure Cosmos DB .NET SDK</strong> in C#.</p>
+<p>Prerequisites</p>
+<ul>
+<li>An <strong>Azure Cosmos DB account</strong> (Core SQL API)</li>
+<li>Your <strong>connection string</strong> or <strong>URI and primary key</strong></li>
+<li>.NET development environment (Visual Studio, .NET SDK)</li>
+<li>Install the <strong>Azure Cosmos SDK</strong> NuGet package:</li>
+</ul>
+<p><code>dotnet add package Microsoft.Azure.Cosmos</code></p>
+<pre><code class="language-csharp">  using System;
+  using System.Threading.Tasks;
+  using Microsoft.Azure.Cosmos;
+  class Program
+  {
+  private static readonly string endpointUri = &quot;https://&lt;your-account&gt;.documents.azure.com:443/&quot;;
+  private static readonly string primaryKey = &quot;&lt;your-primary-key&gt;&quot;;
+  private CosmosClient cosmosClient;
+  private Database database;
+  private Container container;
+
+    private string databaseId = &quot;SampleDatabase&quot;;
+    private string containerId = &quot;SampleContainer&quot;;
+
+    public static async Task Main(string[] args)
+    {
+        try
+        {
+            Program p = new Program();
+            await p.ConnectCosmosAsync();
+        }
+        catch (CosmosException ex)
+        {
+            Console.WriteLine($&quot;Cosmos DB error: {ex.StatusCode} - {ex.Message}&quot;);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($&quot;Error: {e.Message}&quot;);
+        }
+    }
+
+    public async Task ConnectCosmosAsync()
+    {
+        // Create a new CosmosClient instance
+        cosmosClient = new CosmosClient(endpointUri, primaryKey);
+
+        // Create the database if it does not exist
+        database = await cosmosClient.CreateDatabaseIfNotExistsAsync(databaseId);
+        Console.WriteLine($&quot;Created Database: {database.Id}&quot;);
+
+        // Create the container if it does not exist
+        container = await database.CreateContainerIfNotExistsAsync(containerId, &quot;/partitionKey&quot;);
+        Console.WriteLine($&quot;Created Container: {container.Id}&quot;);
+
+        // Example: Add an item to the container
+        var newItem = new { id = Guid.NewGuid().ToString(), partitionKey = &quot;example&quot;, name = &quot;Sample Item&quot; };
+        ItemResponse&lt;dynamic&gt; response = await container.CreateItemAsync(newItem, new PartitionKey(newItem.partitionKey));
+        Console.WriteLine($&quot;Created item with id: {response.Resource.id}&quot;);
+    }
+  }
+</code></pre>
+<p>Explanation of Key Cosmos DB SDK Methods in C#</p>
+<ul>
+<li>
+<p><strong>CosmosClient:</strong>
+  The main client class used to establish a connection to Azure Cosmos DB.</p>
+</li>
+<li>
+<p><strong>CreateDatabaseIfNotExistsAsync:</strong>
+  Creates the database if it does not already exist in the Cosmos DB account.</p>
+</li>
+<li>
+<p><strong>CreateContainerIfNotExistsAsync:</strong>
+  Creates the container (also called collection) within the database if it doesn’t exist, specifying the partition key path.</p>
+</li>
+<li>
+<p><strong>CreateItemAsync:</strong>
+  Adds a new item (document) to the specified container.</p>
+</li>
+</ul>
+<p>References</p>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/azure/cosmos-db/sql/sql-api-sdk-dotnet">Azure Cosmos DB .NET SDK documentation</a></li>
+<li><a href="https://learn.microsoft.com/en-us/azure/cosmos-db/sql/create-sql-api-dotnet">Quickstart: Use Azure Cosmos DB SDK for .NET</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.expand - navigation.sections - navigation.prune - navigation.indexes - content.code.copy"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="../../../extra.js"></script>
+      
+    
+  </body>
+</html>

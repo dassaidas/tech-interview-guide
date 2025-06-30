@@ -1,0 +1,2816 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../../../Poject_Management/Jira/Jira_detailed_course/">
+      
+      
+        <link rel="next" href="../DTU_EDTU/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>IASS_PASS_SAAS - Tech Interview Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-define-ssas-paas-and-iaas" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Tech Interview Guide" class="md-header__button md-logo" aria-label="Tech Interview Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Tech Interview Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              IASS_PASS_SAAS
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Tech Interview Guide" class="md-nav__button md-logo" aria-label="Tech Interview Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Tech Interview Guide
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    .NET
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            .NET
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    C#
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            C#
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Dotnet/csharp/basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Dotnet/csharp/oop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    OOP Concepts
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Dotnet/csharp/advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Advanced Topics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Angular
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Angular
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Angular/fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fundamentals
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Angular/forms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Forms
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Angular/migration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Migration Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    React
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            React
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../React/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Hooks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../React/state/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    State Management
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Project Management
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Project Management
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Jira
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            Jira
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Poject_Management/Jira/basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Poject_Management/Jira/Jira_detailed_course/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    JiraDetailed
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Cloud
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Cloud
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Azure
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            Azure
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    IASS_PASS_SAAS
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    IASS_PASS_SAAS
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-define-ssas-paas-and-iaas" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Define SSAS, PAAS and IAAS ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-how-is-cloud-different-from-normal-webhosting" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. How is cloud different from normal webhosting ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-explain-the-2-big-os-in-cloud" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Explain the 2 big O’s in cloud ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-what-is-a-resource-and-why-do-we-need-resource-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. What is a resource and why do we need Resource groups ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-what-is-the-importance-of-resource-group-location" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. What is the importance of Resource group location ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-what-are-app-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. What are app services ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-which-appservice-will-you-choose-to-host-a-website" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Which appservice will you choose to host a website ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-what-is-the-importance-of-service-plan-and-pricing-tier" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. What is the importance of Service plan and pricing tier?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-how-to-upload-a-site-by-using-ftp-on-azure" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. How to upload a site by using FTP on Azure ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-what-is-the-importance-of-wwwroot-folder" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. What is the importance of “wwwroot” folder ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-how-can-you-go-to-the-console-of-azure" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. How can you go to the console of Azure ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-what-is-the-need-to-app-service-editor" class="md-nav__link">
+    <span class="md-ellipsis">
+      12. What is the need to App Service editor ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-explain-the-importance-of-publish-profile-of-azure" class="md-nav__link">
+    <span class="md-ellipsis">
+      13. Explain the importance of publish profile of Azure ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-how-to-deploy-application-in-azure-web-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      14. How to deploy application in Azure Web app?
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DTU_EDTU/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DTU_EDTU
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AzureFunctions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureFunctions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureStorage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Cosmos_DB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureCosmosDB
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Fabric_microservices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureFabricandMicroServices
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Tables/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureTables
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_blobs%28block%2Cappend%2Cpage%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureBlobs(block,append,page)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Queues%28Azure%20Queues%20%2C%20visibility%20timeouts%20%2CPeek%20%26%20De-Queue%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Azure_Queues
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Services%28App%20services%20and%20Cloud%20services%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Azure_Services
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_WebJobs%28WebJob%20and%20background%20processing.%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Azure_WebJobs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Scenarios
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Scenarios
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Scenarios/migration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Legacy Migration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Scenarios/realworld/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Real-World QA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    BrowserStack
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            BrowserStack
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../browserstack/bascis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-define-ssas-paas-and-iaas" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Define SSAS, PAAS and IAAS ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-how-is-cloud-different-from-normal-webhosting" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. How is cloud different from normal webhosting ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-explain-the-2-big-os-in-cloud" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Explain the 2 big O’s in cloud ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-what-is-a-resource-and-why-do-we-need-resource-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. What is a resource and why do we need Resource groups ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-what-is-the-importance-of-resource-group-location" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. What is the importance of Resource group location ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-what-are-app-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. What are app services ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-which-appservice-will-you-choose-to-host-a-website" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Which appservice will you choose to host a website ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-what-is-the-importance-of-service-plan-and-pricing-tier" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. What is the importance of Service plan and pricing tier?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-how-to-upload-a-site-by-using-ftp-on-azure" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. How to upload a site by using FTP on Azure ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-what-is-the-importance-of-wwwroot-folder" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. What is the importance of “wwwroot” folder ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-how-can-you-go-to-the-console-of-azure" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. How can you go to the console of Azure ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-what-is-the-need-to-app-service-editor" class="md-nav__link">
+    <span class="md-ellipsis">
+      12. What is the need to App Service editor ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-explain-the-importance-of-publish-profile-of-azure" class="md-nav__link">
+    <span class="md-ellipsis">
+      13. Explain the importance of publish profile of Azure ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-how-to-deploy-application-in-azure-web-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      14. How to deploy application in Azure Web app?
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>IASS_PASS_SAAS</h1>
+
+<h3 id="1-define-ssas-paas-and-iaas">1. Define SSAS, PAAS and IAAS ?</h3>
+<p>Cloud computing offers different levels of service models to fit various needs. The three primary models are:</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>SaaS</th>
+<th>PaaS</th>
+<th>IaaS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Use Case</td>
+<td>End-user applications</td>
+<td>App development &amp; deployment</td>
+<td>Full infrastructure control</td>
+</tr>
+<tr>
+<td>Managed By</td>
+<td>Provider</td>
+<td>Shared (provider + developer)</td>
+<td>Mostly user</td>
+</tr>
+<tr>
+<td>User Manages</td>
+<td>Just usage (no backend)</td>
+<td>Code &amp; app config</td>
+<td>OS, middleware, app, data</td>
+</tr>
+<tr>
+<td>Examples</td>
+<td>Gmail, Zoom, Salesforce</td>
+<td>Heroku, App Engine, Azure AppSvc</td>
+<td>EC2, Azure VM, GCP Compute</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<blockquote>
+<p>✅ <strong>SaaS</strong> is best for end users.<br />
+👨‍💻 <strong>PaaS</strong> is for developers.<br />
+🛠️ <strong>IaaS</strong> is for sysadmins and architects.</p>
+</blockquote>
+<h3 id="2-how-is-cloud-different-from-normal-webhosting">2. How is cloud different from normal webhosting ?</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Traditional Hosting</th>
+<th>Cloud Hosting</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Infrastructure</strong></td>
+<td>Single physical server</td>
+<td>Cluster of virtual servers</td>
+</tr>
+<tr>
+<td><strong>Scalability</strong></td>
+<td>Limited/manual</td>
+<td>Auto-scalable</td>
+</tr>
+<tr>
+<td><strong>Uptime</strong></td>
+<td>Low (server failure = down)</td>
+<td>High (failover built-in)</td>
+</tr>
+<tr>
+<td><strong>Cost</strong></td>
+<td>Fixed pricing</td>
+<td>Pay-as-you-use</td>
+</tr>
+<tr>
+<td><strong>Performance</strong></td>
+<td>Affected by neighbors</td>
+<td>Load-balanced</td>
+</tr>
+<tr>
+<td><strong>Best For</strong></td>
+<td>Small/static sites</td>
+<td>Scalable, dynamic apps</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-explain-the-2-big-os-in-cloud">3. Explain the 2 big O’s in cloud ?</h3>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Description</th>
+<th>Real-World Analogy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>On-Demand</strong></td>
+<td>Provision resources instantly when needed</td>
+<td>Like streaming movies (no DVDs)</td>
+</tr>
+<tr>
+<td><strong>Operatinal Expenditure</strong></td>
+<td>Pay for usage instead of upfront investment</td>
+<td>Like paying utility bills</td>
+</tr>
+</tbody>
+</table>
+<h3 id="4-what-is-a-resource-and-why-do-we-need-resource-groups">4. What is a resource and why do we need Resource groups ?</h3>
+<ul>
+<li>Understanding Resources and Resource Groups in Cloud Computing</li>
+</ul>
+<p><strong>What is a Resource?</strong></p>
+<p><strong>Definition:</strong><br />
+A <strong>resource</strong> is any manageable item available in your cloud environment. These are individual services that you create, manage, and pay for.</p>
+<p><strong>Examples of Resources:</strong></p>
+<ul>
+<li>Virtual Machines (VMs)</li>
+<li>Storage Accounts</li>
+<li>SQL Databases</li>
+<li>Web Apps</li>
+<li>Virtual Networks (VNet)</li>
+<li>Kubernetes Clusters</li>
+</ul>
+<p>Each resource represents a <strong>single service</strong> that performs a specific function.</p>
+<p><strong>What is a Resource Group?</strong></p>
+<p><strong>Definition:</strong><br />
+A <strong>Resource Group</strong> is a <strong>logical container</strong> that holds related cloud resources. It helps organize and manage them as a unit.</p>
+<p><strong>Why Do We Need Resource Groups?</strong></p>
+<p><strong>1. Logical Organization</strong></p>
+<p>Group resources by application, environment (dev/test/prod), or project. Makes it easier to locate and manage related items.</p>
+<p><strong>2. Unified Management</strong></p>
+<p>Apply permissions, tags, and policies at the group level. This ensures consistency across all resources inside it.</p>
+<p><strong>3. Simplified Monitoring &amp; Billing</strong></p>
+<p>Monitor usage, set budgets, and track costs at the resource group level.</p>
+<p><strong>4. Efficient Deployment</strong></p>
+<p>Deploy, update, or delete all resources in a group together using templates (e.g., ARM or Bicep templates).</p>
+<p><strong>5. Access Control</strong></p>
+<p>Assign <strong>role-based access</strong> (RBAC) to an entire group, ensuring users can only interact with the resources they’re allowed to manage.</p>
+<hr />
+<p>Example</p>
+<p>Let’s say you’re building a web application called <code>MyApp</code>.</p>
+<p>You could create a resource group named <code>MyApp-RG</code>, and include:</p>
+<ul>
+<li><code>MyApp-VM</code> (Virtual Machine)</li>
+<li>
+<p><code>MyApp-SQL</code> (Database)</p>
+</li>
+<li>
+<p><code>MyApp-Storage</code> (Blob Storage)</p>
+</li>
+<li><code>MyApp-WebApp</code> (App Service)</li>
+</ul>
+<p>All of these resources will be grouped logically, and you can manage them together.</p>
+<hr />
+<p>Summary</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Resource</strong></td>
+<td>A cloud service instance</td>
+<td>Azure VM, SQL DB, Blob Storage</td>
+</tr>
+<tr>
+<td><strong>Resource Group</strong></td>
+<td>A logical container for related resources</td>
+<td>Group for <code>MyApp</code> services</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Think of a </strong>Resource Group<strong> as a folder, and </strong>Resources<strong> as the files inside it.</strong></p>
+<h3 id="5-what-is-the-importance-of-resource-group-location">5. What is the importance of Resource group location ?</h3>
+<p>When creating a <strong>Resource Group</strong> in Azure, you're asked to specify a <strong>location (region)</strong> — but why does it matter?</p>
+<p>What Is a Resource Group Location?</p>
+<p>The <strong>location</strong> of a resource group refers to the <strong>region where the metadata</strong> for that group is stored.<br />
+It does <strong>not dictate</strong> where all the resources inside must reside.</p>
+<p>Why Is Resource Group Location Important?</p>
+<p><strong>Metadata Storage</strong></p>
+<p>The region determines where the <strong>deployment data, management info, and tags</strong> for the resource group are stored.</p>
+<p><strong>Resource Deployment</strong></p>
+<ul>
+<li>Resources <strong>can be deployed in any region</strong>, regardless of the resource group's location.</li>
+<li>But some <strong>services (like Azure Managed Identity, automation, or policy enforcement)</strong> may rely on the resource group’s region.</li>
+</ul>
+<p><strong>Compliance &amp; Governance</strong></p>
+<p>If your organization has <strong>data residency</strong> or <strong>compliance requirements</strong>, storing metadata in a specific region may be necessary.</p>
+<p><strong>Availability &amp; Disaster Recovery</strong></p>
+<p>In case of a regional outage:</p>
+<ul>
+<li>The ability to <strong>manage or update</strong> resources might be affected if the <strong>resource group’s location is down</strong>, even if the actual resource is in a healthy region.</li>
+</ul>
+<p><strong>Consistency in Deployment Templates</strong></p>
+<p>Some ARM templates or scripts may use the resource group’s location as a default value for deploying resources.</p>
+<hr />
+<p>Example Scenario</p>
+<p>You create a resource group <code>MyApp-RG</code> in <strong>East US</strong>.</p>
+<ul>
+<li>You deploy a <strong>VM</strong> in <strong>West US</strong> and a <strong>SQL DB</strong> in <strong>East US 2</strong> — both are valid.</li>
+<li>However, metadata like access policies or tags for <code>MyApp-RG</code> are stored in <strong>East US</strong>.</li>
+<li>If <strong>East US</strong> is down, you might not be able to update or delete the group until it's restored.</li>
+</ul>
+<hr />
+<p>Best Practice</p>
+<ul>
+<li>Choose a <strong>stable and compliant region</strong> for the resource group location.</li>
+<li>If most of your resources are in a specific region, align the resource group with that region to reduce latency and simplify deployment.</li>
+</ul>
+<hr />
+<p>Summary Table</p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Impact of Resource Group Location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Metadata Storage</strong></td>
+<td>Determines where group metadata is stored</td>
+</tr>
+<tr>
+<td><strong>Resource Deployment</strong></td>
+<td>Resources can live in any region</td>
+</tr>
+<tr>
+<td><strong>Outage Impact</strong></td>
+<td>Managing group may fail if location is down</td>
+</tr>
+<tr>
+<td><strong>Compliance</strong></td>
+<td>Important for legal/data governance</td>
+</tr>
+<tr>
+<td><strong>Template Defaults</strong></td>
+<td>Used in scripts to default resource location</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<blockquote>
+<p><strong>Note:</strong> Resource group location ≠ resource location — but it still plays a key role in stability and governance.</p>
+</blockquote>
+<h3 id="6-what-are-app-services">6. What are app services ?</h3>
+<p><strong>Azure App Service</strong> is a fully managed Platform-as-a-Service (PaaS) offering from Microsoft Azure that allows developers to build, deploy, and scale web applications and APIs quickly and efficiently.</p>
+<p>It supports multiple programming languages and frameworks, including:</p>
+<ul>
+<li>ASP.NET / .NET Core</li>
+<li>Java</li>
+<li>Node.js</li>
+<li>PHP</li>
+<li>Python</li>
+<li>Ruby</li>
+<li>Custom containers (Docker, Linux)</li>
+</ul>
+<hr />
+<p>✅ Key Benefits</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Fully Managed Hosting</strong></td>
+<td>No need to manage infrastructure — Microsoft handles OS, server patching, scaling, and security updates.</td>
+</tr>
+<tr>
+<td><strong>Built-in CI/CD</strong></td>
+<td>Integration with GitHub, Azure DevOps, and Bitbucket for continuous integration and deployment.</td>
+</tr>
+<tr>
+<td><strong>Scaling Options</strong></td>
+<td>Automatically scale your application based on demand or schedule.</td>
+</tr>
+<tr>
+<td><strong>Global Availability</strong></td>
+<td>Deploy to data centers around the world for high availability.</td>
+</tr>
+<tr>
+<td><strong>Custom Domains &amp; SSL</strong></td>
+<td>Easily configure your own domain name and secure your app with HTTPS.</td>
+</tr>
+<tr>
+<td><strong>Monitoring and Logging</strong></td>
+<td>Built-in tools for diagnostics, logging, and performance monitoring using Application Insights.</td>
+</tr>
+<tr>
+<td><strong>Authentication &amp; Authorization</strong></td>
+<td>Built-in user authentication with Azure AD, Facebook, Google, Twitter, etc.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p>🧱 App Service Types</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Web Apps</strong></td>
+<td>Host websites and web applications using .NET, Java, Node.js, Python, PHP, etc.</td>
+</tr>
+<tr>
+<td><strong>API Apps</strong></td>
+<td>Host RESTful APIs with Swagger/OpenAPI support.</td>
+</tr>
+<tr>
+<td><strong>Mobile Apps</strong></td>
+<td>Backend services for mobile applications with offline sync, push notifications.</td>
+</tr>
+<tr>
+<td><strong>WebJobs</strong></td>
+<td>Run background tasks triggered by events or on schedules.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p>🛠️ Hosting Plans</p>
+<table>
+<thead>
+<tr>
+<th>Plan</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Free (F1)</strong></td>
+<td>Basic development and testing</td>
+</tr>
+<tr>
+<td><strong>Shared (D1)</strong></td>
+<td>Shared resources for simple workloads</td>
+</tr>
+<tr>
+<td><strong>Basic (B1-B3)</strong></td>
+<td>Dedicated compute for dev/test</td>
+</tr>
+<tr>
+<td><strong>Standard (S1-S3)</strong></td>
+<td>Production-ready with autoscaling and SSL</td>
+</tr>
+<tr>
+<td><strong>Premium (P1v3-P3v3)</strong></td>
+<td>High performance with VNET support</td>
+</tr>
+<tr>
+<td><strong>Isolated (I1-I3)</strong></td>
+<td>Apps needing high security, compliance, and network isolation</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p>🚀 Use Cases</p>
+<ul>
+<li>Hosting public-facing websites and portals</li>
+<li>Deploying RESTful APIs</li>
+<li>Running internal line-of-business applications</li>
+<li>Building backend systems for mobile or IoT apps</li>
+<li>Migrating on-premise .NET web apps to the cloud</li>
+</ul>
+<hr />
+<p>📦 Supported Deployment Methods</p>
+<ul>
+<li>Visual Studio / VS Code</li>
+<li>Azure CLI / PowerShell</li>
+<li>GitHub Actions / Azure DevOps Pipelines</li>
+<li>FTP / FTPS</li>
+<li>Zip deploy</li>
+<li>Container Registry (ACR / Docker Hub)</li>
+</ul>
+<hr />
+<p>🔐 Security Features</p>
+<ul>
+<li>Managed Identity integration for secure Azure resource access</li>
+<li>VNET integration (Premium/Isolated tiers)</li>
+<li>TLS/SSL certificates with automatic renewal</li>
+<li>App-level authentication and RBAC</li>
+<li>Azure Key Vault support for secret management</li>
+</ul>
+<hr />
+<p>📈 Monitoring and Diagnostics</p>
+<p>Azure App Services integrates with:</p>
+<ul>
+<li><strong>Azure Monitor</strong></li>
+<li><strong>Application Insights</strong></li>
+<li><strong>Log Analytics</strong></li>
+</ul>
+<p>Provides insights into:</p>
+<ul>
+<li>Request/response times</li>
+<li>Error tracking</li>
+<li>Memory and CPU usage</li>
+<li>Dependency tracking (e.g., DB calls)</li>
+</ul>
+<p>Summary</p>
+<p>Azure App Services is ideal for developers and teams who want to focus on <strong>code</strong>, not infrastructure. It delivers a fast, secure, and scalable environment for hosting modern web applications and APIs.</p>
+<hr />
+<h3 id="7-which-appservice-will-you-choose-to-host-a-website">7. Which appservice will you choose to host a website ?</h3>
+<p>Azure App Service provides different types of hosting plans to suit a variety of web application needs. When choosing an App Service plan to host a website, consider factors such as performance, scalability, traffic, budget, and required features.</p>
+<p>✅ Recommended App Service Plan for Hosting a Website</p>
+<p><strong>App Service Plan: Basic / Standard / Premium (Windows or Linux)</strong></p>
+<ul>
+<li><strong>Use Case</strong>: Hosting production websites with moderate to high traffic, requiring custom domains, SSL, scaling, and deployment slots.</li>
+<li><strong>Recommendation</strong>: Use <strong>Standard (S1/S2/S3)</strong> or <strong>Premium (P1v3/P2v3)</strong> for best performance and features.</li>
+</ul>
+<hr />
+<p>🔍 App Service Plan Options</p>
+<table>
+<thead>
+<tr>
+<th>Plan Type</th>
+<th>Description</th>
+<th>Ideal For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Free (F1)</strong></td>
+<td>Shared compute; limited resources, no custom domains or SSL.</td>
+<td>Testing, learning, non-public</td>
+</tr>
+<tr>
+<td><strong>Shared (D1)</strong></td>
+<td>Shared infrastructure; basic scaling.</td>
+<td>Low-traffic dev/test apps</td>
+</tr>
+<tr>
+<td><strong>Basic (B1/B2/B3)</strong></td>
+<td>Dedicated VMs, custom domain support.</td>
+<td>Small production workloads</td>
+</tr>
+<tr>
+<td><strong>Standard (S1/S2/S3)</strong></td>
+<td>Autoscaling, staging slots, custom domains + SSL.</td>
+<td>Business websites, web APIs</td>
+</tr>
+<tr>
+<td><strong>Premium (P1v3/P2v3)</strong></td>
+<td>Faster processors, VNet integration, autoscaling, more slots.</td>
+<td>High-traffic websites</td>
+</tr>
+<tr>
+<td><strong>Isolated (I1/I2/I3)</strong></td>
+<td>Runs in VNet with dedicated environment (ASE).</td>
+<td>Secure, compliance-heavy apps</td>
+</tr>
+<tr>
+<td><strong>Container (Linux Docker)</strong></td>
+<td>Host web apps in Docker containers using App Service for Linux.</td>
+<td>Microservices &amp; container-based apps</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p>🎯 Hosting Static Sites?</p>
+<ul>
+<li>Use <strong>Azure Static Web Apps</strong> if you are hosting a static site (HTML/CSS/JS) with optional backend via Azure Functions.</li>
+<li>Benefits: Global CDN, GitHub/Azure DevOps integration, custom domain &amp; SSL.</li>
+</ul>
+<hr />
+<p>✅ Example: Ideal App Services for Common Website Types</p>
+<table>
+<thead>
+<tr>
+<th>Website Type</th>
+<th>Recommended Plan</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Personal blog</td>
+<td>Free or Basic</td>
+</tr>
+<tr>
+<td>Business landing page</td>
+<td>Basic or Standard</td>
+</tr>
+<tr>
+<td>E-commerce website</td>
+<td>Standard or Premium</td>
+</tr>
+<tr>
+<td>High-traffic CMS</td>
+<td>Premium or Isolated</td>
+</tr>
+<tr>
+<td>React/Angular SPA + API</td>
+<td>Static Web App + Premium Plan</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p>📌 Additional Considerations</p>
+<ul>
+<li><strong>Platform</strong>: Choose <strong>Linux</strong> for Node.js, Python, PHP apps or Dockerized apps. Use <strong>Windows</strong> for .NET Framework apps.</li>
+<li><strong>Scaling</strong>: Standard and above support <strong>Auto Scaling</strong> and <strong>Deployment Slots</strong>.</li>
+<li><strong>Networking</strong>: Premium and Isolated plans support <strong>VNet Integration</strong>.</li>
+</ul>
+<hr />
+<p>💡 Final Recommendation</p>
+<p>If you're deploying a typical production-ready website (e.g. using React, Angular, or ASP.NET), go with:</p>
+<pre><code class="language-bash">App Service Plan: **Standard S1** or **Premium P1v3**
+OS: **Linux** (preferred for container support and lower cost)
+
+</code></pre>
+<h3 id="8-what-is-the-importance-of-service-plan-and-pricing-tier">8. What is the importance of Service plan and pricing tier?</h3>
+<p>When deploying a web application on <strong>Azure App Services</strong>, choosing the <strong>right App Service Plan and Pricing Tier</strong> is crucial. It directly impacts your app's <strong>performance, scalability, availability, cost, and feature set</strong>.</p>
+<hr />
+<p>📌 1. What is an App Service Plan?</p>
+<p>An <strong>App Service Plan</strong> defines:</p>
+<ul>
+<li><strong>How much</strong> your app pays (pricing tier)</li>
+<li><strong>What kind</strong> of resources are available (CPU, memory, storage)</li>
+<li><strong>How</strong> your app runs (Windows/Linux, regional deployment)</li>
+<li><strong>How many</strong> apps you can host in the same plan</li>
+</ul>
+<hr />
+<p>💡 2. Importance of Choosing the Right Pricing Tier</p>
+<p>✅ <strong>Performance and Resources</strong></p>
+<ul>
+<li>Higher tiers offer <strong>more CPU, memory, and storage</strong>.</li>
+<li>Directly affects how many users your site can handle without crashing.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>CPU &amp; Memory</th>
+<th>Scaling</th>
+<th>Ideal For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Free</td>
+<td>Very Low</td>
+<td>None</td>
+<td>Learning/testing</td>
+</tr>
+<tr>
+<td>Basic</td>
+<td>Low</td>
+<td>Manual</td>
+<td>Low-traffic apps</td>
+</tr>
+<tr>
+<td>Standard</td>
+<td>Medium</td>
+<td>Auto</td>
+<td>Production apps</td>
+</tr>
+<tr>
+<td>Premium</td>
+<td>High</td>
+<td>Auto</td>
+<td>High-traffic or enterprise apps</td>
+</tr>
+<tr>
+<td>Isolated</td>
+<td>Very High</td>
+<td>Auto</td>
+<td>Secure, VNet-integrated workloads</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p>🔐 <strong>Features and Capabilities</strong></p>
+<ul>
+<li>Only certain tiers support <strong>custom domains</strong>, <strong>SSL</strong>, <strong>auto-scaling</strong>, <strong>staging slots</strong>, <strong>VNet integration</strong>, etc.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Free</th>
+<th>Basic</th>
+<th>Standard</th>
+<th>Premium</th>
+<th>Isolated</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Custom Domain</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>SSL Support</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Auto-scaling</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Staging Slots</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅ (5)</td>
+<td>✅ (20)</td>
+<td>✅ (20)</td>
+</tr>
+<tr>
+<td>VNet Integration</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p>💰 <strong>Cost Optimization</strong></p>
+<ul>
+<li>Underprovisioning can lead to <strong>performance issues</strong>, while overprovisioning leads to <strong>unnecessary cost</strong>.</li>
+<li>Pricing tier affects <strong>billing per hour</strong> whether the app is being used or not.</li>
+</ul>
+<blockquote>
+<p>⚠️ You are billed for the entire App Service Plan, not per app. All apps hosted under the same plan share the same resources.</p>
+</blockquote>
+<hr />
+<p>🔄 <strong>Scalability</strong></p>
+<ul>
+<li>Only Standard and higher tiers support <strong>horizontal scaling</strong> (adding more instances).</li>
+<li>Needed when your website gets <strong>high traffic</strong> or needs <strong>high availability</strong>.</li>
+</ul>
+<hr />
+<p>🛠️ <strong>DevOps and CI/CD Support</strong></p>
+<ul>
+<li>Deployment slots (Standard+) allow <strong>zero-downtime deployments</strong> and easy <strong>rollback</strong>.</li>
+<li>Premium tiers support <strong>more slots</strong>, ideal for <strong>multi-stage environments</strong> (dev/stage/prod).</li>
+</ul>
+<hr />
+<p>🎯 Final Thoughts</p>
+<p>Choosing the right App Service Plan and Pricing Tier ensures:</p>
+<ul>
+<li>✅ Optimal user experience</li>
+<li>✅ Reliable performance under load</li>
+<li>✅ Cost-effective infrastructure</li>
+<li>✅ Access to enterprise-level features</li>
+</ul>
+<blockquote>
+<p>🔽 <strong>Recommendation</strong>:
+For most production web apps, start with <strong>Standard S1</strong> or <strong>Premium P1v3</strong>, and scale based on usage and growth.</p>
+</blockquote>
+<hr />
+<h3 id="9-how-to-upload-a-site-by-using-ftp-on-azure">9. How to upload a site by using FTP on Azure ?</h3>
+<p>Azure App Service provides FTP/S access to deploy website files manually. This method is especially useful for uploading static content or performing quick file edits.</p>
+<hr />
+<p>📁 Prerequisites</p>
+<ul>
+<li>An Azure App Service Web App is already created.</li>
+<li>Your website files (e.g., HTML, CSS, JS, etc.) are ready.</li>
+<li>An FTP client like <strong>FileZilla</strong>, <strong>WinSCP</strong>, or <strong>Visual Studio Code with FTP extension</strong>.</li>
+</ul>
+<hr />
+<p>🔐 Step 1: Get FTP Deployment Credentials</p>
+<ol>
+<li>Go to the <strong>Azure Portal</strong> → <strong>App Services</strong> → Select your Web App.</li>
+<li>Under <strong>Deployment</strong> &gt; click <strong>Deployment Center</strong> (or <strong>FTP</strong> tab).</li>
+<li>Click on <strong>User Credentials</strong> or <strong>Application Scope Credentials</strong>.</li>
+<li>Take note of:</li>
+<li><strong>FTP Hostname</strong></li>
+<li><strong>FTP Username</strong></li>
+<li>Set or view your <strong>FTP Password</strong></li>
+</ol>
+<p>Alternatively, under <strong>"Overview" → "Essentials"</strong>, note down the <strong>FTP/FTPS hostname</strong>.</p>
+<hr />
+<p>💾 Step 2: Prepare FTP Client (Example: FileZilla)</p>
+<ol>
+<li>Open <strong>FileZilla</strong>.</li>
+<li>
+<p>Go to <strong>File → Site Manager</strong> and add a new site:</p>
+</li>
+<li>
+<p><strong>Protocol</strong>: FTP or FTPS (recommended)</p>
+</li>
+<li><strong>Host</strong>: <code>&lt;yourappname&gt;.ftp.azurewebsites.windows.net</code></li>
+<li><strong>Port</strong>: 21 (FTP) or 990 (FTPS)</li>
+<li><strong>Logon Type</strong>: Normal</li>
+<li><strong>User</strong>: <code>\&lt;app-name&gt;\$\&lt;username&gt;</code> (from Azure)</li>
+<li>
+<p><strong>Password</strong>: Your FTP password</p>
+</li>
+<li>
+<p>Click <strong>Connect</strong>.</p>
+</li>
+</ol>
+<hr />
+<p>📂 Step 3: Upload Website Files</p>
+<ol>
+<li>Once connected, navigate to: /site/wwwroot/</li>
+</ol>
+<p>This is the root folder of your web app.</p>
+<ol>
+<li>
+<p>On the left panel, browse your local site files.</p>
+</li>
+<li>
+<p>Drag and drop your website files into the <code>/site/wwwroot</code> directory.</p>
+</li>
+</ol>
+<blockquote>
+<p>⚠️ Uploading files here <strong>overwrites</strong> existing content. Be cautious when deploying to a live site.</p>
+</blockquote>
+<hr />
+<p>✅ Step 4: Verify the Upload</p>
+<ul>
+<li>
+<p>Go to your web app's URL in a browser: This is the root folder of your web app.</p>
+</li>
+<li>
+<p>On the left panel, browse your local site files.</p>
+</li>
+<li>
+<p>Drag and drop your website files into the <code>/site/wwwroot</code> directory.</p>
+</li>
+</ul>
+<blockquote>
+<p>⚠️ Uploading files here <strong>overwrites</strong> existing content. Be cautious when deploying to a live site.</p>
+</blockquote>
+<hr />
+<p>✅ Step 4: Verify the Upload</p>
+<ul>
+<li>
+<p>Go to your web app's URL in a browser: https://<yourappname>.azurewebsites.net</p>
+</li>
+<li>
+<p>You should see your uploaded site running live.</p>
+</li>
+</ul>
+<hr />
+<p>🔄 Optional: Enable FTP Logs</p>
+<p>If facing issues, enable diagnostic logs:</p>
+<ol>
+<li>Go to <strong>App Service → Monitoring → App Service logs</strong>.</li>
+<li>Enable <strong>Application Logging (Filesystem)</strong> and <strong>FTP Logs</strong> for troubleshooting.</li>
+</ol>
+<hr />
+<p>📌 Notes</p>
+<ul>
+<li>FTP is convenient for quick uploads but <strong>not recommended</strong> for production CI/CD workflows.</li>
+<li>Use <strong>Azure DevOps, GitHub Actions, or ZipDeploy</strong> for automated and secure deployments.</li>
+<li>Ensure you use <strong>FTPS</strong> over FTP for encrypted upload.</li>
+</ul>
+<hr />
+<p>📚 Related Docs</p>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/azure/app-service/deploy-ftp">Deploy via FTP</a></li>
+<li><a href="https://learn.microsoft.com/en-us/azure/app-service/deploy-configure-credentials">Configure deployment credentials</a></li>
+</ul>
+<hr />
+<p>✅ Summary</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Get FTP credentials from Azure Portal</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Connect via FTP client</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Upload files to <code>/site/wwwroot/</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Test website</td>
+</tr>
+</tbody>
+</table>
+<h3 id="10-what-is-the-importance-of-wwwroot-folder">10. What is the importance of “wwwroot” folder ?</h3>
+<p>The <code>wwwroot</code> folder is a <strong>critical directory</strong> in Azure App Service and many web frameworks (like ASP.NET Core). It serves as the <strong>public root</strong> of your web application.</p>
+<hr />
+<p>📁 What is <code>wwwroot</code>?</p>
+<p><code>wwwroot</code> is the <strong>web root</strong> directory for a hosted web app.</p>
+<ul>
+<li>All files placed inside <code>wwwroot</code> are <strong>publicly accessible via HTTP/S</strong>.</li>
+<li>It is the <strong>default location</strong> where Azure App Service looks to serve content for incoming web requests.</li>
+</ul>
+<blockquote>
+<p>🔗 Example:
+If your file <code>index.html</code> is located in <code>/site/wwwroot/index.html</code>, it will be accessible at:</p>
+<p><code>https://&lt;yourappname&gt;.azurewebsites.net/index.html</code></p>
+</blockquote>
+<hr />
+<p>🎯 Why is <code>wwwroot</code> Important?</p>
+<ol>
+<li>
+<p>📤 Deployment Target</p>
+</li>
+<li>
+<p>All <strong>FTP</strong>, <strong>zip deployment</strong>, or <strong>build pipelines</strong> upload your app to <code>wwwroot</code>.</p>
+</li>
+<li>
+<p>It’s the <strong>entry point</strong> for your app on Azure App Service.</p>
+</li>
+<li>
+<p>🌍 Public Access Area</p>
+</li>
+<li>
+<p>Files in <code>wwwroot</code> are <strong>exposed to users</strong>.</p>
+</li>
+<li>Ideal for placing:</li>
+<li>Static HTML files</li>
+<li>JavaScript files</li>
+<li>CSS</li>
+<li>Images</li>
+<li>Frontend bu</li>
+<li>🗂️ Directory Structure in Azure App Service
+  When connecting via FTP or Kudu (Advanced Tools), you typically see this structure:
+  /site
+  ├── deployments
+  ├── diagnostics
+  ├── locks
+  └── wwwroot ← Your application’s actual web content lives here</li>
+</ol>
+<h3 id="11-how-can-you-go-to-the-console-of-azure">11. How can you go to the console of Azure ?</h3>
+<p>Azure provides a built-in <strong>Kudu Console</strong> (also known as SCM) for App Services. This powerful tool gives you terminal-like access to your app's environment.</p>
+<hr />
+<p>🧭 Steps to Access the Azure Console for App Service</p>
+<p>✅ Method 1: Using Azure Portal</p>
+<ol>
+<li>
+<p><strong>Login to Azure Portal</strong><br />
+   Go to <a href="https://portal.azure.com">https://portal.azure.com</a></p>
+</li>
+<li>
+<p><strong>Navigate to App Services</strong></p>
+</li>
+<li>
+<p>Click on <strong>App Services</strong> from the left menu.</p>
+</li>
+<li>
+<p>Select your Web App (e.g., <code>my-web-app</code>).</p>
+</li>
+<li>
+<p><strong>Go to Advanced Tools (Kudu)</strong></p>
+</li>
+<li>
+<p>In the left pane, scroll to <strong>Development Tools</strong>.</p>
+</li>
+<li>
+<p>Click on <strong>Advanced Tools</strong> &gt; Click <strong>Go</strong>.</p>
+</li>
+<li>
+<p><strong>Kudu Portal Opens in a New Tab</strong><br />
+   You’ll be redirected to: https://<appname>.scm.azurewebsites.net</p>
+</li>
+<li>
+<p><strong>Open Console</strong></p>
+</li>
+<li>
+<p>In the top menu, click on <strong>Debug Console</strong> → <strong>CMD</strong> or <strong>PowerShell</strong>.</p>
+</li>
+<li>
+<p>✅ You now have terminal access to your app's file system and environment.</p>
+</li>
+</ol>
+<hr />
+<p>✅ Method 2: Direct URL Access to Kudu</p>
+<p>You can directly access the console using this URL format:</p>
+<p>https://<yourappname>.scm.azurewebsites.net/DebugConsole</p>
+<blockquote>
+<p>📌 Replace <code>&lt;yourappname&gt;</code> with your actual Azure Web App name.</p>
+</blockquote>
+<hr />
+<p>🔧 What Can You Do in Azure Console?</p>
+<ul>
+<li>Browse and edit files (e.g., wwwroot)</li>
+<li>Run PowerShell or CMD commands</li>
+<li>Deploy apps manually (zip deploy)</li>
+<li>View environment variables</li>
+<li>Inspect logs and temp files</li>
+</ul>
+<hr />
+<p>🚫 Limitations</p>
+<ul>
+<li>Only available for <strong>App Service</strong> (not for VMs or AKS).</li>
+<li>Has access only to the App Service sandboxed environment.</li>
+<li>Cannot access full Azure environment or other services (e.g., DB, storage directly).</li>
+</ul>
+<hr />
+<p>🛡️ Security Note</p>
+<p>Only users with proper Azure portal access (e.g., Contributor or higher role) can access the console.</p>
+<hr />
+<p>✅ Summary</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tool Used</td>
+<td>Kudu (Advanced Tools) Console</td>
+</tr>
+<tr>
+<td>Access Method</td>
+<td>Azure Portal → App Service → Advanced Tools → Go</td>
+</tr>
+<tr>
+<td>Direct URL</td>
+<td><code>https://&lt;appname&gt;.scm.azurewebsites.net/DebugConsole</code></td>
+</tr>
+<tr>
+<td>Modes</td>
+<td>CMD or PowerShell</td>
+</tr>
+<tr>
+<td>Use Cases</td>
+<td>File edits, logs, manual deploys, environment checks</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="12-what-is-the-need-to-app-service-editor">12. What is the need to App Service editor ?</h3>
+<p>✍️ What is the Need for Azure App Service Editor?</p>
+<p>The <strong>App Service Editor</strong> in Azure is a <strong>browser-based IDE</strong> that allows you to <strong>edit your web app’s code directly</strong> in the cloud — without needing to re-deploy from a local machine.</p>
+<hr />
+<p>🚀 What is App Service Editor?</p>
+<ul>
+<li>A lightweight web-based <strong>code editor</strong>, built on <strong>Monaco</strong> (same engine as VS Code).</li>
+<li>Runs directly inside your App Service environment.</li>
+<li>Allows real-time edits to your files under <code>/site/wwwroot</code>.</li>
+</ul>
+<hr />
+<p>🧠 Why Do You Need It?</p>
+<p>✅ 1. Quick Fixes in Production</p>
+<p>You can:</p>
+<ul>
+<li>Instantly update HTML, CSS, JavaScript, or config files.</li>
+<li>Apply minor bug fixes without redeploying from GitHub or DevOps.</li>
+</ul>
+<blockquote>
+<p>⚠️ Not recommended for large production changes, but useful for hotfixes or debugging.</p>
+</blockquote>
+<hr />
+<p>✅ 2. Real-Time Editing</p>
+<ul>
+<li>Live preview and edit of files deployed in your app.</li>
+<li>Immediate effect without rebuilding or publishing.</li>
+</ul>
+<hr />
+<p>✅ 3. No Local Setup Required</p>
+<ul>
+<li>No need to clone repo or set up a development environment.</li>
+<li>Works entirely in the browser from any location.</li>
+</ul>
+<hr />
+<p>✅ 4. Debug and Inspect Files</p>
+<ul>
+<li>Browse the complete file system of your app.</li>
+<li>Useful for checking deployed builds or log files.</li>
+</ul>
+<hr />
+<p>✅ 5. Developer Convenience</p>
+<ul>
+<li>Ideal for small frontend changes in static sites or single-page apps.</li>
+<li>Especially useful for demos, proof-of-concepts, and MVP apps.</li>
+</ul>
+<hr />
+<p>🔓 How to Open App Service Editor</p>
+<ol>
+<li>Go to <strong>Azure Portal</strong> → <strong>App Services</strong></li>
+<li>Select your App → Under <strong>Development Tools</strong>, click <strong>App Service Editor</strong></li>
+<li>Click <strong>Go</strong>, and it will open:https://<yourappname>.scm.azurewebsites.net/dev</li>
+</ol>
+<hr />
+<p>⚠️ Limitations</p>
+<table>
+<thead>
+<tr>
+<th>Limitation</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Not version controlled</td>
+<td>Manual changes won't be in Git or DevOps pipelines</td>
+</tr>
+<tr>
+<td>No CI/CD integration</td>
+<td>Bypasses standard deployment pipelines</td>
+</tr>
+<tr>
+<td>Not ideal for .NET</td>
+<td>Editing compiled backends like ASP.NET Core is limited</td>
+</tr>
+<tr>
+<td>Not scalable</td>
+<td>Not recommended for large or team-based projects</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p>✅ When to Use App Service Editor</p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Use App Service Editor?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fixing a typo in HTML/CSS</td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td>Adding a console log in JS</td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td>Changing <code>appsettings.json</code></td>
+<td>⚠️ Temporary, not ideal</td>
+</tr>
+<tr>
+<td>Refactoring backend logic</td>
+<td>❌ No (use IDE + deploy)</td>
+</tr>
+<tr>
+<td>Managing large projects</td>
+<td>❌ No</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p>📌 Summary</p>
+<p>The <strong>App Service Editor</strong> is a <strong>lightweight, web-based code editor</strong> useful for:</p>
+<ul>
+<li>Quick edits</li>
+<li>Debugging</li>
+<li>Fast fixes without redeploy</li>
+</ul>
+<blockquote>
+<p>Best used for <strong>frontend changes</strong> and <strong>static content updates</strong>, not for major backend development.</p>
+</blockquote>
+<hr />
+<h3 id="13-explain-the-importance-of-publish-profile-of-azure">13. Explain the importance of publish profile of Azure ?</h3>
+<p>📤 Importance of Azure Publish Profile</p>
+<p>An <strong>Azure Publish Profile</strong> is an XML configuration file that contains all the necessary settings and credentials needed to <strong>deploy your web application to Azure App Service</strong> directly from development tools like Visual Studio, VS Code, or CI/CD pipelines.</p>
+<hr />
+<p>🧾 What is a Publish Profile?</p>
+<ul>
+<li>A <code>.PublishSettings</code> file downloaded from the Azure Portal.</li>
+<li>Contains:</li>
+<li>Web app name</li>
+<li>Deployment method (Web Deploy, FTP)</li>
+<li>Credentials (usernames/passwords)</li>
+<li>Target URL</li>
+<li>Configuration settings</li>
+</ul>
+<blockquote>
+<p>📁 File format: <code>appname.PublishSettings</code></p>
+</blockquote>
+<hr />
+<p>🎯 Why is a Publish Profile Important?</p>
+<p>✅ 1. <strong>Simplifies Deployment</strong></p>
+<ul>
+<li>Enables <strong>one-click publishing</strong> from Visual Studio or VS Code.</li>
+<li>No need to manually configure FTP or deployment endpoints.</li>
+</ul>
+<blockquote>
+<p>🎯 Especially useful for developers deploying from local environments.</p>
+</blockquote>
+<hr />
+<p>✅ 2. <strong>Secure Deployment Credentials</strong></p>
+<ul>
+<li>Includes <strong>deployment credentials</strong> for FTP/WebDeploy in encrypted form.</li>
+<li>You don’t need to remember or manually enter credentials each time.</li>
+</ul>
+<hr />
+<p>✅ 3. <strong>Supports Multiple Deployment Methods</strong></p>
+<ul>
+<li>Works with:</li>
+<li><strong>Web Deploy (MSDeploy)</strong>: Common for .NET apps via Visual Studio.</li>
+<li><strong>FTP/S</strong>: For manual uploads.</li>
+<li><strong>CI/CD Pipelines</strong>: Can be used in GitHub Actions or Azure DevOps.</li>
+</ul>
+<hr />
+<p>✅ 4. <strong>Consistent and Repeatable Deployments</strong></p>
+<ul>
+<li>Developers and build servers use the <strong>same configuration</strong>, reducing setup errors.</li>
+<li>Ideal for teams where multiple people deploy the same app.</li>
+</ul>
+<hr />
+<p>✅ 5. <strong>Integrates with Dev Tools</strong></p>
+<ul>
+<li>Visual Studio automatically reads and configures deployment settings after importing the profile.</li>
+<li>Works with MSBuild, GitHub Actions, Azure DevOps, etc.</li>
+</ul>
+<hr />
+<p>🔐 Security Considerations</p>
+<ul>
+<li>⚠️ <strong>Do not commit</strong> the publish profile file to source control (e.g., GitHub).</li>
+<li>Treat it like a <strong>password file</strong> — it contains encoded credentials.</li>
+<li>Rotate or regenerate if exposed.</li>
+</ul>
+<hr />
+<p>🧭 How to Download Publish Profile</p>
+<ol>
+<li>Go to <strong>Azure Portal</strong> → <strong>App Services</strong></li>
+<li>Select your app</li>
+<li>Click <strong>"Get Publish Profile"</strong> on the Overview blade</li>
+<li>A <code>.PublishSettings</code> file will be downloaded</li>
+</ol>
+<hr />
+<p>🛠️ How to Use in Visual Studio</p>
+<ol>
+<li>In Visual Studio, right-click your project → <strong>Publish</strong></li>
+<li>Click <strong>"Import Profile"</strong></li>
+<li>Browse and select the downloaded <code>.PublishSettings</code> file</li>
+<li>Click <strong>Publish</strong></li>
+</ol>
+<hr />
+<p>✅ Summary</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Benefit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Deployment Configuration</td>
+<td>Contains all required settings</td>
+</tr>
+<tr>
+<td>Easy Integration with IDEs</td>
+<td>Works seamlessly with Visual Studio, VS Code</td>
+</tr>
+<tr>
+<td>Supports Multiple Methods</td>
+<td>Web Deploy, FTP, MSBuild</td>
+</tr>
+<tr>
+<td>Simplifies CI/CD</td>
+<td>Use in automated pipelines</td>
+</tr>
+<tr>
+<td>Security Risk if Misused</td>
+<td>Should never be checked into version control</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>🔐 Always treat your publish profile like a sensitive credential. Use Key Vault or secrets in CI/CD when needed.</p>
+</blockquote>
+<hr />
+<h3 id="14-how-to-deploy-application-in-azure-web-app">14. How to deploy application in Azure Web app?</h3>
+<p><strong>Answer</strong></p>
+<ul>
+<li>Please find the below tutorial do deploy application in Azure Web App.
+  <a href="https://www.youtube.com/watch?v=VLTNyM8DGds">Deployment link</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.expand - navigation.sections - navigation.prune - navigation.indexes - content.code.copy"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="../../../extra.js"></script>
+      
+    
+  </body>
+</html>

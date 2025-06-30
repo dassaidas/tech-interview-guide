@@ -1,0 +1,3030 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../Azure_Tables/">
+      
+      
+        <link rel="next" href="../Azure_Queues%28Azure%20Queues%20%2C%20visibility%20timeouts%20%2CPeek%20%26%20De-Queue%29/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>AzureBlobs(block,append,page) - Tech Interview Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-what-are-the-different-types-of-blobs" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Tech Interview Guide" class="md-header__button md-logo" aria-label="Tech Interview Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Tech Interview Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              AzureBlobs(block,append,page)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Tech Interview Guide" class="md-nav__button md-logo" aria-label="Tech Interview Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Tech Interview Guide
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    .NET
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            .NET
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    C#
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            C#
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Dotnet/csharp/basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Dotnet/csharp/oop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    OOP Concepts
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Dotnet/csharp/advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Advanced Topics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Angular
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Angular
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Angular/fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fundamentals
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Angular/forms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Forms
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Angular/migration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Migration Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    React
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            React
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../React/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Hooks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../React/state/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    State Management
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Project Management
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Project Management
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Jira
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            Jira
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Poject_Management/Jira/basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Poject_Management/Jira/Jira_detailed_course/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    JiraDetailed
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Cloud
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Cloud
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Azure
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            Azure
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IAAS_PASS_SAAS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    IASS_PASS_SAAS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DTU_EDTU/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DTU_EDTU
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AzureFunctions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureFunctions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureStorage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Cosmos_DB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureCosmosDB
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Fabric_microservices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureFabricandMicroServices
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Tables/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureTables
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    AzureBlobs(block,append,page)
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureBlobs(block,append,page)
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-what-are-the-different-types-of-blobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. What are the different types of Blobs?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-in-which-scenarios-we-should-use-which-type-of-blobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. In which scenarios we should use which type of blobs?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-can-you-explain-the-working-of-block-blobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Can you explain the working of block blobs ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-what-is-the-size-of-individual-block-blob" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. What is the size of individual block blob ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-how-many-block-blobs-can-be-accommodated-in-one-blob" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. How many block blobs can be accommodated in one blob ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-explain-the-hierarchal-structure-of-account-container-and-blobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Explain the hierarchal structure of account , container and blobs ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-explain-private-container-and-blob-access-levels" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Explain private , container and blob access levels ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-what-are-the-broader-steps-to-create-blobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. What are the broader steps to create blobs ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-what-is-the-importance-of-singleblobthreshholdinbytes" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. What is the importance of “SingleBlobThreshHoldInBytes” ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-what-happens-when-we-specify-streamwritesizeinbytes" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. What happens when we specify “StreamWriteSizeInBytes” ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-differentiate-between-singleblobthreshholdinbytes-vs-streamwritesizeinbytes" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. Differentiate between “SingleBlobThreshHoldInBytes” VS “StreamWriteSizeInBytes” ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-when-should-we-use-putblock-and-putblocklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      12. When should we use “PutBlock” and “PutBlockList” ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-how-can-we-get-committed-and-uncommitted-blobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      13. How can we get committed and uncommitted blobs ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-how-can-we-download-block-blob" class="md-nav__link">
+    <span class="md-ellipsis">
+      14. How can we download block blob ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-azure-sdk-for-net-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using Azure SDK for .NET (C#)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Using Azure SDK for .NET (C#)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#15-explain-the-importance-of-streamminimumreadsizeinbytes" class="md-nav__link">
+    <span class="md-ellipsis">
+      15. Explain the importance of “StreamMinimumReadSizeInBytes” ?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16-how-to-use-appendblockblobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      16. How to use AppendBlockBlobs ?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#17-can-we-update-appendblockblob" class="md-nav__link">
+    <span class="md-ellipsis">
+      17. Can we update appendBlockBlob ?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#18-explain-writepages-and-read-methods-of-page-blobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      18. Explain “WritePages” and “Read” methods of page blobs ?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#19-what-does-seek-method-do-of-page-blob" class="md-nav__link">
+    <span class="md-ellipsis">
+      19. What does “Seek” method do of page blob ?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Queues%28Azure%20Queues%20%2C%20visibility%20timeouts%20%2CPeek%20%26%20De-Queue%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Azure_Queues
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Services%28App%20services%20and%20Cloud%20services%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Azure_Services
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_WebJobs%28WebJob%20and%20background%20processing.%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Azure_WebJobs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Scenarios
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Scenarios
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Scenarios/migration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Legacy Migration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Scenarios/realworld/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Real-World QA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    BrowserStack
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            BrowserStack
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../browserstack/bascis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-what-are-the-different-types-of-blobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. What are the different types of Blobs?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-in-which-scenarios-we-should-use-which-type-of-blobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. In which scenarios we should use which type of blobs?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-can-you-explain-the-working-of-block-blobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Can you explain the working of block blobs ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-what-is-the-size-of-individual-block-blob" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. What is the size of individual block blob ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-how-many-block-blobs-can-be-accommodated-in-one-blob" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. How many block blobs can be accommodated in one blob ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-explain-the-hierarchal-structure-of-account-container-and-blobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Explain the hierarchal structure of account , container and blobs ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-explain-private-container-and-blob-access-levels" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Explain private , container and blob access levels ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-what-are-the-broader-steps-to-create-blobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. What are the broader steps to create blobs ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-what-is-the-importance-of-singleblobthreshholdinbytes" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. What is the importance of “SingleBlobThreshHoldInBytes” ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-what-happens-when-we-specify-streamwritesizeinbytes" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. What happens when we specify “StreamWriteSizeInBytes” ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-differentiate-between-singleblobthreshholdinbytes-vs-streamwritesizeinbytes" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. Differentiate between “SingleBlobThreshHoldInBytes” VS “StreamWriteSizeInBytes” ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-when-should-we-use-putblock-and-putblocklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      12. When should we use “PutBlock” and “PutBlockList” ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-how-can-we-get-committed-and-uncommitted-blobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      13. How can we get committed and uncommitted blobs ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-how-can-we-download-block-blob" class="md-nav__link">
+    <span class="md-ellipsis">
+      14. How can we download block blob ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-azure-sdk-for-net-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using Azure SDK for .NET (C#)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Using Azure SDK for .NET (C#)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#15-explain-the-importance-of-streamminimumreadsizeinbytes" class="md-nav__link">
+    <span class="md-ellipsis">
+      15. Explain the importance of “StreamMinimumReadSizeInBytes” ?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16-how-to-use-appendblockblobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      16. How to use AppendBlockBlobs ?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#17-can-we-update-appendblockblob" class="md-nav__link">
+    <span class="md-ellipsis">
+      17. Can we update appendBlockBlob ?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#18-explain-writepages-and-read-methods-of-page-blobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      18. Explain “WritePages” and “Read” methods of page blobs ?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#19-what-does-seek-method-do-of-page-blob" class="md-nav__link">
+    <span class="md-ellipsis">
+      19. What does “Seek” method do of page blob ?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>AzureBlobs(block,append,page)</h1>
+
+<h3 id="1-what-are-the-different-types-of-blobs">1. What are the different types of Blobs?</h3>
+<p>Azure Blob Storage supports different types of blobs optimized for various scenarios and performance characteristics.</p>
+<p><strong>1. Block Blobs</strong></p>
+<ul>
+<li><strong>Purpose:</strong> Store text and binary data.</li>
+<li><strong>Use Cases:</strong> Documents, images, videos, backups, etc.</li>
+<li><strong>Characteristics:</strong><pre><code>- Composed of blocks of data.
+- Supports efficient uploads and updates by uploading blocks independently.
+- Maximum size: up to about 190.7 TiB.
+- Ideal for streaming and storing files.
+</code></pre>
+</li>
+</ul>
+<p><strong>2. Append Blobs</strong></p>
+<ul>
+<li><strong>Purpose:</strong> Optimized for append operations.</li>
+<li><strong>Use Cases:</strong> Logging, auditing, telemetry data.</li>
+<li><strong>Characteristics:</strong><pre><code>- Composed of blocks but optimized for append-only operations.
+- New data can only be added to the end of the blob.
+- Supports efficient append with low latency.
+- Maximum size: up to about 195 GiB.
+</code></pre>
+</li>
+</ul>
+<p><strong>3. Page Blobs</strong></p>
+<ul>
+<li><strong>Purpose:</strong> Store random-access files.</li>
+<li><strong>Use Cases:</strong> Virtual hard disks (VHDs), databases, or any scenario requiring frequent read/write operations.</li>
+<li><strong>Characteristics:</strong><pre><code>- Composed of 512-byte pages.
+- Supports random read/write operations.
+-  Maximum size: up to 8 TiB.
+- Suitable for scenarios requiring frequent updates.
+</code></pre>
+</li>
+</ul>
+<p>✅ Summary</p>
+<table>
+<thead>
+<tr>
+<th>Blob Type</th>
+<th>Use Case</th>
+<th>Max Size</th>
+<th>Key Feature</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Block Blob</td>
+<td>General file storage</td>
+<td>~190.7 TiB</td>
+<td>Efficient block uploads</td>
+</tr>
+<tr>
+<td>Append Blob</td>
+<td>Append-only data (logs)</td>
+<td>~195 GiB</td>
+<td>Optimized for append operations</td>
+</tr>
+<tr>
+<td>Page Blob</td>
+<td>Random read/write (VHDs, DBs)</td>
+<td>Up to 8 TiB</td>
+<td>Supports random access pages</td>
+</tr>
+</tbody>
+</table>
+<p>🔗 Additional Info</p>
+<ul>
+<li>Blob storage is scalable, durable, and accessible via REST APIs, SDKs, and Azure Portal.</li>
+<li>Choose blob type based on your application needs.</li>
+</ul>
+<h3 id="2-in-which-scenarios-we-should-use-which-type-of-blobs">2. In which scenarios we should use which type of blobs?</h3>
+<p>Azure Blob Storage offers <strong>Block Blobs</strong>, <strong>Append Blobs</strong>, and <strong>Page Blobs</strong>, each suited to different scenarios.</p>
+<ol>
+<li>Block Blobs</li>
+</ol>
+<p><strong>Use When:</strong></p>
+<ul>
+<li>You need to <strong>store large files</strong> like images, videos, documents, backups.</li>
+<li>Your workload involves <strong>uploading or downloading entire files</strong>.</li>
+<li>You want <strong>efficient uploads</strong> with support for resumable transfers.</li>
+<li>You are <strong>streaming media or files</strong>.</li>
+<li>File size can be very large (up to ~190.7 TiB).</li>
+</ul>
+<p><strong>Common Scenarios:</strong></p>
+<ul>
+<li>Media storage (videos, photos)</li>
+<li>Document storage (PDFs, Word files)</li>
+<li>Backup and restore systems</li>
+<li>Content delivery</li>
+</ul>
+<p><strong>2. Append Blobs</strong></p>
+<p>Use When:</p>
+<ul>
+<li>You need to <strong>append data frequently</strong> without modifying existing content.</li>
+<li>You want to <strong>store logs, audit trails, or telemetry data</strong>.</li>
+<li>Data grows by adding new records continuously.</li>
+<li>Order of records is important.</li>
+</ul>
+<p>Common Scenarios:</p>
+<ul>
+<li>Application logging</li>
+<li>Event and telemetry capture</li>
+<li>Audit and compliance trails</li>
+</ul>
+<p><strong>3. Page Blobs</strong></p>
+<p>Use When:</p>
+<ul>
+<li>You require <strong>random read/write access</strong> to the data.</li>
+<li>You need to <strong>store virtual hard disks (VHDs)</strong> for Azure Virtual Machines.</li>
+<li>Your application involves <strong>frequent updates to specific byte ranges</strong>.</li>
+<li>Low-latency I/O operations are necessary.</li>
+</ul>
+<p>Common Scenarios:</p>
+<ul>
+<li>Azure VM disks (VHD storage)</li>
+<li>Databases requiring page-level updates</li>
+<li>Random access files that need frequent modifications</li>
+</ul>
+<p>✅ Summary Table</p>
+<table>
+<thead>
+<tr>
+<th>Blob Type</th>
+<th>Best Use Case</th>
+<th>Key Feature</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Block Blob</td>
+<td>Large file storage, streaming</td>
+<td>Efficient block uploads</td>
+</tr>
+<tr>
+<td>Append Blob</td>
+<td>Logging, appending data</td>
+<td>Append-only writes</td>
+</tr>
+<tr>
+<td>Page Blob</td>
+<td>Random read/write, VHD storage</td>
+<td>Random access pages</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p>🔍 Tips</p>
+<ul>
+<li>Choose <strong>Block Blobs</strong> for most general-purpose file storage.</li>
+<li>Use <strong>Append Blobs</strong> only if you need append-only semantics.</li>
+<li>Use <strong>Page Blobs</strong> when low-latency random access or VM disks are required.</li>
+</ul>
+<h3 id="3-can-you-explain-the-working-of-block-blobs">3. Can you explain the working of block blobs ?</h3>
+<p><strong>🔍 What Are Block Blobs?</strong></p>
+<ul>
+<li>Block blobs store <strong>text and binary data</strong> as a collection of <strong>blocks</strong>.</li>
+<li>Each block is identified by a <strong>block ID</strong> (a Base64 string).</li>
+<li>Blocks can be uploaded <strong>independently</strong> and in <strong>parallel</strong>.</li>
+</ul>
+<p>⚙️ How Block Blobs Work</p>
+<p><strong>1. Uploading Blocks</strong></p>
+<ul>
+<li>The client splits the blob data into smaller chunks called <strong>blocks</strong>.</li>
+<li>Each block is uploaded separately with a unique block ID.</li>
+<li>Blocks can be uploaded in any order and in parallel, improving upload speed.</li>
+</ul>
+<p><strong>2. Committing Blocks</strong></p>
+<ul>
+<li>After uploading all blocks, the client sends a <strong>commit block list</strong> request.</li>
+<li>The commit operation assembles the blocks into the final blob in the specified order.</li>
+<li>Only committed blocks form the visible blob.</li>
+</ul>
+<p><strong>3. Downloading Blobs</strong></p>
+<ul>
+<li>When a blob is requested, Azure serves the committed blocks in order.</li>
+<li>Supports streaming large blobs efficiently.</li>
+</ul>
+<p><strong>4. Modifying Blobs</strong></p>
+<ul>
+<li>To modify a block blob, upload new blocks and commit an updated block list.</li>
+<li>Uncommitted blocks expire after a week if not committed.</li>
+</ul>
+<p>✅ Benefits of Block Blob Architecture</p>
+<ul>
+<li><strong>Efficient Uploads</strong>: Upload large blobs in parallel smaller chunks.</li>
+<li><strong>Resumable Uploads</strong>: If upload is interrupted, only missing blocks need to be uploaded.</li>
+<li><strong>Flexible</strong>: Update parts of a blob by committing new block lists.</li>
+<li><strong>Scalable</strong>: Supports blobs up to approximately 190.7 TiB.</li>
+</ul>
+<p>🔗 Summary</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Upload Blocks</td>
+<td>Upload blocks independently with IDs</td>
+</tr>
+<tr>
+<td>Commit Blocks</td>
+<td>Assemble blocks into final blob</td>
+</tr>
+<tr>
+<td>Download Blob</td>
+<td>Read committed blocks in order</td>
+</tr>
+<tr>
+<td>Modify Blob</td>
+<td>Upload new blocks and commit list</td>
+</tr>
+</tbody>
+</table>
+<p>Block blobs are ideal for storing files where large size, efficient upload, and streaming are important.</p>
+<h3 id="4-what-is-the-size-of-individual-block-blob">4. What is the size of individual block blob ?</h3>
+<p>✅ Key Size Limits</p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Limit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Maximum size of a single block</strong></td>
+<td>4000 MiB (4,000 MiB or ~4 GB)</td>
+</tr>
+<tr>
+<td><strong>Maximum number of blocks per blob</strong></td>
+<td>50,000 blocks</td>
+</tr>
+<tr>
+<td><strong>Maximum size of a block blob</strong></td>
+<td>Approximately 190.7 TiB (50,000 blocks × 4 MiB each)</td>
+</tr>
+</tbody>
+</table>
+<p>🔍 Explanation</p>
+<ul>
+<li>A <strong>block blob</strong> is made up of multiple blocks.</li>
+<li>Each block can be up to <strong>4000 MiB</strong> in size.</li>
+<li>You can upload up to <strong>50,000 blocks</strong> per blob.</li>
+<li>Therefore, the maximum total size of a block blob is roughly <strong>190.7 TiB</strong>.</li>
+<li>Blocks are combined when committing the blob.</li>
+</ul>
+<p>📌 Notes</p>
+<ul>
+<li>For optimal performance, Azure recommends using smaller blocks (e.g., 4 MiB).</li>
+<li>Large block sizes reduce the number of blocks but may affect upload reliability.</li>
+<li>Uncommitted blocks expire after 7 days.</li>
+</ul>
+<p>🔗 Summary</p>
+<table>
+<thead>
+<tr>
+<th>Limit</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Max block size</td>
+<td>4000 MiB (4 GB)</td>
+</tr>
+<tr>
+<td>Max number of blocks</td>
+<td>50,000</td>
+</tr>
+<tr>
+<td>Max block blob size</td>
+<td>~190.7 TiB</td>
+</tr>
+</tbody>
+</table>
+<h3 id="5-how-many-block-blobs-can-be-accommodated-in-one-blob">5. How many block blobs can be accommodated in one blob ?</h3>
+<p>📌 Answer</p>
+<ul>
+<li>A <strong>single block blob</strong> in Azure Blob Storage can contain <strong>up to 50,000 blocks</strong>.</li>
+<li>Each block can be <strong>up to 4000 MiB (approximately 4 GiB)</strong> in size.</li>
+</ul>
+<p>🧾 Calculation</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Max blocks/blob</td>
+<td>50,000</td>
+</tr>
+<tr>
+<td>Max size/block</td>
+<td>4000 MiB (~4 GiB)</td>
+</tr>
+<tr>
+<td>Max blob size</td>
+<td>50,000 × 4000 MiB = ~190.7 TiB</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>🧠 <strong>Note</strong>: You do not store <em>multiple block blobs</em> inside another blob. Each <strong>block blob is a single object</strong> made up of multiple blocks.</p>
+</blockquote>
+<p>❓ Clarification</p>
+<ul>
+<li>A <strong>block blob</strong> ≠ a container of multiple blobs.</li>
+<li>Rather, it is <strong>a single blob object composed of multiple blocks</strong>.</li>
+<li>You can store <strong>multiple block blobs</strong> in a <strong>blob container</strong>, not inside each other.</li>
+</ul>
+<p>✅ Summary</p>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Max blocks per block blob</td>
+<td>50,000</td>
+</tr>
+<tr>
+<td>Max block size</td>
+<td>4000 MiB (≈4 GiB)</td>
+</tr>
+<tr>
+<td>Max total blob size</td>
+<td>~190.7 TiB</td>
+</tr>
+<tr>
+<td>Block blobs inside a blob</td>
+<td>❌ Not possible (1 blob = 1 object)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="6-explain-the-hierarchal-structure-of-account-container-and-blobs">6. Explain the hierarchal structure of account , container and blobs ?</h3>
+<p>🏗️ Hierarchical Structure of Azure Blob Storage</p>
+<p>Azure Blob Storage is organized in a <strong>three-level hierarchy</strong> to manage and access data efficiently.</p>
+<p>📘 1. Storage Account</p>
+<ul>
+<li>The <strong>top-level namespace</strong> for all your Azure Storage data.</li>
+<li>Each storage account provides a <strong>unique namespace</strong> in Azure for your data.</li>
+<li>It can contain multiple containers.</li>
+<li>URL format:https://<storage-account-name>.blob.core.windows.net/</li>
+</ul>
+<p>📂 2. Container</p>
+<ul>
+<li>A <strong>container</strong> organizes a set of blobs.</li>
+<li>It's similar to a directory or folder in traditional file systems.</li>
+<li>All blobs must be stored in a container.</li>
+<li>You can define access levels at the container level: Private, Blob (public read), or Container (full public read).</li>
+<li>URL format: https://<storage-account-name>.blob.core.windows.net/<container-name></li>
+</ul>
+<p>📄 3. Blob</p>
+<ul>
+<li>The actual <strong>file or object</strong> you store in Azure Blob Storage.</li>
+<li>Can be of types: <strong>Block Blob</strong>, <strong>Append Blob</strong>, or <strong>Page Blob</strong>.</li>
+<li>Blobs are stored inside containers and can be large binary/text files.</li>
+<li>Each blob is uniquely identified within its container by its name.</li>
+<li>URL format: https://<storage-account-name>.blob.core.windows.net/<container-name>/<blob-name></li>
+</ul>
+<pre><code>Storage Account
+│
+├── Container 1
+│ ├── blob-a.txt
+│ ├── image1.jpg
+│ └── video.mp4
+│
+├── Container 2
+│ ├── log-2024.txt
+│ └── snapshot.json
+│
+└── Container 3
+└── invoice.pdf
+</code></pre>
+<p>✅ Summary Table</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Description</th>
+<th>Example URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Storage Account</td>
+<td>Root namespace in Azure</td>
+<td><code>https://mystorage.blob.core.windows.net/</code></td>
+</tr>
+<tr>
+<td>Container</td>
+<td>Logical grouping of blobs</td>
+<td><code>https://mystorage.blob.core.windows.net/photos/</code></td>
+</tr>
+<tr>
+<td>Blob</td>
+<td>Actual data file (object)</td>
+<td><code>https://mystorage.blob.core.windows.net/photos/image.jpg</code></td>
+</tr>
+</tbody>
+</table>
+<p>🔐 Access Control</p>
+<ul>
+<li>Authentication and authorization are typically applied at the <strong>account or container level</strong>.</li>
+<li>You can use Shared Access Signatures (SAS), Azure RBAC, or access policies.</li>
+</ul>
+<h3 id="7-explain-private-container-and-blob-access-levels">7. Explain private , container and blob access levels ?</h3>
+<p>Azure Blob Storage provides <strong>three levels of public access</strong> for containers and blobs to control visibility and security.</p>
+<p><strong>1. 🚫 Private (No Anonymous Access)</strong></p>
+<ul>
+<li>
+<p><strong>Description:</strong><br />
+  No anonymous access is allowed. Only authorized users (via Azure AD, SAS tokens, or account keys) can access data.</p>
+</li>
+<li>
+<p><strong>Use Case:</strong><br />
+  Ideal for <strong>secure enterprise data</strong>, private backups, confidential documents.</p>
+</li>
+<li>
+<p><strong>Who Can Access?</strong><br />
+  Only users/applications with proper credentials.</p>
+</li>
+</ul>
+<p><strong>2. 📂 Container (Full Public Read Access for Container and Blobs)</strong></p>
+<ul>
+<li>
+<p><strong>Description:</strong><br />
+  Allows <strong>anonymous read access</strong> to both the blobs and the list of blobs in the container.</p>
+</li>
+<li>
+<p><strong>Use Case:</strong><br />
+  Useful for <strong>public media galleries</strong>, static websites, or shared public datasets.</p>
+</li>
+<li>
+<p><strong>Who Can Access?</strong><br />
+  Anyone with the container URL can:</p>
+</li>
+<li>List all blobs in the container.</li>
+<li>Read blob content.</li>
+</ul>
+<p><strong>3. 📄 Blob (Public Read Access for Blobs Only)</strong></p>
+<ul>
+<li>
+<p><strong>Description:</strong><br />
+  Allows <strong>anonymous read access to blobs</strong>, but not to the container metadata or list of blobs.</p>
+</li>
+<li>
+<p><strong>Use Case:</strong><br />
+  Share <strong>specific files (like PDFs or images)</strong> without exposing the full container.</p>
+</li>
+<li>
+<p><strong>Who Can Access?</strong><br />
+  Anyone with the blob’s direct URL can read the blob. They <strong>cannot list blobs</strong> in the container.</p>
+</li>
+</ul>
+<p>✅ Summary Table</p>
+<table>
+<thead>
+<tr>
+<th>Access Level</th>
+<th>Container Listing</th>
+<th>Blob Read Access</th>
+<th>Authentication Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Private</strong></td>
+<td>❌ No</td>
+<td>❌ No</td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td><strong>Container</strong></td>
+<td>✅ Yes</td>
+<td>✅ Yes</td>
+<td>❌ No (anonymous allowed)</td>
+</tr>
+<tr>
+<td><strong>Blob</strong></td>
+<td>❌ No</td>
+<td>✅ Yes</td>
+<td>❌ No (anonymous allowed)</td>
+</tr>
+</tbody>
+</table>
+<p>🔐 How to Set Access Level</p>
+<p>You can configure access levels:</p>
+<ul>
+<li>From <strong>Azure Portal</strong> (Container → Change access level)</li>
+<li>Using <strong>Azure CLI</strong>:
+  <code>bash
+  az storage container set-permission --name &lt;container-name&gt; --public-access &lt;level&gt;</code></li>
+</ul>
+<p><strong>🛡️ Best Practice</strong></p>
+<ul>
+<li>
+<p>Use Private for sensitive and internal data.</p>
+</li>
+<li>
+<p>Use Blob for publicly shared files.</p>
+</li>
+<li>
+<p>Use Container with caution, only for fully public use cases.</p>
+</li>
+</ul>
+<h3 id="8-what-are-the-broader-steps-to-create-blobs">8. What are the broader steps to create blobs ?</h3>
+<p>Creating blobs in Azure involves setting up the environment, organizing your storage hierarchy, and uploading your data.</p>
+<p>✅ Step-by-Step Overview
+<strong>1. 🔐 Create an Azure Storage Account</strong></p>
+<ul>
+<li>Go to Azure Portal.</li>
+<li>Click on <strong>Storage Accounts</strong> → <strong>Create</strong>.</li>
+<li>Choose a <strong>resource group</strong>, provide a <strong>unique name</strong>, region, and <strong>performance tier</strong>.</li>
+<li>Select <strong>BlobStorage</strong> or <strong>General-purpose v2</strong> as the account type.</li>
+</ul>
+<p><strong>2. 📂 Create a Blob Container</strong></p>
+<ul>
+<li>Navigate to the <strong>storage account</strong> you just created.</li>
+<li>Select <strong>Containers</strong> → <strong>+ Container</strong>.</li>
+<li>Provide a <strong>container name</strong> (lowercase only).</li>
+<li>Set the <strong>access level</strong>: <code>Private</code>, <code>Blob</code>, or <code>Container</code>.</li>
+</ul>
+<p><strong>3. 📤 Upload a Blob</strong></p>
+<ul>
+<li>Go to the container.</li>
+<li>Click <strong>Upload</strong>.</li>
+<li>Select the file you want to upload (supports images, videos, docs, etc.).</li>
+<li>Choose <strong>block blob</strong> (default) unless you need append/page blob.</li>
+<li>Click <strong>Upload</strong>.</li>
+</ul>
+<p><strong>4. 🔗 Access or Secure Your Blob</strong></p>
+<ul>
+<li>
+<p>Once uploaded, you’ll get a URL like: https://<account>.blob.core.windows.net/<container>/<blob></p>
+</li>
+<li>
+<p>Use <strong>SAS tokens</strong>, <strong>Azure RBAC</strong>, or <strong>container policies</strong> to secure or share the blob.</p>
+</li>
+</ul>
+<p>📌 Optional: Programmatic Upload (C# Example)</p>
+<pre><code class="language-csharp">var blobServiceClient = new BlobServiceClient(&quot;&lt;connection-string&gt;&quot;);
+var containerClient = blobServiceClient.GetBlobContainerClient(&quot;mycontainer&quot;);
+var blobClient = containerClient.GetBlobClient(&quot;myfile.txt&quot;);
+
+using FileStream uploadFileStream = File.OpenRead(&quot;myfile.txt&quot;);
+blobClient.Upload(uploadFileStream, true);
+uploadFileStream.Close();
+</code></pre>
+<p>📋 Summary – Steps to Create Blobs in Azure</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Create a storage account</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Create a container</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Upload blob (file)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Access or secure the blob URL</td>
+</tr>
+</tbody>
+</table>
+<h3 id="9-what-is-the-importance-of-singleblobthreshholdinbytes">9. What is the importance of “SingleBlobThreshHoldInBytes” ?</h3>
+<p>📘 What Is It?</p>
+<p><code>SingleBlobUploadThresholdInBytes</code> is a configuration setting in Azure SDKs that determines:</p>
+<blockquote>
+<p>🔧 <strong>The maximum size (in bytes) of a blob that can be uploaded in a single operation.</strong><br />
+If the blob size exceeds this threshold, it is automatically uploaded in <strong>blocks</strong> (i.e., multipart upload).</p>
+</blockquote>
+<p>⚙️ How It Works</p>
+<ul>
+<li>If a file is <strong>smaller than or equal</strong> to the threshold:</li>
+<li>It is uploaded as a <strong>single PUT operation</strong>.</li>
+<li>If a file is <strong>larger</strong> than the threshold:</li>
+<li>It is uploaded in <strong>multiple blocks</strong> using <code>PutBlock</code> + <code>PutBlockList</code>.</li>
+</ul>
+<p>✅ Why It's Important</p>
+<table>
+<thead>
+<tr>
+<th>Benefit</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Optimized Performance</strong></td>
+<td>Uploading small files in one request reduces overhead.</td>
+</tr>
+<tr>
+<td><strong>Automatic Block Uploads</strong></td>
+<td>Automatically switches to block upload for large files.</td>
+</tr>
+<tr>
+<td><strong>Better Reliability</strong></td>
+<td>Large uploads benefit from retry logic per block, improving fault tolerance.</td>
+</tr>
+<tr>
+<td><strong>Customization</strong></td>
+<td>Developers can tune this value to balance performance and reliability.</td>
+</tr>
+</tbody>
+</table>
+<p>📌 Default Value</p>
+<ul>
+<li>Typically: <strong>256 MiB (268,435,456 bytes)</strong></li>
+<li>Can be configured in the SDK for performance tuning:
+  <code>csharp
+  new BlobClientOptions
+  {
+      SingleBlobUploadThreshold = 100 * 1024 * 1024 // 100 MB
+  };</code>
+  <strong>🔐 Best Practice</strong></li>
+<li>
+<p>For large files: Use lower thresholds to enable block uploads with retry support.</p>
+</li>
+<li>
+<p>For small files: Use higher thresholds to avoid overhead of block management.</p>
+</li>
+</ul>
+<p>📝 Summary – SingleBlobUploadThresholdInBytes</p>
+<table>
+<thead>
+<tr>
+<th>Setting Name</th>
+<th><code>SingleBlobUploadThresholdInBytes</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Purpose</td>
+<td>Switch between single PUT and block upload automatically</td>
+</tr>
+<tr>
+<td>Default</td>
+<td>~256 MiB</td>
+</tr>
+<tr>
+<td>Benefit</td>
+<td>Optimizes performance, fault tolerance, and control</td>
+</tr>
+</tbody>
+</table>
+<h3 id="10-what-happens-when-we-specify-streamwritesizeinbytes">10. What happens when we specify “StreamWriteSizeInBytes” ?</h3>
+<p>📘 Definition</p>
+<p><code>StreamWriteSizeInBytes</code> is a configuration property used in Azure Blob Storage SDKs to define:</p>
+<blockquote>
+<p>💡 <strong>The size of data chunks written to the blob when uploading a stream (e.g., FileStream or MemoryStream).</strong></p>
+</blockquote>
+<p>⚙️ How It Works</p>
+<ul>
+<li>When uploading a blob from a stream (e.g., <code>UploadAsync(Stream)</code>), Azure writes the stream in <strong>chunks of size = <code>StreamWriteSizeInBytes</code></strong>.</li>
+<li>This value controls the <strong>buffer size</strong> used internally during the upload process.</li>
+</ul>
+<p>✅ Why It Matters</p>
+<table>
+<thead>
+<tr>
+<th>Impact</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Performance Tuning</strong></td>
+<td>Larger sizes reduce number of write calls and can improve upload speed.</td>
+</tr>
+<tr>
+<td><strong>Memory Consumption</strong></td>
+<td>Larger buffer sizes use more memory per upload thread.</td>
+</tr>
+<tr>
+<td><strong>Network Efficiency</strong></td>
+<td>Helps balance between network throughput and responsiveness.</td>
+</tr>
+<tr>
+<td><strong>Parallel Uploads</strong></td>
+<td>Can be combined with concurrency settings for better performance.</td>
+</tr>
+</tbody>
+</table>
+<p>📌 Typical Values</p>
+<ul>
+<li>Common default: <code>4 MiB</code> to <code>8 MiB</code> (depends on SDK version)</li>
+<li>Recommended range: <strong>2 MiB to 100 MiB</strong></li>
+<li>Example in C#:</li>
+</ul>
+<p><code>csharp
+  var options = new BlockBlobClientOptions
+  {
+      TransferOptions = new StorageTransferOptions
+      {
+          InitialTransferSize = 8 * 1024 * 1024,           // 8 MiB
+          MaximumTransferSize = 8 * 1024 * 1024,           // 8 MiB
+          MaximumConcurrency = 4
+      }
+  };</code></p>
+<p>⚠️ Important Notes</p>
+<ul>
+<li>Increasing this too much may lead to <strong>high memory usage</strong> in concurrent uploads.</li>
+<li>Too small can result in <strong>slower uploads</strong> due to too many small network operations.</li>
+</ul>
+<p>📝 Summary – StreamWriteSizeInBytes</p>
+<table>
+<thead>
+<tr>
+<th>Setting Name</th>
+<th><code>StreamWriteSizeInBytes</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Purpose</td>
+<td>Chunk size for writing blob data from streams</td>
+</tr>
+<tr>
+<td>Default (SDK-dependent)</td>
+<td>~4–8 MiB</td>
+</tr>
+<tr>
+<td>Effect</td>
+<td>Impacts upload performance and memory usage</td>
+</tr>
+<tr>
+<td>Best Practice</td>
+<td>Tune based on file size, memory, and network</td>
+</tr>
+</tbody>
+</table>
+<h3 id="11-differentiate-between-singleblobthreshholdinbytes-vs-streamwritesizeinbytes">11. Differentiate between “SingleBlobThreshHoldInBytes” VS “StreamWriteSizeInBytes” ?</h3>
+<p>🔍 Difference Between <code>SingleBlobUploadThresholdInBytes</code> vs <code>StreamWriteSizeInBytes</code></p>
+<p>These two settings control how data is uploaded to Azure Blob Storage, but they serve different purposes.</p>
+<p>📌 Key Differences</p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th><code>SingleBlobUploadThresholdInBytes</code></th>
+<th><code>StreamWriteSizeInBytes</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Purpose</strong></td>
+<td>Determines when to switch from single upload to block upload</td>
+<td>Sets the chunk size when writing from a stream</td>
+</tr>
+<tr>
+<td><strong>Applies To</strong></td>
+<td>Entire blob upload</td>
+<td>Streaming uploads (e.g., FileStream, MemoryStream)</td>
+</tr>
+<tr>
+<td><strong>Triggers Block Upload</strong></td>
+<td>✅ Yes – if blob size exceeds threshold</td>
+<td>❌ No – just controls buffer size per chunk</td>
+</tr>
+<tr>
+<td><strong>Performance Impact</strong></td>
+<td>Impacts upload mode selection</td>
+<td>Impacts memory usage and write performance</td>
+</tr>
+<tr>
+<td><strong>Typical Use Case</strong></td>
+<td>Full file uploads (e.g., <code>UploadAsync(filePath)</code>)</td>
+<td>Uploading large blobs via streams</td>
+</tr>
+<tr>
+<td><strong>Default Value</strong></td>
+<td>~256 MiB</td>
+<td>~4–8 MiB</td>
+</tr>
+<tr>
+<td><strong>Risk of High Memory Use</strong></td>
+<td>Low – switches upload method</td>
+<td>High – if set too large in multi-threaded scenarios</td>
+</tr>
+</tbody>
+</table>
+<p>📝 Summary</p>
+<ul>
+<li>Use <code>SingleBlobUploadThresholdInBytes</code> to decide <strong>when Azure uses block upload</strong>.</li>
+<li>Use <code>StreamWriteSizeInBytes</code> to <strong>control buffer size</strong> when uploading from a stream.</li>
+<li>Both settings can be fine-tuned for <strong>performance and scalability</strong>.</li>
+</ul>
+<h3 id="12-when-should-we-use-putblock-and-putblocklist">12. When should we use “PutBlock” and “PutBlockList” ?</h3>
+<p>⚙️ When to Use <code>PutBlock</code> and <code>PutBlockList</code> in Azure Blob Storage</p>
+<p>Azure Block Blob uploads use two key operations when working with blocks:</p>
+<p><strong>1. 📌 <code>PutBlock</code></strong></p>
+<ul>
+<li><strong>Purpose:</strong> Uploads a single block of data to Azure Blob Storage.</li>
+<li>
+<p><strong>Use Case:</strong></p>
+<pre><code> - When you want to upload a **part (block)** of a large blob independently.
+ - Supports **parallel or chunked uploads** of large files.
+ - Blocks can be uploaded **in any order**.
+</code></pre>
+</li>
+<li>
+<p><strong>Note:</strong></p>
+<pre><code> - Blocks uploaded with `PutBlock` are **not committed** until `PutBlockList` is called.
+ - Uncommitted blocks expire after 7 days if not committed.
+</code></pre>
+</li>
+</ul>
+<p><strong>2. 📌 <code>PutBlockList</code></strong></p>
+<ul>
+<li><strong>Purpose:</strong> Commits a list of blocks to assemble the final blob.</li>
+<li>
+<p><strong>Use Case:</strong></p>
+<pre><code>- After all blocks are uploaded via `PutBlock`, call `PutBlockList` to **commit** the blocks.
+- Defines the **final order** of blocks in the blob.
+- Makes the blob **available and readable**.
+</code></pre>
+</li>
+<li>
+<p><strong>Note:</strong></p>
+<pre><code>- Only blocks included in the `PutBlockList` become part of the committed blob.
+- Blocks not included remain uncommitted and will expire.
+</code></pre>
+</li>
+</ul>
+<p><strong>🔄 Workflow Summary</strong></p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Upload Blocks</td>
+<td>Use <code>PutBlock</code> to upload individual blocks in any order</td>
+</tr>
+<tr>
+<td>2. Commit Blocks</td>
+<td>Use <code>PutBlockList</code> to commit the block list in desired order</td>
+</tr>
+</tbody>
+</table>
+<p><strong>✅ When to Use</strong></p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Operation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Upload large blobs in chunks</td>
+<td><code>PutBlock</code></td>
+</tr>
+<tr>
+<td>Finalize and assemble the blob</td>
+<td><code>PutBlockList</code></td>
+</tr>
+<tr>
+<td>Resume interrupted uploads</td>
+<td>Use <code>PutBlock</code> to upload missing blocks, then <code>PutBlockList</code></td>
+</tr>
+</tbody>
+</table>
+<p>📝 <strong>Summary</strong></p>
+<ul>
+<li><strong><code>PutBlock</code></strong> uploads blocks independently (uncommitted).</li>
+<li><strong><code>PutBlockList</code></strong> commits the blocks to form the final blob.</li>
+<li>Together they enable <strong>reliable, resumable, and parallel uploads</strong> of large blobs.</li>
+</ul>
+<h3 id="13-how-can-we-get-committed-and-uncommitted-blobs">13. How can we get committed and uncommitted blobs ?</h3>
+<p>Azure Blob Storage allows you to manage and inspect both <strong>committed</strong> and <strong>uncommitted</strong> blocks within a block blob.</p>
+<p>Definitions</p>
+<ul>
+<li><strong>Committed blocks:</strong> Blocks that have been committed by a <code>PutBlockList</code> operation and form the visible blob.</li>
+<li><strong>Uncommitted blocks:</strong> Blocks uploaded by <code>PutBlock</code> but <strong>not yet committed</strong>. They are invisible until committed and expire after 7 days.</li>
+</ul>
+<p>⚙️ Retrieving Blocks</p>
+<p>Using Azure SDK (C# Example)</p>
+<pre><code class="language-csharp">var blobClient = containerClient.GetBlockBlobClient(&quot;myblob.txt&quot;);
+var blockList = await blobClient.GetBlockListAsync(BlockListTypes.All);
+
+Console.WriteLine(&quot;Committed Blocks:&quot;);
+foreach (var block in blockList.Value.CommittedBlocks)
+{
+    Console.WriteLine($&quot;Block ID: {block.Name}, Size: {block.Size}&quot;);
+}
+
+Console.WriteLine(&quot;Uncommitted Blocks:&quot;);
+foreach (var block in blockList.Value.UncommittedBlocks)
+{
+    Console.WriteLine($&quot;Block ID: {block.Name}, Size: {block.Size}&quot;);
+}
+</code></pre>
+<p><strong>Using REST API</strong></p>
+<ul>
+<li>
+<p>Use the Get Block List operation with blocklisttype=all query parameter.</p>
+</li>
+<li>
+<p>The response contains two sections: <CommittedBlocks> and <UncommittedBlocks>.</p>
+</li>
+</ul>
+<p>✅ Summary Table</p>
+<table>
+<thead>
+<tr>
+<th>Block Type</th>
+<th>Description</th>
+<th>Visibility</th>
+<th>Lifetime</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Committed Blocks</td>
+<td>Part of the committed blob</td>
+<td>Visible to reads</td>
+<td>Persist until overwritten</td>
+</tr>
+<tr>
+<td>Uncommitted Blocks</td>
+<td>Uploaded but not yet committed blocks</td>
+<td>Invisible</td>
+<td>Expire after 7 days if uncommitted</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p>📝 Notes</p>
+<ul>
+<li>Use block list info to manage resumable uploads.</li>
+<li>Uncommitted blocks consume storage but are not visible.</li>
+<li>Commit blocks with <code>PutBlockList</code> to finalize the blob.</li>
+</ul>
+<h3 id="14-how-can-we-download-block-blob">14. How can we download block blob ?</h3>
+<p>You can download a block blob from Azure Blob Storage using various SDKs. Below is a common example using C# Azure SDK.</p>
+<h2 id="using-azure-sdk-for-net-c">Using Azure SDK for .NET (C#)</h2>
+<pre><code class="language-csharp">using Azure.Storage.Blobs;
+using System.IO;
+using System.Threading.Tasks;
+
+public async Task DownloadBlockBlobAsync(string connectionString, string containerName, string blobName, string downloadFilePath)
+{
+    // Create BlobServiceClient
+    BlobServiceClient blobServiceClient = new BlobServiceClient(connectionString);
+
+    // Get the container client
+    BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(containerName);
+
+    // Get the blob client
+    BlobClient blobClient = containerClient.GetBlobClient(blobName);
+
+    // Download the blob's contents to a local file
+    await blobClient.DownloadToAsync(downloadFilePath);
+}
+</code></pre>
+<p><strong>Steps Explained</strong></p>
+<ul>
+<li>
+<p>Create a BlobServiceClient with your storage account connection string.</p>
+</li>
+<li>
+<p>Get the container client using the container name.</p>
+</li>
+<li>
+<p>Get the blob client using the blob name.</p>
+</li>
+<li>
+<p>Call DownloadToAsync() to download the blob content to a local file path.</p>
+</li>
+</ul>
+<p><strong>Notes</strong></p>
+<ul>
+<li>
+<p>You can also download to a stream instead of a file by using DownloadToAsync(Stream).</p>
+</li>
+<li>
+<p>For large blobs, consider using asynchronous or chunked downloads for better performance.</p>
+</li>
+</ul>
+<h3 id="15-explain-the-importance-of-streamminimumreadsizeinbytes">15. Explain the importance of “StreamMinimumReadSizeInBytes” ?</h3>
+<p><code>StreamMinimumReadSizeInBytes</code> is a configuration setting used in Azure Blob Storage SDKs that defines:</p>
+<blockquote>
+<p>🔧 <strong>The minimum size of data (in bytes) to read from the blob stream in one operation.</strong></p>
+</blockquote>
+<p>⚙️ How It Works</p>
+<ul>
+<li>When reading data from a blob stream, the SDK reads data in chunks.</li>
+<li>This setting controls the <strong>minimum buffer size</strong> used for each read operation.</li>
+<li>Helps optimize the balance between <strong>number of read calls</strong> and <strong>memory usage</strong>.</li>
+</ul>
+<p>✅ Why It Matters</p>
+<table>
+<thead>
+<tr>
+<th>Benefit</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Performance Optimization</strong></td>
+<td>Larger read sizes reduce the number of network calls, improving throughput.</td>
+</tr>
+<tr>
+<td><strong>Memory Management</strong></td>
+<td>Controls how much memory is allocated for buffering during reads.</td>
+</tr>
+<tr>
+<td><strong>Smooth Streaming</strong></td>
+<td>Ensures efficient streaming of blob data with fewer pauses.</td>
+</tr>
+</tbody>
+</table>
+<p>📌 Typical Values</p>
+<ul>
+<li>Default values vary by SDK but usually range from <strong>256 KB to 4 MB</strong>.</li>
+<li>Can be adjusted based on application needs and available memory.</li>
+</ul>
+<p>🔐 Best Practice</p>
+<ul>
+<li>Increase this value for large sequential reads to improve performance.</li>
+<li>Decrease it if memory usage needs to be minimized or for small reads.</li>
+</ul>
+<p>📝 Summary</p>
+<table>
+<thead>
+<tr>
+<th>Setting Name</th>
+<th><code>StreamMinimumReadSizeInBytes</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Purpose</td>
+<td>Minimum size to read from blob stream per call</td>
+</tr>
+<tr>
+<td>Effect</td>
+<td>Balances network calls and memory use</td>
+</tr>
+<tr>
+<td>Default (SDK-dependent)</td>
+<td>Typically 256 KB to 4 MB</td>
+</tr>
+<tr>
+<td>Best Practice</td>
+<td>Tune based on workload size and memory constraints</td>
+</tr>
+</tbody>
+</table>
+<h3 id="16-how-to-use-appendblockblobs">16. How to use AppendBlockBlobs ?</h3>
+<p><strong>What is an Append Blob?</strong></p>
+<ul>
+<li>Append blobs are optimized for <strong>append operations</strong>.</li>
+<li>You can only <strong>add data to the end</strong> of the blob.</li>
+<li>Ideal for logging, audit trails, and telemetry data.</li>
+</ul>
+<p><strong>Using Azure SDK for .NET</strong></p>
+<pre><code class="language-csharp">using Azure.Storage.Blobs.Specialized;
+using System.Text;
+using System.Threading.Tasks;
+
+var connectionString = &quot;&lt;your_connection_string&gt;&quot;;
+var containerName = &quot;mycontainer&quot;;
+var blobName = &quot;logfile.txt&quot;;
+
+var blobServiceClient = new BlobServiceClient(connectionString);
+var containerClient = blobServiceClient.GetBlobContainerClient(containerName);
+
+// Get the Append Blob client
+var appendBlobClient = containerClient.GetAppendBlobClient(blobName);
+</code></pre>
+<p><strong>Create the Append Blob (if not exists)</strong></p>
+<pre><code>await appendBlobClient.CreateIfNotExistsAsync();
+</code></pre>
+<p><strong>Append Data to the Blob</strong></p>
+<pre><code>string logMessage = &quot;This is a new log entry.\n&quot;;
+byte[] byteArray = Encoding.UTF8.GetBytes(logMessage);
+
+using var stream = new MemoryStream(byteArray);
+await appendBlobClient.AppendBlockAsync(stream);
+</code></pre>
+<p>📝 Notes</p>
+<ul>
+<li>Append blobs only support <strong>append operations</strong>; you cannot modify existing content.</li>
+<li>Each append operation adds data to the <strong>end</strong> of the blob.</li>
+<li>Append blobs have a maximum size of about <strong>195 GiB</strong>.</li>
+</ul>
+<p>📋 Summary</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Method</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Create Append Blob</td>
+<td><code>CreateIfNotExistsAsync</code></td>
+</tr>
+<tr>
+<td>Append Data</td>
+<td><code>AppendBlockAsync</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="17-can-we-update-appendblockblob">17. Can we update appendBlockBlob ?</h3>
+<p>❌ Can We Update Append Blobs?</p>
+<ul>
+<li><strong>No</strong>, append blobs do <strong>not support updating or modifying existing data</strong> once written.</li>
+<li>You can <strong>only append new data to the end</strong> of an append blob using <code>AppendBlockAsync</code>.</li>
+<li>To modify content, you must:<pre><code>- Download the entire blob,
+- Make changes locally,
+- Then upload a new blob (replace the old one).
+</code></pre>
+</li>
+</ul>
+<p>🔄 Summary</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Supported?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Append data</td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td>Update existing data</td>
+<td>❌ No</td>
+</tr>
+<tr>
+<td>Delete data</td>
+<td>Only by deleting the entire blob</td>
+</tr>
+</tbody>
+</table>
+<p>Append blobs are designed primarily for <strong>append-only scenarios</strong> like logs and audit trails.</p>
+<h3 id="18-explain-writepages-and-read-methods-of-page-blobs">18. Explain “WritePages” and “Read” methods of page blobs ?</h3>
+<p>📄 What is a Page Blob?</p>
+<ul>
+<li>A Page Blob stores data optimized for <strong>random read/write operations</strong>.</li>
+<li>Data is organized in <strong>512-byte pages</strong>.</li>
+<li>Ideal for virtual machine disks, databases, or scenarios requiring frequent partial updates.</li>
+</ul>
+<p>✍️ <code>WritePages</code> Method</p>
+<ul>
+<li><strong>Purpose:</strong> Writes data to specific pages (offsets) within the page blob.</li>
+<li><strong>Key Features:</strong></li>
+<li>Allows <strong>random writes</strong> at specified byte offsets.</li>
+<li>Requires data length and offset to be aligned to 512-byte boundaries.</li>
+<li>Efficient for updating parts of large blobs without rewriting the entire blob.</li>
+<li><strong>Usage Example:</strong></li>
+</ul>
+<pre><code class="language-csharp">// Parameters
+long offset = 0; // must be multiple of 512
+byte[] data = ...; // data to write, multiple of 512 bytes
+
+using MemoryStream stream = new MemoryStream(data);
+await pageBlobClient.WritePagesAsync(stream, offset);
+</code></pre>
+<p><strong>📖 Read Method</strong></p>
+<ul>
+<li>
+<p>Purpose: Reads data from specified ranges (offset and length) of the page blob.</p>
+</li>
+<li>
+<p>Key Features:</p>
+<pre><code>    - Supports random reads from any offset.
+
+    - Reads can be partial, allowing efficient access to portions of large blobs.
+
+    - Offset and length should align to 512-byte boundaries for best performance.
+</code></pre>
+</li>
+</ul>
+<p><strong>Usage Example:</strong></p>
+<pre><code>long offset = 0;    // byte offset to start reading from
+long length = 512;  // number of bytes to read
+
+var response = await pageBlobClient.ReadAsync(new HttpRange(offset, length));
+using Stream stream = response.Value.Content;
+// Process stream as needed
+
+</code></pre>
+<p>✅ Summary</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Purpose</th>
+<th>Key Points</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WritePages</td>
+<td>Write data to specific pages</td>
+<td>Random, aligned writes in 512-byte units</td>
+</tr>
+<tr>
+<td>Read</td>
+<td>Read data from specific ranges</td>
+<td>Random reads, efficient partial access</td>
+</tr>
+</tbody>
+</table>
+<p>📌 Notes</p>
+<ul>
+<li>Both methods require <strong>512-byte alignment</strong> for offsets and lengths.</li>
+<li>Page blobs support <strong>efficient random read/write</strong>, unlike block blobs which are optimized for sequential writes.</li>
+</ul>
+<h3 id="19-what-does-seek-method-do-of-page-blob">19. What does “Seek” method do of page blob ?</h3>
+<ul>
+<li>The <code>Seek</code> method is used when working with <strong>streams</strong> that represent page blobs.</li>
+<li>It <strong>changes the current position</strong> of the stream pointer to a specified location.</li>
+<li>This allows <strong>reading from or writing to</strong> different parts of the page blob without sequential access.</li>
+</ul>
+<p>⚙️ How It Works</p>
+<ul>
+<li>
+<p>The method takes an <strong>offset</strong> and a <strong>reference point</strong> (origin) which can be:</p>
+</li>
+<li>
+<p><code>Begin</code> — offset is from the start of the stream.</p>
+</li>
+<li><code>Current</code> — offset is relative to the current position.</li>
+<li>
+<p><code>End</code> — offset is from the end of the stream.</p>
+</li>
+<li>
+<p>After <code>Seek</code>, the next read or write operation will start from the new position.</p>
+</li>
+</ul>
+<p>📌 Importance in Page Blob Operations</p>
+<ul>
+<li>Page blobs support <strong>random access</strong> read/write.</li>
+<li>Using <code>Seek</code> lets you efficiently navigate to the exact page (512-byte aligned position) you want to read or write.</li>
+<li>Enables partial updates without needing to load or rewrite the entire blob.</li>
+</ul>
+<p>📝 Example (C#)</p>
+<pre><code class="language-csharp">Stream pageBlobStream = await pageBlobClient.OpenWriteAsync(true);
+pageBlobStream.Seek(1024, SeekOrigin.Begin); // Move to byte offset 1024
+// Next write will start at byte 1024
+</code></pre>
+<p>✅ Summary</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Seek</td>
+<td>Moves the stream position to a specified offset, enabling random access to the blob data</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.expand - navigation.sections - navigation.prune - navigation.indexes - content.code.copy"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="../../../extra.js"></script>
+      
+    
+  </body>
+</html>

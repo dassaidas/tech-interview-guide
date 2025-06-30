@@ -1,0 +1,2085 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../Azure_Cosmos_DB/">
+      
+      
+        <link rel="next" href="../Azure_Tables/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>AzureFabricandMicroServices - Tech Interview Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-why-automation-is-must-for-micro-services" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Tech Interview Guide" class="md-header__button md-logo" aria-label="Tech Interview Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Tech Interview Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              AzureFabricandMicroServices
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Tech Interview Guide" class="md-nav__button md-logo" aria-label="Tech Interview Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Tech Interview Guide
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    .NET
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            .NET
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    C#
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            C#
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Dotnet/csharp/basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Dotnet/csharp/oop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    OOP Concepts
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Dotnet/csharp/advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Advanced Topics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Angular
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Angular
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Angular/fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fundamentals
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Angular/forms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Forms
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Angular/migration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Migration Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    React
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            React
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../React/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Hooks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../React/state/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    State Management
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Project Management
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Project Management
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Jira
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            Jira
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Poject_Management/Jira/basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Poject_Management/Jira/Jira_detailed_course/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    JiraDetailed
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Cloud
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Cloud
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Azure
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            Azure
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IAAS_PASS_SAAS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    IASS_PASS_SAAS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DTU_EDTU/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DTU_EDTU
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AzureFunctions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureFunctions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureStorage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Cosmos_DB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureCosmosDB
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    AzureFabricandMicroServices
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureFabricandMicroServices
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-why-automation-is-must-for-micro-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Why automation is must for Micro-services?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-what-are-the-infrastructure-issues-when-deploying-micro-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. What are the infrastructure issues when deploying Micro-services?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-define-azure-fabric-in-one-sentence" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Define Azure fabric in one sentence ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-what-is-the-use-of-azure-fabric-sdk-and-local-cluster-manager-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. What is the use of Azure fabric SDK and Local cluster manager tool ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-differentiate-between-stateful-and-stateless-microservices" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Differentiate between stateful and stateless microservices ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-explain-the-importance-of-configuration-project-in-azure-fabric-projects" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Explain the importance of configuration project in Azure fabric projects ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-explain-the-importance-of-statemanager-in-stateful-projects" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Explain the importance of “StateManager” in stateful projects ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-where-is-web-application-url-configured" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Where is Web application URL configured ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-differentiate-between-ltsc-and-sac" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Differentiate between LTSC and SAC ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-what-role-does-certificate-play-in-fabric" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. What role does certificate play in fabric ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-what-is-the-use-ad-user-in-fabric" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. what is the use AD user in fabric ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-explain-azure-vault" class="md-nav__link">
+    <span class="md-ellipsis">
+      12. Explain Azure vault ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-how-to-publish-using-visual-studio-to-azure-fabric" class="md-nav__link">
+    <span class="md-ellipsis">
+      13. How to publish using visual studio to Azure fabric ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-how-to-use-client-certificates-for-deployment-and-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      14. How to use client certificates for deployment and management ?
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Tables/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureTables
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_blobs%28block%2Cappend%2Cpage%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureBlobs(block,append,page)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Queues%28Azure%20Queues%20%2C%20visibility%20timeouts%20%2CPeek%20%26%20De-Queue%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Azure_Queues
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Services%28App%20services%20and%20Cloud%20services%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Azure_Services
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_WebJobs%28WebJob%20and%20background%20processing.%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Azure_WebJobs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Scenarios
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Scenarios
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Scenarios/migration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Legacy Migration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Scenarios/realworld/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Real-World QA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    BrowserStack
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            BrowserStack
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../browserstack/bascis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-why-automation-is-must-for-micro-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Why automation is must for Micro-services?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-what-are-the-infrastructure-issues-when-deploying-micro-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. What are the infrastructure issues when deploying Micro-services?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-define-azure-fabric-in-one-sentence" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Define Azure fabric in one sentence ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-what-is-the-use-of-azure-fabric-sdk-and-local-cluster-manager-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. What is the use of Azure fabric SDK and Local cluster manager tool ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-differentiate-between-stateful-and-stateless-microservices" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Differentiate between stateful and stateless microservices ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-explain-the-importance-of-configuration-project-in-azure-fabric-projects" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Explain the importance of configuration project in Azure fabric projects ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-explain-the-importance-of-statemanager-in-stateful-projects" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Explain the importance of “StateManager” in stateful projects ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-where-is-web-application-url-configured" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Where is Web application URL configured ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-differentiate-between-ltsc-and-sac" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Differentiate between LTSC and SAC ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-what-role-does-certificate-play-in-fabric" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. What role does certificate play in fabric ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-what-is-the-use-ad-user-in-fabric" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. what is the use AD user in fabric ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-explain-azure-vault" class="md-nav__link">
+    <span class="md-ellipsis">
+      12. Explain Azure vault ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-how-to-publish-using-visual-studio-to-azure-fabric" class="md-nav__link">
+    <span class="md-ellipsis">
+      13. How to publish using visual studio to Azure fabric ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-how-to-use-client-certificates-for-deployment-and-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      14. How to use client certificates for deployment and management ?
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>AzureFabricandMicroServices</h1>
+
+<h3 id="1-why-automation-is-must-for-micro-services">1. Why automation is must for Micro-services?</h3>
+<p>Microservices architecture breaks down applications into many small, independently deployable services. This distributed nature creates complexities that make <strong>automation essential</strong>.</p>
+<p>Key Reasons Automation is Crucial</p>
+<ol>
+<li>
+<p><strong>Continuous Integration &amp; Continuous Deployment (CI/CD)</strong></p>
+<ul>
+<li>
+<p>Frequent changes require automated build, test, and deployment pipelines.</p>
+</li>
+<li>
+<p>Ensures quick and reliable delivery of new features and bug fixes.</p>
+</li>
+<li>Reduces human errors during deployments.</li>
+</ul>
+</li>
+<li>
+<p><strong>Service Scalability</strong></p>
+<ul>
+<li>Automation enables dynamic scaling of individual microservices based on demand.</li>
+<li>Manual scaling is impractical and error-prone in distributed environments.</li>
+</ul>
+</li>
+<li>
+<p><strong>Consistency Across Environments</strong></p>
+<ul>
+<li>Automated provisioning and configuration management maintain consistency across dev, test, staging, and production.</li>
+<li>Avoids configuration drift and environment-specific bugs.</li>
+</ul>
+</li>
+<li>
+<p><strong>Efficient Resource Management</strong></p>
+<ul>
+<li>Automates resource allocation, monitoring, and cleanup.</li>
+<li>Improves cost efficiency and system reliability.</li>
+</ul>
+</li>
+<li>
+<p><strong>Resilience and Recovery</strong></p>
+<ul>
+<li>Automated health checks and self-healing mechanisms can detect and recover from failures.</li>
+<li>Minimizes downtime without manual intervention.</li>
+</ul>
+</li>
+<li>
+<p><strong>Complexity Management</strong></p>
+<ul>
+<li>Microservices often have many interdependent components.</li>
+<li>Automation orchestrates service dependencies, startup order, and updates seamlessly.</li>
+</ul>
+</li>
+</ol>
+<p>Summary</p>
+<table>
+<thead>
+<tr>
+<th>Challenge in Microservices</th>
+<th>How Automation Helps</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Frequent deployments</td>
+<td>Enables fast, reliable CI/CD</td>
+</tr>
+<tr>
+<td>Scaling</td>
+<td>Automates dynamic resource scaling</td>
+</tr>
+<tr>
+<td>Environment drift</td>
+<td>Ensures configuration consistency</td>
+</tr>
+<tr>
+<td>Service failures</td>
+<td>Provides automated recovery</td>
+</tr>
+<tr>
+<td>Complex inter-service workflows</td>
+<td>Orchestrates and manages dependencies</td>
+</tr>
+</tbody>
+</table>
+<p>Automation is not just helpful — it’s <strong>critical</strong> to manage, deploy, and maintain microservices efficiently and reliably.</p>
+<p>References</p>
+<ul>
+<li><a href="https://martinfowler.com/articles/microservice-testing/">Microservices Automation</a></li>
+<li><a href="https://azure.microsoft.com/en-us/overview/continuous-integration/">CI/CD for Microservices</a></li>
+</ul>
+<h3 id="2-what-are-the-infrastructure-issues-when-deploying-micro-services">2. What are the infrastructure issues when deploying Micro-services?</h3>
+<p>Deploying microservices introduces several infrastructure challenges due to their distributed and decoupled nature.</p>
+<p>Key Infrastructure Issues</p>
+<ol>
+<li>
+<p>Service Discovery</p>
+<ul>
+<li>Microservices dynamically scale and move, requiring mechanisms to locate service instances.</li>
+<li>Without proper service discovery, services cannot communicate reliably.</li>
+</ul>
+</li>
+<li>
+<p>Load Balancing</p>
+<ul>
+<li>Efficiently distributing requests across multiple instances of a service is essential.</li>
+<li>Balancing load to avoid hotspots or downtime is complex.</li>
+</ul>
+</li>
+<li>
+<p>Network Complexity</p>
+<ul>
+<li>Increased inter-service communication leads to more network traffic.</li>
+<li>Handling latency, retries, failures, and network partitions becomes harder.</li>
+</ul>
+</li>
+<li>
+<p>Configuration Management</p>
+<ul>
+<li>Managing diverse configurations across many services.</li>
+<li>Propagating configuration changes without downtime is difficult.</li>
+</ul>
+</li>
+<li>
+<p>Security</p>
+<ul>
+<li>Securing communication between services (authentication, authorization, encryption).</li>
+<li>Managing secrets and credentials securely.</li>
+</ul>
+</li>
+<li>
+<p>Logging, Monitoring, and Tracing</p>
+<ul>
+<li>Collecting and correlating logs and metrics from many distributed services.</li>
+<li>Implementing distributed tracing to track requests end-to-end.</li>
+</ul>
+</li>
+<li>
+<p>Deployment and Orchestration</p>
+<ul>
+<li>Coordinating deployments of multiple interdependent services.</li>
+<li>Managing versioning, rollbacks, and zero-downtime deployments.</li>
+<li>Often requires container orchestration platforms like Kubernetes.</li>
+</ul>
+</li>
+<li>
+<p>Data Management</p>
+<ul>
+<li>Managing data consistency across distributed services.</li>
+<li>Handling distributed transactions or eventual consistency.</li>
+</ul>
+</li>
+<li>
+<p>Resource Management</p>
+<ul>
+<li>Allocating compute, memory, and storage efficiently.</li>
+<li>Preventing resource contention and ensuring availability.</li>
+</ul>
+</li>
+</ol>
+<p>Summary Table</p>
+<table>
+<thead>
+<tr>
+<th>Infrastructure Issue</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Service Discovery</td>
+<td>Dynamically locating service instances</td>
+</tr>
+<tr>
+<td>Load Balancing</td>
+<td>Distributing traffic evenly</td>
+</tr>
+<tr>
+<td>Network Complexity</td>
+<td>Managing inter-service communication</td>
+</tr>
+<tr>
+<td>Configuration Management</td>
+<td>Handling configuration at scale</td>
+</tr>
+<tr>
+<td>Security</td>
+<td>Protecting data and services</td>
+</tr>
+<tr>
+<td>Logging &amp; Monitoring</td>
+<td>Centralizing logs and metrics</td>
+</tr>
+<tr>
+<td>Deployment &amp; Orchestration</td>
+<td>Managing service lifecycle and dependencies</td>
+</tr>
+<tr>
+<td>Data Management</td>
+<td>Ensuring data integrity and consistency</td>
+</tr>
+<tr>
+<td>Resource Management</td>
+<td>Efficient allocation and scaling of resources</td>
+</tr>
+</tbody>
+</table>
+<p>References</p>
+<ul>
+<li><a href="https://martinfowler.com/articles/microservices.html">Microservices Architecture - Martin Fowler</a></li>
+<li><a href="https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/">Kubernetes Documentation</a></li>
+<li><a href="https://istio.io/latest/docs/concepts/what-is-istio/">Service Mesh Concepts</a></li>
+</ul>
+<h3 id="3-define-azure-fabric-in-one-sentence">3. Define Azure fabric in one sentence ?</h3>
+<p><strong>Azure Service Fabric</strong> is a distributed systems platform that simplifies the packaging, deployment, and management of scalable and reliable microservices and containers in the cloud.</p>
+<h3 id="4-what-is-the-use-of-azure-fabric-sdk-and-local-cluster-manager-tool">4. What is the use of Azure fabric SDK and Local cluster manager tool ?</h3>
+<ul>
+<li>
+<p><strong>Azure Service Fabric SDK</strong>:<br />
+  Provides developers with libraries, tools, and APIs to build, test, and deploy Service Fabric applications and microservices efficiently.</p>
+</li>
+<li>
+<p><strong>Local Cluster Manager Tool</strong>:<br />
+  Enables creating and managing a local Service Fabric cluster on a development machine to test and debug Service Fabric applications locally before deploying to the cloud.</p>
+</li>
+</ul>
+<h3 id="5-differentiate-between-stateful-and-stateless-microservices">5. Differentiate between stateful and stateless microservices ?</h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Stateful Microservices</th>
+<th>Stateless Microservices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Definition</strong></td>
+<td>Maintain and manage state (data) across multiple requests</td>
+<td>Do not retain any state between requests</td>
+</tr>
+<tr>
+<td><strong>Data Storage</strong></td>
+<td>Store data either in-memory or durable storage</td>
+<td>No internal data storage; rely on external storage if needed</td>
+</tr>
+<tr>
+<td><strong>Use Case</strong></td>
+<td>Applications that require data persistence, e.g., shopping carts, user sessions</td>
+<td>Services that perform independent operations, e.g., authentication, logging</td>
+</tr>
+<tr>
+<td><strong>Scalability</strong></td>
+<td>More complex due to state synchronization between nodes</td>
+<td>Easier to scale out since any instance can handle requests</td>
+</tr>
+<tr>
+<td><strong>Failure Recovery</strong></td>
+<td>Needs mechanisms to recover or replicate state</td>
+<td>Can recover easily by simply restarting without data loss</td>
+</tr>
+<tr>
+<td><strong>Examples</strong></td>
+<td>Databases, session management, chat applications</td>
+<td>Stateless APIs, microservices handling requests without data retention</td>
+</tr>
+</tbody>
+</table>
+<h3 id="6-explain-the-importance-of-configuration-project-in-azure-fabric-projects">6. Explain the importance of configuration project in Azure fabric projects ?</h3>
+<p>The <strong>Configuration Project</strong> in Azure Service Fabric is crucial because it manages and centralizes all the configurable settings for your Service Fabric applications, such as connection strings, environment-specific variables, and feature toggles. This separation allows you to:</p>
+<ul>
+<li>Easily update settings without redeploying or changing the application code.</li>
+<li>Support multiple environments (development, testing, production) with different configurations.</li>
+<li>Maintain clean code by externalizing environment-specific data.</li>
+<li>Enable dynamic configuration updates to running services without downtime.</li>
+<li>Simplify deployment and management by keeping configuration organized and version-controlled separately from application logic.</li>
+</ul>
+<h3 id="7-explain-the-importance-of-statemanager-in-stateful-projects">7. Explain the importance of “StateManager” in stateful projects ?</h3>
+<p>The <strong><code>StateManager</code></strong> is a key component in stateful Service Fabric applications that provides reliable, transactional storage for the service’s state. Its importance lies in:</p>
+<ul>
+<li><strong>Reliable State Persistence:</strong> Ensures that state data is durably stored and survives service restarts and failures.</li>
+<li><strong>Transactional Consistency:</strong> Supports transactions that guarantee atomic updates to the state, preventing partial or corrupt data.</li>
+<li><strong>Simplifies State Handling:</strong> Abstracts complex state management tasks, allowing developers to work with reliable collections (like dictionaries, queues) easily.</li>
+<li><strong>Enables High Availability:</strong> Replicates state across multiple nodes to ensure data availability and fault tolerance.</li>
+<li><strong>Facilitates Stateful Microservices:</strong> Makes it possible to build microservices that maintain and manage their own data reliably within the cluster.</li>
+</ul>
+<h3 id="8-where-is-web-application-url-configured">8. Where is Web application URL configured ?</h3>
+<p>The <strong>Web Application URL</strong> is typically configured in one or more of the following places depending on the project setup:</p>
+<ul>
+<li>
+<p><strong>In Azure Service Fabric projects:</strong><br />
+  The URL is specified in the <strong>ServiceManifest.xml</strong> file inside the <code>&lt;Endpoints&gt;</code> section, defining the port and protocol the service listens on.</p>
+</li>
+<li>
+<p><strong>In configuration files:</strong><br />
+  Such as <code>appsettings.json</code> (for ASP.NET Core apps) or <code>web.config</code> (for older ASP.NET apps), where base URLs or API endpoints can be set.</p>
+</li>
+<li>
+<p><strong>In the Azure Portal:</strong><br />
+  When deployed, the public-facing URL is configured as part of the Azure App Service or Azure Load Balancer settings.</p>
+</li>
+<li>
+<p><strong>In code or environment variables:</strong><br />
+  Sometimes URLs are set programmatically or via environment variables for flexibility across environments.</p>
+</li>
+</ul>
+<p>In summary, the primary configuration for the web application URL in Service Fabric is inside the <strong>ServiceManifest.xml</strong> under the endpoint definitions.</p>
+<h3 id="9-differentiate-between-ltsc-and-sac">9. Differentiate between LTSC and SAC ?</h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>LTSC (Long-Term Servicing Channel)</th>
+<th>SAC (Semi-Annual Channel)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Release Frequency</strong></td>
+<td>Every 2–3 years</td>
+<td>Twice a year (every 6 months)</td>
+</tr>
+<tr>
+<td><strong>Support Duration</strong></td>
+<td>5 years of mainstream support + 5 years extended</td>
+<td>18 months per release</td>
+</tr>
+<tr>
+<td><strong>Use Case</strong></td>
+<td>Stable environments needing long-term support, e.g., production servers</td>
+<td>Rapid innovation and feature testing environments</td>
+</tr>
+<tr>
+<td><strong>Features</strong></td>
+<td>Receives only security and critical updates</td>
+<td>Receives new features and improvements frequently</td>
+</tr>
+<tr>
+<td><strong>Update Model</strong></td>
+<td>In-place upgrades are rare; major upgrades at LTSC release</td>
+<td>Frequent feature updates and improvements</td>
+</tr>
+<tr>
+<td><strong>Examples</strong></td>
+<td>Windows Server 2019, Windows 10 Enterprise LTSC</td>
+<td>Windows Server versions released every 6 months</td>
+</tr>
+</tbody>
+</table>
+<h3 id="10-what-role-does-certificate-play-in-fabric">10. What role does certificate play in fabric ?</h3>
+<p>Certificates in Azure Service Fabric are used to:</p>
+<ul>
+<li><strong>Authenticate and secure communication</strong> between clients, nodes, and services within the cluster.</li>
+<li><strong>Encrypt data in transit</strong> to ensure confidentiality and prevent eavesdropping.</li>
+<li><strong>Enable cluster security</strong> by validating identities and establishing trust.</li>
+<li><strong>Support mutual authentication</strong> between cluster nodes and external clients.</li>
+<li><strong>Protect sensitive configuration and management operations</strong> by restricting access only to authorized parties.</li>
+<li><strong>Facilitate secure management</strong> of the cluster via tools and APIs.</li>
+</ul>
+<p>Overall, certificates are critical for ensuring the security, integrity, and trustworthiness of the Service Fabric cluster and its services.</p>
+<h3 id="11-what-is-the-use-ad-user-in-fabric">11. what is the use AD user in fabric ?</h3>
+<p>An <strong>AD User</strong> in Azure Service Fabric is used to:</p>
+<ul>
+<li><strong>Authenticate and authorize users or services</strong> accessing the Service Fabric cluster, ensuring secure access control.</li>
+<li><strong>Manage role-based access control (RBAC)</strong> by assigning permissions to AD users or groups for performing cluster management tasks.</li>
+<li><strong>Integrate with enterprise identity systems</strong>, enabling seamless single sign-on (SSO) and centralized user management.</li>
+<li><strong>Secure cluster operations</strong> by restricting administrative and operational actions to authenticated AD identities.</li>
+<li><strong>Facilitate auditing and compliance</strong> by tracking user activities based on their AD credentials.</li>
+</ul>
+<p>In essence, AD users help enforce security policies and manage access within Service Fabric clusters in enterprise environments.</p>
+<h3 id="12-explain-azure-vault">12. Explain Azure vault ?</h3>
+<p><strong>Azure Key Vault</strong> is a cloud service that provides secure storage and management of sensitive information such as secrets, encryption keys, and certificates. It helps safeguard cryptographic keys and secrets used by cloud applications and services, enabling:</p>
+<ul>
+<li><strong>Centralized secret management</strong> for passwords, API keys, connection strings, and certificates.</li>
+<li><strong>Secure key management</strong> with hardware security modules (HSMs) for cryptographic keys.</li>
+<li><strong>Access control and auditing</strong> using Azure Active Directory (AAD) and detailed logging.</li>
+<li><strong>Simplified compliance</strong> with regulatory requirements by securely handling sensitive data.</li>
+<li><strong>Seamless integration</strong> with other Azure services and custom applications for secure secret retrieval.</li>
+</ul>
+<p>Azure Key Vault helps improve security posture by reducing the risk of accidental exposure and simplifying secret lifecycle management.</p>
+<h3 id="13-how-to-publish-using-visual-studio-to-azure-fabric">13. How to publish using visual studio to Azure fabric ?</h3>
+<ol>
+<li>
+<p><strong>Open your Service Fabric project</strong> in Visual Studio.</p>
+</li>
+<li>
+<p><strong>Right-click the project</strong> (usually the application project, not the service project) in Solution Explorer and select <strong>Publish</strong>.</p>
+</li>
+<li>
+<p>In the <strong>Publish Service Fabric Application</strong> dialog:</p>
+<ul>
+<li>Choose <strong>Azure Service Fabric Cluster</strong> as the target.</li>
+<li>Click <strong>Next</strong>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Select or enter the cluster connection details</strong>:</p>
+<ul>
+<li>Provide the <strong>cluster endpoint URL</strong> (e.g., <code>https://&lt;clustername&gt;.&lt;region&gt;.cloudapp.azure.com:19080</code>).</li>
+<li>Specify the <strong>management certificate</strong> or <strong>Azure Active Directory credentials</strong> for authentication.</li>
+</ul>
+</li>
+<li>
+<p>Choose the <strong>target application name</strong> on the cluster.</p>
+</li>
+<li>
+<p>Select the <strong>publish profile</strong> or create a new one for repeated use.</p>
+</li>
+<li>
+<p>Optionally configure <strong>advanced settings</strong>, such as:</p>
+<ul>
+<li>Application parameters.</li>
+<li>Upgrade modes (e.g., rolling upgrade).</li>
+<li>Timeout settings.</li>
+</ul>
+</li>
+<li>
+<p>Click <strong>Publish</strong> to build, package, and deploy your Service Fabric application to the Azure cluster.</p>
+</li>
+<li>
+<p>Monitor the output window for deployment progress and completion status.</p>
+</li>
+</ol>
+<p>Visual Studio simplifies the deployment by handling packaging, connection, and versioning automatically.</p>
+<h3 id="14-how-to-use-client-certificates-for-deployment-and-management">14. How to use client certificates for deployment and management ?</h3>
+<p>Client certificates provide secure authentication for deployment and management operations in an Azure Service Fabric cluster, ensuring only authorized users or tools can perform sensitive actions.</p>
+<p>Steps to Use Client Certificates</p>
+<ol>
+<li>
+<p><strong>Generate or Obtain a Client Certificate</strong></p>
+<ul>
+<li>Create a certificate (e.g., using PowerShell, OpenSSL, or a certificate authority) that will identify the client (user or management tool).</li>
+</ul>
+</li>
+<li>
+<p><strong>Upload the Client Certificate to the Service Fabric Cluster</strong></p>
+<ul>
+<li>Add the client certificate’s public key (thumbprint) to the cluster's security configuration (in <code>ClusterManifest.json</code> or via Azure portal) under the <code>ClientCertificateCommonNames</code> or <code>ClientCertificateThumbprints</code> section.</li>
+<li>This allows the cluster to recognize and trust the client certificate for authentication.</li>
+</ul>
+</li>
+<li>
+<p><strong>Install the Client Certificate Locally</strong></p>
+<ul>
+<li>Install the private key of the client certificate into the local certificate store on the machine that will run deployment or management commands (e.g., under Personal Certificates in Windows).</li>
+</ul>
+</li>
+<li>
+<p><strong>Configure Client Tools to Use the Certificate</strong></p>
+<ul>
+<li>For PowerShell or Service Fabric CLI tools, specify the client certificate when connecting to the cluster using parameters like <code>-FindType</code>, <code>-FindValue</code>, or by referencing the certificate’s thumbprint.</li>
+<li>For Visual Studio publishing, configure the publish profile to use the client certificate.</li>
+</ul>
+</li>
+<li>
+<p><strong>Perform Deployment and Management</strong></p>
+<ul>
+<li>Use the client certificate authenticated session to deploy applications, manage the cluster, and perform administrative operations securely.</li>
+</ul>
+</li>
+</ol>
+<p>Benefits</p>
+<ul>
+<li>Provides <strong>mutual authentication</strong> between client and cluster.</li>
+<li>Enhances <strong>security</strong> by restricting access to authorized certificate holders.</li>
+<li>Supports <strong>non-interactive, automated deployment</strong> scenarios with certificates.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.expand - navigation.sections - navigation.prune - navigation.indexes - content.code.copy"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="../../../extra.js"></script>
+      
+    
+  </body>
+</html>

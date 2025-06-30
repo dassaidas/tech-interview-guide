@@ -1,0 +1,2918 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../AzureFunctions/">
+      
+      
+        <link rel="next" href="../Azure_Cosmos_DB/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>AzureStorage - Tech Interview Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-differentiate-between-resource-manager-and-classic" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Tech Interview Guide" class="md-header__button md-logo" aria-label="Tech Interview Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Tech Interview Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              AzureStorage
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Tech Interview Guide" class="md-nav__button md-logo" aria-label="Tech Interview Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Tech Interview Guide
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    .NET
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            .NET
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    C#
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            C#
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Dotnet/csharp/basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Dotnet/csharp/oop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    OOP Concepts
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Dotnet/csharp/advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Advanced Topics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Angular
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Angular
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Angular/fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fundamentals
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Angular/forms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Forms
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Angular/migration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Migration Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    React
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            React
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../React/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Hooks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../React/state/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    State Management
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Project Management
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Project Management
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Jira
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            Jira
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Poject_Management/Jira/basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Poject_Management/Jira/Jira_detailed_course/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    JiraDetailed
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Cloud
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Cloud
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Azure
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            Azure
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IAAS_PASS_SAAS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    IASS_PASS_SAAS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DTU_EDTU/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DTU_EDTU
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AzureFunctions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureFunctions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    AzureStorage
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureStorage
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-differentiate-between-resource-manager-and-classic" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Differentiate between resource manager and classic ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-explain-the-difference-between-blobs-files-queues-and-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Explain the difference between blobs , files , queues and table ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-differentiate-between-general-storage-v1-vs-v2-vs-blob" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Differentiate between general storage v1 vs v2 vs blob ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-when-should-we-select-hot-access-tier-or-cold-access-tier" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. When should we select hot access tier or cold access tier ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-when-should-we-choose-standard-vs-premium" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. When should we choose standard vs premium ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-differentiate-between-sdd-vs-hdd" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Differentiate between SDD vs HDD ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-differentiate-between-lrs-zrs-grs-and-ra-grs" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Differentiate between LRS , ZRS , GRS and RA-GRS ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-how-can-azure-storage-explorer-make-your-life-easy" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. How can azure storage explorer make your life easy ?
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Cosmos_DB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureCosmosDB
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Fabric_microservices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureFabricandMicroServices
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Tables/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureTables
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_blobs%28block%2Cappend%2Cpage%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureBlobs(block,append,page)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Queues%28Azure%20Queues%20%2C%20visibility%20timeouts%20%2CPeek%20%26%20De-Queue%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Azure_Queues
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Services%28App%20services%20and%20Cloud%20services%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Azure_Services
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_WebJobs%28WebJob%20and%20background%20processing.%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Azure_WebJobs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Scenarios
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Scenarios
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Scenarios/migration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Legacy Migration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Scenarios/realworld/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Real-World QA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    BrowserStack
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            BrowserStack
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../browserstack/bascis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-differentiate-between-resource-manager-and-classic" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Differentiate between resource manager and classic ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-explain-the-difference-between-blobs-files-queues-and-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Explain the difference between blobs , files , queues and table ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-differentiate-between-general-storage-v1-vs-v2-vs-blob" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Differentiate between general storage v1 vs v2 vs blob ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-when-should-we-select-hot-access-tier-or-cold-access-tier" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. When should we select hot access tier or cold access tier ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-when-should-we-choose-standard-vs-premium" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. When should we choose standard vs premium ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-differentiate-between-sdd-vs-hdd" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Differentiate between SDD vs HDD ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-differentiate-between-lrs-zrs-grs-and-ra-grs" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Differentiate between LRS , ZRS , GRS and RA-GRS ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-how-can-azure-storage-explorer-make-your-life-easy" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. How can azure storage explorer make your life easy ?
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>AzureStorage</h1>
+
+<h3 id="1-differentiate-between-resource-manager-and-classic">1. Differentiate between resource manager and classic ?</h3>
+<p>Azure provides two deployment models for resources: <strong>Resource Manager (ARM)</strong> and <strong>Classic</strong>. Below is a comparison of the two models:</p>
+<ol>
+<li>Overview</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Resource Manager (ARM)</th>
+<th>Classic Deployment Model</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Introduced</strong></td>
+<td>2014 (Modern model)</td>
+<td>Pre-2014 (Legacy model)</td>
+</tr>
+<tr>
+<td><strong>Deployment Method</strong></td>
+<td>Declarative templates (ARM templates)</td>
+<td>Manual or scripted (PowerShell, CLI)</td>
+</tr>
+<tr>
+<td><strong>Resource Group</strong></td>
+<td>Resources are grouped logically using Resource Groups</td>
+<td>No concept of Resource Groups</td>
+</tr>
+<tr>
+<td><strong>Management</strong></td>
+<td>Unified and consistent management via Azure Portal, PowerShell, CLI, SDKs</td>
+<td>Limited and inconsistent management</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>Key Differences</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Resource Manager (ARM)</th>
+<th>Classic Deployment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Grouping</strong></td>
+<td>Resources are deployed and managed as a group</td>
+<td>Resources are managed individually</td>
+</tr>
+<tr>
+<td><strong>RBAC Support</strong></td>
+<td>Supports Role-Based Access Control (RBAC)</td>
+<td>Limited RBAC (applies at subscription level)</td>
+</tr>
+<tr>
+<td><strong>Tagging Support</strong></td>
+<td>Tags can be applied to resources and groups</td>
+<td>No tagging support</td>
+</tr>
+<tr>
+<td><strong>Template Support</strong></td>
+<td>Supports Infrastructure-as-Code with ARM templates</td>
+<td>No native template support</td>
+</tr>
+<tr>
+<td><strong>Consistency</strong></td>
+<td>Consistent and predictable deployments</td>
+<td>Less consistent across services</td>
+</tr>
+<tr>
+<td><strong>Dependencies</strong></td>
+<td>Supports defining dependencies between resources</td>
+<td>No dependency handling</td>
+</tr>
+<tr>
+<td><strong>Resource Locks</strong></td>
+<td>Supports locking resources to prevent changes</td>
+<td>Not available</td>
+</tr>
+<tr>
+<td><strong>Policy Integration</strong></td>
+<td>Supports Azure Policy</td>
+<td>Not supported</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>Use Cases</li>
+</ol>
+<p><strong>ARM Model</strong>:</p>
+<ul>
+<li>Recommended for all new resources and services</li>
+<li>Supports CI/CD, DevOps, automation, and modern governance3</li>
+</ul>
+<p><strong>Classic Model</strong>:</p>
+<ul>
+<li>Legacy workloads or services not yet migrated</li>
+<li>
+<p>Not recommended for new deployments</p>
+</li>
+<li>
+<p>Migration</p>
+</li>
+</ul>
+<p>Microsoft encourages migration from Classic to ARM using tools like:</p>
+<ul>
+<li><strong>Azure Migrate</strong></li>
+<li><strong>Classic to ARM migration tools</strong></li>
+<li><strong>Manual re-deployment via ARM templates</strong></li>
+</ul>
+<blockquote>
+<p>⚠️ Note: Some services no longer support the classic model and may be retired.</p>
+</blockquote>
+<ol>
+<li>Conclusion</li>
+</ol>
+<p>ARM provides a modern, scalable, and manageable way of working with Azure resources, enabling automation, consistency, and governance. The classic model is deprecated and should be avoided in new projects.</p>
+<p>References</p>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/overview">Microsoft Learn: Azure Resource Manager Overview</a></li>
+<li><a href="https://learn.microsoft.com/en-us/azure/cloud-services-extended-support/in-place-migration-overview">Migration from Classic to ARM</a></li>
+</ul>
+<h3 id="2-explain-the-difference-between-blobs-files-queues-and-table">2. Explain the difference between blobs , files , queues and table ?</h3>
+<p>Azure Storage offers different services to cater to various storage needs. Below is a breakdown of the key differences among <strong>Blob Storage</strong>, <strong>File Storage</strong>, <strong>Queue Storage</strong>, and <strong>Table Storage</strong>.</p>
+<ol>
+<li>Overview</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Storage Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Blob Storage</strong></td>
+<td>Stores unstructured data like documents, images, videos, and backups</td>
+</tr>
+<tr>
+<td><strong>File Storage</strong></td>
+<td>Shared file system accessible via SMB protocol, similar to a file share</td>
+</tr>
+<tr>
+<td><strong>Queue Storage</strong></td>
+<td>Messaging store for reliable inter-service communication</td>
+</tr>
+<tr>
+<td><strong>Table Storage</strong></td>
+<td>NoSQL key-value storage for structured, non-relational data</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>Key Differences</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Blob Storage</th>
+<th>File Storage</th>
+<th>Queue Storage</th>
+<th>Table Storage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Use Case</strong></td>
+<td>Images, backups, videos, logs</td>
+<td>Shared file access, lift-and-shift apps</td>
+<td>Messaging between services</td>
+<td>Storing large sets of structured data</td>
+</tr>
+<tr>
+<td><strong>Data Type</strong></td>
+<td>Unstructured</td>
+<td>File-based</td>
+<td>Text messages</td>
+<td>Structured data in key-value format</td>
+</tr>
+<tr>
+<td><strong>Access Protocol</strong></td>
+<td>HTTP/HTTPS via REST API</td>
+<td>SMB (Server Message Block)</td>
+<td>REST API</td>
+<td>REST API</td>
+</tr>
+<tr>
+<td><strong>File Structure</strong></td>
+<td>Containers → Blobs</td>
+<td>Shares → Directories → Files</td>
+<td>Queues → Messages</td>
+<td>Tables → Entities</td>
+</tr>
+<tr>
+<td><strong>Max Message Size</strong></td>
+<td>N/A</td>
+<td>N/A</td>
+<td>64 KB per message</td>
+<td>Up to 1 MB per entity</td>
+</tr>
+<tr>
+<td><strong>Max Storage Size</strong></td>
+<td>Depends on tier (up to petabytes)</td>
+<td>Up to 100 TiB per share</td>
+<td>Up to 500 TiB</td>
+<td>Up to 500 TiB</td>
+</tr>
+<tr>
+<td><strong>Access Control</strong></td>
+<td>Azure RBAC, Shared Access Signatures</td>
+<td>Azure RBAC, Shared Access Signatures</td>
+<td>Shared Access Signatures (SAS)</td>
+<td>Shared Access Signatures (SAS)</td>
+</tr>
+<tr>
+<td><strong>Latency</strong></td>
+<td>Low</td>
+<td>Low</td>
+<td>Very Low (used for message queuing)</td>
+<td>Low</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>When to Use What?</li>
+</ol>
+<p>✅ <strong>Blob Storage</strong></p>
+<ul>
+<li>Storing images, videos, PDFs, large logs</li>
+<li>Backup and disaster recovery</li>
+<li>Data lake for analytics (with ADLS Gen2)</li>
+</ul>
+<p>✅ <strong>File Storage</strong></p>
+<ul>
+<li>Migrating legacy apps that use file shares</li>
+<li>Centralized file storage accessible via SMB</li>
+<li>Lift-and-shift file-based workloads</li>
+</ul>
+<p>✅ <strong>Queue Storage</strong></p>
+<ul>
+<li>Asynchronous task messaging</li>
+<li>Decoupling services in distributed systems</li>
+<li>Processing orders, logs, or events in the background</li>
+</ul>
+<p>✅ <strong>Table Storage</strong></p>
+<ul>
+<li>Large-scale structured data with simple query needs</li>
+<li>Device logs, metadata storage, user profiles</li>
+<li>
+<p>Cheaper alternative to full database if joins aren't needed</p>
+</li>
+<li>
+<p>Summary</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Storage Type</th>
+<th>Best For</th>
+<th>Key Benefit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Blob</td>
+<td>Media files, unstructured data</td>
+<td>Cost-effective, scalable</td>
+</tr>
+<tr>
+<td>File</td>
+<td>SMB file share replacement</td>
+<td>Easy migration of legacy systems</td>
+</tr>
+<tr>
+<td>Queue</td>
+<td>Service communication</td>
+<td>Reliable async messaging</td>
+</tr>
+<tr>
+<td>Table</td>
+<td>NoSQL structured storage</td>
+<td>Fast and cheap key-value access</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>
+<p>References</p>
+</li>
+<li>
+<p><a href="https://learn.microsoft.com/en-us/azure/storage/blobs/">Azure Blob Storage Documentation</a></p>
+</li>
+<li><a href="https://learn.microsoft.com/en-us/azure/storage/files/">Azure Files Documentation</a></li>
+<li><a href="https://learn.microsoft.com/en-us/azure/storage/queues/">Azure Queue Storage Documentation</a></li>
+<li><a href="https://learn.microsoft.com/en-us/azure/storage/tables/">Azure Table Storage Documentation</a></li>
+</ol>
+<h3 id="3-differentiate-between-general-storage-v1-vs-v2-vs-blob">3. Differentiate between general storage v1 vs v2 vs blob ?</h3>
+<p>Azure offers different types of storage accounts to meet various needs. The three primary types are:</p>
+<ul>
+<li><strong>General Purpose v1 (GPv1)</strong></li>
+<li><strong>General Purpose v2 (GPv2)</strong></li>
+<li><strong>Blob Storage Account</strong></li>
+</ul>
+<p>Below is a detailed comparison:</p>
+<ol>
+<li>Overview</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Storage Account Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GPv1</strong></td>
+<td>Legacy account supporting all storage services with older pricing model</td>
+</tr>
+<tr>
+<td><strong>GPv2</strong></td>
+<td>Recommended default; supports latest features, access tiers, and pricing</td>
+</tr>
+<tr>
+<td><strong>Blob Storage</strong></td>
+<td>Specialized for blob data only, with access tiers but limited services</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>Feature Comparison</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Feature / Capability</th>
+<th>GPv1</th>
+<th>GPv2 (Recommended)</th>
+<th>Blob Storage Account</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Supported Services</strong></td>
+<td>Blobs, Files, Queues, Tables</td>
+<td>Blobs, Files, Queues, Tables</td>
+<td>Blobs only</td>
+</tr>
+<tr>
+<td><strong>Access Tiers</strong></td>
+<td>Not supported</td>
+<td>Hot, Cool, Archive</td>
+<td>Hot, Cool, Archive</td>
+</tr>
+<tr>
+<td><strong>Performance Tiers</strong></td>
+<td>Standard, Premium (limited)</td>
+<td>Standard, Premium (full)</td>
+<td>Standard only</td>
+</tr>
+<tr>
+<td><strong>Features (Soft delete, etc.)</strong></td>
+<td>Limited</td>
+<td>Full support (latest features)</td>
+<td>Partial (Blob-related only)</td>
+</tr>
+<tr>
+<td><strong>Pricing Model</strong></td>
+<td>Older pricing</td>
+<td>Latest pricing (cost-effective)</td>
+<td>Latest pricing</td>
+</tr>
+<tr>
+<td><strong>Lifecycle Management</strong></td>
+<td>Not supported</td>
+<td>Supported</td>
+<td>Supported</td>
+</tr>
+<tr>
+<td><strong>Redundancy Options</strong></td>
+<td>LRS, GRS, RA-GRS, ZRS</td>
+<td>LRS, GRS, RA-GRS, ZRS</td>
+<td>LRS, GRS, RA-GRS</td>
+</tr>
+<tr>
+<td><strong>Use Cases</strong></td>
+<td>Legacy systems</td>
+<td>New apps, general workloads</td>
+<td>Blob-heavy workloads</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>Key Differences</li>
+</ol>
+<p>✅ <strong>General Purpose v1</strong></p>
+<ul>
+<li>Older version with limited support for new features</li>
+<li>No access tiers (hot/cool/archive)</li>
+<li>Higher transaction costs compared to GPv2</li>
+<li>Use only if backward compatibility is required</li>
+</ul>
+<p>✅ <strong>General Purpose v2 (GPv2)</strong></p>
+<ul>
+<li>Default and recommended option</li>
+<li>Supports all storage types with full feature set</li>
+<li>Includes access tiers, lifecycle management, soft delete, and Azure Data Lake Gen2</li>
+<li>Cost-optimized pricing model</li>
+</ul>
+<p>✅ <strong>Blob Storage Account</strong></p>
+<ul>
+<li>Only supports <strong>blob data</strong></li>
+<li>Includes support for access tiers (hot, cool, archive)</li>
+<li>Does <strong>not support queues, files, or tables</strong></li>
+<li>
+<p>Good for scenarios dealing only with blobs like media storage, backup, archives</p>
+</li>
+<li>
+<p>When to Use Which?</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Recommended Account Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>General purpose storage (blobs, files, etc.)</td>
+<td>General Purpose v2 (GPv2)</td>
+</tr>
+<tr>
+<td>Blob-only workloads (e.g., backup/archive)</td>
+<td>Blob Storage</td>
+</tr>
+<tr>
+<td>Legacy systems requiring older features</td>
+<td>General Purpose v1 (GPv1)</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>Summary Table</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Feature / Type</th>
+<th>GPv1</th>
+<th>GPv2 (Recommended)</th>
+<th>Blob Storage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Supports Blob Storage</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Supports File Storage</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>Supports Queue Storage</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>Supports Table Storage</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>Access Tiers (Hot/Cool/Archive)</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Pricing Model</td>
+<td>Legacy</td>
+<td>Latest (Flexible)</td>
+<td>Latest</td>
+</tr>
+<tr>
+<td>Lifecycle Management</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Azure Data Lake Gen2</td>
+<td>❌</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>
+<p>Conclusion</p>
+</li>
+<li>
+<p><strong>Always use GPv2</strong> for most new workloads — it's the most flexible and future-proof.</p>
+</li>
+<li><strong>Use Blob Storage Account</strong> only for blob-specific needs when no other storage services are required.</li>
+<li>
+<p><strong>Avoid GPv1</strong> unless you're working with legacy systems or need compatibility.</p>
+</li>
+<li>
+<p>References</p>
+</li>
+<li>
+<p><a href="https://learn.microsoft.com/en-us/azure/storage/common/storage-account-overview">Azure Storage Account Overview</a></p>
+</li>
+<li><a href="https://azure.microsoft.com/en-us/pricing/details/storage/">Azure Storage Pricing</a></li>
+</ol>
+<h3 id="4-when-should-we-select-hot-access-tier-or-cold-access-tier">4. When should we select hot access tier or cold access tier ?</h3>
+<p>Azure Blob Storage provides multiple <strong>access tiers</strong> to optimize cost based on how frequently your data is accessed. Choosing the right tier can significantly reduce storage costs.</p>
+<p>🔥 Hot Access Tier</p>
+<p>✅ When to Use:</p>
+<ul>
+<li><strong>Data is accessed frequently</strong> (read/write)</li>
+<li>Requires <strong>low latency</strong> and <strong>high throughput</strong></li>
+<li>Mission-critical, real-time processing applications</li>
+</ul>
+<p>📦 Typical Use Cases:</p>
+<ul>
+<li>Active application data (e.g., media content, transaction logs)</li>
+<li>Data in use by websites, mobile apps, and business processes</li>
+<li>Databases and frequently updated logs</li>
+<li>Real-time analytics and dashboarding</li>
+</ul>
+<p>💰 Cost Characteristics:</p>
+<ul>
+<li><strong>Higher storage cost</strong></li>
+<li><strong>Lower access (read/write) cost</strong></li>
+</ul>
+<hr />
+<p>❄️ Cool (Cold) Access Tier</p>
+<p>✅ When to Use:</p>
+<ul>
+<li>Data is <strong>infrequently accessed</strong>, but still needs to be <strong>retrieved occasionally</strong></li>
+<li>Data must be stored for <strong>at least 30 days</strong></li>
+</ul>
+<p>📦 Typical Use Cases:</p>
+<ul>
+<li>Backup files</li>
+<li>Long-term storage for compliance</li>
+<li>Historical logs and infrequently queried datasets</li>
+<li>Data awaiting processing</li>
+</ul>
+<p>💰 Cost Characteristics:</p>
+<ul>
+<li><strong>Lower storage cost</strong></li>
+<li><strong>Higher access cost</strong> (read/write operations cost more)</li>
+<li>Early deletion fees (minimum 30-day retention)</li>
+</ul>
+<p>❗ Key Decision Factors</p>
+<table>
+<thead>
+<tr>
+<th>Factor</th>
+<th>Hot Tier</th>
+<th>Cool Tier</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Access Frequency</strong></td>
+<td>High</td>
+<td>Low</td>
+</tr>
+<tr>
+<td><strong>Latency</strong></td>
+<td>Low (faster access)</td>
+<td>Medium (slightly slower access)</td>
+</tr>
+<tr>
+<td><strong>Storage Cost per GB</strong></td>
+<td>Higher</td>
+<td>Lower</td>
+</tr>
+<tr>
+<td><strong>Access Cost per Operation</strong></td>
+<td>Lower</td>
+<td>Higher</td>
+</tr>
+<tr>
+<td><strong>Minimum Retention Duration</strong></td>
+<td>None</td>
+<td>30 days</td>
+</tr>
+<tr>
+<td><strong>Early Deletion Charges</strong></td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<p>📊 Summary</p>
+<table>
+<thead>
+<tr>
+<th>Use Case</th>
+<th>Recommended Tier</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Frequently used app data</td>
+<td>Hot</td>
+</tr>
+<tr>
+<td>Infrequently accessed backups</td>
+<td>Cool</td>
+</tr>
+<tr>
+<td>Log files stored for 6+ months</td>
+<td>Cool</td>
+</tr>
+<tr>
+<td>Videos for a streaming platform</td>
+<td>Hot</td>
+</tr>
+<tr>
+<td>Archived customer invoices</td>
+<td>Cool</td>
+</tr>
+</tbody>
+</table>
+<p>🔄 Other Access Tiers for Reference</p>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Best For</th>
+<th>Min Retention</th>
+<th>Access Speed</th>
+<th>Cost Trend</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hot</td>
+<td>Frequent access</td>
+<td>None</td>
+<td>Fast</td>
+<td>High storage, low access</td>
+</tr>
+<tr>
+<td>Cool</td>
+<td>Infrequent access (≥ 30 days)</td>
+<td>30 days</td>
+<td>Moderate</td>
+<td>Low storage, high access</td>
+</tr>
+<tr>
+<td>Archive</td>
+<td>Rare access (≥ 180 days)</td>
+<td>180 days</td>
+<td>Slow (rehydration needed)</td>
+<td>Lowest storage, highest access</td>
+</tr>
+</tbody>
+</table>
+<p>🔗 References</p>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/azure/storage/blobs/access-tiers-overview">Azure Blob Storage Access Tiers</a></li>
+<li><a href="https://azure.microsoft.com/en-us/pricing/details/storage/blobs/">Azure Storage Pricing</a></li>
+</ul>
+<h3 id="5-when-should-we-choose-standard-vs-premium">5. When should we choose standard vs premium ?</h3>
+<p>Azure Storage offers two performance tiers:</p>
+<ul>
+<li><strong>Standard Tier</strong></li>
+<li><strong>Premium Tier</strong></li>
+</ul>
+<p>Selecting the right tier depends on your application's performance, cost, and latency requirements.</p>
+<p>🟢 Standard Tier</p>
+<p>✅ When to Use:</p>
+<ul>
+<li>General-purpose workloads with <strong>moderate performance needs</strong></li>
+<li>Applications where <strong>latency is not critical</strong></li>
+<li>Cost-sensitive scenarios with large data volumes</li>
+</ul>
+<p>📦 Typical Use Cases:</p>
+<ul>
+<li>Backups and archives</li>
+<li>Media content storage (images, videos)</li>
+<li>General-purpose file shares</li>
+<li>Database BLOBs with low IOPS</li>
+<li>Web apps, APIs, dev/test environments</li>
+</ul>
+<p>⚙️ Technical Characteristics:</p>
+<ul>
+<li><strong>Backed by HDDs or standard SSDs</strong></li>
+<li><strong>Lower IOPS and throughput</strong></li>
+<li>Higher latency (~ms range)</li>
+</ul>
+<p>💰 Cost:</p>
+<ul>
+<li><strong>Low cost per GB</strong></li>
+<li><strong>Higher latency</strong></li>
+<li>Pay-per-transaction (higher for frequent access)</li>
+</ul>
+<p>🔴 Premium Tier</p>
+<p>✅ When to Use:</p>
+<ul>
+<li>Workloads requiring <strong>low-latency, high throughput, and high IOPS</strong></li>
+<li>Applications with <strong>performance-critical operations</strong></li>
+</ul>
+<p>📦 Typical Use Cases:</p>
+<ul>
+<li>Virtual machines with heavy I/O (e.g., SQL Server, Oracle)</li>
+<li>OLTP databases</li>
+<li>High-performance file shares (e.g., FSLogix profiles)</li>
+<li>Enterprise apps with sub-millisecond latency requirements</li>
+</ul>
+<p>⚙️ Technical Characteristics:</p>
+<ul>
+<li><strong>Backed by high-performance SSDs</strong></li>
+<li><strong>Very high IOPS &amp; throughput</strong></li>
+<li><strong>Lower latency (~sub-millisecond)</strong></li>
+</ul>
+<p>💰 Cost:</p>
+<ul>
+<li><strong>Higher cost per GB</strong></li>
+<li>Predictable performance</li>
+<li>Flat rate pricing (vs. transactional)</li>
+</ul>
+<p>🔍 Side-by-Side Comparison</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Standard Tier</th>
+<th>Premium Tier</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Performance Medium</strong></td>
+<td>HDD / Standard SSD</td>
+<td>SSD</td>
+</tr>
+<tr>
+<td><strong>Latency</strong></td>
+<td>Milliseconds</td>
+<td>Sub-millisecond</td>
+</tr>
+<tr>
+<td><strong>Throughput</strong></td>
+<td>Moderate</td>
+<td>High</td>
+</tr>
+<tr>
+<td><strong>IOPS</strong></td>
+<td>Low to moderate</td>
+<td>High</td>
+</tr>
+<tr>
+<td><strong>Cost</strong></td>
+<td>Lower (pay-as-you-go)</td>
+<td>Higher (flat rate)</td>
+</tr>
+<tr>
+<td><strong>Use Case Fit</strong></td>
+<td>Archive, backup, general use</td>
+<td>Mission-critical, high IOPS</td>
+</tr>
+<tr>
+<td><strong>Scalability</strong></td>
+<td>High</td>
+<td>High</td>
+</tr>
+</tbody>
+</table>
+<p>✅ Choosing Recommendation</p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Recommended Tier</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Backups and archives</td>
+<td>Standard</td>
+</tr>
+<tr>
+<td>Media content delivery</td>
+<td>Standard</td>
+</tr>
+<tr>
+<td>Dev/test environments</td>
+<td>Standard</td>
+</tr>
+<tr>
+<td>Mission-critical database (SQL, Oracle)</td>
+<td>Premium</td>
+</tr>
+<tr>
+<td>High-performance virtual machine disks</td>
+<td>Premium</td>
+</tr>
+<tr>
+<td>File shares for FSLogix profiles (VDI)</td>
+<td>Premium</td>
+</tr>
+</tbody>
+</table>
+<p>🔗 References</p>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/azure/storage/common/storage-performance-tiers">Azure Storage Performance Tiers</a></li>
+<li><a href="https://learn.microsoft.com/en-us/azure/virtual-machines/disks-types">Azure Premium vs Standard Disks</a></li>
+</ul>
+<h3 id="6-differentiate-between-sdd-vs-hdd">6. Differentiate between SDD vs HDD ?</h3>
+<p>Both <strong>SSD (Solid State Drive)</strong> and <strong>HDD (Hard Disk Drive)</strong> are storage devices used in computers and servers. Below is a comparison based on speed, durability, cost, and use cases.</p>
+<p>🧠 Overview</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>SSD (Solid State Drive)</th>
+<th>HDD (Hard Disk Drive)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Technology</strong></td>
+<td>Flash memory (no moving parts)</td>
+<td>Magnetic spinning disk + moving head</td>
+</tr>
+<tr>
+<td><strong>Access Time</strong></td>
+<td>Fast (0.1 ms - 0.3 ms)</td>
+<td>Slow (5 ms - 15 ms)</td>
+</tr>
+<tr>
+<td><strong>Durability</strong></td>
+<td>More durable (no mechanical parts)</td>
+<td>Prone to damage from drops/shocks</td>
+</tr>
+<tr>
+<td><strong>Noise</strong></td>
+<td>Silent operation</td>
+<td>Audible spinning/clicking sounds</td>
+</tr>
+<tr>
+<td><strong>Power Usage</strong></td>
+<td>Lower power consumption</td>
+<td>Higher power consumption</td>
+</tr>
+<tr>
+<td><strong>Cost/GB</strong></td>
+<td>Higher</td>
+<td>Lower</td>
+</tr>
+<tr>
+<td><strong>Lifespan (writes)</strong></td>
+<td>Limited write cycles (wear leveling)</td>
+<td>Can degrade over time (mechanical wear)</td>
+</tr>
+<tr>
+<td><strong>Boot Time</strong></td>
+<td>10–15 seconds</td>
+<td>30–40 seconds</td>
+</tr>
+</tbody>
+</table>
+<p>⚙️ Performance Comparison</p>
+<table>
+<thead>
+<tr>
+<th>Criteria</th>
+<th>SSD</th>
+<th>HDD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Read/Write Speed</strong></td>
+<td>500 MB/s to 7,000 MB/s (NVMe)</td>
+<td>80 MB/s to 160 MB/s</td>
+</tr>
+<tr>
+<td><strong>Data Transfer Rate</strong></td>
+<td>Very high</td>
+<td>Moderate to low</td>
+</tr>
+<tr>
+<td><strong>IOPS (Input/Output)</strong></td>
+<td>10x to 100x more than HDD</td>
+<td>Lower IOPS</td>
+</tr>
+</tbody>
+</table>
+<p>📦 Use Case Comparison</p>
+<table>
+<thead>
+<tr>
+<th>Use Case</th>
+<th>Recommended Drive</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Operating system / boot drive</td>
+<td>SSD</td>
+</tr>
+<tr>
+<td>Gaming or media editing</td>
+<td>SSD</td>
+</tr>
+<tr>
+<td>Archival or long-term data storage</td>
+<td>HDD</td>
+</tr>
+<tr>
+<td>Large file media libraries</td>
+<td>HDD</td>
+</tr>
+<tr>
+<td>Performance-critical applications</td>
+<td>SSD</td>
+</tr>
+<tr>
+<td>Budget-friendly large storage</td>
+<td>HDD</td>
+</tr>
+</tbody>
+</table>
+<p>🧾 Cost &amp; Capacity Comparison</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>SSD</th>
+<th>HDD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Price per GB</strong></td>
+<td>Higher</td>
+<td>Lower</td>
+</tr>
+<tr>
+<td><strong>Typical Capacity</strong></td>
+<td>128 GB – 8 TB</td>
+<td>500 GB – 20 TB</td>
+</tr>
+<tr>
+<td><strong>Affordability</strong></td>
+<td>Expensive for large sizes</td>
+<td>Cost-effective for bulk</td>
+</tr>
+</tbody>
+</table>
+<p>📊 Summary Table</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>SSD</th>
+<th>HDD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Speed</td>
+<td>Much faster</td>
+<td>Slower</td>
+</tr>
+<tr>
+<td>Durability</td>
+<td>More resistant to damage</td>
+<td>Mechanical, fragile</td>
+</tr>
+<tr>
+<td>Noise</td>
+<td>Silent</td>
+<td>Audible</td>
+</tr>
+<tr>
+<td>Cost</td>
+<td>Higher</td>
+<td>Lower</td>
+</tr>
+<tr>
+<td>Lifespan</td>
+<td>Limited write cycles</td>
+<td>Mechanical wear over time</td>
+</tr>
+<tr>
+<td>Energy Usage</td>
+<td>Low</td>
+<td>High</td>
+</tr>
+</tbody>
+</table>
+<p>🧠 Conclusion</p>
+<ul>
+<li>Choose <strong>SSD</strong> if you need <strong>speed, reliability, and performance</strong> (e.g., boot drives, databases, gaming).</li>
+<li>Choose <strong>HDD</strong> if you need <strong>large storage capacity at low cost</strong> (e.g., backups, media libraries).</li>
+</ul>
+<p>🔗 References</p>
+<ul>
+<li><a href="https://www.crucial.com/articles/about-ssd/what-is-an-ssd">What is an SSD?</a></li>
+<li><a href="https://learn.microsoft.com/en-us/azure/virtual-machines/disks-types">SSD vs HDD Comparison – Microsoft Docs</a></li>
+</ul>
+<h3 id="7-differentiate-between-lrs-zrs-grs-and-ra-grs">7. Differentiate between LRS , ZRS , GRS and RA-GRS ?</h3>
+<p>Azure provides multiple <strong>data redundancy options</strong> to ensure high availability, durability, and disaster recovery of your data. These include:</p>
+<ul>
+<li><strong>LRS (Locally Redundant Storage)</strong></li>
+<li><strong>ZRS (Zone-Redundant Storage)</strong></li>
+<li><strong>GRS (Geo-Redundant Storage)</strong></li>
+<li>
+<p><strong>RA-GRS (Read-Access Geo-Redundant Storage)</strong></p>
+</li>
+<li>
+<p>🧠 Definitions</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Redundancy Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LRS</strong></td>
+<td>Replicates data 3 times within a single <strong>datacenter</strong> in one region.</td>
+</tr>
+<tr>
+<td><strong>ZRS</strong></td>
+<td>Replicates data across <strong>3 availability zones</strong> in the <strong>same region</strong>.</td>
+</tr>
+<tr>
+<td><strong>GRS</strong></td>
+<td>Replicates data to a <strong>secondary region</strong> hundreds of miles away (with LRS in both regions).</td>
+</tr>
+<tr>
+<td><strong>RA-GRS</strong></td>
+<td>Same as GRS but allows <strong>read-only access</strong> to the secondary region.</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>📦 Use Case Comparison</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Recommended Redundancy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Low-cost storage with basic durability</td>
+<td>LRS</td>
+</tr>
+<tr>
+<td>High availability within a region</td>
+<td>ZRS</td>
+</tr>
+<tr>
+<td>Disaster recovery across regions (write-only)</td>
+<td>GRS</td>
+</tr>
+<tr>
+<td>Read-only access during regional outage</td>
+<td>RA-GRS</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>🔁 Replication Scope</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Redundancy</th>
+<th>Intra-Region</th>
+<th>Inter-Zone</th>
+<th>Cross-Region</th>
+<th>Read Access to Secondary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LRS</strong></td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><strong>ZRS</strong></td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><strong>GRS</strong></td>
+<td>✅</td>
+<td>❌</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><strong>RA-GRS</strong></td>
+<td>✅</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p>💰 Cost &amp; Availability</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>LRS</th>
+<th>ZRS</th>
+<th>GRS</th>
+<th>RA-GRS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cost</strong></td>
+<td>Lowest</td>
+<td>Medium</td>
+<td>High</td>
+<td>Highest</td>
+</tr>
+<tr>
+<td><strong>Durability (9s)</strong></td>
+<td>11 9s</td>
+<td>12 9s</td>
+<td>16 9s</td>
+<td>16 9s</td>
+</tr>
+<tr>
+<td><strong>Availability SLA</strong></td>
+<td>99.9%</td>
+<td>99.999%</td>
+<td>99.9%</td>
+<td>99.9%</td>
+</tr>
+<tr>
+<td><strong>Disaster Recovery Ready</strong></td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>Read Access in Failover</strong></td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p>🔍 Summary Table</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>LRS</th>
+<th>ZRS</th>
+<th>GRS</th>
+<th>RA-GRS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Redundancy Type</strong></td>
+<td>Single DC replication</td>
+<td>Multi-zone replication</td>
+<td>Cross-region replication</td>
+<td>Cross-region + read access</td>
+</tr>
+<tr>
+<td><strong>Number of Copies</strong></td>
+<td>3</td>
+<td>3+</td>
+<td>6 (3 in each region)</td>
+<td>6 (3 in each region)</td>
+</tr>
+<tr>
+<td><strong>Availability Zone</strong></td>
+<td>❌</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><strong>Geo Replication</strong></td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>Read from Secondary</strong></td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>Best For</strong></td>
+<td>Low-cost local storage</td>
+<td>High-availability within region</td>
+<td>Disaster recovery</td>
+<td>DR + read access to secondary</td>
+</tr>
+</tbody>
+</table>
+<p>✅ Recommendations</p>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Basic redundancy, dev/test workloads</td>
+<td><strong>LRS</strong></td>
+</tr>
+<tr>
+<td>Zone-level high availability (e.g., production apps)</td>
+<td><strong>ZRS</strong></td>
+</tr>
+<tr>
+<td>DR capability for mission-critical apps</td>
+<td><strong>GRS</strong></td>
+</tr>
+<tr>
+<td>DR with read access (e.g., reporting, analytics)</td>
+<td><strong>RA-GRS</strong></td>
+</tr>
+</tbody>
+</table>
+<p>🔗 References</p>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/azure/storage/common/storage-redundancy">Azure Storage Redundancy</a></li>
+<li><a href="https://learn.microsoft.com/en-us/azure/storage/common/storage-redundancy-options">Choose a Storage Redundancy Option</a></li>
+</ul>
+<h3 id="8-how-can-azure-storage-explorer-make-your-life-easy">8. How can azure storage explorer make your life easy ?</h3>
+<p><strong>Azure Storage Explorer</strong> is a free, standalone GUI tool from Microsoft that simplifies working with Azure Storage resources like Blobs, Queues, Tables, and File Shares.</p>
+<p>🛠️ What is Azure Storage Explorer?</p>
+<p>Azure Storage Explorer is a <strong>cross-platform desktop app</strong> (Windows, macOS, Linux) that lets you <strong>easily manage and interact</strong> with your Azure storage accounts <strong>without needing to write code or scripts</strong>.</p>
+<p>✅ Key Benefits of Azure Storage Explorer</p>
+<ol>
+<li>
+<p><strong>Visual Interface</strong></p>
+</li>
+<li>
+<p>Browse containers, directories, and blobs like a file explorer.</p>
+</li>
+<li>Easy drag-and-drop for uploads and downloads.</li>
+<li>
+<p>No need for complex PowerShell or Azure CLI commands.</p>
+</li>
+<li>
+<p><strong>Multi-Storage Support</strong></p>
+</li>
+<li>
+<p>Manage <strong>multiple storage accounts</strong> across <strong>subscriptions and tenants</strong>.</p>
+</li>
+<li>
+<p>Access <strong>Azure Blob, Queue, Table, and File storage</strong>, plus Azure Data Lake.</p>
+</li>
+<li>
+<p><strong>Local Emulator Support</strong></p>
+</li>
+<li>
+<p>Integrates with <strong>Azure Storage Emulator</strong> or <strong>Azurite</strong> for local development.</p>
+</li>
+<li>
+<p>Helps in testing apps offline before cloud deployment.</p>
+</li>
+<li>
+<p><strong>Access via Different Authentication Modes</strong></p>
+</li>
+<li>
+<p>Azure AD (RBAC), Shared Access Signature (SAS), Connection Strings, or Account Keys.</p>
+</li>
+<li>
+<p>Connect to public, private, or even on-premises Azure Stack storage.</p>
+</li>
+<li>
+<p><strong>Blob and File Management</strong></p>
+</li>
+<li>
+<p>Upload, download, rename, move, and delete blobs or files.</p>
+</li>
+<li>
+<p>Preview file types like text, JSON, images right in the app.</p>
+</li>
+<li>
+<p><strong>Queue and Table Explorer</strong></p>
+</li>
+<li>
+<p>View and modify queue messages.</p>
+</li>
+<li>
+<p>Browse, filter, add, edit, or delete rows in Azure Tables (NoSQL DB).</p>
+</li>
+<li>
+<p><strong>SAS Token and Shared Access</strong></p>
+</li>
+<li>
+<p>Generate and manage SAS URLs to securely share blobs, files, or containers.</p>
+</li>
+<li>
+<p>Easily control permissions (read, write, delete, list, etc.).</p>
+</li>
+<li>
+<p><strong>Cross-Region and Cloud Integration</strong></p>
+</li>
+<li>
+<p>Manage Azure storage across <strong>multiple regions</strong>.</p>
+</li>
+<li>
+<p>Support for <strong>Azure Government</strong>, <strong>China</strong>, and <strong>Azure Stack</strong> clouds.</p>
+</li>
+<li>
+<p><strong>Time-Saving for DevOps &amp; Admins</strong></p>
+</li>
+<li>
+<p>Easy to inspect storage used by web apps, functions, and containers.</p>
+</li>
+<li>
+<p>Faster troubleshooting and real-time monitoring of storage data.</p>
+</li>
+<li>
+<p><strong>Snapshot and Versioning Support</strong></p>
+</li>
+<li>
+<p>View and restore blob snapshots and versions.</p>
+</li>
+<li>Helpful for backup and disaster recovery scenarios.</li>
+</ol>
+<p>📦 Typical Use Cases</p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Developer</td>
+<td>Upload test files, debug queue messages</td>
+</tr>
+<tr>
+<td>Data Engineer</td>
+<td>Manage and inspect blob datasets and file shares</td>
+</tr>
+<tr>
+<td>Admin</td>
+<td>Monitor storage usage and permissions</td>
+</tr>
+<tr>
+<td>QA Tester</td>
+<td>Interact with emulators for offline testing</td>
+</tr>
+</tbody>
+</table>
+<p>🔗 Resources</p>
+<ul>
+<li><a href="https://azure.microsoft.com/en-us/features/storage-explorer/">Download Azure Storage Explorer</a></li>
+<li><a href="https://learn.microsoft.com/en-us/azure/storage/common/storage-explorer">Azure Storage Explorer Docs</a></li>
+</ul>
+<p>🧠 Conclusion</p>
+<p><strong>Azure Storage Explorer makes your life easy</strong> by offering a <strong>GUI-based, no-code, cross-platform</strong> way to work with Azure storage. It e</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.expand - navigation.sections - navigation.prune - navigation.indexes - content.code.copy"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="../../../extra.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2754 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../basics/">
+      
+      
+        <link rel="next" href="../../../Cloud/Azure/IAAS_PASS_SAAS/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>JiraDetailed - Tech Interview Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#what-is-jira" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Tech Interview Guide" class="md-header__button md-logo" aria-label="Tech Interview Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Tech Interview Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              JiraDetailed
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Tech Interview Guide" class="md-nav__button md-logo" aria-label="Tech Interview Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Tech Interview Guide
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    .NET
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            .NET
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    C#
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            C#
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Dotnet/csharp/basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Dotnet/csharp/oop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    OOP Concepts
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Dotnet/csharp/advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Advanced Topics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Angular
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Angular
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Angular/fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fundamentals
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Angular/forms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Forms
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Angular/migration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Migration Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    React
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            React
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../React/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Hooks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../React/state/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    State Management
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Project Management
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Project Management
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Jira
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            Jira
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    JiraDetailed
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    JiraDetailed
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-jira" class="md-nav__link">
+    <span class="md-ellipsis">
+      what is JIRA?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-an-agile" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is an agile?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-an-agile-board" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is an Agile Board?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-scrum" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is scrum?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-sprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is sprint?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-happens-when-we-get-some-another-hours-of-work-in-the-mid-of-sprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      what happens when we get some another hours of work in the mid of sprint
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-kanban-board" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is Kanban board
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-a-stand-ups" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a stand-ups?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-a-story" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a Story
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-epic" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is EPIC
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-an-issue" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is an issue
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-a-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a Project
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#team-managed-projects" class="md-nav__link">
+    <span class="md-ellipsis">
+      Team Managed Projects
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#company-managed-projects" class="md-nav__link">
+    <span class="md-ellipsis">
+      Company managed projects
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-turn-kanban-board-to-scrum-board" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to turn kanban board to Scrum board?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-story-points" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is Story Points
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-the-issues-are-stories-are-dispalyed-in-calendar" class="md-nav__link">
+    <span class="md-ellipsis">
+      How the issues are stories are dispalyed in calendar
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-the-name-of-the-location-where-goals-are-managed-in-jira" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is the name of the location where goals are managed in Jira?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-a-release" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a release
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-a-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a component?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-jql" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is JQL
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#this-is-the-name-of-the-feature-that-adds-a-horizontal-swimlane-across-aa-jira-board" class="md-nav__link">
+    <span class="md-ellipsis">
+      This is the name of the feature that adds a horizontal swimlane across aa jira board.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-permission-will-allow-you-to-settup-a-new-board-admin" class="md-nav__link">
+    <span class="md-ellipsis">
+      What permission will allow you to settup a new board admin?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-do-you-configure-the-issues-visible-on-board" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do you configure the issues visible on board?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#on-a-scrum-board-what-is-displayed-under-the-breadcrumb" class="md-nav__link">
+    <span class="md-ellipsis">
+      On a scrum board, what is displayed under the breadcrumb?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-another-name-that-jira-uses-for-releases-in-the-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      what's another name that jira uses for releases in the interface?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-you-save-a-search-in-jira-whats-that-called" class="md-nav__link">
+    <span class="md-ellipsis">
+      When you save a search in Jira, what's that called?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#filters-control-which-issues-drive-what-feature-on-the-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      Filters control which issues drive what feature on the dashboard?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reports-in-jira-are-attached-to-what-feature" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reports in Jira are attached to what feature?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-creating-a-team-yu-can-only-add-users-already-in-your-company-managed-projects" class="md-nav__link">
+    <span class="md-ellipsis">
+      When creating a team, yu can only add users already in your company- managed projects?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-the-first-step-to-doing-a-buld-edit-in-jira" class="md-nav__link">
+    <span class="md-ellipsis">
+      What's the first step to doing a buld edit in jira?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#product-acceess" class="md-nav__link">
+    <span class="md-ellipsis">
+      Product Acceess
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-workflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is Workflows
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-do-you-go-to-turn-off-the-calendar-view-in-a-company-mnanaged-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      **Where do you go to turn off the calendar view in a company- mnanaged project?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-do-workflows-control-in-jira" class="md-nav__link">
+    <span class="md-ellipsis">
+      What do workflows control in jira?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#after-you-create-a-custom-issue-type-how-do-yoi-make-it-show-up-in-a-comapny-manged-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      After you create a custom issue type, how do yoi make it show up in a comapny-manged project?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#after-you-create-a-custom-filed-how-do-you-make-it-show-up-on-an-issue-type-in-a-company-managed-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      After you create a custom filed, how do you make it show up on an issue type in a company-managed Project?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-the-proper-sequence-for-an-autamtion-rule-in-jira" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is the proper sequence for an autamtion rule in jira?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-does-jira-call-their-third-party-add-ons-that-you-can-purchase-from-marketplace" class="md-nav__link">
+    <span class="md-ellipsis">
+      What does jira call their third-party add-ons that you can purchase from marketplace?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-do-you-go-to-see-all-the-changes-made-by-users-across-jira" class="md-nav__link">
+    <span class="md-ellipsis">
+      Where do you go to see all the changes made by users across jira?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#burndown-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      Burndown Chart
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#burnup-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      Burnup chart
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sprint-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      sprint Report
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#epic-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      Epic Report
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#velocity-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      Velocity Report
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#control-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      Control Report
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#average-age-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      Average age Report
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#which-jira-software-reports-would-you-use-to-determine-if-your-team-will-acheive-their-current-sprint-goal" class="md-nav__link">
+    <span class="md-ellipsis">
+      which jira software reports would you use to determine if your team will acheive their current sprint goal
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#which-jira-aglie-report-would-you-use-to-estimate-when-a-version-will-be-complete" class="md-nav__link">
+    <span class="md-ellipsis">
+      which jira aglie report would you use to estimate when a version will be complete
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#which-tow-jira-agile-reports-provide-forecastin" class="md-nav__link">
+    <span class="md-ellipsis">
+      Which tow jira agile reports provide forecastin?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-a-gadget" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a Gadget?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jira-administrators-are-the-only-ones-that-can-create-dashboards-if-you-need-a-gadget-added-to-your-dashboard-contact-your-jira-administrator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Jira administrators are the only ones that can create dashboards. if you need a gadget added to your dashboard, contact your jira administrator
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#as-the-scrum-master-you-want-to-compre-how-well-your-team-does-at-meeting-their-goal-for-the-last-five-sprints-in-an-epic-which-gadget-or-report-would-you-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      As the scrum master, you want to compre how well your team does at meeting their goal for the last five sprints in an epic. which gadget or report would you use?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#as-the-scrum-master-you-need-to-help-your-team-estimate-how-many-story-points-the-team-can-complete-in-the-next-sprint-which-report-or-gadget-would-you-use-for-this-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      As the scrum Master, You need to help your team estimate how many story points the team can complete in the next sprint, which report or gadget would you use for this task?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jira-products" class="md-nav__link">
+    <span class="md-ellipsis">
+      JIRA Products
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cloud-vs-data-center" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cloud V/s Data Center
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-center" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data center
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-will-happen-if-you-exceed-the-number-of-licensed-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      what will happen if you exceed the number of licensed users?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jira-roles" class="md-nav__link">
+    <span class="md-ellipsis">
+      JIRA Roles
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Cloud
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Cloud
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Azure
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            Azure
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Cloud/Azure/IAAS_PASS_SAAS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    IASS_PASS_SAAS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Cloud/Azure/DTU_EDTU/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DTU_EDTU
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Cloud/Azure/AzureFunctions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureFunctions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Cloud/Azure/Azure_storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureStorage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Cloud/Azure/Azure_Cosmos_DB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureCosmosDB
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Cloud/Azure/Azure_Fabric_microservices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureFabricandMicroServices
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Cloud/Azure/Azure_Tables/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureTables
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Cloud/Azure/Azure_blobs%28block%2Cappend%2Cpage%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureBlobs(block,append,page)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Cloud/Azure/Azure_Queues%28Azure%20Queues%20%2C%20visibility%20timeouts%20%2CPeek%20%26%20De-Queue%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Azure_Queues
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Cloud/Azure/Azure_Services%28App%20services%20and%20Cloud%20services%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Azure_Services
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Cloud/Azure/Azure_WebJobs%28WebJob%20and%20background%20processing.%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Azure_WebJobs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Scenarios
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Scenarios
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Scenarios/migration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Legacy Migration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Scenarios/realworld/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Real-World QA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    BrowserStack
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            BrowserStack
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../browserstack/bascis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-jira" class="md-nav__link">
+    <span class="md-ellipsis">
+      what is JIRA?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-an-agile" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is an agile?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-an-agile-board" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is an Agile Board?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-scrum" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is scrum?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-sprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is sprint?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-happens-when-we-get-some-another-hours-of-work-in-the-mid-of-sprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      what happens when we get some another hours of work in the mid of sprint
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-kanban-board" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is Kanban board
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-a-stand-ups" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a stand-ups?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-a-story" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a Story
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-epic" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is EPIC
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-an-issue" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is an issue
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-a-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a Project
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#team-managed-projects" class="md-nav__link">
+    <span class="md-ellipsis">
+      Team Managed Projects
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#company-managed-projects" class="md-nav__link">
+    <span class="md-ellipsis">
+      Company managed projects
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-turn-kanban-board-to-scrum-board" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to turn kanban board to Scrum board?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-story-points" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is Story Points
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-the-issues-are-stories-are-dispalyed-in-calendar" class="md-nav__link">
+    <span class="md-ellipsis">
+      How the issues are stories are dispalyed in calendar
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-the-name-of-the-location-where-goals-are-managed-in-jira" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is the name of the location where goals are managed in Jira?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-a-release" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a release
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-a-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a component?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-jql" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is JQL
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#this-is-the-name-of-the-feature-that-adds-a-horizontal-swimlane-across-aa-jira-board" class="md-nav__link">
+    <span class="md-ellipsis">
+      This is the name of the feature that adds a horizontal swimlane across aa jira board.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-permission-will-allow-you-to-settup-a-new-board-admin" class="md-nav__link">
+    <span class="md-ellipsis">
+      What permission will allow you to settup a new board admin?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-do-you-configure-the-issues-visible-on-board" class="md-nav__link">
+    <span class="md-ellipsis">
+      How do you configure the issues visible on board?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#on-a-scrum-board-what-is-displayed-under-the-breadcrumb" class="md-nav__link">
+    <span class="md-ellipsis">
+      On a scrum board, what is displayed under the breadcrumb?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-another-name-that-jira-uses-for-releases-in-the-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      what's another name that jira uses for releases in the interface?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-you-save-a-search-in-jira-whats-that-called" class="md-nav__link">
+    <span class="md-ellipsis">
+      When you save a search in Jira, what's that called?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#filters-control-which-issues-drive-what-feature-on-the-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      Filters control which issues drive what feature on the dashboard?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reports-in-jira-are-attached-to-what-feature" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reports in Jira are attached to what feature?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-creating-a-team-yu-can-only-add-users-already-in-your-company-managed-projects" class="md-nav__link">
+    <span class="md-ellipsis">
+      When creating a team, yu can only add users already in your company- managed projects?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-the-first-step-to-doing-a-buld-edit-in-jira" class="md-nav__link">
+    <span class="md-ellipsis">
+      What's the first step to doing a buld edit in jira?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#product-acceess" class="md-nav__link">
+    <span class="md-ellipsis">
+      Product Acceess
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-workflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is Workflows
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-do-you-go-to-turn-off-the-calendar-view-in-a-company-mnanaged-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      **Where do you go to turn off the calendar view in a company- mnanaged project?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-do-workflows-control-in-jira" class="md-nav__link">
+    <span class="md-ellipsis">
+      What do workflows control in jira?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#after-you-create-a-custom-issue-type-how-do-yoi-make-it-show-up-in-a-comapny-manged-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      After you create a custom issue type, how do yoi make it show up in a comapny-manged project?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#after-you-create-a-custom-filed-how-do-you-make-it-show-up-on-an-issue-type-in-a-company-managed-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      After you create a custom filed, how do you make it show up on an issue type in a company-managed Project?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-the-proper-sequence-for-an-autamtion-rule-in-jira" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is the proper sequence for an autamtion rule in jira?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-does-jira-call-their-third-party-add-ons-that-you-can-purchase-from-marketplace" class="md-nav__link">
+    <span class="md-ellipsis">
+      What does jira call their third-party add-ons that you can purchase from marketplace?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-do-you-go-to-see-all-the-changes-made-by-users-across-jira" class="md-nav__link">
+    <span class="md-ellipsis">
+      Where do you go to see all the changes made by users across jira?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#burndown-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      Burndown Chart
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#burnup-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      Burnup chart
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sprint-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      sprint Report
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#epic-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      Epic Report
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#velocity-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      Velocity Report
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#control-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      Control Report
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#average-age-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      Average age Report
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#which-jira-software-reports-would-you-use-to-determine-if-your-team-will-acheive-their-current-sprint-goal" class="md-nav__link">
+    <span class="md-ellipsis">
+      which jira software reports would you use to determine if your team will acheive their current sprint goal
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#which-jira-aglie-report-would-you-use-to-estimate-when-a-version-will-be-complete" class="md-nav__link">
+    <span class="md-ellipsis">
+      which jira aglie report would you use to estimate when a version will be complete
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#which-tow-jira-agile-reports-provide-forecastin" class="md-nav__link">
+    <span class="md-ellipsis">
+      Which tow jira agile reports provide forecastin?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-a-gadget" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a Gadget?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jira-administrators-are-the-only-ones-that-can-create-dashboards-if-you-need-a-gadget-added-to-your-dashboard-contact-your-jira-administrator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Jira administrators are the only ones that can create dashboards. if you need a gadget added to your dashboard, contact your jira administrator
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#as-the-scrum-master-you-want-to-compre-how-well-your-team-does-at-meeting-their-goal-for-the-last-five-sprints-in-an-epic-which-gadget-or-report-would-you-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      As the scrum master, you want to compre how well your team does at meeting their goal for the last five sprints in an epic. which gadget or report would you use?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#as-the-scrum-master-you-need-to-help-your-team-estimate-how-many-story-points-the-team-can-complete-in-the-next-sprint-which-report-or-gadget-would-you-use-for-this-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      As the scrum Master, You need to help your team estimate how many story points the team can complete in the next sprint, which report or gadget would you use for this task?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jira-products" class="md-nav__link">
+    <span class="md-ellipsis">
+      JIRA Products
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cloud-vs-data-center" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cloud V/s Data Center
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-center" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data center
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-will-happen-if-you-exceed-the-number-of-licensed-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      what will happen if you exceed the number of licensed users?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jira-roles" class="md-nav__link">
+    <span class="md-ellipsis">
+      JIRA Roles
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>JiraDetailed</h1>
+
+<h3 id="what-is-jira"><strong>what is JIRA?</strong></h3>
+<ul>
+<li>JIRA uses Agile, it is a project management tool</li>
+</ul>
+<h3 id="what-is-an-agile"><strong>What is an agile?</strong></h3>
+<ul>
+<li>A software developemtn methodology focuses in empowering teams to efficientlt organize their work through self-managment and collaboration</li>
+</ul>
+<h3 id="what-is-an-agile-board"><strong>What is an Agile Board?</strong></h3>
+<ul>
+<li>They are two types of Agile baords<pre><code>- Scrum and kanban
+</code></pre>
+</li>
+</ul>
+<h3 id="what-is-scrum"><strong>What is scrum?</strong></h3>
+<ul>
+<li>An agile framework that uses sprints to get work done.</li>
+</ul>
+<h3 id="what-is-sprint"><strong>What is sprint?</strong></h3>
+<ul>
+<li>A sprint is a pre-determined amount of time for your team ot get a pre-deermined amounut of work done.</li>
+</ul>
+<h3 id="what-happens-when-we-get-some-another-hours-of-work-in-the-mid-of-sprint"><strong>what happens when we get some another hours of work in the mid of sprint</strong></h3>
+<ul>
+<li>The best practice for this is we can add the task in the backlog or if we want to do in current print the same amount of working hours task has to move to backlog and bring this task to current sprint.</li>
+</ul>
+<h3 id="what-is-kanban-board"><strong>What is Kanban board</strong></h3>
+<ul>
+<li>An agile framework that uses a continuos workflow instead of sprints to get work done.</li>
+</ul>
+<h3 id="what-is-a-stand-ups"><strong>What is a stand-ups?</strong></h3>
+<ul>
+<li>A stand-up meeting is a fase meeting(so fast that no one needs tp sit down) every morning where everyone on the team review wheat they did the day before, hwat they'll do today and any roadblocks they're having.</li>
+</ul>
+<h3 id="what-is-a-story"><strong>What is a Story</strong></h3>
+<ul>
+<li>
+<p>In Agile it follows the below the principle for creating a story and that is the reason it is called as UseR Story</p>
+<pre><code>-As a &lt;type of user&gt;, I want &lt;some goal&gt; so that &lt;some reason&gt;
+</code></pre>
+</li>
+<li>
+<p>Creating a new issue in Jira, the Story issue type referes to an agile term known as User stories</p>
+</li>
+<li>
+<p>story is a default issue type in JIRA</p>
+</li>
+</ul>
+<h3 id="what-is-epic"><strong>What is EPIC</strong></h3>
+<ul>
+<li>
+<p>A epic is how you tack multiple stories that correlate with each other. this helps everyone on the team see the progress of the bigger picture.</p>
+</li>
+<li>
+<p><strong>Under Epic we have stories</strong></p>
+</li>
+</ul>
+<h3 id="what-is-an-issue"><strong>What is an issue</strong></h3>
+<ul>
+<li>Issues are at hte heart of what you need to track. They are contianers for all the fields in jira.</li>
+</ul>
+<h3 id="what-is-a-project"><strong>What is a Project</strong></h3>
+<ul>
+<li>Projects are containets for issues. They are how you configure issue types, fields, etc..,</li>
+</ul>
+<h3 id="team-managed-projects"><strong>Team Managed Projects</strong></h3>
+<ul>
+<li>In team managed projects. the project scope entities (issues types, statuses, fields, etc) that live only with in a single team - managed project.</li>
+<li>it is managed by anyone in the team.</li>
+</ul>
+<h3 id="company-managed-projects"><strong>Company managed projects</strong></h3>
+<ul>
+<li>In Company Projects, the entities are created globally and this entities are shared by all the projects.</li>
+<li>it is managed by jira administrator.</li>
+</ul>
+<h3 id="how-to-turn-kanban-board-to-scrum-board"><strong>How to turn kanban board to Scrum board?</strong></h3>
+<ul>
+<li>basically we the difference b/w both is the scrum have backlogs and sprints, so we need to turn on the below features</li>
+<li><strong>Features :</strong> Backlog, sprints, timeline</li>
+</ul>
+<h3 id="what-is-story-points"><strong>What is Story Points</strong></h3>
+<ul>
+<li>A unit of measurement that is defined by your team (Similar to sprints) to determine the overall amount of work, complexity, and uncerainty involved.</li>
+</ul>
+<h3 id="how-the-issues-are-stories-are-dispalyed-in-calendar"><strong>How the issues are stories are dispalyed in calendar</strong></h3>
+<ul>
+<li>if the issue has the due date it is automatically displayed in calendar view.</li>
+</ul>
+<h3 id="what-is-the-name-of-the-location-where-goals-are-managed-in-jira"><strong>What is the name of the location where goals are managed in Jira?</strong></h3>
+<ul>
+<li>Atlassian Home.</li>
+</ul>
+<h3 id="what-is-a-release"><strong>What is a release</strong></h3>
+<ul>
+<li>Releases are built-in way of tracking the issues that are associated with different versions of your software.</li>
+</ul>
+<h3 id="what-is-a-component"><strong>What is a component?</strong></h3>
+<ul>
+<li>Components are a built-in way of tracking the issues that are associated with differen functionality or areas of focus.</li>
+</ul>
+<h3 id="what-is-jql"><strong>What is JQL</strong></h3>
+<ul>
+<li>JQL is jira Query language, with this we can give queries to the filters.</li>
+</ul>
+<h3 id="this-is-the-name-of-the-feature-that-adds-a-horizontal-swimlane-across-aa-jira-board"><strong>This is the name of the feature that adds a horizontal swimlane across aa jira board.</strong></h3>
+<ul>
+<li>GroupBy.</li>
+</ul>
+<h3 id="what-permission-will-allow-you-to-settup-a-new-board-admin"><strong>What permission will allow you to settup a new board admin?</strong></h3>
+<ul>
+<li>Project admin permissions.</li>
+</ul>
+<h3 id="how-do-you-configure-the-issues-visible-on-board"><strong>How do you configure the issues visible on board?</strong></h3>
+<ul>
+<li>Filters</li>
+</ul>
+<h3 id="on-a-scrum-board-what-is-displayed-under-the-breadcrumb"><strong>On a scrum board, what is displayed under the breadcrumb?</strong></h3>
+<ul>
+<li>Sprint name</li>
+</ul>
+<h3 id="whats-another-name-that-jira-uses-for-releases-in-the-interface"><strong>what's another name that jira uses for releases in the interface?</strong></h3>
+<ul>
+<li>versions</li>
+</ul>
+<h3 id="when-you-save-a-search-in-jira-whats-that-called"><strong>When you save a search in Jira, what's that called?</strong></h3>
+<ul>
+<li>Filter</li>
+</ul>
+<h3 id="filters-control-which-issues-drive-what-feature-on-the-dashboard"><strong>Filters control which issues drive what feature on the dashboard?</strong></h3>
+<ul>
+<li>Gadjets.</li>
+</ul>
+<h3 id="reports-in-jira-are-attached-to-what-feature"><strong>Reports in Jira are attached to what feature?</strong></h3>
+<ul>
+<li>Boards.</li>
+</ul>
+<h3 id="when-creating-a-team-yu-can-only-add-users-already-in-your-company-managed-projects"><strong>When creating a team, yu can only add users already in your company- managed projects?</strong></h3>
+<ul>
+<li>False</li>
+</ul>
+<h3 id="whats-the-first-step-to-doing-a-buld-edit-in-jira"><strong>What's the first step to doing a buld edit in jira?</strong></h3>
+<ul>
+<li>Searching for the issues to edit.</li>
+</ul>
+<h3 id="product-acceess"><strong>Product Acceess</strong></h3>
+<ul>
+<li>Active users are those with prduct access. For example, Jira, BitBucket, And Confluence are all different Products.</li>
+</ul>
+<h3 id="what-is-workflows"><strong>What is Workflows</strong></h3>
+<ul>
+<li>Workflows are used to control the statuses of issues and how they trnsistion from one status to another.</li>
+</ul>
+<h3 id="where-do-you-go-to-turn-off-the-calendar-view-in-a-company-mnanaged-project">**Where do you go to turn off the calendar view in a company- mnanaged project?</h3>
+<ul>
+<li>Features</li>
+</ul>
+<h3 id="what-do-workflows-control-in-jira"><strong>What do workflows control in jira?</strong></h3>
+<ul>
+<li>Statuses and transitions</li>
+</ul>
+<h3 id="after-you-create-a-custom-issue-type-how-do-yoi-make-it-show-up-in-a-comapny-manged-project"><strong>After you create a custom issue type, how do yoi make it show up in a comapny-manged project?</strong></h3>
+<ul>
+<li>With a scheme.</li>
+</ul>
+<h3 id="after-you-create-a-custom-filed-how-do-you-make-it-show-up-on-an-issue-type-in-a-company-managed-project"><strong>After you create a custom filed, how do you make it show up on an issue type in a company-managed Project?</strong></h3>
+<ul>
+<li>with a scheme.</li>
+</ul>
+<h3 id="what-is-the-proper-sequence-for-an-autamtion-rule-in-jira"><strong>What is the proper sequence for an autamtion rule in jira?</strong></h3>
+<ul>
+<li>trigger, condition, action</li>
+</ul>
+<h3 id="what-does-jira-call-their-third-party-add-ons-that-you-can-purchase-from-marketplace"><strong>What does jira call their third-party add-ons that you can purchase from marketplace?</strong></h3>
+<ul>
+<li>apps</li>
+</ul>
+<h3 id="where-do-you-go-to-see-all-the-changes-made-by-users-across-jira"><strong>Where do you go to see all the changes made by users across jira?</strong></h3>
+<ul>
+<li>Audit log</li>
+</ul>
+<h3 id="burndown-chart"><strong>Burndown Chart</strong></h3>
+<ul>
+<li><strong>What it is:</strong> Diagram of actual and estimated amount of work to be done in a sprint.</li>
+<li><strong>What it tells Us:</strong> How team is delivering work during a sprint. The likelihood of achieving the sprint goal.</li>
+<li><strong>Why it is uses</strong> To track sprint progress and identify issues.</li>
+</ul>
+<h3 id="burnup-chart"><strong>Burnup chart</strong></h3>
+<ul>
+<li><strong>What it is :</strong> Diagram of totalscope compared to amount of work completed in a sprint.</li>
+<li><strong>What it tells us:</strong> How team mkaed progress towards the total scope with in a sprint , the amount of scope creep.</li>
+<li><strong>Why use it:</strong> To track sprint progress and identitfy scope creep.</li>
+</ul>
+<h3 id="sprint-report"><strong>sprint Report</strong></h3>
+<ul>
+<li><strong>What it is :</strong> Summary of the sprint progress to date</li>
+<li><strong>What it tells us:</strong> What the team delivered (and didn't deliver) for a specified sprint.</li>
+<li><strong>Why use it:</strong> To view a summary of sprint.</li>
+</ul>
+<h3 id="epic-report"><strong>Epic Report</strong></h3>
+<ul>
+<li><strong>What it is :</strong> Diagram of complete, incomplete, and non estimated issues in a epic</li>
+<li><strong>What it tells us:</strong> Trending progress toward completing an epic over time and also track remaining work</li>
+<li><strong>Why use it:</strong> To plan work for an epic that may span mutiple sprints.</li>
+</ul>
+<h3 id="velocity-report"><strong>Velocity Report</strong></h3>
+<ul>
+<li><strong>What it is :</strong> Chart of planned work vs compelted work for mutiple sprints</li>
+<li><strong>What it tells us:</strong> What team commits to and delivers each sprint</li>
+<li><strong>Why use it:</strong> To identify and address trends in team commitment and delivery.</li>
+</ul>
+<h3 id="control-report"><strong>Control Report</strong></h3>
+<ul>
+<li><strong>What it is :</strong> Diagram of cycle time in each workflow state for project</li>
+<li><strong>What it tells us:</strong> Where bottlenecks and slow downs occurs in workflow</li>
+<li><strong>Why use it:</strong>To identify and address workflow design prblems and to enable moore predictale estimatons.</li>
+</ul>
+<h3 id="average-age-report"><strong>Average age Report</strong></h3>
+<ul>
+<li><strong>What it is :</strong> Displays average age of unresolved issues for project or filter</li>
+<li><strong>What it tells us:</strong> Whether baclog is kept up to date</li>
+<li><strong>Why use it:</strong>To identify aging issues so backlog can be updated.</li>
+</ul>
+<h3 id="which-jira-software-reports-would-you-use-to-determine-if-your-team-will-acheive-their-current-sprint-goal"><strong>which jira software reports would you use to determine if your team will acheive their current sprint goal</strong></h3>
+<ul>
+<li>Burndown chart</li>
+<li>sprint report</li>
+</ul>
+<h3 id="which-jira-aglie-report-would-you-use-to-estimate-when-a-version-will-be-complete"><strong>which jira aglie report would you use to estimate when a version will be complete</strong></h3>
+<ul>
+<li>Release Burndown</li>
+</ul>
+<h3 id="which-tow-jira-agile-reports-provide-forecastin"><strong>Which tow jira agile reports provide forecastin?</strong></h3>
+<ul>
+<li>
+<p>Release Burndown</p>
+</li>
+<li>
+<p>Version report</p>
+</li>
+</ul>
+<h3 id="what-is-a-gadget"><strong>What is a Gadget?</strong></h3>
+<ul>
+<li>Dispaly protect/issue information</li>
+<li>visualize information</li>
+<li>customizable</li>
+<li>centralized location</li>
+</ul>
+<h3 id="jira-administrators-are-the-only-ones-that-can-create-dashboards-if-you-need-a-gadget-added-to-your-dashboard-contact-your-jira-administrator"><strong>Jira administrators are the only ones that can create dashboards. if you need a gadget added to your dashboard, contact your jira administrator</strong></h3>
+<ul>
+<li><strong>FALSE</strong> Any jira use can create a dashboard and can add gadjets to a dashboard</li>
+</ul>
+<h3 id="as-the-scrum-master-you-want-to-compre-how-well-your-team-does-at-meeting-their-goal-for-the-last-five-sprints-in-an-epic-which-gadget-or-report-would-you-use"><strong>As the scrum master, you want to compre how well your team does at meeting their goal for the last five sprints in an epic. which gadget or report would you use?</strong></h3>
+<ul>
+<li>Velocity chart</li>
+<li>Epic burndown chart</li>
+</ul>
+<h3 id="as-the-scrum-master-you-need-to-help-your-team-estimate-how-many-story-points-the-team-can-complete-in-the-next-sprint-which-report-or-gadget-would-you-use-for-this-task"><strong>As the scrum Master, You need to help your team estimate how many story points the team can complete in the next sprint, which report or gadget would you use for this task?</strong></h3>
+<ul>
+<li>velocity chart</li>
+</ul>
+<h3 id="jira-products"><strong>JIRA Products</strong></h3>
+<ul>
+<li>JIRA Software</li>
+<li>JIRA Service Management</li>
+<li>Jira Core</li>
+</ul>
+<h3 id="cloud-vs-data-center"><strong>Cloud V/s Data Center</strong></h3>
+<ul>
+<li>Is for the organizations that don't want to maintain servers, softwares upgrades, and tasks that an IT system administrator, serer administrators and a host of other experts must take care of.</li>
+</ul>
+<h3 id="data-center"><strong>Data center</strong></h3>
+<ul>
+<li>Is used by business that need to host their own data and applications</li>
+</ul>
+<h3 id="what-will-happen-if-you-exceed-the-number-of-licensed-users"><strong>what will happen if you exceed the number of licensed users?</strong></h3>
+<ul>
+<li>Users wont able to create new issues</li>
+</ul>
+<h3 id="jira-roles"><strong>JIRA Roles</strong></h3>
+<p><strong>Projet administrator</strong></p>
+<p>What can they do</p>
+<ul>
+<li>Assign project members to project roles</li>
+<li>Edit project details</li>
+<li>Edit workflow and screens</li>
+<li>create and mamage versions and components</li>
+</ul>
+<p>Who can be assigned</p>
+<ul>
+<li>one or more users and/or groups</li>
+</ul>
+<p>by default, the project administrator rile is granted to the jira administrators groups when project is created.</p>
+<p><strong>Project Lead</strong></p>
+<p>What they can do</p>
+<ul>
+<li>manage the project</li>
+<li>used in schemas and more</li>
+</ul>
+<p>Who can be assigned?</p>
+<ul>
+<li>only one use</li>
+<li>any user can be assigned</li>
+</ul>
+<p>by default, the jira admin who created the projet is assigned as the project lead</p>
+<p><strong>Default assignee</strong></p>
+<p>What they can do?</p>
+<ul>
+<li>assigned to issues if no other user is assigned to the issue on creation.</li>
+</ul>
+<p>who can be assinged?</p>
+<ul>
+<li>project lead, componen lead, or unassigned</li>
+</ul>
+<p>default issue assignes will be set according to system, componenent, or project settings.</p>
+<p><strong>Borad Administrator</strong></p>
+<p>What they can do?</p>
+<ul>
+<li>Configure boards(change columns, configure swimlanes)</li>
+</ul>
+<p>Who can be assigned?</p>
+<ul>
+<li>one or more users or groups.</li>
+</ul>
+<p>the user who created the board is automaticallu granted the board administrator role.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.expand - navigation.sections - navigation.prune - navigation.indexes - content.code.copy"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="../../../extra.js"></script>
+      
+    
+  </body>
+</html>

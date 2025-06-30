@@ -1,0 +1,2237 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../Azure_blobs%28block%2Cappend%2Cpage%29/">
+      
+      
+        <link rel="next" href="../Azure_Services%28App%20services%20and%20Cloud%20services%29/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>Azure_Queues - Tech Interview Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-what-is-the-need-of-queues" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Tech Interview Guide" class="md-header__button md-logo" aria-label="Tech Interview Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Tech Interview Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Azure_Queues
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Tech Interview Guide" class="md-nav__button md-logo" aria-label="Tech Interview Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Tech Interview Guide
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    .NET
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            .NET
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    C#
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            C#
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Dotnet/csharp/basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Dotnet/csharp/oop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    OOP Concepts
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Dotnet/csharp/advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Advanced Topics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Angular
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Angular
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Angular/fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fundamentals
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Angular/forms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Forms
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Angular/migration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Migration Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    React
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            React
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../React/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Hooks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../React/state/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    State Management
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Project Management
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Project Management
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Jira
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            Jira
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Poject_Management/Jira/basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Poject_Management/Jira/Jira_detailed_course/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    JiraDetailed
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Cloud
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Cloud
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Azure
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            Azure
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IAAS_PASS_SAAS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    IASS_PASS_SAAS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DTU_EDTU/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DTU_EDTU
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AzureFunctions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureFunctions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureStorage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Cosmos_DB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureCosmosDB
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Fabric_microservices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureFabricandMicroServices
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Tables/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureTables
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_blobs%28block%2Cappend%2Cpage%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AzureBlobs(block,append,page)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Azure_Queues
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Azure_Queues
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-what-is-the-need-of-queues" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. What is the need of Queues?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-what-is-fifo-in-queues" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. What is FIFO in Queues?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-how-to-add-message-read-the-next-record" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. How to add message read the next record?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-does-peekmessage-read-the-next-record" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Does PeekMessage read the next record?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-how-to-do-a-de-queue-in-queues" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. How to do a De-queue in Queues?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-explain-visibility-time-out-concept" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Explain visibility time out concept?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-how-is-getmessage-different-from-peek" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. How is GetMessage different from Peek?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-how-to-read-bulk-messages-from-queues" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. How to read bulk messages from Queues?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-by-default-in-getmessage-visibility-time-out-___seconds" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. By default In GetMessage visibility time out ___seconds.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-how-to-update-a-message" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. How to update a message?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-what-is-the-messageupdatefield-meant-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. What is the MessageUpdateField meant for?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-what-is-importance-of-messageid-and-popreceiptid" class="md-nav__link">
+    <span class="md-ellipsis">
+      12. What is importance of MessageId and Popreceiptid?
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_Services%28App%20services%20and%20Cloud%20services%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Azure_Services
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Azure_WebJobs%28WebJob%20and%20background%20processing.%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Azure_WebJobs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Scenarios
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Scenarios
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Scenarios/migration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Legacy Migration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Scenarios/realworld/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Real-World QA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    BrowserStack
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            BrowserStack
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../browserstack/bascis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-what-is-the-need-of-queues" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. What is the need of Queues?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-what-is-fifo-in-queues" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. What is FIFO in Queues?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-how-to-add-message-read-the-next-record" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. How to add message read the next record?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-does-peekmessage-read-the-next-record" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Does PeekMessage read the next record?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-how-to-do-a-de-queue-in-queues" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. How to do a De-queue in Queues?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-explain-visibility-time-out-concept" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Explain visibility time out concept?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-how-is-getmessage-different-from-peek" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. How is GetMessage different from Peek?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-how-to-read-bulk-messages-from-queues" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. How to read bulk messages from Queues?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-by-default-in-getmessage-visibility-time-out-___seconds" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. By default In GetMessage visibility time out ___seconds.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-how-to-update-a-message" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. How to update a message?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-what-is-the-messageupdatefield-meant-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. What is the MessageUpdateField meant for?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-what-is-importance-of-messageid-and-popreceiptid" class="md-nav__link">
+    <span class="md-ellipsis">
+      12. What is importance of MessageId and Popreceiptid?
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>Azure_Queues</h1>
+
+<p><strong>Azure Queues , visibility timeouts ,Peek &amp; De-Queue.</strong></p>
+<h3 id="1-what-is-the-need-of-queues">1. What is the need of Queues?</h3>
+<p>🔑 Purpose of Queues</p>
+<ul>
+<li>
+<p><strong>Decouple application components:</strong><br />
+  Queues enable different parts of a system to communicate asynchronously without tight coupling.</p>
+</li>
+<li>
+<p><strong>Buffering and load leveling:</strong><br />
+  They smooth out bursts of work by buffering requests, preventing system overload.</p>
+</li>
+<li>
+<p><strong>Reliable message delivery:</strong><br />
+  Ensure that messages are stored durably until processed, even if consumers are temporarily unavailable.</p>
+</li>
+<li>
+<p><strong>Enable asynchronous processing:</strong><br />
+  Producers can send messages and continue working without waiting for consumers to finish processing.</p>
+</li>
+<li>
+<p><strong>Improve scalability:</strong><br />
+  Multiple consumers can process messages concurrently, improving throughput and scalability.</p>
+</li>
+</ul>
+<p>📌 Common Use Cases</p>
+<ul>
+<li>Task scheduling and background processing</li>
+<li>Communication between microservices</li>
+<li>Workload distribution in distributed systems</li>
+<li>Event-driven architectures and workflows</li>
+</ul>
+<p>✅ Summary</p>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Decoupling</td>
+<td>Enables loose coupling between components</td>
+</tr>
+<tr>
+<td>Load leveling</td>
+<td>Buffers spikes in workload</td>
+</tr>
+<tr>
+<td>Reliability</td>
+<td>Guarantees message delivery</td>
+</tr>
+<tr>
+<td>Asynchronous processing</td>
+<td>Allows non-blocking communication</td>
+</tr>
+<tr>
+<td>Scalability</td>
+<td>Supports parallel and distributed processing</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-what-is-fifo-in-queues">2. What is FIFO in Queues?</h3>
+<p>🔑 Definition</p>
+<ul>
+<li><strong>FIFO</strong> stands for <strong>First-In, First-Out</strong>.</li>
+<li>It is a message processing order where the <strong>first message added to the queue is the first one to be processed</strong>.</li>
+<li>Ensures messages are handled in the exact order they were received.</li>
+</ul>
+<p>⚙️ How FIFO Works in Queues</p>
+<ul>
+<li>Messages are enqueued (added) at the <strong>tail</strong>.</li>
+<li>Messages are dequeued (removed) from the <strong>head</strong>.</li>
+<li>Guarantees <strong>ordered processing</strong>, critical for workflows requiring sequence integrity.</li>
+</ul>
+<p>📌 Importance of FIFO</p>
+<ul>
+<li>Maintains <strong>data consistency</strong> when order matters.</li>
+<li>Prevents <strong>out-of-order processing</strong> that could cause errors or incorrect results.</li>
+<li>Vital for scenarios like:<pre><code>- Transaction processing
+- Event sourcing
+- Workflow orchestration
+</code></pre>
+</li>
+</ul>
+<p>✅ Summary</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FIFO</td>
+<td>First-In, First-Out processing</td>
+</tr>
+<tr>
+<td>Purpose</td>
+<td>Process messages in order received</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-how-to-add-message-read-the-next-record">3. How to add message read the next record?</h3>
+<p>➕ How to Add a Message and Read the Next Record in Azure Queue Storage (C#)</p>
+<p><strong>1. Add a Message to the Queue</strong></p>
+<pre><code class="language-csharp">using Azure.Storage.Queues;
+using System;
+using System.Threading.Tasks;
+
+string connectionString = &quot;&lt;your_connection_string&gt;&quot;;
+string queueName = &quot;myqueue&quot;;
+
+var queueClient = new QueueClient(connectionString, queueName);
+
+// Ensure queue exists
+await queueClient.CreateIfNotExistsAsync();
+
+string messageText = &quot;Hello, Azure Queue!&quot;;
+
+// Add message to the queue
+await queueClient.SendMessageAsync(messageText);
+Console.WriteLine(&quot;Message added to queue.&quot;);
+</code></pre>
+<p><strong>2. Read the Next Message from the Queue</strong></p>
+<pre><code>// Receive the next message (peek-lock)
+var receivedMessage = await queueClient.ReceiveMessageAsync();
+
+if (receivedMessage.Value != null)
+{
+    Console.WriteLine($&quot;Dequeued message: {receivedMessage.Value.MessageText}&quot;);
+
+    // Process message here...
+
+    // Delete message after processing to remove it from the queue
+    await queueClient.DeleteMessageAsync(receivedMessage.Value.MessageId, receivedMessage.Value.PopReceipt);
+}
+else
+{
+    Console.WriteLine(&quot;No messages in queue.&quot;);
+}
+</code></pre>
+<p>📝 Notes</p>
+<ul>
+<li><code>ReceiveMessageAsync()</code> retrieves one message with a default visibility timeout (message becomes invisible temporarily).</li>
+<li>After processing, delete the message to prevent it from becoming visible again.</li>
+<li>You can receive multiple messages using <code>ReceiveMessagesAsync(int maxMessages)</code>.</li>
+</ul>
+<p>📋 Summary</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Method</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Add message</td>
+<td><code>SendMessageAsync()</code></td>
+</tr>
+<tr>
+<td>Read next message</td>
+<td><code>ReceiveMessageAsync()</code></td>
+</tr>
+<tr>
+<td>Delete processed message</td>
+<td><code>DeleteMessageAsync()</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="4-does-peekmessage-read-the-next-record">4. Does PeekMessage read the next record?</h3>
+<p>📘 What is <code>PeekMessage</code>?</p>
+<ul>
+<li><code>PeekMessage</code> <strong>retrieves a message from the queue without changing its visibility</strong>.</li>
+<li>It <strong>does NOT dequeue</strong> the message; the message remains visible and available to other consumers.</li>
+<li>Useful for <strong>inspecting the next message</strong> without removing it from the queue.</li>
+</ul>
+<p>⚙️ How It Differs from <code>ReceiveMessage</code></p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ReceiveMessage</code></td>
+<td>Retrieves and temporarily hides the message (locks it) for processing</td>
+</tr>
+<tr>
+<td><code>PeekMessage</code></td>
+<td>Retrieves the message without locking or hiding it</td>
+</tr>
+</tbody>
+</table>
+<p>🔑 Key Points</p>
+<ul>
+<li><code>PeekMessage</code> lets you <strong>read the next message without affecting the queue state</strong>.</li>
+<li>It does <strong>not</strong> remove or mark the message as processed.</li>
+<li>The same message can be peeked multiple times by multiple consumers.</li>
+</ul>
+<p>✅ Summary</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Reads Next Record?</th>
+<th>Removes from Queue?</th>
+<th>Changes Visibility?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PeekMessage</code></td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>ReceiveMessage</code></td>
+<td>Yes</td>
+<td>No (until deleted)</td>
+<td>Yes (locks message)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="5-how-to-do-a-de-queue-in-queues">5. How to do a De-queue in Queues?</h3>
+<p>Steps to Dequeue (Read &amp; Remove) a Message</p>
+<ol>
+<li><strong>Receive the message</strong> (makes it invisible temporarily).</li>
+<li><strong>Process the message</strong> as needed.</li>
+<li><strong>Delete the message</strong> from the queue to complete dequeue.</li>
+</ol>
+<pre><code class="language-csharp">using Azure.Storage.Queues;
+using System;
+using System.Threading.Tasks;
+
+string connectionString = &quot;&lt;your_connection_string&gt;&quot;;
+string queueName = &quot;myqueue&quot;;
+
+var queueClient = new QueueClient(connectionString, queueName);
+await queueClient.CreateIfNotExistsAsync();
+
+// Receive the next message
+var receivedMessage = await queueClient.ReceiveMessageAsync();
+
+if (receivedMessage.Value != null)
+{
+    Console.WriteLine($&quot;Dequeued message: {receivedMessage.Value.MessageText}&quot;);
+
+    // Process your message here
+
+    // Delete message to remove it permanently from the queue
+    await queueClient.DeleteMessageAsync(receivedMessage.Value.MessageId, receivedMessage.Value.PopReceipt);
+}
+else
+{
+    Console.WriteLine(&quot;No messages available to dequeue.&quot;);
+}
+</code></pre>
+<p>📝 Notes</p>
+<ul>
+<li>The visibility timeout prevents other consumers from processing the same message simultaneously.</li>
+<li>If you don't delete the message after processing, it becomes visible again once the timeout expires.</li>
+</ul>
+<p>📋 Summary</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Method</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Receive message</td>
+<td><code>ReceiveMessageAsync()</code></td>
+</tr>
+<tr>
+<td>Delete message</td>
+<td><code>DeleteMessageAsync()</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="6-explain-visibility-time-out-concept">6. Explain visibility time out concept?</h3>
+<p>🔑 What is Visibility Timeout?</p>
+<ul>
+<li>When a message is received (dequeued) from a queue, it becomes <strong>invisible to other consumers</strong> for a specific period called the <strong>visibility timeout</strong>.</li>
+<li>During this time, the receiver can <strong>process the message without other consumers seeing or processing it</strong>.</li>
+<li>If the message is <strong>deleted before the timeout expires</strong>, it is permanently removed from the queue.</li>
+<li>If not deleted within the timeout, the message becomes <strong>visible again</strong> and can be processed by other consumers.</li>
+</ul>
+<p>⚙️ How It Works</p>
+<ol>
+<li><strong>Message retrieved</strong> by a consumer using <code>ReceiveMessageAsync()</code>.</li>
+<li>Message is <strong>hidden (invisible)</strong> from other consumers for the visibility timeout duration.</li>
+<li>Consumer processes the message.</li>
+<li>Consumer <strong>deletes the message</strong> upon successful processing.</li>
+<li>If consumer fails to delete the message, it <strong>reappears</strong> in the queue after the timeout for retry.</li>
+</ol>
+<p>📌 Importance</p>
+<ul>
+<li>Prevents <strong>duplicate processing</strong> of the same message by multiple consumers.</li>
+<li>Supports <strong>reliable processing</strong> with automatic retries on failure.</li>
+<li>Allows <strong>scaling</strong> with multiple consumers processing messages independently.</li>
+</ul>
+<p>📝 Default and Configurable</p>
+<ul>
+<li>Default visibility timeout is typically <strong>30 seconds</strong> but can be configured up to <strong>7 days</strong>.</li>
+<li>Can be set per message when receiving or updated dynamically.</li>
+</ul>
+<p>✅ Summary</p>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Visibility Timeout</td>
+<td>Period a message is hidden after being dequeued</td>
+</tr>
+<tr>
+<td>Purpose</td>
+<td>Prevents concurrent processing and ensures reliability</td>
+</tr>
+<tr>
+<td>Behavior</td>
+<td>Message reappears if not deleted within timeout</td>
+</tr>
+</tbody>
+</table>
+<h3 id="7-how-is-getmessage-different-from-peek">7. How is GetMessage different from Peek?</h3>
+<p>📘 GetMessage</p>
+<ul>
+<li><strong>Also known as:</strong> <code>ReceiveMessageAsync()</code> in Azure SDK.</li>
+<li><strong>Purpose:</strong> Retrieves and locks the next message for processing.</li>
+<li><strong>Behavior:</strong></li>
+<li>Message becomes <strong>invisible</strong> to other consumers for the duration of the <strong>visibility timeout</strong>.</li>
+<li>Requires <strong>explicit deletion</strong> after processing to remove it from the queue.</li>
+<li><strong>Use Case:</strong> When you want to <strong>process and then remove</strong> the message from the queue.</li>
+</ul>
+<p>👀 PeekMessage</p>
+<ul>
+<li><strong>Also known as:</strong> <code>PeekMessageAsync()</code></li>
+<li><strong>Purpose:</strong> Inspects the next message <strong>without locking or removing</strong> it.</li>
+<li><strong>Behavior:</strong></li>
+<li>Message remains <strong>visible</strong> to other consumers.</li>
+<li>No effect on message state or visibility.</li>
+<li><strong>Use Case:</strong> When you just want to <strong>look at the message</strong> without affecting queue processing.</li>
+</ul>
+<p>✅ Summary</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th><code>GetMessage</code> (<code>ReceiveMessageAsync</code>)</th>
+<th><code>PeekMessage</code> (<code>PeekMessageAsync</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reads next message</td>
+<td>✅ Yes</td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td>Locks message</td>
+<td>✅ Yes</td>
+<td>❌ No</td>
+</tr>
+<tr>
+<td>Removes message</td>
+<td>❌ No (until deleted manually)</td>
+<td>❌ No</td>
+</tr>
+<tr>
+<td>Affects visibility</td>
+<td>✅ Temporarily hides message</td>
+<td>❌ No impact</td>
+</tr>
+<tr>
+<td>Use case</td>
+<td>For processing and removing messages</td>
+<td>For inspecting messages only</td>
+</tr>
+</tbody>
+</table>
+<h3 id="8-how-to-read-bulk-messages-from-queues">8. How to read bulk messages from Queues?</h3>
+<p>🔄 Use <code>ReceiveMessagesAsync(int maxMessages)</code> Method</p>
+<ul>
+<li>Azure Queue Storage allows you to retrieve up to <strong>32 messages at a time</strong> using:</li>
+</ul>
+<pre><code>  ReceiveMessagesAsync(maxMessages: 32)
+  using Azure.Storage.Queues;
+  using System;
+  using System.Threading.Tasks;
+  string connectionString = &quot;&lt;your_connection_string&gt;&quot;;
+  string queueName = &quot;myqueue&quot;;
+  var queueClient = new QueueClient(connectionString, queueName);
+  await queueClient.CreateIfNotExistsAsync();
+  // Read up to 10 messages in one call
+  var messages = await queueClient.ReceiveMessagesAsync(maxMessages: 10);
+  foreach (var message in messages.Value)
+  {
+  Console.WriteLine($&quot;Message: {message.MessageText}&quot;);
+
+    // Process and delete
+    await queueClient.DeleteMessageAsync(message.MessageId, message.PopReceipt);
+  }
+
+</code></pre>
+<p>📌 Notes</p>
+<ul>
+<li>Maximum <code>maxMessages</code> allowed: <strong>32</strong> per request.</li>
+<li>Each message becomes <strong>temporarily invisible</strong> (default: 30 seconds) unless deleted.</li>
+<li>Always call <code>DeleteMessageAsync()</code> after processing each message to <strong>prevent reprocessing</strong>.</li>
+</ul>
+<p>📋 Summary</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Method</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Read bulk messages</td>
+<td><code>ReceiveMessagesAsync(maxMessages)</code></td>
+</tr>
+<tr>
+<td>Delete each message</td>
+<td><code>DeleteMessageAsync()</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="9-by-default-in-getmessage-visibility-time-out-___seconds">9. By default In GetMessage visibility time out ___seconds.</h3>
+<ul>
+<li>By default, when using <code>GetMessage</code> / <code>ReceiveMessageAsync()</code> in Azure Queue Storage:</li>
+<li>The <strong>visibility timeout is 30 seconds</strong>.</li>
+</ul>
+<p>📌 What This Means</p>
+<ul>
+<li>After receiving a message, it becomes <strong>invisible to other consumers</strong> for 30 seconds.</li>
+<li>If not deleted within that time, the message <strong>reappears</strong> in the queue and may be reprocessed.</li>
+</ul>
+<p>✅ Summary</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Visibility Timeout</td>
+<td>30 seconds</td>
+</tr>
+</tbody>
+</table>
+<h3 id="10-how-to-update-a-message">10. How to update a message?</h3>
+<p>🔄 How to Update a Message in Azure Queue Storage (C#)</p>
+<p>🛠️ Purpose</p>
+<ul>
+<li>Use <code>UpdateMessageAsync()</code> to <strong>modify the content</strong> of an existing message <strong>without removing it</strong> from the queue.</li>
+<li>You can also optionally <strong>reset the visibility timeout</strong>.</li>
+</ul>
+<p>✅ Example Code</p>
+<pre><code>using Azure.Storage.Queues;
+using System;
+using System.Threading.Tasks;
+
+string connectionString = &quot;&lt;your_connection_string&gt;&quot;;
+string queueName = &quot;myqueue&quot;;
+
+var queueClient = new QueueClient(connectionString, queueName);
+await queueClient.CreateIfNotExistsAsync();
+
+// Step 1: Get the message
+var received = await queueClient.ReceiveMessageAsync();
+
+if (received.Value != null)
+{
+    string newContent = &quot;Updated message content&quot;;
+
+    // Step 2: Update the message
+    await queueClient.UpdateMessageAsync(
+        received.Value.MessageId,
+        received.Value.PopReceipt,
+        newContent,
+        TimeSpan.FromSeconds(0) // Make it immediately visible again
+    );
+
+    Console.WriteLine(&quot;Message updated.&quot;);
+}
+</code></pre>
+<p>📌 Notes</p>
+<ul>
+<li>You must provide both the <strong>MessageId</strong> and <strong>PopReceipt</strong>.</li>
+<li>The <strong>PopReceipt</strong> changes each time the message is accessed; use the <strong>most recent one</strong>.</li>
+<li>You can also update the <strong>visibility timeout</strong> to delay re-processing.</li>
+</ul>
+<p>📋 Summary</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Method</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Update a message</td>
+<td><code>UpdateMessageAsync()</code></td>
+<td>MessageId + PopReceipt</td>
+</tr>
+</tbody>
+</table>
+<h3 id="11-what-is-the-messageupdatefield-meant-for">11. What is the MessageUpdateField meant for?</h3>
+<p>🧾 What is <code>MessageUpdateFields</code> Used For?</p>
+<p>📘 Definition</p>
+<ul>
+<li><code>MessageUpdateFields</code> is an <strong>enumeration</strong> in the Azure Queue SDK.</li>
+<li>It specifies <strong>which parts of a queue message</strong> should be updated when calling <code>UpdateMessageAsync()</code>.</li>
+</ul>
+<p>🔧 Options</p>
+<table>
+<thead>
+<tr>
+<th>Enum Value</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>None</code></td>
+<td>Do not update any field</td>
+</tr>
+<tr>
+<td><code>Content</code></td>
+<td>Update the message text only</td>
+</tr>
+<tr>
+<td><code>VisibilityTimeout</code></td>
+<td>Update the visibility timeout only</td>
+</tr>
+<tr>
+<td><code>All</code></td>
+<td>Update both content and visibility timeout</td>
+</tr>
+</tbody>
+</table>
+<p>🛠️ Usage Example</p>
+<pre><code>await queueClient.UpdateMessageAsync(
+    messageId: msg.MessageId,
+    popReceipt: msg.PopReceipt,
+    messageText: &quot;Updated content&quot;,
+    visibilityTimeout: TimeSpan.FromSeconds(0),
+    MessageUpdateFields.All
+);
+</code></pre>
+<p>📌 Notes</p>
+<ul>
+<li><code>MessageUpdateFields</code> gives <strong>fine-grained control</strong> over what gets updated.</li>
+<li>Defaults to <strong>All</strong> if not specified.</li>
+</ul>
+<p>✅ Summary</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Content</code></td>
+<td>Updates the message body</td>
+</tr>
+<tr>
+<td><code>VisibilityTimeout</code></td>
+<td>Changes the reappearance delay</td>
+</tr>
+<tr>
+<td><code>All</code></td>
+<td>Updates both content and timeout</td>
+</tr>
+</tbody>
+</table>
+<h3 id="12-what-is-importance-of-messageid-and-popreceiptid">12. What is importance of MessageId and Popreceiptid?</h3>
+<p>🆔 Importance of <code>MessageId</code> and <code>PopReceipt</code> in Azure Queues</p>
+<p>📘 What is <code>MessageId</code>?</p>
+<ul>
+<li>A <strong>unique identifier</strong> assigned to each message when it is added to the queue.</li>
+<li>Used to <strong>target a specific message</strong> for operations like delete or update.</li>
+</ul>
+<p>🔐 What is <code>PopReceipt</code>?</p>
+<ul>
+<li>A <strong>token (receipt)</strong> generated each time a message is retrieved using <code>ReceiveMessageAsync()</code>.</li>
+<li>Ensures that only the <strong>current processor</strong> of the message can delete or update it.</li>
+<li>Acts like a <strong>proof-of-access</strong> to prevent race conditions in distributed systems.</li>
+</ul>
+<p>🛠️ Why Both Are Required?</p>
+<table>
+<thead>
+<tr>
+<th>Reason</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Message identification</td>
+<td><code>MessageId</code> tells <strong>which message</strong> to operate on</td>
+</tr>
+<tr>
+<td>Safe concurrency &amp; versioning</td>
+<td><code>PopReceipt</code> ensures that only the <strong>latest owner</strong> of the message can change it</td>
+</tr>
+<tr>
+<td>Prevents accidental deletion</td>
+<td>If a message was retrieved earlier but not yet processed, a new <code>PopReceipt</code> is issued upon re-fetch</td>
+</tr>
+</tbody>
+</table>
+<p>✅ Summary</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MessageId</code></td>
+<td>Uniquely identifies a message</td>
+</tr>
+<tr>
+<td><code>PopReceipt</code></td>
+<td>Authorizes and secures update/delete</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.expand - navigation.sections - navigation.prune - navigation.indexes - content.code.copy"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="../../../extra.js"></script>
+      
+    
+  </body>
+</html>
