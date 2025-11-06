@@ -874,3 +874,200 @@ An **Azure Publish Profile** is an XML configuration file that contains all the 
 
 - Please find the below tutorial do deploy application in Azure Web App.
   [Deployment link](https://www.youtube.com/watch?v=VLTNyM8DGds)
+
+### 15. CI/CD: Deploy .NET 8 Web App to Azure with GitHub Actions
+
+This guide explains how to set up Continuous Integration and Deployment (CI/CD) for a .NET 8 Web Application hosted on Azure App Service using GitHub Actions.
+
+---
+
+✅ Prerequisites
+
+1. Azure subscription
+2. Azure App Service (e.g., **AzureWebAppOne**)
+3. .NET 8 web application in a GitHub repository (e.g., in a folder named `Azure_APP_one`)
+4. Azure CLI access (via local or [Azure Cloud Shell](https://shell.azure.com))
+
+---
+
+**🔐 Step 1: Create Azure Service Principal**
+Use Azure CLI to create a Service Principal with Contributor role:
+
+```bash
+az ad sp create-for-rbac \
+  --name "github-action-sp" \
+  --sdk-auth \
+  --role contributor \
+  --scopes /<your-subcription-id>
+```
+
+Explanation of Each Part
+
+**az ad sp create-for-rbac**
+
+This is the main Azure CLI command to create a Service Principal (SP).
+
+sp stands for Service Principal.
+
+create-for-rbac sets up the SP with a role for Role-Based Access Control (RBAC).
+
+**--name "github-action-sp"**
+
+Specifies the name of the Service Principal (your app identity).
+
+This name appears under App registrations in Azure AD.
+
+You can name it anything (e.g., "my-deploy-sp"), but "github-action-sp" is a common name for GitHub workflows.
+
+**--sdk-auth**
+
+This outputs the authentication credentials in JSON format, which GitHub Actions understands.
+
+You copy this JSON into a GitHub secret (e.g., AzureWebAppOne_SPN).
+
+⚠️ This flag is deprecated, but still widely used for GitHub Actions until replaced by ARM credential support.
+
+**--role contributor**
+
+Assigns the Contributor role to the SP.
+
+This role allows full management access to resources (except user access permissions).
+
+Ideal for CI/CD pipelines, because it can deploy/update apps, but not manage RBAC itself.
+
+**--scopes /subscriptions/<your-subscription-id>**
+This defines the scope of access (i.e., where the SP is allowed to operate).
+
+subscriptions/<id> means you're giving Contributor rights to the entire Azure subscription.
+
+You can narrow the scope to a resource group or App Service if needed:
+
+Example: /subscriptions/<id>/resourceGroups/my-rg
+
+Example: /subscriptions/<id>/resourceGroups/my-rg/providers/Microsoft.Web/sites/mywebapp
+
+Replace <your-subscription-id> with your actual Azure subscription ID
+
+🔒 **Step 2: Add Service Principal to GitHub Secrets**
+
+Go to your GitHub repository.
+
+Navigate to:
+Settings → Secrets and variables → Actions
+
+Click “New repository secret”
+
+Name the secret:**AzureWebAppOne_SPN**
+Paste the full JSON output from Step 1 into the value field.
+
+Click “Add secret”
+
+**Step 3: Create GitHub Actions Workflow**
+Create a file in your repo:
+.github/workflows/deploy.yml
+
+```
+# Workflow name displayed in GitHub Actions UI
+name: Build and deploy .NET Core application to Azure Web App
+
+# Trigger this workflow on every push to the master branch
+on:
+  push:
+    branches:
+      - master
+
+# Define global environment variables used throughout the workflow
+env:
+  AZURE_WEBAPP_NAME: AzureWebAppOne                        # Name of the Azure Web App (must match the actual App Service name in Azure)
+  AZURE_WEBAPP_PACKAGE_PATH: Azure_APP_one/published       # Folder path where the published app will be placed
+  CONFIGURATION: Release                                   # Build configuration (Debug or Release)
+  DOTNET_CORE_VERSION: 8.0.x                               # .NET SDK version to install
+  WORKING_DIRECTORY: Azure_APP_one                         # Folder where the .NET project (.csproj) exists
+
+jobs:
+  build:
+    runs-on: windows-latest  # GitHub-hosted runner on Windows
+
+    steps:
+      # Step 1: Checkout the code from the GitHub repo
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Install the specified .NET SDK version
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+
+      # Step 3: Restore project dependencies (NuGet packages)
+      - name: Restore dependencies
+        run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
+
+      # Step 4: Build the project
+      - name: Build project
+        run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
+
+      # Step 5: Run unit tests (if any)
+      - name: Run tests
+        run: dotnet test "${{ env.WORKING_DIRECTORY }}" --no-build --verbosity normal
+
+      # Step 6: Publish the project to the specified output folder
+      - name: Publish project
+        run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
+
+      # Step 7: Upload the published output as an artifact for use in the deploy job
+      - name: Upload artifact for deployment
+        uses: actions/upload-artifact@v4
+        with:
+          name: webapp
+          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+  deploy:
+    runs-on: windows-latest
+    needs: build  # This job depends on the successful completion of the build job
+
+    steps:
+      # Step 1: Download the published artifact
+      - name: Download published app
+        uses: actions/download-artifact@v4
+        with:
+          name: webapp
+          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+      # Step 2: Authenticate with Azure using a service principal (JSON stored as GitHub Secret)
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AzureWebAppOne_SPN }}  # JSON stored in GitHub Secrets
+
+      # Step 3: Deploy the app to Azure Web App
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}  # The name of the target Azure App Service
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}  # The path to the zipped or folder deployment package
+
+```
+
+**Step 4: Trigger Deployment**
+Push code to the master branch
+
+Or trigger the workflow manually in the GitHub Actions tab
+
+On success, your app is live at:https://<AzureWebAppOne>.azurewebsites.net
+
+📌 **Optional Enhancements**
+Add deployment slots and use slot-name in webapps-deploy
+
+Add scheduled workflows or manual triggers
+
+Use Key Vault for secret rotation
+
+Enable Application Insights and custom logging
+
+**Cleanup (Optional**)
+To delete the service principal:
+
+```
+az ad sp delete --id <clientId>
+```

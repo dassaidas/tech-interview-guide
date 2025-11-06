@@ -27,6 +27,10 @@ nav:
           - Basics: Dotnet/csharp/basics.md
           - OOP Concepts: Dotnet/csharp/oop.md
           - Advanced Topics: Dotnet/csharp/advanced.md
+      - dotnetCore:
+          - Basics: Dotnet/DotnetCore/basics.md
+          - Kestrel and otherservices: Dotnet/DotnetCore/kestral_and_other_services.md
+
   - Angular:
       - Fundamentals: Angular/fundamentals.md
       - Forms: Angular/forms.md
