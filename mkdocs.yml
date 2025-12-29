@@ -24,39 +24,41 @@ nav:
 
   - .NET:
       - C#:
-          - Basics: Dotnet/csharp/basics.md
-          - OOP Concepts: Dotnet/csharp/oop.md
-          - Advanced Topics: Dotnet/csharp/advanced.md
+          - Basics: Dotnet/Csharp/Basics/index.md
+          - OOP Concepts: Dotnet/Csharp/OOPS/index.md
+          - Advanced Topics: Dotnet/Csharp/Advancded/index.md
       - dotnetCore:
-          - Basics: Dotnet/DotnetCore/basics.md
-          - Kestrel and otherservices: Dotnet/DotnetCore/kestral_and_other_services.md
+          - Fundamentals: Dotnet/DotnetCore/Fundamentals/index.md
+          - Kestrel and otherservices: Dotnet/DotnetCore/Kestrel_and_other_services/index.md
+          - Dotnetcore_vs_donetframework: Dotnet/DotnetCore/Dotnetcore_vs_donetframework/index.md
+
 
   - Angular:
-      - Fundamentals: Angular/fundamentals.md
-      - Forms: Angular/forms.md
-      - Migration Guide: Angular/migration.md
+      - Fundamentals: Angular/Fundamentals/index.md
+      - Forms: Angular/Forms/index.md
+      - Migration Guide: Angular/MigrationGuide/index.md
   - React:
-      - Hooks: React/hooks.md
-      - State Management: React/state.md
+      - Hooks: React/Hooks/index.md
+      - State Management: React/State/index.md
   - Project Management:
       - Jira:
-          - Basics: Poject_Management/Jira/basics.md
-          - JiraDetailed: Poject_Management/Jira/Jira_detailed_course.md
+          - Basics: Project_Management/Jira/Basics/index.md
+          - JiraDetailed: Project_Management/Jira/Jira_detailed_course/index.md
   - Cloud:
       - Azure:
-          - IASS_PASS_SAAS: Cloud/Azure/IAAS_PASS_SAAS.md
-          - DTU_EDTU: Cloud/Azure/DTU_EDTU.md
-          - AzureFunctions: Cloud/Azure/AzureFunctions.md
-          - AzureStorage: Cloud/Azure/Azure_storage.md
-          - AzureCosmosDB: Cloud/Azure/Azure_Cosmos_DB.md
-          - AzureFabricandMicroServices: Cloud/Azure/Azure_Fabric_microservices.md
-          - AzureTables: Cloud/Azure/Azure_Tables.md
-          - AzureBlobs(block,append,page): Cloud/Azure/Azure_blobs(block,append,page).md
-          - Azure_Queues: Cloud/Azure/Azure_Queues(Azure Queues , visibility timeouts ,Peek & De-Queue).md
-          - Azure_Services: Cloud/Azure/Azure_Services(App services and Cloud services).md
-          - Azure_WebJobs: Cloud/Azure/Azure_WebJobs(WebJob and background processing.).md
+          - IASS_PASS_SAAS: Cloud/Azure/IAAS_PASS_SAAS/index.md
+          - DTU_EDTU: Cloud/Azure/DTU_EDTU/index.md
+          - AzureFunctions: Cloud/Azure/AzureFunctions/index.md
+          - AzureStorage: Cloud/Azure/Azure_storage/index.md
+          - AzureCosmosDB: Cloud/Azure/Azure_Cosmos_DB/index.md
+          - AzureFabricandMicroServices: Cloud/Azure/Azure_Fabric_microservices/index.md
+          - AzureTables: Cloud/Azure/Azure_Tables/index.md
+          - AzureBlobs(block,append,page): Cloud/Azure/Azure_blobs(block,append,page)/index.md
+          - Azure_Queues: Cloud/Azure/Azure_Queues(Azure Queues , visibility timeouts ,Peek & De-Queue)/index.md
+          - Azure_Services: Cloud/Azure/Azure_Services(App services and Cloud services)/index.md
+          - Azure_WebJobs: Cloud/Azure/Azure_WebJobs(WebJob and background processing.)/index.md
   - Scenarios:
-      - Legacy Migration: Scenarios/migration.md
-      - Real-World QA: Scenarios/realworld.md
+      - Legacy Migration: Scenarios/Migration/index.md
+      - Real-World QA: Scenarios/Realworld/index.md
   - BrowserStack:
-      - Basics: browserstack/bascis.md
+      - Basics: BrowserStack/Basics/index.md

@@ -1,6 +1,6 @@
 # Jira Interview Questions
 
-![JIRA logo](../../assets/JIRA_logo.jpg)
+![JIRA logo](../../../assets/JIRA_logo.jpg)
 
 ### 1. What is JIRA?
 

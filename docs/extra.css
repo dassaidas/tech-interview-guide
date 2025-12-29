@@ -1,67 +1,156 @@
-/* extra.css */
+/* =========================================================
+   MkDocs Material – Primary Sidebar Navigation
+   Author: Clean & Stable Accordion Styling
+   ========================================================= */
 
-/* Main navigation styling */
-.md-nav--primary .md-nav__title {
-  background-color: #f8f9fa;
-  padding: 1rem;
-  margin-bottom: 0.5rem;
+/* ---------------------------------------------------------
+   CSS Variables (easy theming)
+   --------------------------------------------------------- */
+:root {
+  --nav-bg-header: #f8f9fa;
+  --nav-section-color: #289550;
+  --nav-section-hover-bg: rgba(106, 1, 1, 0.05);
+  --nav-active-color: #f14848;
+  --nav-active-bg: rgba(0, 0, 0, 0.07);
+  --nav-active-border: var(--md-primary-fg-color);
+  --nav-radius: 6px;
 }
 
-/* Section headers */
-.md-nav--primary .md-nav__item--section > .md-nav__link {
-  font-weight: 600;
-  color: #289550;
-  padding: 0.6rem 1rem;
-  margin: 2px 0;
-  border-radius: 4px;
-  transition: all 0.2s ease;
-}
-
-.md-nav--primary .md-nav__item--section > .md-nav__link:hover {
-  background-color: #6a01010d;
-}
-
-/* Active section styling */
-.md-nav--primary .md-nav__item--active > .md-nav__link {
-  color: #f14848;
-  background-color: rgba(0, 0, 0, 0.07);
-  box-shadow: inset 4px 0 0 var(--md-primary-fg-color);
-}
-
-/* Submenu items */
-.md-nav--primary .md-nav__item--nested .md-nav__link {
-  padding-left: 2rem !important;
-  font-size: 0.95em;
-}
-
-/* Smooth transitions for navigation */
-.md-nav__item--section {
-  transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: hidden;
-}
-
-/* Initial state for sections */
-.md-nav--primary .md-nav__item--section {
-  max-height: 1000px; /* Default open state */
-  overflow: visible;
-}
-
-/* Closed state */
-.md-nav--primary .md-nav__item--section[data-collapsed="true"] {
-  max-height: 44px !important; /* Height of header only */
-  overflow: hidden;
-}
-
-/* Prevent flickering */
+/* ---------------------------------------------------------
+   Sidebar Container Fixes
+   --------------------------------------------------------- */
 .md-sidebar__scrollwrap {
   backface-visibility: hidden;
   transform: translateZ(0);
   will-change: transform;
 }
 
-/* Responsive adjustments */
+/* ---------------------------------------------------------
+   Navigation Title
+   --------------------------------------------------------- */
+.md-nav--primary .md-nav__title {
+  background-color: var(--nav-bg-header);
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+
+  font-weight: 600;
+  letter-spacing: 0.3px;
+
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* ---------------------------------------------------------
+   Section Headers (Top-Level)
+   --------------------------------------------------------- */
+.md-nav--primary
+.md-nav__item--section
+> .md-nav__link {
+  display: flex;
+  align-items: center;
+
+  padding: 0.6rem 1rem;
+  margin: 2px 0;
+
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--nav-section-color);
+
+  border-radius: var(--nav-radius);
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Hover */
+.md-nav--primary
+.md-nav__item--section
+> .md-nav__link:hover {
+  background-color: var(--nav-section-hover-bg);
+}
+
+/* ---------------------------------------------------------
+   Active Section (Accordion Open)
+   --------------------------------------------------------- */
+.md-nav--primary
+.md-nav__item--active
+> .md-nav__link {
+  color: var(--nav-active-color);
+  background-color: var(--nav-active-bg);
+
+  box-shadow: inset 4px 0 0 var(--nav-active-border);
+}
+
+/* ---------------------------------------------------------
+   Nested / Submenu Items
+   --------------------------------------------------------- */
+.md-nav--primary
+.md-nav__item--nested
+.md-nav__link {
+  padding-left: 2rem !important;
+  font-size: 0.9rem;
+  opacity: 0.95;
+
+  transition:
+    opacity 0.15s ease,
+    background-color 0.15s ease;
+}
+
+/* Submenu Hover */
+.md-nav--primary
+.md-nav__item--nested
+.md-nav__link:hover {
+  opacity: 1;
+}
+
+/* Active Page (actual page, not section) */
+.md-nav__link--active {
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------------
+   Accordion Section Behavior
+   --------------------------------------------------------- */
+.md-nav__item--section {
+  overflow: hidden;
+  transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Default (open-capable) */
+.md-nav--primary
+.md-nav__item--section {
+  max-height: 1000px;
+  overflow: visible;
+}
+
+/* Collapsed state (controlled via JS if needed) */
+.md-nav--primary
+.md-nav__item--section[data-collapsed="true"] {
+  max-height: 44px !important;
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------
+   Remove Conflicting Animations
+   --------------------------------------------------------- */
+.md-nav__toggle {
+  transition: none !important;
+}
+
+/* ---------------------------------------------------------
+   Mobile / Tablet Overrides
+   --------------------------------------------------------- */
 @media screen and (max-width: 76.1875em) {
-  .md-nav--primary .md-nav__item--section {
+  .md-nav--primary
+  .md-nav__item--section {
     max-height: none !important;
+  }
+
+  .md-nav--primary
+  .md-nav__item--nested
+  .md-nav__link {
+    padding-left: 1.5rem !important;
   }
 }

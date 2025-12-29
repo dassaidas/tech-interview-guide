@@ -1,6 +1,6 @@
 # React Hooks Interview Questions
 
-![React Lifecycle](../assets/react-lifecycle.png)
+![React Lifecycle](../../assets/react-lifecycle.png)
 
 ### 1. What is useState?
 

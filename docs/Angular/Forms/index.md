@@ -1,6 +1,6 @@
 # Angular Forms Interview Questions
 
-![Angular Form Flow](../assets/angular-form-flow.png)
+![Angular Form Flow](../../assets/angular-form-flow.png)
 
 ### 1. What are the two types of forms in Angular?
 
