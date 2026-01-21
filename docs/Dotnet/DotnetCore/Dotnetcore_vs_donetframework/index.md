@@ -145,7 +145,6 @@ Deployment where the application ships with its own runtime, producing a **self-
 ---
 
 
-## 13. Real-World Implications
 
 ### Q22. Why are enterprises moving to .NET Core?
 - Performance improvements

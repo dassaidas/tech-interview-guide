@@ -31,6 +31,15 @@ nav:
           - Fundamentals: Dotnet/DotnetCore/Fundamentals/index.md
           - Kestrel and otherservices: Dotnet/DotnetCore/Kestrel_and_other_services/index.md
           - Dotnetcore_vs_donetframework: Dotnet/DotnetCore/Dotnetcore_vs_donetframework/index.md
+          - Cross_Platform_Runtime: Dotnet/DotnetCore/Cross_Platform_Runtime/index.md
+          - Middleware_Pipeline: Dotnet/DotnetCore/Middleware_Pipeline/index.md
+          - Dependencies_in_ASP.NET_Core: Dotnet/DotnetCore/Dependencies_in_ASP.NET_Core/index.md
+          - Hosting_Models: Dotnet/DotnetCore/Hosting_Models/index.md
+          - Program.cs_Startup.cs_Lifecycle: Dotnet/DotnetCore/Program.cs_Startup.cs_Lifecycle/index.md
+          - Environment_based_Configuration: Dotnet/DotnetCore/Environment_based_Configuration/index.md
+          - Configuration_System: Dotnet/DotnetCore/Configuration_System/index.md
+          - appsettings.json_secrets.json: Dotnet/DotnetCore/appsettings.json_secrets.json/index.md
+          - Project_Templates_Overview: Dotnet/DotnetCore/Project_Templates_Overview/index.md
 
 
   - Angular:
