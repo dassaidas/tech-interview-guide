@@ -71,3 +71,7 @@ nav:
       - Real-World QA: Scenarios/Realworld/index.md
   - BrowserStack:
       - Basics: BrowserStack/Basics/index.md
+  - Oracle:
+        - PL_SQL:
+          - Introduction: Oracle/PL_SQL/Introduction/index.md
+          - Pullagale_Databse: Oracle/PL_SQL/Pullagale_Databse/index.md
