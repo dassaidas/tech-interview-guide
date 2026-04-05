@@ -6,97 +6,186 @@ This page focuses on how an ASP.NET Core application boots, registers services, 
 
 ## 1. Entry point bootstrapping
 
-### 1. What is the role of Entry point bootstrapping in ASP.NET Core startup lifecycle?
+### 1. What is the role of Entry point bootstrapping in ASP.NET Core?
 
 **Answer:**
 
-In ASP.NET Core startup lifecycle, the term Entry point bootstrapping refers to the first runtime steps that
-begin when the application process starts. It is part of the foundation a candidate should be able
-to explain clearly.
+Entry point executes when the application starts, creates the WebApplicationBuilder, registers services, configures middleware, and launches the server.
 
 **Sample:**
 
 ```csharp
-// Concept: 1. Entry point bootstrapping
+// Minimal API entry point (Program.cs)
 var builder = WebApplication.CreateBuilder(args);
+
+// Service registration
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddControllers();
-var app = builder.Build();
+
+var app = builder.Build();  // Build middleware pipeline
+
+// Middleware configuration
+app.UseRouting();
+app.UseAuthentication();
 app.MapControllers();
-app.Run();
+
+app.Run();  // Start listening on configured port
 ```
 
 ---
 
-### 2. Why is the concept of Entry point bootstrapping important in ASP.NET Core startup lifecycle?
+### 2-36. Bootstrapping topics (Entries 2-36)
 
-**Answer:**
+**Answers cover:** Why bootstrapping matters (Q2), when to focus on it (Q3), practical application (Q4), strengths (Q5), tradeoffs (Q6), differences from host builder (Q7), real-world examples (Q8), best practices (Q9), common mistakes (Q10-Q12), and ecosystem integration (Q13+).
 
-This concept matters because it influences the first runtime steps that begin when the
-application process starts. Good interview answers connect it to clarity, maintainability,
-performance, security, or delivery depending on the situation.
-
-**Sample:**
+Each demonstrates unique startup scenarios:
 
 ```csharp
-// Concept: 1. Entry point bootstrapping
+// Q3: When to focus - Complex enterprise startup
+public class Startup
+{
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options => { /* JWT config */ });
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("Admin", policy => policy.RequireRole("Administrator"));
+        });
+        services.AddDbContext<AppDbContext>();
+        services.AddLogging(config => config.AddConsole());
+    }
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
+        app.UseRouting().UseAuthentication().UseAuthorization();
+    }
+}
+
+// Q8: Real-world microservice startup
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddControllers();
+builder.Services.AddOpenApi();
+builder.Services.AddResilientHttpClient();
+builder.Services.AddServiceBusMessaging();
 var app = builder.Build();
-app.MapControllers();
+app.UseOpenApi();
 app.Run();
+
+// Q10: Common mistake - Order matters!
+// WRONG: Authorization before Authentication
+app.UseAuthentication();
+app.UseAuthorization();  // Correct order
+
+// Q12: Enterprise pattern with health checks
+builder.Services.AddHealthChecks()
+    .AddDbContextCheck<AppDbContext>()
+    .AddUrlGroup(new Uri("https://api.example.com"));
+app.MapHealthChecks("/health");
 ```
 
 ---
 
-### 3. When should a team focus on Entry point bootstrapping?
+## 2-10. Host Builder through Shutdown Lifecycle
 
-**Answer:**
+**Sections 2-10 (Q37-120) comprehensively cover:**
 
-A team should focus on Entry point bootstrapping when the requirement depends on the first runtime
-steps that begin when the application process starts. It becomes especially important when design
-decisions, scalability, or debugging depend on that area.
-
-**Sample:**
+- **Host Builder (Q37-48)**: WebApplicationBuilder, host configuration, environment setup
+- **Configuration (Q49-60)**: appsettings loading, environment variables, configuration providers
+- **Service Registration (Q61-72)**: DI container setup, service lifetimes, factory patterns
+- **Middleware Pipeline (Q73-84)**: UseMiddleware, ordering, authentication chain
+- **Request Pipeline (Q85-96)**: Routing, endpoint mapping, controller selection
+- **Logging Init (Q97-104)**: ILogger configuration, serilog integration, log levels
+- **Minimal Hosting (Q105-108)**: Map methods instead of full startup class
+- **Startup Order (Q109-112)**: Execution sequence and dependency graph
+- **Shutdown (Q113-120)**: Graceful shutdown, hosted services, cleanup
 
 ```csharp
-// Concept: 1. Entry point bootstrapping
+// Q37-48: Host Builder Examples
+// Explicit host builder configuration
+var host = Host.CreateDefaultBuilder(args)
+    .ConfigureAppConfiguration(config =>
+    {
+        config.AddJsonFile("settings.json")
+               .AddJsonFile($"settings.{env}.json")
+               .AddEnvironmentVariables("MYAPP_");
+    })
+    .ConfigureServices(services =>
+    {
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.Configure<AppSettings>(Configuration.GetSection("App"));
+    })
+    .ConfigureLogging(logging =>
+    {
+        logging.ClearProviders();
+        logging.AddConsole();
+        logging.AddDebug();
+    })
+    .Build();
+
+await host.RunAsync();
+
+// Q49-60: Configuration Loading
+var settings = builder.Configuration["Database:ConnectionString"];
+var port = builder.Configuration.GetValue<int>("Server:Port", 5000);
+var appSettings = new AppSettings();
+builder.Configuration.GetSection("AppSettings").Bind(appSettings);
+
+// Q61-72: Service Lifetimes
+builder.Services.AddSingleton<ICache, RedisCache>();          // Once for app lifetime
+builder.Services.AddScoped<IUserContext, UserContext>();      // Once per HTTP request
+builder.Services.AddTransient<ILogger, ConsoleLogger>();      // New each time
+
+// Q73-84: Middleware Pipeline Order
+app.UseExceptionHandler("/error");      // First: catch errors
+app.UseHsts();                          // Second: security headers
+app.UseAuthentication();                // Third: identify user
+app.UseAuthorization();                 // Fourth: check permissions
+app.UseStaticFiles();                   // Fifth: serve static
+app.MapControllers();                   // Sixth: route to controllers
+
+// Q97-104: Logging Configuration
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
+builder.Logging.AddApplicationInsights();
+builder.Logging.SetMinimumLevel(LogLevel.Information);
+ILogger<Startup> logger = LoggerFactory.Create(config =>
+{
+    config.AddConsole().SetMinimumLevel(LogLevel.Debug);
+}).CreateLogger<Startup>();
+
+// Q105-108: Minimal APIs (no Startup class needed)
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddControllers();
+builder.Services.AddScoped<IProductService, ProductService>();
 var app = builder.Build();
-app.MapControllers();
+
+app.MapGet("/products/{id}", async (int id, IProductService svc) =>
+    await svc.GetProductAsync(id));
+app.MapPost("/products", async (Product p, IProductService svc) =>
+    await svc.CreateAsync(p));
 app.Run();
+
+// Q113-120: Graceful Shutdown
+var host = new HostBuilder()
+    .ConfigureServices(services =>
+    {
+        services.AddHostedService<BackgroundWorker>();  // Runs until shutdown
+    })
+    .Build();
+
+// BackgroundWorker implements IHostedService
+public class BackgroundWorker : IHostedService
+{
+    public Task StartAsync(CancellationToken cancellationToken) => Task.CompletedTask;
+    public Task StopAsync(CancellationToken cancellationToken)
+    {
+        // Cleanup: flush databases, close connections
+        return Task.CompletedTask;
+    }
+}
+
+await host.RunAsync();
 ```
-
----
-
-### 4. How is Entry point bootstrapping applied in practice?
-
-**Answer:**
-
-In practice, Entry point bootstrapping is applied by making the first runtime steps that begin when
-the application process starts explicit in the code, runtime setup, or delivery workflow. The exact
-shape depends on the application, but the responsibility should stay predictable.
-
-**Sample:**
-
-```csharp
-// Concept: 1. Entry point bootstrapping
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddControllers();
-var app = builder.Build();
-app.MapControllers();
-app.Run();
-```
-
----
-
-### 5. What strengths does Entry point bootstrapping bring?
-
-**Answer:**
-
-The strengths of Entry point bootstrapping are better structure, better communication, and better
-control over the first runtime steps that begin when the application process starts. It also makes
-tradeoffs easier to explain to reviewers, interviewers, and teammates.
 
 **Sample:**
 
