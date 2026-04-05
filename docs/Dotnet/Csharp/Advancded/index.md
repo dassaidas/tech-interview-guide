@@ -10,194 +10,164 @@ This page focuses on advanced C# concepts that typically appear after the fundam
 
 **Answer:**
 
-Delegates enable callbacks and decoupled communication. Events provide a publish-subscribe pattern where publishers notify subscribers without knowing them. Together they enable loose coupling, observer pattern, and event-driven architectures.
+Delegates provide type-safe callable references, and events build on delegates to support
+publish-subscribe communication. In advanced C#, they are a key tool for decoupling components,
+implementing callbacks, and reacting to state changes without hard wiring dependencies.
 
-**Detailed Example:**
+**Sample:**
 
 ```csharp
-// DELEGATE: Type-safe function reference
-public delegate void OrderStatusHandler(string orderId, string status);
+public class OrderStatusEventArgs : EventArgs
+{
+    public string OrderId { get; init; }
+    public string Status { get; init; }
+}
 
-// EVENT: Publisher encapsulates subscriber management
 public class OrderService
 {
-    // Event using built-in EventHandler
     public event EventHandler<OrderStatusEventArgs> OrderStatusChanged;
 
-    public void PlaceOrder(string orderId)
+    public void Ship(string orderId)
     {
-        Console.WriteLine($"Processing order {orderId}");
-
-        // Simulate processing
-        Task.Delay(1000).Wait();
-
-        // Raise event - only publisher can invoke
         OnOrderStatusChanged(orderId, "Shipped");
     }
 
-    // Protected method to raise event
     protected virtual void OnOrderStatusChanged(string orderId, string status)
     {
-        OrderStatusChanged?.Invoke(this, new OrderStatusEventArgs { OrderId = orderId, Status = status });
-    }
-}
-
-// CUSTOM EVENT ARGS
-public class OrderStatusEventArgs : EventArgs
-{
-    public string OrderId { get; set; }
-    public string Status { get; set; }
-}
-
-// SUBSCRIBER: Decoupled from publisher
-public class OrderNotificationService
-{
-    public void Subscribe(OrderService service)
-    {
-        // Weak subscription pattern
-        service.OrderStatusChanged += OnOrderStatusChanged;
-    }
-
-    private void OnOrderStatusChanged(object sender, OrderStatusEventArgs e)
-    {
-        Console.WriteLine($"📧 Notification: Order {e.OrderId} is {e.Status}");
-        SendEmailNotification(e.OrderId, e.Status);
-    }
-
-    private void SendEmailNotification(string orderId, string status)
-    {
-        // Email logic
-    }
-}
-
-// USAGE
-var orderService = new OrderService();
-var notificationService = new OrderNotificationService();
-notificationService.Subscribe(orderService);
-
-orderService.PlaceOrder("ORD-001");
-// Output:
-// Processing order ORD-001
-// 📧 Notification: Order ORD-001 is Shipped
-```
-
----
-
-### 2-12. Delegates and Events Deep Dive
-
-**Key Concepts Covered:**
-
-```csharp
-// MULTICAST DELEGATES (multiple subscribers)
-public delegate void DataProcessor(string data);
-
-DataProcessor processor = Console.WriteLine;
-processor += data => Console.WriteLine($"Processed: {data}");
-processor("Test");  // Calls both subscribers
-
-// WEAK EVENTS (prevent memory leaks)
-// Using WeakEventManager for scenarios with many subscribers
-public class DataProvider
-{
-    private List<(WeakReference<IDataChanged> subscriber, int id)> subscribers = new();
-
-    public void Subscribe(IDataChanged subscriber)
-    {
-        subscribers.Add((new WeakReference<IDataChanged>(subscriber), subscribers.Count));
-    }
-
-    public void RaiseDataChanged()
-    {
-        subscribers.RemoveAll(s => !s.Item1.TryGetTarget(out _));
-        foreach (var (weakRef, _) in subscribers)
+        OrderStatusChanged?.Invoke(this, new OrderStatusEventArgs
         {
-            if (weakRef.TryGetTarget(out var subscriber))
-                subscriber.OnDataChanged();
-        }
-    }
-}
-
-// CUSTOM EVENT PATTERN (best practice)
-public class DataChangeEventArgs : EventArgs
-{
-    public required string PropertyName { get; init; }
-    public required object OldValue { get; init; }
-    public required object NewValue { get; init; }
-    public DateTime ChangedAt { get; init; } = DateTime.UtcNow;
-}
-
-public class DataModel
-{
-    private string _name;
-
-    public event EventHandler<DataChangeEventArgs> PropertyChanged;
-
-    public string Name
-    {
-        get => _name;
-        set
-        {
-            if (_name != value)
-            {
-                var oldValue = _name;
-                _name = value;
-                OnPropertyChanged(nameof(Name), oldValue, value);
-            }
-        }
-    }
-
-    protected virtual void OnPropertyChanged(string propertyName, object oldValue, object newValue)
-    {
-        PropertyChanged?.Invoke(this, new DataChangeEventArgs
-        {
-            PropertyName = propertyName,
-            OldValue = oldValue,
-            NewValue = newValue
+            OrderId = orderId,
+            Status = status
         });
     }
 }
 
-// DELEGATES WITH MULTIPLE RETURN VALUES
-public delegate (bool success, string message) ValidationDelegate(string input);
+var service = new OrderService();
+service.OrderStatusChanged += (sender, e) =>
+    Console.WriteLine($"{e.OrderId} -> {e.Status}");
 
-ValidationDelegate validator = input =>
+service.Ship("ORD-001");
+```
+
+---
+
+### 2. Why is the concept of Delegates and events important in advanced C#?
+
+**Answer:**
+
+This concept matters because it influences the callback and notification model used in advanced C#
+applications. Good interview answers connect it to loose coupling, extensibility, testability, and
+clear responsibility boundaries between publishers and subscribers.
+
+**Sample:**
+
+```csharp
+public class PaymentService
 {
-    if (string.IsNullOrEmpty(input))
-        return (false, "Input cannot be empty");
-    return (true, "Valid");
-};
+    public event EventHandler PaymentCompleted;
 
-var (success, message) = validator("test");
-
-// BEST PRACTICE: Use Action<T> and Func<T> over custom delegates
-public class Repository<T>
-{
-    public event Action<T> ItemAdded;
-    public event Func<T, Task> ItemProcessing;
-
-    public void Add(T item)
+    public void CompletePayment()
     {
-        ItemAdded?.Invoke(item);
+        // Core business logic stays separate from listeners.
+        PaymentCompleted?.Invoke(this, EventArgs.Empty);
     }
+}
 
-    public async Task ProcessAsync(T item)
+var service = new PaymentService();
+service.PaymentCompleted += (s, e) => Console.WriteLine("Send email");
+service.PaymentCompleted += (s, e) => Console.WriteLine("Write audit log");
+service.PaymentCompleted += (s, e) => Console.WriteLine("Publish metrics");
+```
+
+---
+
+### 3. When should a team focus on Delegates and events?
+
+**Answer:**
+
+A team should focus on Delegates and events when multiple parts of the system need to react to the
+same action, or when a caller should provide behavior without tightly coupling classes together. It
+becomes especially useful in UI flows, plugin models, background processing, and domain events.
+
+**Sample:**
+
+```csharp
+public class FileImporter
+{
+    public event EventHandler<string> FileImported;
+
+    public void Import(string fileName)
     {
-        if (ItemProcessing != null)
+        // Import logic
+        FileImported?.Invoke(this, fileName);
+    }
+}
+
+var importer = new FileImporter();
+importer.FileImported += (s, file) => Console.WriteLine($"Indexed {file}");
+importer.FileImported += (s, file) => Console.WriteLine($"Archived {file}");
+```
+
+---
+
+### 4. How is Delegates and events applied in practice?
+
+**Answer:**
+
+In practice, Delegates and events is applied by defining well named callback contracts and raising
+notifications from the component that owns the state change. The surrounding code stays easier to
+extend because new subscribers can be added with minimal changes to the publisher.
+
+**Sample:**
+
+```csharp
+public class DownloadService
+{
+    public event EventHandler<int> ProgressChanged;
+
+    public async Task DownloadAsync()
+    {
+        for (int percent = 0; percent <= 100; percent += 25)
         {
-            foreach (Func<T, Task> handler in ItemProcessing.GetInvocationList())
-            {
-                await handler(item);
-            }
+            await Task.Delay(50);
+            ProgressChanged?.Invoke(this, percent);
         }
     }
 }
+
+var downloader = new DownloadService();
+downloader.ProgressChanged += (s, percent) => Console.WriteLine($"{percent}% complete");
+await downloader.DownloadAsync();
 ```
 
-var even = numbers.Where(n => n % 2 == 0);
-await Task.Delay(10);
-Console.WriteLine(string.Join(",", even));
+---
 
-````
+### 5. What strengths does Delegates and events bring?
+
+**Answer:**
+
+The strengths of Delegates and events are loose coupling, clearer extension points, and cleaner
+separation between the component that triggers work and the components that respond to it. They are
+especially strong when multiple listeners need to react independently to the same event.
+
+**Sample:**
+
+```csharp
+public class BuildPipeline
+{
+    public event Action BuildFinished;
+
+    public void Finish()
+    {
+        BuildFinished?.Invoke();
+    }
+}
+
+var pipeline = new BuildPipeline();
+pipeline.BuildFinished += () => Console.WriteLine("Notify team");
+pipeline.BuildFinished += () => Console.WriteLine("Upload artifacts");
+pipeline.BuildFinished += () => Console.WriteLine("Refresh dashboard");
+```
 
 ---
 
@@ -260,7 +230,7 @@ public class EventSubscriber : IDisposable
 
     private void OnDataChanged(object sender, EventArgs e) { }
 }
-````
+```
 
 ---
 
@@ -610,109 +580,69 @@ await service.LoadDataAsync();
 
 **Answer:**
 
-Lambda expressions provide concise, anonymous function syntax. They enable functional programming styles, integrate with LINQ for data processing, and allow closure over local variables. Essential for callbacks, predicates, projections, and modern C# patterns.
+Lambda expressions provide concise function syntax for inline behavior. In advanced C#, they are
+heavily used with LINQ, delegates, async APIs, and event handlers because they make filters,
+projections, and callbacks easier to express close to the code that uses them.
 
-**Detailed Example:**
+**Sample:**
 
 ```csharp
-// BASIC LAMBDA: Type inference from context
-// Explicit parameter types
-Func<int, int, int> add = (int x, int y) => x + y;
+Func<int, bool> isEven = number => number % 2 == 0;
+Func<int, int> square = number => number * number;
 
-// Implicit parameter types (inferred)
-Func<int, int, int> multiply = (x, y) => x * y;  // Types inferred from Func<int,int,int>
-
-// Single parameter - parentheses optional
-Func<string, int> length = s => s.Length;
-Func<string, int> length2 = (s) => s.Length;  // Also valid
-
-// CLOSURES: Capturing variables from outer scope
-int multiplier = 5;
-Func<int, int> scale = x => x * multiplier;  // Captures multiplier variable
-Console.WriteLine(scale(10));  // Output: 50
-
-multiplier = 10;
-Console.WriteLine(scale(10));  // Output: 100 - uses updated value!
-
-// EXPRESSION BODIES: Statement vs expression lambdas
-// Expression lambda (returns value)
-Func<int, bool> isEven = x => x % 2 == 0;
-
-// Statement lambda (can contain multiple statements)
-Func<int, string> describe = x =>
-{
-    var type = x % 2 == 0 ? "even" : "odd";
-    var positive = x > 0 ? "positive" : "non-positive";
-    return $"{x} is {positive} and {type}";
-};
-
-Console.WriteLine(describe(-4));  // -4 is non-positive and even
-
-// PRACTICE PATTERN 1: LINQ Queries
-var users = new List<User>
-{
-    new { Id = 1, Name = "Alice", Age = 30 },
-    new { Id = 2, Name = "Bob", Age = 25 },
-    new { Id = 3, Name = "Charlie", Age = 35 }
-};
-
-// Filter with lambda predicate
-var adults = users.Where(u => u.Age >= 18).ToList();
-
-// Transform with lambda projection
-var names = users.Select(u => u.Name).ToList();
-
-// Complex projection with object initialization
-var dtos = users
-    .Where(u => u.Age > 25)
-    .Select(u => new UserDto
-    {
-        Id = u.Id,
-        DisplayName = $"{u.Name} ({u.Age})",
-        IsAdmin = u.Age > 30
-    })
+var numbers = new[] { 1, 2, 3, 4, 5, 6 };
+var evenSquares = numbers
+    .Where(isEven)
+    .Select(square)
     .ToList();
 
-// PRACTICE PATTERN 2: Event handlers
-button.Click += (sender, e) =>
-{
-    MessageBox.Show("Button clicked");
-};
-
-// PRACTICE PATTERN 3: Async callbacks
-await Task.Run(() =>
-{
-    LongRunningOperation();
-    Console.WriteLine("Done");
-});
-
-// PRACTICE PATTERN 4: Recursive lambdas (require manual casting)
-Func<int, int> factorial = null;
-factorial = n => n <= 1 ? 1 : n * factorial(n - 1);
-Console.WriteLine(factorial(5));  // 120
-
-// BEST PRACTICE: When to use lambdas vs named methods
-// Use lambda for:
-// - Simple, one-off callbacks
-// - LINQ predicates and projections
-// - Event handlers with minimal logic
-users.Where(u => u.Age > 25)  // ✅ Lambda here is clear
-
-// Use named methods for:
-// - Complex logic
-// - Reusable operations
-// - Methods that need documentation
-public bool IsAdult(User u) => u.Age >= 18;
-users.Where(IsAdult)  // ✅ Named method is clearer
+Console.WriteLine(string.Join(", ", evenSquares));
 ```
 
-// Concept: 2. Lambda expressions
-var numbers = new[] { 1, 2, 3, 4 };
-var even = numbers.Where(n => n % 2 == 0);
-await Task.Delay(10);
-Console.WriteLine(string.Join(",", even));
+---
 
-````
+### 14. Why is the concept of Lambda expressions important in advanced C#?
+
+**Answer:**
+
+This concept matters because it influences how teams write expressive, composable code for modern
+C# APIs. Good interview answers connect lambda expressions to readability, LINQ fluency, reduced
+boilerplate, and the ability to pass behavior as data.
+
+**Sample:**
+
+```csharp
+var users = new List<string> { "alice", "bob", "charlie" };
+
+var result = users
+    .Where(name => name.Length > 3)
+    .Select(name => name.ToUpperInvariant())
+    .OrderBy(name => name)
+    .ToList();
+```
+
+---
+
+### 15. When should a team focus on Lambda expressions?
+
+**Answer:**
+
+A team should focus on Lambda expressions when working with LINQ, delegate-based APIs, async
+pipelines, or small callback logic that benefits from staying close to the call site. They are most
+useful when the behavior is short, specific, and not worth extracting into a separate named method.
+
+**Sample:**
+
+```csharp
+var queue = new Queue<int>(new[] { 1, 2, 3, 4 });
+
+var processed = queue
+    .Where(value => value > 2)
+    .Select(value => $"Item-{value}")
+    .ToList();
+
+button.Click += (sender, args) => Console.WriteLine("Clicked");
+```
 
 ---
 
@@ -757,7 +687,7 @@ var lengths = words.Select(getLength).ToList();
 
 // 6. Sorting with custom logic
 var sorted = users.OrderBy(u => u.Age).ThenBy(u => u.Name).ToList();
-````
+```
 
 ---
 
@@ -1185,337 +1115,82 @@ await service.LoadDataAsync();
 
 ## 3. Generics
 
-### 25-36. Generics Deep Dive
+### 25. What is the role of Generics in advanced C#?
 
-**Comprehensive Coverage:**
+**Answer:**
+
+Generics provide reusable, type-safe abstractions without falling back to object casting or runtime
+type guessing. In advanced C#, they are central to collections, repositories, pipelines, and API
+design because they balance flexibility with compile-time safety.
+
+**Sample:**
 
 ```csharp
-// BASIC GENERIC TYPES
-public class Repository<T> where T : class
+public class Repository<T>
 {
-    private List<T> items = new();
+    private readonly List<T> _items = new();
 
-    public void Add(T item) => items.Add(item);
-    public T GetById(int id) => items.FirstOrDefault();
-    public List<T> GetAll() => items;
+    public void Add(T item) => _items.Add(item);
+    public IReadOnlyList<T> GetAll() => _items;
 }
 
-// GENERIC METHODS
-public class Converter
-{
-    public T Convert<T>(object value) where T : class, new()
-    {
-        if (value == null) return null;
-        return JsonConvert.DeserializeObject<T>(value.ToString());
-    }
+var names = new Repository<string>();
+names.Add("Alice");
 
-    public TOut Map<TIn, TOut>(TIn source) where TIn : class where TOut : class, new()
-    {
-        var dest = new TOut();
-        // Reflection-based mapping
-        return dest;
-    }
-}
-
-// CONSTRAINTS IN DEPTH
-// Base type constraint
-public class Validator<T> where T : ValidationBase
-{
-    public bool Validate(T obj) => obj.IsValid();
-}
-
-// Generic type constraints
-public class Comparer<T> where T : IComparable<T>
-{
-    public int Compare(T a, T b) => a.CompareTo(b);
-}
-
-// Constructor constraint
-public class Factory<T> where T : new()
-{
-    public T Create() => new T();
-    public List<T> CreateMultiple(int count) => Enumerable.Range(0, count).Select(_ => new T()).ToList();
-}
-
-// COVARIANCE: out keyword - only output
-public interface IRepository<out T>
-{
-    T GetById(int id);
-    IEnumerable<T> GetAll();
-}
-
-// CONTRAVARIANCE: in keyword - only input
-public interface IWriter<in T>
-{
-    void Write(T item);
-    void WriteMany(IEnumerable<T> items);
-}
-
-// PRACTICAL PATTERN: Generic repository with constraints
-public abstract class Entity
-{
-    public int Id { get; set; }
-}
-
-public interface IRepository<T> where T : Entity
-{
-    void Add(T entity);
-    void Update(T entity);
-    void Delete(int id);
-    T GetById(int id);
-}
-
-public class EntityRepository<T> : IRepository<T> where T : Entity, new()
-{
-    private List<T> storage = new();
-
-    public void Add(T entity)
-    {
-        entity.Id = storage.Max(e => e.Id) + 1;
-        storage.Add(entity);
-    }
-
-    public void Update(T entity)
-    {
-        var existing = storage.FirstOrDefault(e => e.Id == entity.Id);
-        if (existing != null)
-        {
-            storage.Remove(existing);
-            storage.Add(entity);
-        }
-    }
-
-    public void Delete(int id) => storage.RemoveAll(e => e.Id == id);
-    public T GetById(int id) => storage.FirstOrDefault(e => e.Id == id);
-}
-
-// PERFORMANCE: Generic vs Reflection
-// Generic - compiled, no reflection cost
-public class GenericPool<T> where T : new()
-{
-    private Stack<T> available = new();
-    public T Rent() => available.Count > 0 ? available.Pop() : new T();
-    public void Return(T item) => available.Push(item);
-}
-
-// Reflection-based - slower
-public class ReflectionPool
-{
-    public object Rent(Type type) => Activator.CreateInstance(type);
-}
+var scores = new Repository<int>();
+scores.Add(100);
 ```
 
 ---
 
-## 4. LINQ
+### 26. Why is the concept of Generics important in advanced C#?
 
-### 37-48. LINQ Comprehensive Examples
+**Answer:**
 
-**Covered Topics:**
+This concept matters because it influences how teams create reusable libraries and domain code
+without giving up strong typing. Good interview answers connect generics to maintainability,
+performance, fewer casts, and safer API contracts.
+
+**Sample:**
 
 ```csharp
-// QUERY SYNTAX vs METHOD SYNTAX
-List<User> users = GetUsers();
+// Without generics
+var items = new ArrayList();
+items.Add(42);
+int value = (int)items[0];
 
-// Query syntax (SQL-like)
-var adults = from u in users
-             where u.Age >= 18
-             orderby u.Name
-             select u;
-
-// Method syntax (fluent)
-var adultsMethod = users
-    .Where(u => u.Age >= 18)
-    .OrderBy(u => u.Name);
-
-// COMMON OPERATIONS
-// Where: Filter
-var activeUsers = users.Where(u => u.IsActive).ToList();
-
-// Select: Project/Transform
-var names = users.Select(u => u.Name).ToList();
-var dtos = users.Select(u => new { u.Id, u.Name, Age = u.DateOfBirth.CalculateAge() }).ToList();
-
-// SelectMany: Flatten
-var allOrders = users.SelectMany(u => u.Orders).ToList();
-var orderDates = users.SelectMany(u => u.Orders).Select(o => o.Date).ToList();
-
-// OrderBy/ThenBy: Sorting
-var sorted = users
-    .OrderBy(u => u.Department)
-    .ThenBy(u => u.Name)
-    .ToList();
-
-// GroupBy: Aggregation
-var byDepartment = users
-    .GroupBy(u => u.Department)
-    .Select(g => new { Department = g.Key, Count = g.Count(), Users = g.ToList() })
-    .ToList();
-
-// Join: Multiple sources
-var userOrders = users
-    .Join(orders, u => u.Id, o => o.UserId, (u, o) => new { u.Name, o.Amount, o.Date })
-    .ToList();
-
-// LEFT OUTER JOIN: Using GroupJoin
-var usersWithOrders = users
-    .GroupJoin(orders, u => u.Id, o => o.UserId, (u, os) => new { User = u, Orders = os.ToList() })
-    .ToList();
-
-// DEFERRED EXECUTION: Queries execute when enumerated
-var query = users.Where(u => u.Age > 25);
-users.Add(new User { Age = 30 });  // New user added
-var results = query.ToList();  // Now executes with new user!
-
-// EAGER EXECUTION: ToList() forces immediate execution
-var eagerResults = users.Where(u => u.Age > 25).ToList();
-users.Add(new User { Age = 30 });  // Doesn't affect eagerResults
-
-// AGGREGATE FUNCTIONS
-int count = users.Count();
-int sum = users.Sum(u => u.Age);
-double average = users.Average(u => u.Age);
-var minAge = users.Min(u => u.Age);
-var maxAge = users.Max(u => u.Age);
-string concatenated = string.Join(", ", users.Select(u => u.Name));
-
-// LINQ TO SQL / ENTITY FRAMEWORK: QueryProvider
-using (var db = new MyDbContext())
-{
-    // This generates SQL, not LINQ to Objects
-    var activeUsers = db.Users
-        .Where(u => u.IsActive)  // Translated to SQL WHERE
-        .Include(u => u.Orders)  // SQL JOIN
-        .ToList();  // Finally executes query
-}
-
-// RANGE and REPEAT
-var sequence = Enumerable.Range(1, 10);  // 1,2,3...10
-var repeated = Enumerable.Repeat("X", 5);  // "X","X","X","X","X"
-
-// PERFORMANCE: Avoid multiple enumerations
-var lotsOfUsers = users.Where(u => u.IsActive);  // Query not executed
-
-// Bad: Enumerates 3 times
-int count = lotsOfUsers.Count();
-var first = lotsOfUsers.First();
-var all = lotsOfUsers.ToList();
-
-// Good: Execute once
-var materialized = lotsOfUsers.ToList();
-int count = materialized.Count;
-var first = materialized.First();
+// With generics
+var typedItems = new List<int> { 42 };
+int safeValue = typedItems[0];
 ```
 
 ---
 
-## 5. Async and await
+### 27. When should a team focus on Generics?
 
-### 49-60. Async/Await Deep Dive
+**Answer:**
 
-**Key Patterns:**
+A team should focus on Generics when the same behavior must work across multiple types, especially
+for collections, data access, validation, caching, or infrastructure components. They are most
+valuable when duplication would otherwise grow across similar implementations.
+
+**Sample:**
 
 ```csharp
-// BASIC ASYNC/AWAIT
-public async Task<User> GetUserAsync(int id)
+public interface ICache<T>
 {
-    // Returns Task<User>, can be awaited
-    var response = await _httpClient.GetAsync($"/users/{id}");
-    var content = await response.Content.ReadAsStringAsync();
-    return JsonConvert.DeserializeObject<User>(content);
+    void Set(string key, T value);
+    T Get(string key);
 }
 
-// Consuming async method
-var user = await GetUserAsync(1);  // Awaits result
-// OR
-var task = GetUserAsync(1);  // Don't await - get Task
-var user = await task;  // Await later
-
-// VOID vs TASK return type
-// ❌ Bad: Void async - can't track completion
-public async void BadLoadData()
+public class MemoryCache<T> : ICache<T>
 {
-    await LoadFromServer();  // Exception won't be caught
-}
+    private readonly Dictionary<string, T> _data = new();
 
-// ✅ Good: Task return type
-public async Task LoadDataAsync()
-{
-    await LoadFromServer();
-}
-
-// MULTIPLE AWAITS: Sequential
-public async Task<Data> ProcessAsync()
-{
-    var user = await GetUserAsync(1);  // Wait for user
-    var orders = await GetOrdersAsync(user.Id);  // Wait for orders
-    return new Data { User = user, Orders = orders };
-}
-
-// CONCURRENT: Run in parallel
-public async Task<(User, List<Order>)> ProcessConcurrentAsync()
-{
-    var userTask = GetUserAsync(1);
-    var ordersTask = GetOrdersAsync(1);
-
-    await Task.WhenAll(userTask, ordersTask);  // Wait for both
-    return (userTask.Result, ordersTask.Result);
-}
-
-// EXCEPTION HANDLING
-public async Task<string> SafeDownloadAsync(string url)
-{
-    try
-    {
-        using var response = await _httpClient.GetAsync(url);
-        return await response.Content.ReadAsStringAsync();
-    }
-    catch (HttpRequestException ex)
-    {
-        Console.WriteLine($"Download failed: {ex.Message}");
-        return null;
-    }
-}
-
-// TIMEOUT
-public async Task<string> DownloadWithTimeoutAsync(string url)
-{
-    using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-    return await _httpClient.GetStringAsync(url, cts.Token);
-}
-
-// ASYNC ENUMERATION: Async enumerators
-public async IAsyncEnumerable<User> GetUsersStreamAsync()
-{
-    for (int i = 0; i < 1000; i++)
-    {
-        var user = await FetchUserAsync(i);
-        yield return user;  // Lazily fetches users
-    }
-}
-
-// Usage
-await foreach (var user in GetUsersStreamAsync())
-{
-    Console.WriteLine(user.Name);
-}
-
-// BEST PRACTICE: ConfigureAwait
-public async Task GetDataAsync()
-{
-    // WithConfigureAwait(false) - don't return to UI thread
-    var response = await _httpClient.GetAsync(url).ConfigureAwait(false);
-    var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-    return content;
+    public void Set(string key, T value) => _data[key] = value;
+    public T Get(string key) => _data[key];
 }
 ```
-
-var numbers = new[] { 1, 2, 3, 4 };
-var even = numbers.Where(n => n % 2 == 0);
-await Task.Delay(10);
-Console.WriteLine(string.Join(",", even));
-
-````
 
 ---
 
@@ -1563,7 +1238,7 @@ var productRepo = new Repository<Product>();
 
 userRepo.Add(new User { Id = 1, Name = "John" });
 productRepo.Add(new Product { Id = 1, Price = 99.99m });
-````
+```
 
 ---
 
@@ -3405,196 +3080,31 @@ public class OrderService
 
 ## 6. Tasks and threading
 
-### 61-72. Tasks and Threading Patterns
+### 61. What is the role of Tasks and threading in advanced C#?
 
-**Comprehensive Examples:**
+**Answer:**
+
+Tasks and threading provide the execution model used to coordinate concurrent and parallel work in
+advanced C#. They help teams improve responsiveness, use CPU resources effectively, and separate
+long-running work from the main execution flow.
+
+**Sample:**
 
 ```csharp
-// TASK BASICS
-Task<int> task = Task.Run(() => CalculateAsync());
-int result = task.Result;  // Blocks until result
-
-// TASK.WHENALL: Wait for all
-Task<int> t1 = Task.Run(() => 1);
-Task<int> t2 = Task.Run(() => 2);
-await Task.WhenAll(t1, t2);
-var results = new[] { t1.Result, t2.Result };
-
-// PARALLEL.FOR: Distribute loop iterations
-Parallel.For(0, items.Count, i =>
+public async Task<int> CalculateAsync(int value)
 {
-    ProcessItem(items[i]);  // Runs in parallel threads
-});
-
-// TASK CONTINUATION
-Task task1 = DoWorkAsync();
-Task task2 = task1.ContinueWith(t => DoFollowUp());
-Task task3 = task2.ContinueWith(t => Cleanup());
-
-// CANCELLATION: CancellationToken
-var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-await LongWorkAsync(cts.Token);
-
-// THREAD POOL & WORK ITEMS
-ThreadPool.QueueUserWorkItem(state =>
-{
-    Console.WriteLine($"Running on thread {Thread.CurrentThread.ManagedThreadId}");
-});
-
-// SYNCHRONIZATION: Lock
-private object lockObj = new object();
-lock (lockObj)
-{
-    sharedCounter++;  // Safe access
+    await Task.Delay(100);
+    return value * 2;
 }
 
-// ASYNC LOCK (AsyncLock pattern)
-private readonly SemaphoreSlim semaphore = new SemaphoreSlim(1);
+var firstTask = CalculateAsync(10);
+var secondTask = CalculateAsync(20);
 
-public async Task SafeAccessAsync()
-{
-    await semaphore.WaitAsync();
-    try
-    {
-        await ProtectedOperation();
-    }
-    finally
-    {
-        semaphore.Release();
-    }
-}
-
-// PRODUCER-CONSUMER: BlockingCollection
-var queue = new BlockingCollection<int>();
-Task producer = Task.Run(() =>
-{
-    for (int i = 0; i < 100; i++)
-    {
-        queue.Add(i);
-    }
-    queue.CompleteAdding();
-});
-
-Task consumer = Task.Run(() =>
-{
-    foreach (int item in queue.GetConsumingEnumerable())
-    {
-        Process(item);
-    }
-});
-
-await Task.WhenAll(producer, consumer);
+var results = await Task.WhenAll(firstTask, secondTask);
+Console.WriteLine(string.Join(", ", results));
 ```
 
 ---
-
-## 7. Reflection
-
-### 73-84. Dynamic Type Inspection & Invocation
-
-**Key Patterns:**
-
-```csharp
-// TYPE INSPECTION
-Type t = typeof(User);
-var methods = t.GetMethods(BindingFlags.Public | BindingFlags.Instance);
-var properties = t.GetProperties();
-
-// CREATE INSTANCES
-var user = (User)Activator.CreateInstance(t);
-var userWithCtor = (User)Activator.CreateInstance(t, "John", 30);
-
-// INVOKE METHODS
-var method = t.GetMethod("Save");
-method.Invoke(user, null);
-
-// ACCESS PROPERTIES
-var nameProp = t.GetProperty("Name");
-nameProp.SetValue(user, "Jane");
-var name = (string)nameProp.GetValue(user);
-
-// CHECK ATTRIBUTES
-if (t.GetCustomAttribute<SerializableAttribute>() != null)
-{
-    Console.WriteLine("Type is serializable");
-}
-
-// EXPRESSION TREES: Compiled reflection
-var param = Expression.Parameter(typeof(User));
-var prop = Expression.Property(param, "Age");
-var lambda = Expression.Lambda<Func<User, int>>(prop, param);
-var compiled = lambda.Compile();
-int age = compiled(new User { Age = 25 });
-
-// GENERIC TYPES
-var listType = typeof(List<User>);
-var args = listType.GetGenericArguments();  // [typeof(User)]
-
-// PERFORMANCE OPTIMIZATION: Cache results
-public static class ReflectionCache<T>
-{
-    public static readonly PropertyInfo[] Properties = typeof(T).GetProperties();
-    public static readonly MethodInfo[] Methods = typeof(T).GetMethods();
-}
-```
-
----
-
-## 8-10. Attributes, Memory Management & Collections
-
-**Advanced Features:**
-
-```csharp
-// DEFINE CUSTOM ATTRIBUTE
-[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-public class PerformanceAttribute : Attribute
-{
-    public string Description { get; set; }
-    public int ExpectedMs { get; set; }
-}
-
-// APPLY CUSTOM ATTRIBUTE
-[Performance(Description = "Critical query", ExpectedMs = 100)]
-[Cacheable(durationSeconds: 300)]
-public class UserService
-{
-    [Performance(ExpectedMs = 50)]
-    public User GetById(int id) { }
-}
-
-// STACKALLOC: Allocate on stack (no GC)
-Span<byte> buffer = stackalloc byte[256];
-stream.Read(buffer);
-
-// UNMANAGED: Direct memory
-[DllImport("kernel32.dll")]
-public static extern void SetConsoleTitle(string lpConsoleTitle);
-
-// SPAN<T>: Memory-safe zero-copy slicing
-int[] array = new int[] { 1, 2, 3, 4, 5 };
-Span<int> slice = array.AsSpan(1, 3);  // Points to same memory
-
-// MEMORY<T>: Reference counted memory
-Memory<int> memory = new Memory<int>(new[] { 1, 2, 3 });
-MemoryPool<int>.Shared.Rent(10);
-
-// ADVANCED COLLECTIONS
-var linkedList = new LinkedList<int> { 1, 2, 3 };
-var node = linkedList.First;
-linkedList.AddBefore(node, 0);
-
-// CONCURRENT COLLECTIONS (thread-safe)
-var concurrentDict = new ConcurrentDictionary<string, int>();
-concurrentDict.TryAdd("key", 42);
-concurrentDict.TryGetValue("key", out int value);
-
-var concurrentBag = new ConcurrentBag<string>();
-concurrentBag.Add("item");  // Lightweight, unordered
-
-var blockingQueue = new BlockingCollection<int>(maxSize: 100);
-blockingQueue.Add(1);  // Blocks if full
-blockingQueue.Take();  // Blocks if empty
-```
 
 ### 62. Why is the concept of Tasks and threading important in advanced C#?
 
