@@ -17,11 +17,25 @@ explain clearly.
 **Sample:**
 
 ```csharp
-// Concept: 1. Classes and objects
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class OrderLine
+{
+    public string Sku { get; }
+    public int Quantity { get; }
+    public decimal UnitPrice { get; }
+
+    public OrderLine(string sku, int quantity, decimal unitPrice)
+    {
+        Sku = sku;
+        Quantity = quantity;
+        UnitPrice = unitPrice;
+    }
+}
+
+public class Order
+{
+    public List<OrderLine> Lines { get; } = new();
+    public decimal Total => Lines.Sum(x => x.Quantity * x.UnitPrice);
+}
 ```
 
 ---
@@ -37,11 +51,25 @@ performance, security, or delivery depending on the situation.
 **Sample:**
 
 ```csharp
-// Concept: 1. Classes and objects
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class OrderLine
+{
+    public string Sku { get; }
+    public int Quantity { get; }
+    public decimal UnitPrice { get; }
+
+    public OrderLine(string sku, int quantity, decimal unitPrice)
+    {
+        Sku = sku;
+        Quantity = quantity;
+        UnitPrice = unitPrice;
+    }
+}
+
+public class Order
+{
+    public List<OrderLine> Lines { get; } = new();
+    public decimal Total => Lines.Sum(x => x.Quantity * x.UnitPrice);
+}
 ```
 
 ---
@@ -57,11 +85,25 @@ decisions, scalability, or debugging depend on that area.
 **Sample:**
 
 ```csharp
-// Concept: 1. Classes and objects
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class OrderLine
+{
+    public string Sku { get; }
+    public int Quantity { get; }
+    public decimal UnitPrice { get; }
+
+    public OrderLine(string sku, int quantity, decimal unitPrice)
+    {
+        Sku = sku;
+        Quantity = quantity;
+        UnitPrice = unitPrice;
+    }
+}
+
+public class Order
+{
+    public List<OrderLine> Lines { get; } = new();
+    public decimal Total => Lines.Sum(x => x.Quantity * x.UnitPrice);
+}
 ```
 
 ---
@@ -77,11 +119,10 @@ shape depends on the application, but the responsibility should stay predictable
 **Sample:**
 
 ```csharp
-// Concept: 1. Classes and objects
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+var order = new Order();
+order.Lines.Add(new OrderLine("LAPTOP-15", 1, 89999m));
+order.Lines.Add(new OrderLine("MOUSE-WL", 2, 1499m));
+Console.WriteLine($"Items={order.Lines.Count}, Total={order.Total}");
 ```
 
 ---
@@ -97,11 +138,25 @@ tradeoffs easier to explain to reviewers, interviewers, and teammates.
 **Sample:**
 
 ```csharp
-// Concept: 1. Classes and objects
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class OrderLine
+{
+    public string Sku { get; }
+    public int Quantity { get; }
+    public decimal UnitPrice { get; }
+
+    public OrderLine(string sku, int quantity, decimal unitPrice)
+    {
+        Sku = sku;
+        Quantity = quantity;
+        UnitPrice = unitPrice;
+    }
+}
+
+public class Order
+{
+    public List<OrderLine> Lines { get; } = new();
+    public decimal Total => Lines.Sum(x => x.Quantity * x.UnitPrice);
+}
 ```
 
 ---
@@ -117,11 +172,15 @@ That usually leads to overengineering, hidden bugs, or confusing architecture.
 **Sample:**
 
 ```csharp
-// Concept: 1. Classes and objects
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class UserManager
+{
+    public void Register() { }
+    public void Login() { }
+    public void ExportAudit() { }
+    public void RebuildSearchIndex() { }
+}
+
+// A class exists, but it has become a god object with unrelated responsibilities.
 ```
 
 ---
@@ -137,11 +196,18 @@ points. They often work together, but they solve different parts of the topic.
 **Sample:**
 
 ```csharp
-// Concept: 1. Classes and objects
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class PlainOrder
+{
+    public decimal Total;
+}
+
+public class SaferOrder
+{
+    public decimal Total { get; private set; }
+    public void AddCharge(decimal amount) => Total += amount;
+}
+
+// Classes and objects define structure. Encapsulation controls how state changes.
 ```
 
 ---
@@ -158,11 +224,10 @@ alone.
 **Sample:**
 
 ```csharp
-// Concept: 1. Classes and objects
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+var order = new Order();
+order.Lines.Add(new OrderLine("LAPTOP-15", 1, 89999m));
+order.Lines.Add(new OrderLine("MOUSE-WL", 2, 1499m));
+Console.WriteLine($"Items={order.Lines.Count}, Total={order.Total}");
 ```
 
 ---
@@ -178,11 +243,10 @@ implementation readable, and validate important paths early.
 **Sample:**
 
 ```csharp
-// Concept: 1. Classes and objects
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+var order = new Order();
+order.Lines.Add(new OrderLine("LAPTOP-15", 1, 89999m));
+order.Lines.Add(new OrderLine("MOUSE-WL", 2, 1499m));
+Console.WriteLine($"Items={order.Lines.Count}, Total={order.Total}");
 ```
 
 ---
@@ -198,11 +262,15 @@ weak design choices, poor debugging, or incomplete explanations.
 **Sample:**
 
 ```csharp
-// Concept: 1. Classes and objects
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class UserManager
+{
+    public void Register() { }
+    public void Login() { }
+    public void ExportAudit() { }
+    public void RebuildSearchIndex() { }
+}
+
+// A class exists, but it has become a god object with unrelated responsibilities.
 ```
 
 ---
@@ -218,11 +286,8 @@ configuration, logs, runtime behavior, and edge cases before changing the design
 **Sample:**
 
 ```csharp
-// Concept: 1. Classes and objects
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+var product = new { Name = "Monitor", Price = 249.99m, Stock = 12 };
+Console.WriteLine($"State => Name={product.Name}, Price={product.Price}, Stock={product.Stock}");
 ```
 
 ---
@@ -238,11 +303,17 @@ turns isolated facts into a coherent end-to-end explanation.
 **Sample:**
 
 ```csharp
-// Concept: 1. Classes and objects
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public interface IPriceRule
+{
+    decimal Apply(decimal subtotal);
+}
+
+public class PercentageDiscount : IPriceRule
+{
+    public decimal Apply(decimal subtotal) => subtotal * 0.90m;
+}
+
+// Classes provide the model, and interfaces add abstraction and polymorphism.
 ```
 
 ---
@@ -259,11 +330,23 @@ access points. It is part of the foundation a candidate should be able to explai
 **Sample:**
 
 ```csharp
-// Concept: 2. Encapsulation
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class BankAccount
+{
+    private decimal _balance;
+    public decimal Balance => _balance;
+
+    public void Deposit(decimal amount)
+    {
+        if (amount <= 0) throw new ArgumentOutOfRangeException(nameof(amount));
+        _balance += amount;
+    }
+
+    public void Withdraw(decimal amount)
+    {
+        if (amount > _balance) throw new InvalidOperationException("Insufficient funds.");
+        _balance -= amount;
+    }
+}
 ```
 
 ---
@@ -279,11 +362,23 @@ delivery depending on the situation.
 **Sample:**
 
 ```csharp
-// Concept: 2. Encapsulation
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class BankAccount
+{
+    private decimal _balance;
+    public decimal Balance => _balance;
+
+    public void Deposit(decimal amount)
+    {
+        if (amount <= 0) throw new ArgumentOutOfRangeException(nameof(amount));
+        _balance += amount;
+    }
+
+    public void Withdraw(decimal amount)
+    {
+        if (amount > _balance) throw new InvalidOperationException("Insufficient funds.");
+        _balance -= amount;
+    }
+}
 ```
 
 ---
@@ -299,11 +394,23 @@ or debugging depend on that area.
 **Sample:**
 
 ```csharp
-// Concept: 2. Encapsulation
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class BankAccount
+{
+    private decimal _balance;
+    public decimal Balance => _balance;
+
+    public void Deposit(decimal amount)
+    {
+        if (amount <= 0) throw new ArgumentOutOfRangeException(nameof(amount));
+        _balance += amount;
+    }
+
+    public void Withdraw(decimal amount)
+    {
+        if (amount > _balance) throw new InvalidOperationException("Insufficient funds.");
+        _balance -= amount;
+    }
+}
 ```
 
 ---
@@ -319,11 +426,10 @@ the application, but the responsibility should stay predictable.
 **Sample:**
 
 ```csharp
-// Concept: 2. Encapsulation
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+var account = new BankAccount();
+account.Deposit(1000m);
+account.Withdraw(250m);
+Console.WriteLine(account.Balance);
 ```
 
 ---
@@ -339,11 +445,23 @@ explain to reviewers, interviewers, and teammates.
 **Sample:**
 
 ```csharp
-// Concept: 2. Encapsulation
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class BankAccount
+{
+    private decimal _balance;
+    public decimal Balance => _balance;
+
+    public void Deposit(decimal amount)
+    {
+        if (amount <= 0) throw new ArgumentOutOfRangeException(nameof(amount));
+        _balance += amount;
+    }
+
+    public void Withdraw(decimal amount)
+    {
+        if (amount > _balance) throw new InvalidOperationException("Insufficient funds.");
+        _balance -= amount;
+    }
+}
 ```
 
 ---
@@ -359,11 +477,14 @@ overengineering, hidden bugs, or confusing architecture.
 **Sample:**
 
 ```csharp
-// Concept: 2. Encapsulation
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class EmployeeProfile
+{
+    public string Name { get; set; }
+    public decimal Salary { get; set; }
+    public string TaxCode { get; set; }
+}
+
+// If everything is writable from anywhere, invariants are easy to break.
 ```
 
 ---
@@ -379,11 +500,21 @@ details. They often work together, but they solve different parts of the topic.
 **Sample:**
 
 ```csharp
-// Concept: 2. Encapsulation
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class PaymentProcessor
+{
+    public void Pay(string cardNumber, decimal amount)
+    {
+        Validate(cardNumber, amount);
+        Authorize(cardNumber, amount);
+        Capture(amount);
+    }
+
+    private void Validate(string cardNumber, decimal amount) { }
+    private void Authorize(string cardNumber, decimal amount) { }
+    private void Capture(decimal amount) { }
+}
+
+// Encapsulation protects state. Abstraction hides workflow complexity behind a small API.
 ```
 
 ---
@@ -399,11 +530,10 @@ points. Interviewers usually care more about the reasoning than the definition a
 **Sample:**
 
 ```csharp
-// Concept: 2. Encapsulation
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+var account = new BankAccount();
+account.Deposit(1000m);
+account.Withdraw(250m);
+Console.WriteLine(account.Balance);
 ```
 
 ---
@@ -419,11 +549,10 @@ readable, and validate important paths early.
 **Sample:**
 
 ```csharp
-// Concept: 2. Encapsulation
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+var account = new BankAccount();
+account.Deposit(1000m);
+account.Withdraw(250m);
+Console.WriteLine(account.Balance);
 ```
 
 ---
@@ -439,11 +568,14 @@ poor debugging, or incomplete explanations.
 **Sample:**
 
 ```csharp
-// Concept: 2. Encapsulation
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class EmployeeProfile
+{
+    public string Name { get; set; }
+    public decimal Salary { get; set; }
+    public string TaxCode { get; set; }
+}
+
+// If everything is writable from anywhere, invariants are easy to break.
 ```
 
 ---
@@ -459,11 +591,18 @@ configuration, logs, runtime behavior, and edge cases before changing the design
 **Sample:**
 
 ```csharp
-// Concept: 2. Encapsulation
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class Subscription
+{
+    private string _plan = "Free";
+    public string Plan => _plan;
+
+    public void Upgrade(string newPlan)
+    {
+        Console.WriteLine($"Before: {_plan}");
+        _plan = newPlan;
+        Console.WriteLine($"After: {_plan}");
+    }
+}
 ```
 
 ---
@@ -479,11 +618,16 @@ into a coherent end-to-end explanation.
 **Sample:**
 
 ```csharp
-// Concept: 2. Encapsulation
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public interface IShipmentTracker
+{
+    void MarkDelivered();
+}
+
+public class ShipmentTracker : IShipmentTracker
+{
+    private string _status = "InTransit";
+    public void MarkDelivered() => _status = "Delivered";
+}
 ```
 
 ---
@@ -501,11 +645,19 @@ explain clearly.
 **Sample:**
 
 ```csharp
-// Concept: 3. Abstraction
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public interface IStorageGateway
+{
+    Task SaveAsync(string path, Stream content);
+}
+
+public class AzureBlobStorageGateway : IStorageGateway
+{
+    public Task SaveAsync(string path, Stream content)
+    {
+        Console.WriteLine($"Uploading {path} to blob storage");
+        return Task.CompletedTask;
+    }
+}
 ```
 
 ---
@@ -521,11 +673,19 @@ security, or delivery depending on the situation.
 **Sample:**
 
 ```csharp
-// Concept: 3. Abstraction
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public interface IStorageGateway
+{
+    Task SaveAsync(string path, Stream content);
+}
+
+public class AzureBlobStorageGateway : IStorageGateway
+{
+    public Task SaveAsync(string path, Stream content)
+    {
+        Console.WriteLine($"Uploading {path} to blob storage");
+        return Task.CompletedTask;
+    }
+}
 ```
 
 ---
@@ -541,11 +701,19 @@ decisions, scalability, or debugging depend on that area.
 **Sample:**
 
 ```csharp
-// Concept: 3. Abstraction
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public interface IStorageGateway
+{
+    Task SaveAsync(string path, Stream content);
+}
+
+public class AzureBlobStorageGateway : IStorageGateway
+{
+    public Task SaveAsync(string path, Stream content)
+    {
+        Console.WriteLine($"Uploading {path} to blob storage");
+        return Task.CompletedTask;
+    }
+}
 ```
 
 ---
@@ -561,11 +729,14 @@ exact shape depends on the application, but the responsibility should stay predi
 **Sample:**
 
 ```csharp
-// Concept: 3. Abstraction
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class InvoiceService
+{
+    private readonly IStorageGateway _storage;
+    public InvoiceService(IStorageGateway storage) => _storage = storage;
+
+    public Task ArchiveAsync(string invoiceNumber, Stream pdf)
+        => _storage.SaveAsync($"invoices/{invoiceNumber}.pdf", pdf);
+}
 ```
 
 ---
@@ -581,11 +752,19 @@ easier to explain to reviewers, interviewers, and teammates.
 **Sample:**
 
 ```csharp
-// Concept: 3. Abstraction
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public interface IStorageGateway
+{
+    Task SaveAsync(string path, Stream content);
+}
+
+public class AzureBlobStorageGateway : IStorageGateway
+{
+    public Task SaveAsync(string path, Stream content)
+    {
+        Console.WriteLine($"Uploading {path} to blob storage");
+        return Task.CompletedTask;
+    }
+}
 ```
 
 ---
@@ -601,11 +780,12 @@ That usually leads to overengineering, hidden bugs, or confusing architecture.
 **Sample:**
 
 ```csharp
-// Concept: 3. Abstraction
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public interface ICustomerManagerServiceFactoryBuilder
+{
+    object Build(object input);
+}
+
+// The name is abstract, but it does not describe a clear business capability.
 ```
 
 ---
@@ -621,11 +801,17 @@ type. They often work together, but they solve different parts of the topic.
 **Sample:**
 
 ```csharp
-// Concept: 3. Abstraction
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public interface INotifier
+{
+    Task SendAsync(string message);
+}
+
+public abstract class NotificationTemplate
+{
+    public abstract Task RenderAndSendAsync(INotifier notifier, string userName);
+}
+
+// Abstraction defines the contract. Inheritance shares a reusable base.
 ```
 
 ---
@@ -642,11 +828,14 @@ alone.
 **Sample:**
 
 ```csharp
-// Concept: 3. Abstraction
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class InvoiceService
+{
+    private readonly IStorageGateway _storage;
+    public InvoiceService(IStorageGateway storage) => _storage = storage;
+
+    public Task ArchiveAsync(string invoiceNumber, Stream pdf)
+        => _storage.SaveAsync($"invoices/{invoiceNumber}.pdf", pdf);
+}
 ```
 
 ---
@@ -662,11 +851,14 @@ keep implementation readable, and validate important paths early.
 **Sample:**
 
 ```csharp
-// Concept: 3. Abstraction
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class InvoiceService
+{
+    private readonly IStorageGateway _storage;
+    public InvoiceService(IStorageGateway storage) => _storage = storage;
+
+    public Task ArchiveAsync(string invoiceNumber, Stream pdf)
+        => _storage.SaveAsync($"invoices/{invoiceNumber}.pdf", pdf);
+}
 ```
 
 ---
@@ -682,11 +874,12 @@ design choices, poor debugging, or incomplete explanations.
 **Sample:**
 
 ```csharp
-// Concept: 3. Abstraction
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public interface ICustomerManagerServiceFactoryBuilder
+{
+    object Build(object input);
+}
+
+// The name is abstract, but it does not describe a clear business capability.
 ```
 
 ---
@@ -702,11 +895,17 @@ configuration, logs, runtime behavior, and edge cases before changing the design
 **Sample:**
 
 ```csharp
-// Concept: 3. Abstraction
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class LoggingFileStore : IStorageGateway
+{
+    private readonly IStorageGateway _inner;
+    public LoggingFileStore(IStorageGateway inner) => _inner = inner;
+
+    public async Task SaveAsync(string path, Stream content)
+    {
+        Console.WriteLine($"Resolved implementation: {_inner.GetType().Name}");
+        await _inner.SaveAsync(path, content);
+    }
+}
 ```
 
 ---
@@ -722,11 +921,17 @@ turns isolated facts into a coherent end-to-end explanation.
 **Sample:**
 
 ```csharp
-// Concept: 3. Abstraction
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public interface IDiscountPolicy
+{
+    decimal Apply(decimal subtotal);
+}
+
+public class CheckoutService
+{
+    private readonly IDiscountPolicy _policy;
+    public CheckoutService(IDiscountPolicy policy) => _policy = policy;
+    public decimal FinalTotal(decimal subtotal) => _policy.Apply(subtotal);
+}
 ```
 
 ---
@@ -743,11 +948,18 @@ base type. It is part of the foundation a candidate should be able to explain cl
 **Sample:**
 
 ```csharp
-// Concept: 4. Inheritance
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public abstract class NotificationChannel
+{
+    public string ChannelName { get; }
+    protected NotificationChannel(string channelName) => ChannelName = channelName;
+    public abstract Task SendAsync(string recipient, string message);
+}
+
+public sealed class EmailChannel : NotificationChannel
+{
+    public EmailChannel() : base("Email") { }
+    public override Task SendAsync(string recipient, string message) => Task.CompletedTask;
+}
 ```
 
 ---
@@ -763,11 +975,18 @@ delivery depending on the situation.
 **Sample:**
 
 ```csharp
-// Concept: 4. Inheritance
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public abstract class NotificationChannel
+{
+    public string ChannelName { get; }
+    protected NotificationChannel(string channelName) => ChannelName = channelName;
+    public abstract Task SendAsync(string recipient, string message);
+}
+
+public sealed class EmailChannel : NotificationChannel
+{
+    public EmailChannel() : base("Email") { }
+    public override Task SendAsync(string recipient, string message) => Task.CompletedTask;
+}
 ```
 
 ---
@@ -783,11 +1002,18 @@ debugging depend on that area.
 **Sample:**
 
 ```csharp
-// Concept: 4. Inheritance
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public abstract class NotificationChannel
+{
+    public string ChannelName { get; }
+    protected NotificationChannel(string channelName) => ChannelName = channelName;
+    public abstract Task SendAsync(string recipient, string message);
+}
+
+public sealed class EmailChannel : NotificationChannel
+{
+    public EmailChannel() : base("Email") { }
+    public override Task SendAsync(string recipient, string message) => Task.CompletedTask;
+}
 ```
 
 ---
@@ -803,11 +1029,9 @@ application, but the responsibility should stay predictable.
 **Sample:**
 
 ```csharp
-// Concept: 4. Inheritance
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+NotificationChannel channel = new EmailChannel();
+Console.WriteLine(channel.ChannelName);
+await channel.SendAsync("customer@contoso.com", "Order shipped");
 ```
 
 ---
@@ -823,11 +1047,18 @@ reviewers, interviewers, and teammates.
 **Sample:**
 
 ```csharp
-// Concept: 4. Inheritance
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public abstract class NotificationChannel
+{
+    public string ChannelName { get; }
+    protected NotificationChannel(string channelName) => ChannelName = channelName;
+    public abstract Task SendAsync(string recipient, string message);
+}
+
+public sealed class EmailChannel : NotificationChannel
+{
+    public EmailChannel() : base("Email") { }
+    public override Task SendAsync(string recipient, string message) => Task.CompletedTask;
+}
 ```
 
 ---
@@ -843,11 +1074,17 @@ overengineering, hidden bugs, or confusing architecture.
 **Sample:**
 
 ```csharp
-// Concept: 4. Inheritance
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class Animal
+{
+    public void Eat() { }
+}
+
+public class ReportService : Animal
+{
+    public void Export() { }
+}
+
+// This compiles, but the inheritance relationship is nonsense.
 ```
 
 ---
@@ -863,11 +1100,18 @@ overridden behavior. They often work together, but they solve different parts of
 **Sample:**
 
 ```csharp
-// Concept: 4. Inheritance
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public abstract class DiscountRule
+{
+    public virtual decimal Apply(decimal subtotal) => subtotal;
+}
+
+public class VipDiscountRule : DiscountRule
+{
+    public override decimal Apply(decimal subtotal) => subtotal * 0.80m;
+}
+
+DiscountRule rule = new VipDiscountRule();
+Console.WriteLine(rule.Apply(1000m)); // inheritance defines the hierarchy, runtime dispatch is polymorphism
 ```
 
 ---
@@ -883,11 +1127,9 @@ Interviewers usually care more about the reasoning than the definition alone.
 **Sample:**
 
 ```csharp
-// Concept: 4. Inheritance
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+NotificationChannel channel = new EmailChannel();
+Console.WriteLine(channel.ChannelName);
+await channel.SendAsync("customer@contoso.com", "Order shipped");
 ```
 
 ---
@@ -903,11 +1145,9 @@ readable, and validate important paths early.
 **Sample:**
 
 ```csharp
-// Concept: 4. Inheritance
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+NotificationChannel channel = new EmailChannel();
+Console.WriteLine(channel.ChannelName);
+await channel.SendAsync("customer@contoso.com", "Order shipped");
 ```
 
 ---
@@ -923,11 +1163,17 @@ debugging, or incomplete explanations.
 **Sample:**
 
 ```csharp
-// Concept: 4. Inheritance
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class Animal
+{
+    public void Eat() { }
+}
+
+public class ReportService : Animal
+{
+    public void Export() { }
+}
+
+// This compiles, but the inheritance relationship is nonsense.
 ```
 
 ---
@@ -943,11 +1189,14 @@ runtime behavior, and edge cases before changing the design.
 **Sample:**
 
 ```csharp
-// Concept: 4. Inheritance
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class VerboseDiscountRule : DiscountRule
+{
+    public override decimal Apply(decimal subtotal)
+    {
+        Console.WriteLine("VerboseDiscountRule.Apply called");
+        return subtotal * 0.95m;
+    }
+}
 ```
 
 ---
@@ -963,11 +1212,17 @@ coherent end-to-end explanation.
 **Sample:**
 
 ```csharp
-// Concept: 4. Inheritance
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public abstract class WorkflowStep
+{
+    public abstract Task ExecuteAsync();
+}
+
+public class ApproveOrderStep : WorkflowStep
+{
+    public override Task ExecuteAsync() => Task.CompletedTask;
+}
+
+List<WorkflowStep> steps = new() { new ApproveOrderStep() };
 ```
 
 ---
@@ -985,11 +1240,20 @@ explain clearly.
 **Sample:**
 
 ```csharp
-// Concept: 5. Polymorphism
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public interface IDiscountStrategy
+{
+    decimal Apply(decimal subtotal);
+}
+
+public class FestivalDiscount : IDiscountStrategy
+{
+    public decimal Apply(decimal subtotal) => subtotal * 0.90m;
+}
+
+public class MemberDiscount : IDiscountStrategy
+{
+    public decimal Apply(decimal subtotal) => subtotal - 250m;
+}
 ```
 
 ---
@@ -1005,11 +1269,20 @@ performance, security, or delivery depending on the situation.
 **Sample:**
 
 ```csharp
-// Concept: 5. Polymorphism
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public interface IDiscountStrategy
+{
+    decimal Apply(decimal subtotal);
+}
+
+public class FestivalDiscount : IDiscountStrategy
+{
+    public decimal Apply(decimal subtotal) => subtotal * 0.90m;
+}
+
+public class MemberDiscount : IDiscountStrategy
+{
+    public decimal Apply(decimal subtotal) => subtotal - 250m;
+}
 ```
 
 ---
@@ -1025,11 +1298,20 @@ decisions, scalability, or debugging depend on that area.
 **Sample:**
 
 ```csharp
-// Concept: 5. Polymorphism
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public interface IDiscountStrategy
+{
+    decimal Apply(decimal subtotal);
+}
+
+public class FestivalDiscount : IDiscountStrategy
+{
+    public decimal Apply(decimal subtotal) => subtotal * 0.90m;
+}
+
+public class MemberDiscount : IDiscountStrategy
+{
+    public decimal Apply(decimal subtotal) => subtotal - 250m;
+}
 ```
 
 ---
@@ -1045,11 +1327,14 @@ exact shape depends on the application, but the responsibility should stay predi
 **Sample:**
 
 ```csharp
-// Concept: 5. Polymorphism
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+IReadOnlyList<IDiscountStrategy> strategies = new IDiscountStrategy[]
+{
+    new FestivalDiscount(),
+    new MemberDiscount()
+};
+
+foreach (var strategy in strategies)
+    Console.WriteLine(strategy.Apply(2000m));
 ```
 
 ---
@@ -1065,11 +1350,20 @@ tradeoffs easier to explain to reviewers, interviewers, and teammates.
 **Sample:**
 
 ```csharp
-// Concept: 5. Polymorphism
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public interface IDiscountStrategy
+{
+    decimal Apply(decimal subtotal);
+}
+
+public class FestivalDiscount : IDiscountStrategy
+{
+    public decimal Apply(decimal subtotal) => subtotal * 0.90m;
+}
+
+public class MemberDiscount : IDiscountStrategy
+{
+    public decimal Apply(decimal subtotal) => subtotal - 250m;
+}
 ```
 
 ---
@@ -1085,11 +1379,17 @@ That usually leads to overengineering, hidden bugs, or confusing architecture.
 **Sample:**
 
 ```csharp
-// Concept: 5. Polymorphism
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class BadCheckoutService
+{
+    public decimal FinalTotal(decimal subtotal, IDiscountStrategy strategy)
+    {
+        if (strategy is FestivalDiscount) return subtotal * 0.90m;
+        if (strategy is MemberDiscount) return subtotal - 250m;
+        return subtotal;
+    }
+}
+
+// The type checks undo the benefit of polymorphism.
 ```
 
 ---
@@ -1106,11 +1406,18 @@ topic.
 **Sample:**
 
 ```csharp
-// Concept: 5. Polymorphism
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public interface IFileExporter
+{
+    byte[] Export(IEnumerable<string> rows);
+}
+
+public class CsvExporter : IFileExporter
+{
+    public byte[] Export(IEnumerable<string> rows) => Encoding.UTF8.GetBytes(string.Join(Environment.NewLine, rows));
+}
+
+IFileExporter exporter = new CsvExporter();
+Console.WriteLine(exporter.GetType().Name); // interface is the contract, substitution at runtime is polymorphism
 ```
 
 ---
@@ -1126,11 +1433,14 @@ overridden behavior. Interviewers usually care more about the reasoning than the
 **Sample:**
 
 ```csharp
-// Concept: 5. Polymorphism
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+IReadOnlyList<IDiscountStrategy> strategies = new IDiscountStrategy[]
+{
+    new FestivalDiscount(),
+    new MemberDiscount()
+};
+
+foreach (var strategy in strategies)
+    Console.WriteLine(strategy.Apply(2000m));
 ```
 
 ---
@@ -1146,11 +1456,14 @@ keep implementation readable, and validate important paths early.
 **Sample:**
 
 ```csharp
-// Concept: 5. Polymorphism
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+IReadOnlyList<IDiscountStrategy> strategies = new IDiscountStrategy[]
+{
+    new FestivalDiscount(),
+    new MemberDiscount()
+};
+
+foreach (var strategy in strategies)
+    Console.WriteLine(strategy.Apply(2000m));
 ```
 
 ---
@@ -1166,11 +1479,17 @@ weak design choices, poor debugging, or incomplete explanations.
 **Sample:**
 
 ```csharp
-// Concept: 5. Polymorphism
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class BadCheckoutService
+{
+    public decimal FinalTotal(decimal subtotal, IDiscountStrategy strategy)
+    {
+        if (strategy is FestivalDiscount) return subtotal * 0.90m;
+        if (strategy is MemberDiscount) return subtotal - 250m;
+        return subtotal;
+    }
+}
+
+// The type checks undo the benefit of polymorphism.
 ```
 
 ---
@@ -1186,11 +1505,19 @@ dependencies, configuration, logs, runtime behavior, and edge cases before chang
 **Sample:**
 
 ```csharp
-// Concept: 5. Polymorphism
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public interface ISerializer
+{
+    string Serialize(object value);
+}
+
+public class JsonSerializerAdapter : ISerializer
+{
+    public string Serialize(object value)
+    {
+        Console.WriteLine($"Serializer used: {GetType().Name}");
+        return System.Text.Json.JsonSerializer.Serialize(value);
+    }
+}
 ```
 
 ---
@@ -1206,11 +1533,12 @@ turns isolated facts into a coherent end-to-end explanation.
 **Sample:**
 
 ```csharp
-// Concept: 5. Polymorphism
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class CheckoutService
+{
+    private readonly IDiscountStrategy _discountStrategy;
+    public CheckoutService(IDiscountStrategy discountStrategy) => _discountStrategy = discountStrategy;
+    public decimal Payable(decimal subtotal) => _discountStrategy.Apply(subtotal);
+}
 ```
 
 ---
@@ -1228,11 +1556,16 @@ explain clearly.
 **Sample:**
 
 ```csharp
-// Concept: 6. Interfaces
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public interface IPaymentGateway
+{
+    Task<string> ChargeAsync(decimal amount, string reference);
+}
+
+public class StripeGateway : IPaymentGateway
+{
+    public Task<string> ChargeAsync(decimal amount, string reference)
+        => Task.FromResult($"stripe:{reference}:{amount}");
+}
 ```
 
 ---
@@ -1248,11 +1581,16 @@ performance, security, or delivery depending on the situation.
 **Sample:**
 
 ```csharp
-// Concept: 6. Interfaces
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public interface IPaymentGateway
+{
+    Task<string> ChargeAsync(decimal amount, string reference);
+}
+
+public class StripeGateway : IPaymentGateway
+{
+    public Task<string> ChargeAsync(decimal amount, string reference)
+        => Task.FromResult($"stripe:{reference}:{amount}");
+}
 ```
 
 ---
@@ -1268,11 +1606,16 @@ decisions, scalability, or debugging depend on that area.
 **Sample:**
 
 ```csharp
-// Concept: 6. Interfaces
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public interface IPaymentGateway
+{
+    Task<string> ChargeAsync(decimal amount, string reference);
+}
+
+public class StripeGateway : IPaymentGateway
+{
+    public Task<string> ChargeAsync(decimal amount, string reference)
+        => Task.FromResult($"stripe:{reference}:{amount}");
+}
 ```
 
 ---
@@ -1288,11 +1631,14 @@ depends on the application, but the responsibility should stay predictable.
 **Sample:**
 
 ```csharp
-// Concept: 6. Interfaces
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class PaymentService
+{
+    private readonly IPaymentGateway _gateway;
+    public PaymentService(IPaymentGateway gateway) => _gateway = gateway;
+
+    public Task<string> PayAsync(decimal amount, string reference)
+        => _gateway.ChargeAsync(amount, reference);
+}
 ```
 
 ---
@@ -1308,11 +1654,16 @@ tradeoffs easier to explain to reviewers, interviewers, and teammates.
 **Sample:**
 
 ```csharp
-// Concept: 6. Interfaces
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public interface IPaymentGateway
+{
+    Task<string> ChargeAsync(decimal amount, string reference);
+}
+
+public class StripeGateway : IPaymentGateway
+{
+    public Task<string> ChargeAsync(decimal amount, string reference)
+        => Task.FromResult($"stripe:{reference}:{amount}");
+}
 ```
 
 ---
@@ -1328,11 +1679,16 @@ That usually leads to overengineering, hidden bugs, or confusing architecture.
 **Sample:**
 
 ```csharp
-// Concept: 6. Interfaces
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public interface IUserOperations
+{
+    void Create();
+    void Delete();
+    void Suspend();
+    void ResetPassword();
+    void Export();
+}
+
+// A wide interface forces clients to depend on members they may never use.
 ```
 
 ---
@@ -1349,11 +1705,19 @@ of the topic.
 **Sample:**
 
 ```csharp
-// Concept: 6. Interfaces
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public interface IReportBuilder
+{
+    byte[] Build();
+}
+
+public abstract class ReportBuilderBase
+{
+    protected string Title { get; }
+    protected ReportBuilderBase(string title) => Title = title;
+    public abstract byte[] Build();
+}
+
+// Interfaces define a contract; abstract classes can also share state and base behavior.
 ```
 
 ---
@@ -1369,11 +1733,14 @@ implementation. Interviewers usually care more about the reasoning than the defi
 **Sample:**
 
 ```csharp
-// Concept: 6. Interfaces
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class PaymentService
+{
+    private readonly IPaymentGateway _gateway;
+    public PaymentService(IPaymentGateway gateway) => _gateway = gateway;
+
+    public Task<string> PayAsync(decimal amount, string reference)
+        => _gateway.ChargeAsync(amount, reference);
+}
 ```
 
 ---
@@ -1389,11 +1756,14 @@ implementation readable, and validate important paths early.
 **Sample:**
 
 ```csharp
-// Concept: 6. Interfaces
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class PaymentService
+{
+    private readonly IPaymentGateway _gateway;
+    public PaymentService(IPaymentGateway gateway) => _gateway = gateway;
+
+    public Task<string> PayAsync(decimal amount, string reference)
+        => _gateway.ChargeAsync(amount, reference);
+}
 ```
 
 ---
@@ -1409,11 +1779,16 @@ weak design choices, poor debugging, or incomplete explanations.
 **Sample:**
 
 ```csharp
-// Concept: 6. Interfaces
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public interface IUserOperations
+{
+    void Create();
+    void Delete();
+    void Suspend();
+    void ResetPassword();
+    void Export();
+}
+
+// A wide interface forces clients to depend on members they may never use.
 ```
 
 ---
@@ -1429,11 +1804,15 @@ configuration, logs, runtime behavior, and edge cases before changing the design
 **Sample:**
 
 ```csharp
-// Concept: 6. Interfaces
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public interface INotificationSender
+{
+    Task SendAsync(string message);
+}
+
+public class FailingNotificationSender : INotificationSender
+{
+    public Task SendAsync(string message) => throw new NotImplementedException("Provider not configured yet.");
+}
 ```
 
 ---
@@ -1449,11 +1828,17 @@ turns isolated facts into a coherent end-to-end explanation.
 **Sample:**
 
 ```csharp
-// Concept: 6. Interfaces
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class SubscriptionService
+{
+    private readonly IClock _clock;
+    public SubscriptionService(IClock clock) => _clock = clock;
+    public DateTime RenewalDate() => _clock.UtcNow.AddMonths(1);
+}
+
+public interface IClock
+{
+    DateTime UtcNow { get; }
+}
 ```
 
 ---
@@ -1471,11 +1856,21 @@ be able to explain clearly.
 **Sample:**
 
 ```csharp
-// Concept: 7. Abstract classes
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public abstract class InvoiceExporter
+{
+    protected string CompanyName { get; }
+    protected InvoiceExporter(string companyName) => CompanyName = companyName;
+    public abstract byte[] Export(Invoice invoice);
+}
+
+public sealed class CsvInvoiceExporter : InvoiceExporter
+{
+    public CsvInvoiceExporter(string companyName) : base(companyName) { }
+    public override byte[] Export(Invoice invoice)
+        => Encoding.UTF8.GetBytes($"{CompanyName},{invoice.Number},{invoice.Total}");
+}
+
+public record Invoice(string Number, decimal Total);
 ```
 
 ---
@@ -1491,11 +1886,21 @@ maintainability, performance, security, or delivery depending on the situation.
 **Sample:**
 
 ```csharp
-// Concept: 7. Abstract classes
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public abstract class InvoiceExporter
+{
+    protected string CompanyName { get; }
+    protected InvoiceExporter(string companyName) => CompanyName = companyName;
+    public abstract byte[] Export(Invoice invoice);
+}
+
+public sealed class CsvInvoiceExporter : InvoiceExporter
+{
+    public CsvInvoiceExporter(string companyName) : base(companyName) { }
+    public override byte[] Export(Invoice invoice)
+        => Encoding.UTF8.GetBytes($"{CompanyName},{invoice.Number},{invoice.Total}");
+}
+
+public record Invoice(string Number, decimal Total);
 ```
 
 ---
@@ -1511,11 +1916,21 @@ design decisions, scalability, or debugging depend on that area.
 **Sample:**
 
 ```csharp
-// Concept: 7. Abstract classes
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public abstract class InvoiceExporter
+{
+    protected string CompanyName { get; }
+    protected InvoiceExporter(string companyName) => CompanyName = companyName;
+    public abstract byte[] Export(Invoice invoice);
+}
+
+public sealed class CsvInvoiceExporter : InvoiceExporter
+{
+    public CsvInvoiceExporter(string companyName) : base(companyName) { }
+    public override byte[] Export(Invoice invoice)
+        => Encoding.UTF8.GetBytes($"{CompanyName},{invoice.Number},{invoice.Total}");
+}
+
+public record Invoice(string Number, decimal Total);
 ```
 
 ---
@@ -1531,11 +1946,9 @@ exact shape depends on the application, but the responsibility should stay predi
 **Sample:**
 
 ```csharp
-// Concept: 7. Abstract classes
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+InvoiceExporter exporter = new CsvInvoiceExporter("Contoso");
+var bytes = exporter.Export(new Invoice("INV-2026-1001", 1500m));
+Console.WriteLine(bytes.Length);
 ```
 
 ---
@@ -1551,11 +1964,21 @@ also makes tradeoffs easier to explain to reviewers, interviewers, and teammates
 **Sample:**
 
 ```csharp
-// Concept: 7. Abstract classes
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public abstract class InvoiceExporter
+{
+    protected string CompanyName { get; }
+    protected InvoiceExporter(string companyName) => CompanyName = companyName;
+    public abstract byte[] Export(Invoice invoice);
+}
+
+public sealed class CsvInvoiceExporter : InvoiceExporter
+{
+    public CsvInvoiceExporter(string companyName) : base(companyName) { }
+    public override byte[] Export(Invoice invoice)
+        => Encoding.UTF8.GetBytes($"{CompanyName},{invoice.Number},{invoice.Total}");
+}
+
+public record Invoice(string Number, decimal Total);
 ```
 
 ---
@@ -1571,11 +1994,13 @@ must coexist. That usually leads to overengineering, hidden bugs, or confusing a
 **Sample:**
 
 ```csharp
-// Concept: 7. Abstract classes
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public abstract class NotificationBase
+{
+    public abstract void Send(string to, string message);
+    public abstract void SendSms(string to, string message);
+}
+
+// Every subclass is forced to support every message type, even when it should not.
 ```
 
 ---
@@ -1591,11 +2016,18 @@ are created. They often work together, but they solve different parts of the top
 **Sample:**
 
 ```csharp
-// Concept: 7. Abstract classes
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public abstract class IntegrationClient
+{
+    protected string BaseUrl { get; }
+    protected IntegrationClient(string baseUrl) => BaseUrl = baseUrl;
+}
+
+public class CrmClient : IntegrationClient
+{
+    public CrmClient(string baseUrl) : base(baseUrl) { }
+}
+
+// The constructor initializes shared state; the abstract class defines the reusable hierarchy.
 ```
 
 ---
@@ -1612,11 +2044,9 @@ definition alone.
 **Sample:**
 
 ```csharp
-// Concept: 7. Abstract classes
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+InvoiceExporter exporter = new CsvInvoiceExporter("Contoso");
+var bytes = exporter.Export(new Invoice("INV-2026-1001", 1500m));
+Console.WriteLine(bytes.Length);
 ```
 
 ---
@@ -1632,11 +2062,9 @@ document intent, keep implementation readable, and validate important paths earl
 **Sample:**
 
 ```csharp
-// Concept: 7. Abstract classes
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+InvoiceExporter exporter = new CsvInvoiceExporter("Contoso");
+var bytes = exporter.Export(new Invoice("INV-2026-1001", 1500m));
+Console.WriteLine(bytes.Length);
 ```
 
 ---
@@ -1652,11 +2080,13 @@ appears as weak design choices, poor debugging, or incomplete explanations.
 **Sample:**
 
 ```csharp
-// Concept: 7. Abstract classes
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public abstract class NotificationBase
+{
+    public abstract void Send(string to, string message);
+    public abstract void SendSms(string to, string message);
+}
+
+// Every subclass is forced to support every message type, even when it should not.
 ```
 
 ---
@@ -1672,11 +2102,25 @@ dependencies, configuration, logs, runtime behavior, and edge cases before chang
 **Sample:**
 
 ```csharp
-// Concept: 7. Abstract classes
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public abstract class SyncJob
+{
+    public async Task RunAsync()
+    {
+        Console.WriteLine($"Running {GetType().Name}");
+        await ExecuteAsync();
+    }
+
+    protected abstract Task ExecuteAsync();
+}
+
+public class CustomerSyncJob : SyncJob
+{
+    protected override Task ExecuteAsync()
+    {
+        Console.WriteLine("Customer sync override called");
+        return Task.CompletedTask;
+    }
+}
 ```
 
 ---
@@ -1692,11 +2136,15 @@ pieces that turns isolated facts into a coherent end-to-end explanation.
 **Sample:**
 
 ```csharp
-// Concept: 7. Abstract classes
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public abstract class OrderRule
+{
+    public abstract bool IsValid(Order order);
+}
+
+public class MinimumAmountRule : OrderRule
+{
+    public override bool IsValid(Order order) => order.Total >= 100m;
+}
 ```
 
 ---
@@ -1713,11 +2161,19 @@ created. It is part of the foundation a candidate should be able to explain clea
 **Sample:**
 
 ```csharp
-// Concept: 8. Constructors
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class Money
+{
+    public string Currency { get; }
+    public decimal Amount { get; }
+
+    public Money(string currency, decimal amount)
+    {
+        if (string.IsNullOrWhiteSpace(currency)) throw new ArgumentException("Currency is required.");
+        if (amount < 0) throw new ArgumentOutOfRangeException(nameof(amount));
+        Currency = currency;
+        Amount = amount;
+    }
+}
 ```
 
 ---
@@ -1733,11 +2189,19 @@ depending on the situation.
 **Sample:**
 
 ```csharp
-// Concept: 8. Constructors
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class Money
+{
+    public string Currency { get; }
+    public decimal Amount { get; }
+
+    public Money(string currency, decimal amount)
+    {
+        if (string.IsNullOrWhiteSpace(currency)) throw new ArgumentException("Currency is required.");
+        if (amount < 0) throw new ArgumentOutOfRangeException(nameof(amount));
+        Currency = currency;
+        Amount = amount;
+    }
+}
 ```
 
 ---
@@ -1753,11 +2217,19 @@ debugging depend on that area.
 **Sample:**
 
 ```csharp
-// Concept: 8. Constructors
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class Money
+{
+    public string Currency { get; }
+    public decimal Amount { get; }
+
+    public Money(string currency, decimal amount)
+    {
+        if (string.IsNullOrWhiteSpace(currency)) throw new ArgumentException("Currency is required.");
+        if (amount < 0) throw new ArgumentOutOfRangeException(nameof(amount));
+        Currency = currency;
+        Amount = amount;
+    }
+}
 ```
 
 ---
@@ -1773,11 +2245,23 @@ application, but the responsibility should stay predictable.
 **Sample:**
 
 ```csharp
-// Concept: 8. Constructors
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+var booking = new Booking(Guid.NewGuid(), new DateOnly(2026, 4, 10), new DateOnly(2026, 4, 12));
+Console.WriteLine($"Room={booking.RoomId}, CheckIn={booking.CheckIn}, CheckOut={booking.CheckOut}");
+
+public class Booking
+{
+    public Guid RoomId { get; }
+    public DateOnly CheckIn { get; }
+    public DateOnly CheckOut { get; }
+
+    public Booking(Guid roomId, DateOnly checkIn, DateOnly checkOut)
+    {
+        if (checkOut <= checkIn) throw new ArgumentException("Check-out must be after check-in.");
+        RoomId = roomId;
+        CheckIn = checkIn;
+        CheckOut = checkOut;
+    }
+}
 ```
 
 ---
@@ -1793,11 +2277,19 @@ reviewers, interviewers, and teammates.
 **Sample:**
 
 ```csharp
-// Concept: 8. Constructors
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class Money
+{
+    public string Currency { get; }
+    public decimal Amount { get; }
+
+    public Money(string currency, decimal amount)
+    {
+        if (string.IsNullOrWhiteSpace(currency)) throw new ArgumentException("Currency is required.");
+        if (amount < 0) throw new ArgumentOutOfRangeException(nameof(amount));
+        Currency = currency;
+        Amount = amount;
+    }
+}
 ```
 
 ---
@@ -1813,11 +2305,17 @@ overengineering, hidden bugs, or confusing architecture.
 **Sample:**
 
 ```csharp
-// Concept: 8. Constructors
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class ReportService
+{
+    public ReportService(string region, IClock clock, ICurrencyService currencyService, IAuditWriter auditWriter, ILogger logger)
+    {
+        // Too many constructor parameters usually hint that this class does too much.
+    }
+}
+
+public interface ICurrencyService { }
+public interface IAuditWriter { }
+public interface ILogger { }
 ```
 
 ---
@@ -1833,11 +2331,19 @@ together. They often work together, but they solve different parts of the topic.
 **Sample:**
 
 ```csharp
-// Concept: 8. Constructors
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class Address
+{
+    public string City { get; }
+    public Address(string city) => City = city;
+}
+
+public class Customer
+{
+    public Address Address { get; }
+    public Customer(Address address) => Address = address;
+}
+
+// Constructors wire object relationships. Association/composition describes the relationship itself.
 ```
 
 ---
@@ -1853,11 +2359,23 @@ Interviewers usually care more about the reasoning than the definition alone.
 **Sample:**
 
 ```csharp
-// Concept: 8. Constructors
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+var booking = new Booking(Guid.NewGuid(), new DateOnly(2026, 4, 10), new DateOnly(2026, 4, 12));
+Console.WriteLine($"Room={booking.RoomId}, CheckIn={booking.CheckIn}, CheckOut={booking.CheckOut}");
+
+public class Booking
+{
+    public Guid RoomId { get; }
+    public DateOnly CheckIn { get; }
+    public DateOnly CheckOut { get; }
+
+    public Booking(Guid roomId, DateOnly checkIn, DateOnly checkOut)
+    {
+        if (checkOut <= checkIn) throw new ArgumentException("Check-out must be after check-in.");
+        RoomId = roomId;
+        CheckIn = checkIn;
+        CheckOut = checkOut;
+    }
+}
 ```
 
 ---
@@ -1873,11 +2391,23 @@ implementation readable, and validate important paths early.
 **Sample:**
 
 ```csharp
-// Concept: 8. Constructors
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+var booking = new Booking(Guid.NewGuid(), new DateOnly(2026, 4, 10), new DateOnly(2026, 4, 12));
+Console.WriteLine($"Room={booking.RoomId}, CheckIn={booking.CheckIn}, CheckOut={booking.CheckOut}");
+
+public class Booking
+{
+    public Guid RoomId { get; }
+    public DateOnly CheckIn { get; }
+    public DateOnly CheckOut { get; }
+
+    public Booking(Guid roomId, DateOnly checkIn, DateOnly checkOut)
+    {
+        if (checkOut <= checkIn) throw new ArgumentException("Check-out must be after check-in.");
+        RoomId = roomId;
+        CheckIn = checkIn;
+        CheckOut = checkOut;
+    }
+}
 ```
 
 ---
@@ -1893,11 +2423,17 @@ debugging, or incomplete explanations.
 **Sample:**
 
 ```csharp
-// Concept: 8. Constructors
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class ReportService
+{
+    public ReportService(string region, IClock clock, ICurrencyService currencyService, IAuditWriter auditWriter, ILogger logger)
+    {
+        // Too many constructor parameters usually hint that this class does too much.
+    }
+}
+
+public interface ICurrencyService { }
+public interface IAuditWriter { }
+public interface ILogger { }
 ```
 
 ---
@@ -1913,11 +2449,18 @@ runtime behavior, and edge cases before changing the design.
 **Sample:**
 
 ```csharp
-// Concept: 8. Constructors
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class SecureToken
+{
+    public string Value { get; }
+
+    public SecureToken(string value)
+    {
+        Console.WriteLine("Entering constructor");
+        Value = string.IsNullOrWhiteSpace(value)
+            ? throw new ArgumentException("Token cannot be empty.")
+            : value;
+    }
+}
 ```
 
 ---
@@ -1933,11 +2476,17 @@ facts into a coherent end-to-end explanation.
 **Sample:**
 
 ```csharp
-// Concept: 8. Constructors
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class Order
+{
+    public Customer Customer { get; }
+    public IReadOnlyList<OrderLine> Lines { get; }
+
+    public Order(Customer customer, IReadOnlyList<OrderLine> lines)
+    {
+        Customer = customer;
+        Lines = lines;
+    }
+}
 ```
 
 ---
@@ -1955,11 +2504,18 @@ explain clearly.
 **Sample:**
 
 ```csharp
-// Concept: 9. Association and composition
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class Customer
+{
+    public string Name { get; }
+    public Customer(string name) => Name = name;
+}
+
+public class Order
+{
+    public Customer Customer { get; }
+    public List<OrderLine> Lines { get; } = new();
+    public Order(Customer customer) => Customer = customer;
+}
 ```
 
 ---
@@ -1975,11 +2531,18 @@ performance, security, or delivery depending on the situation.
 **Sample:**
 
 ```csharp
-// Concept: 9. Association and composition
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class Customer
+{
+    public string Name { get; }
+    public Customer(string name) => Name = name;
+}
+
+public class Order
+{
+    public Customer Customer { get; }
+    public List<OrderLine> Lines { get; } = new();
+    public Order(Customer customer) => Customer = customer;
+}
 ```
 
 ---
@@ -1995,11 +2558,18 @@ decisions, scalability, or debugging depend on that area.
 **Sample:**
 
 ```csharp
-// Concept: 9. Association and composition
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class Customer
+{
+    public string Name { get; }
+    public Customer(string name) => Name = name;
+}
+
+public class Order
+{
+    public Customer Customer { get; }
+    public List<OrderLine> Lines { get; } = new();
+    public Order(Customer customer) => Customer = customer;
+}
 ```
 
 ---
@@ -2015,11 +2585,24 @@ shape depends on the application, but the responsibility should stay predictable
 **Sample:**
 
 ```csharp
-// Concept: 9. Association and composition
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+var invoice = new Invoice(new Customer("Asha"), new Address("Hyderabad", "India"));
+invoice.Lines.Add(new OrderLine("SSD-1TB", 1, 7499m));
+Console.WriteLine(invoice.Total);
+
+public class Invoice
+{
+    public Customer Customer { get; }
+    public Address BillingAddress { get; }
+    public List<OrderLine> Lines { get; } = new();
+    public Invoice(Customer customer, Address billingAddress)
+    {
+        Customer = customer;
+        BillingAddress = billingAddress;
+    }
+    public decimal Total => Lines.Sum(x => x.Quantity * x.UnitPrice);
+}
+
+public record Address(string City, string Country);
 ```
 
 ---
@@ -2035,11 +2618,18 @@ tradeoffs easier to explain to reviewers, interviewers, and teammates.
 **Sample:**
 
 ```csharp
-// Concept: 9. Association and composition
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class Customer
+{
+    public string Name { get; }
+    public Customer(string name) => Name = name;
+}
+
+public class Order
+{
+    public Customer Customer { get; }
+    public List<OrderLine> Lines { get; } = new();
+    public Order(Customer customer) => Customer = customer;
+}
 ```
 
 ---
@@ -2055,11 +2645,24 @@ That usually leads to overengineering, hidden bugs, or confusing architecture.
 **Sample:**
 
 ```csharp
-// Concept: 9. Association and composition
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class OrderAggregate
+{
+    public Customer Customer { get; }
+    public Payment Payment { get; }
+    public Shipment Shipment { get; }
+    public Promotion Promotion { get; }
+
+    public OrderAggregate(Customer customer, Payment payment, Shipment shipment, Promotion promotion)
+    {
+        Customer = customer;
+        Payment = payment;
+        Shipment = shipment;
+        Promotion = promotion;
+    }
+}
+
+public record Payment(string Reference);
+public record Promotion(string Code);
 ```
 
 ---
@@ -2076,11 +2679,19 @@ topic.
 **Sample:**
 
 ```csharp
-// Concept: 9. Association and composition
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class CheckoutService
+{
+    private readonly IDiscountPolicy _discountPolicy;
+    private readonly ITaxPolicy _taxPolicy;
+
+    public CheckoutService(IDiscountPolicy discountPolicy, ITaxPolicy taxPolicy)
+    {
+        _discountPolicy = discountPolicy;
+        _taxPolicy = taxPolicy;
+    }
+}
+
+// Composition is the structural choice. SOLID helps decide whether the overall design stays healthy.
 ```
 
 ---
@@ -2096,11 +2707,24 @@ objects work together. Interviewers usually care more about the reasoning than t
 **Sample:**
 
 ```csharp
-// Concept: 9. Association and composition
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+var invoice = new Invoice(new Customer("Asha"), new Address("Hyderabad", "India"));
+invoice.Lines.Add(new OrderLine("SSD-1TB", 1, 7499m));
+Console.WriteLine(invoice.Total);
+
+public class Invoice
+{
+    public Customer Customer { get; }
+    public Address BillingAddress { get; }
+    public List<OrderLine> Lines { get; } = new();
+    public Invoice(Customer customer, Address billingAddress)
+    {
+        Customer = customer;
+        BillingAddress = billingAddress;
+    }
+    public decimal Total => Lines.Sum(x => x.Quantity * x.UnitPrice);
+}
+
+public record Address(string City, string Country);
 ```
 
 ---
@@ -2116,11 +2740,24 @@ keep implementation readable, and validate important paths early.
 **Sample:**
 
 ```csharp
-// Concept: 9. Association and composition
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+var invoice = new Invoice(new Customer("Asha"), new Address("Hyderabad", "India"));
+invoice.Lines.Add(new OrderLine("SSD-1TB", 1, 7499m));
+Console.WriteLine(invoice.Total);
+
+public class Invoice
+{
+    public Customer Customer { get; }
+    public Address BillingAddress { get; }
+    public List<OrderLine> Lines { get; } = new();
+    public Invoice(Customer customer, Address billingAddress)
+    {
+        Customer = customer;
+        BillingAddress = billingAddress;
+    }
+    public decimal Total => Lines.Sum(x => x.Quantity * x.UnitPrice);
+}
+
+public record Address(string City, string Country);
 ```
 
 ---
@@ -2136,11 +2773,24 @@ weak design choices, poor debugging, or incomplete explanations.
 **Sample:**
 
 ```csharp
-// Concept: 9. Association and composition
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class OrderAggregate
+{
+    public Customer Customer { get; }
+    public Payment Payment { get; }
+    public Shipment Shipment { get; }
+    public Promotion Promotion { get; }
+
+    public OrderAggregate(Customer customer, Payment payment, Shipment shipment, Promotion promotion)
+    {
+        Customer = customer;
+        Payment = payment;
+        Shipment = shipment;
+        Promotion = promotion;
+    }
+}
+
+public record Payment(string Reference);
+public record Promotion(string Code);
 ```
 
 ---
@@ -2156,11 +2806,13 @@ dependencies, configuration, logs, runtime behavior, and edge cases before chang
 **Sample:**
 
 ```csharp
-// Concept: 9. Association and composition
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class InvoiceRef
+{
+    public Customer? Customer { get; set; }
+}
+
+var broken = new InvoiceRef();
+Console.WriteLine(broken.Customer?.Name ?? "Missing customer reference");
 ```
 
 ---
@@ -2176,11 +2828,20 @@ turns isolated facts into a coherent end-to-end explanation.
 **Sample:**
 
 ```csharp
-// Concept: 9. Association and composition
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class OrderWorkflow
+{
+    private readonly IValidator _validator;
+    private readonly INotifier _notifier;
+
+    public OrderWorkflow(IValidator validator, INotifier notifier)
+    {
+        _validator = validator;
+        _notifier = notifier;
+    }
+}
+
+public interface IValidator { }
+public interface INotifier { }
 ```
 
 ---
@@ -2198,11 +2859,27 @@ explain clearly.
 **Sample:**
 
 ```csharp
-// Concept: 10. SOLID-oriented design
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class CheckoutService
+{
+    private readonly IDiscountPolicy _discount;
+    private readonly ITaxPolicy _tax;
+    private readonly IInvoiceRepository _repository;
+
+    public CheckoutService(IDiscountPolicy discount, ITaxPolicy tax, IInvoiceRepository repository)
+    {
+        _discount = discount;
+        _tax = tax;
+        _repository = repository;
+    }
+
+    public async Task<decimal> PlaceAsync(Order order)
+    {
+        var discounted = _discount.Apply(order.Total);
+        var finalTotal = discounted + _tax.Calculate(discounted);
+        await _repository.SaveAsync(order);
+        return finalTotal;
+    }
+}
 ```
 
 ---
@@ -2218,11 +2895,27 @@ performance, security, or delivery depending on the situation.
 **Sample:**
 
 ```csharp
-// Concept: 10. SOLID-oriented design
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class CheckoutService
+{
+    private readonly IDiscountPolicy _discount;
+    private readonly ITaxPolicy _tax;
+    private readonly IInvoiceRepository _repository;
+
+    public CheckoutService(IDiscountPolicy discount, ITaxPolicy tax, IInvoiceRepository repository)
+    {
+        _discount = discount;
+        _tax = tax;
+        _repository = repository;
+    }
+
+    public async Task<decimal> PlaceAsync(Order order)
+    {
+        var discounted = _discount.Apply(order.Total);
+        var finalTotal = discounted + _tax.Calculate(discounted);
+        await _repository.SaveAsync(order);
+        return finalTotal;
+    }
+}
 ```
 
 ---
@@ -2238,11 +2931,27 @@ decisions, scalability, or debugging depend on that area.
 **Sample:**
 
 ```csharp
-// Concept: 10. SOLID-oriented design
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class CheckoutService
+{
+    private readonly IDiscountPolicy _discount;
+    private readonly ITaxPolicy _tax;
+    private readonly IInvoiceRepository _repository;
+
+    public CheckoutService(IDiscountPolicy discount, ITaxPolicy tax, IInvoiceRepository repository)
+    {
+        _discount = discount;
+        _tax = tax;
+        _repository = repository;
+    }
+
+    public async Task<decimal> PlaceAsync(Order order)
+    {
+        var discounted = _discount.Apply(order.Total);
+        var finalTotal = discounted + _tax.Calculate(discounted);
+        await _repository.SaveAsync(order);
+        return finalTotal;
+    }
+}
 ```
 
 ---
@@ -2258,11 +2967,18 @@ exact shape depends on the application, but the responsibility should stay predi
 **Sample:**
 
 ```csharp
-// Concept: 10. SOLID-oriented design
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class OrderController
+{
+    private readonly ICheckoutService _checkoutService;
+    public OrderController(ICheckoutService checkoutService) => _checkoutService = checkoutService;
+}
+
+public interface ICheckoutService
+{
+    Task PlaceAsync(Order order);
+}
+
+// Start with clear responsibilities and introduce abstractions where change pressure is real.
 ```
 
 ---
@@ -2278,11 +2994,27 @@ makes tradeoffs easier to explain to reviewers, interviewers, and teammates.
 **Sample:**
 
 ```csharp
-// Concept: 10. SOLID-oriented design
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class CheckoutService
+{
+    private readonly IDiscountPolicy _discount;
+    private readonly ITaxPolicy _tax;
+    private readonly IInvoiceRepository _repository;
+
+    public CheckoutService(IDiscountPolicy discount, ITaxPolicy tax, IInvoiceRepository repository)
+    {
+        _discount = discount;
+        _tax = tax;
+        _repository = repository;
+    }
+
+    public async Task<decimal> PlaceAsync(Order order)
+    {
+        var discounted = _discount.Apply(order.Total);
+        var finalTotal = discounted + _tax.Calculate(discounted);
+        await _repository.SaveAsync(order);
+        return finalTotal;
+    }
+}
 ```
 
 ---
@@ -2298,11 +3030,22 @@ maintainable. That usually leads to overengineering, hidden bugs, or confusing a
 **Sample:**
 
 ```csharp
-// Concept: 10. SOLID-oriented design
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public interface IUserService
+{
+    void Create();
+}
+
+public interface IUserFactory
+{
+    IUserService Create();
+}
+
+public interface IUserFactoryProvider
+{
+    IUserFactory CreateFactory();
+}
+
+// The pattern names are fancy, but the design may now be harder than the business problem.
 ```
 
 ---
@@ -2318,11 +3061,15 @@ structured program entities. They often work together, but they solve different 
 **Sample:**
 
 ```csharp
-// Concept: 10. SOLID-oriented design
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class OrderEntity
+{
+    public Guid Id { get; }
+    public decimal Total { get; private set; }
+    public OrderEntity(Guid id) => Id = id;
+    public void AddCharge(decimal amount) => Total += amount;
+}
+
+// Classes and objects are the building blocks. SOLID evaluates whether their design stays maintainable.
 ```
 
 ---
@@ -2339,11 +3086,18 @@ alone.
 **Sample:**
 
 ```csharp
-// Concept: 10. SOLID-oriented design
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class OrderController
+{
+    private readonly ICheckoutService _checkoutService;
+    public OrderController(ICheckoutService checkoutService) => _checkoutService = checkoutService;
+}
+
+public interface ICheckoutService
+{
+    Task PlaceAsync(Order order);
+}
+
+// Start with clear responsibilities and introduce abstractions where change pressure is real.
 ```
 
 ---
@@ -2359,11 +3113,18 @@ intent, keep implementation readable, and validate important paths early.
 **Sample:**
 
 ```csharp
-// Concept: 10. SOLID-oriented design
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class OrderController
+{
+    private readonly ICheckoutService _checkoutService;
+    public OrderController(ICheckoutService checkoutService) => _checkoutService = checkoutService;
+}
+
+public interface ICheckoutService
+{
+    Task PlaceAsync(Order order);
+}
+
+// Start with clear responsibilities and introduce abstractions where change pressure is real.
 ```
 
 ---
@@ -2379,11 +3140,22 @@ as weak design choices, poor debugging, or incomplete explanations.
 **Sample:**
 
 ```csharp
-// Concept: 10. SOLID-oriented design
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public interface IUserService
+{
+    void Create();
+}
+
+public interface IUserFactory
+{
+    IUserService Create();
+}
+
+public interface IUserFactoryProvider
+{
+    IUserFactory CreateFactory();
+}
+
+// The pattern names are fancy, but the design may now be harder than the business problem.
 ```
 
 ---
@@ -2399,11 +3171,14 @@ dependencies, configuration, logs, runtime behavior, and edge cases before chang
 **Sample:**
 
 ```csharp
-// Concept: 10. SOLID-oriented design
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public class LegacyCheckoutService
+{
+    public decimal Process(Order order, string userType, bool isFestival, bool isVip)
+    {
+        // This long conditional block is a design smell and a refactoring target.
+        return order.Total;
+    }
+}
 ```
 
 ---
@@ -2419,9 +3194,214 @@ that turns isolated facts into a coherent end-to-end explanation.
 **Sample:**
 
 ```csharp
-// Concept: 10. SOLID-oriented design
-public class Animal { public virtual string Speak() => "sound"; }
-public class Dog : Animal { public override string Speak() => "bark"; }
-Animal pet = new Dog();
-Console.WriteLine(pet.Speak());
+public interface IShippingStrategy
+{
+    decimal Calculate(decimal weight);
+}
+
+public class ExpressShippingStrategy : IShippingStrategy
+{
+    public decimal Calculate(decimal weight) => 150m + (weight * 10m);
+}
+
+// SOLID ties together abstraction, polymorphism, composition, and focused classes.
+```
+---
+
+## 11. Tricky interview questions
+
+### 121. Why is method hiding with `new` a tricky OOP interview topic in C#?
+
+**Answer:**
+
+Method hiding is tricky because the behavior depends on the reference type, not just the runtime object.
+Many candidates confuse `new` with `override`, but they produce different dispatch rules.
+
+**Sample:**
+
+```csharp
+public class ReportFormatter
+{
+    public string Format() => "Base format";
+}
+
+public class HtmlReportFormatter : ReportFormatter
+{
+    public new string Format() => "HTML format";
+}
+
+ReportFormatter baseRef = new HtmlReportFormatter();
+HtmlReportFormatter derivedRef = new HtmlReportFormatter();
+Console.WriteLine(baseRef.Format());
+Console.WriteLine(derivedRef.Format());
+```
+
+---
+
+### 122. What happens when a base constructor calls a virtual method?
+
+**Answer:**
+
+The override runs before the derived constructor has finished initializing its own fields. That can produce
+null values, incorrect state, or intermittent bugs.
+
+**Sample:**
+
+```csharp
+public abstract class DocumentBase
+{
+    protected DocumentBase() => Console.WriteLine(GetTitle());
+    protected abstract string GetTitle();
+}
+
+public class InvoiceDocument : DocumentBase
+{
+    private readonly string _number;
+    public InvoiceDocument(string number) => _number = number;
+    protected override string GetTitle() => _number ?? "Number not initialized yet";
+}
+```
+
+---
+
+### 123. How does explicit interface implementation affect polymorphism?
+
+**Answer:**
+
+Explicit interface members are only available through the interface reference. That keeps the public surface
+smaller, but it surprises developers who expect the member to be callable directly.
+
+**Sample:**
+
+```csharp
+public interface IAuditWriter
+{
+    void Write(string message);
+}
+
+public class FileAuditWriter : IAuditWriter
+{
+    void IAuditWriter.Write(string message) => Console.WriteLine($"AUDIT: {message}");
+}
+
+((IAuditWriter)new FileAuditWriter()).Write("Order approved");
+```
+
+---
+
+### 124. What is the tricky difference between `==`, `Equals`, and `ReferenceEquals` for objects?
+
+**Answer:**
+
+Value equality and reference equality are different design choices. For value objects and entities, picking
+the wrong one causes subtle bugs in comparisons and collections.
+
+**Sample:**
+
+```csharp
+public record Money(decimal Amount, string Currency);
+
+var first = new Money(100, "USD");
+var second = new Money(100, "USD");
+
+Console.WriteLine(first == second);
+Console.WriteLine(first.Equals(second));
+Console.WriteLine(object.ReferenceEquals(first, second));
+```
+
+---
+
+### 125. Why are records not always a drop-in replacement for entities?
+
+**Answer:**
+
+Records are great for value-like data, but entities usually have identity, lifecycle, and mutable business
+state. Using a record for an entity can make equality semantics misleading.
+
+**Sample:**
+
+```csharp
+public record CustomerSnapshot(Guid Id, string Name);
+
+public class CustomerEntity
+{
+    public Guid Id { get; }
+    public string Name { get; private set; }
+    public CustomerEntity(Guid id, string name)
+    {
+        Id = id;
+        Name = name;
+    }
+    public void Rename(string name) => Name = name;
+}
+```
+
+---
+
+### 126. Why is exposing collection properties directly a common OOP trap?
+
+**Answer:**
+
+It allows outside code to mutate internal state without the owning object enforcing any rules. That quietly
+breaks encapsulation and often bypasses validation.
+
+**Sample:**
+
+```csharp
+public class Project
+{
+    private readonly List<string> _members = new();
+    public IReadOnlyCollection<string> Members => _members;
+
+    public void AddMember(string email)
+    {
+        if (_members.Contains(email)) throw new InvalidOperationException("Duplicate member.");
+        _members.Add(email);
+    }
+}
+```
+
+---
+
+### 127. How does composition help avoid the fragile base class problem?
+
+**Answer:**
+
+Composition keeps behavior in separate collaborators instead of forcing every variation into one inheritance
+chain. That reduces ripple effects when one feature changes.
+
+**Sample:**
+
+```csharp
+public interface IDiscountPolicy
+{
+    decimal Apply(decimal subtotal);
+}
+
+public class CheckoutService
+{
+    private readonly IDiscountPolicy _discountPolicy;
+    public CheckoutService(IDiscountPolicy discountPolicy) => _discountPolicy = discountPolicy;
+    public decimal Total(decimal subtotal) => _discountPolicy.Apply(subtotal);
+}
+```
+
+---
+
+### 128. What OOP issue appears when `IDisposable` is ignored in an object graph?
+
+**Answer:**
+
+Ownership becomes unclear, and resources such as streams, connections, or timers may leak. This is especially
+tricky when one object creates another internally and no one disposes it.
+
+**Sample:**
+
+```csharp
+public class ExportService : IDisposable
+{
+    private readonly StreamWriter _writer = new("export.log");
+    public void WriteLine(string value) => _writer.WriteLine(value);
+    public void Dispose() => _writer.Dispose();
+}
 ```

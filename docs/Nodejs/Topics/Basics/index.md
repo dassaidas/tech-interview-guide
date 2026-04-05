@@ -17,10 +17,14 @@ explain clearly.
 **Sample:**
 
 ```js
-// Concept: 1. Runtime and V8
+const v8 = require('v8');
 const http = require('http');
+
+console.log(`Node ${process.version}`);
+console.log(`Heap limit: ${Math.round(v8.getHeapStatistics().heap_size_limit / 1024 / 1024)} MB`);
+
 http.createServer((req, res) => {
-  res.end('1. Runtime and V8');
+  res.end(JSON.stringify({ runtime: 'node', engine: 'v8' }));
 }).listen(3000);
 ```
 
@@ -37,11 +41,15 @@ performance, security, or delivery depending on the situation.
 **Sample:**
 
 ```js
-// Concept: 1. Runtime and V8
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('1. Runtime and V8');
-}).listen(3000);
+const v8 = require('v8');
+
+function compileTemplate(template, values) {
+  return template.replace(/\{\{(\w+)\}\}/g, (_, key) => values[key] ?? '');
+}
+
+const html = compileTemplate('<h1>{{title}}</h1>', { title: 'Orders Dashboard' });
+console.log(html);
+console.log(`Used heap: ${Math.round(v8.getHeapStatistics().used_heap_size / 1024)} KB`);
 ```
 
 ---
@@ -57,11 +65,12 @@ design decisions, debugging, or architecture conversations depend on that area.
 **Sample:**
 
 ```js
-// Concept: 1. Runtime and V8
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('1. Runtime and V8');
-}).listen(3000);
+function shouldUseNode(workload) {
+  return workload.ioHeavy && workload.concurrentUsers > 1000 && !workload.cpuHeavy;
+}
+
+const apiGatewayWorkload = { ioHeavy: true, concurrentUsers: 5000, cpuHeavy: false };
+console.log(shouldUseNode(apiGatewayWorkload)); // true
 ```
 
 ---
@@ -77,11 +86,15 @@ exact shape depends on the stack, but the responsibility should stay predictable
 **Sample:**
 
 ```js
-// Concept: 1. Runtime and V8
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('1. Runtime and V8');
-}).listen(3000);
+const v8 = require('v8');
+
+setInterval(() => {
+  const { used_heap_size, total_heap_size } = v8.getHeapStatistics();
+  console.log({
+    usedMB: Math.round(used_heap_size / 1024 / 1024),
+    totalMB: Math.round(total_heap_size / 1024 / 1024)
+  });
+}, 5000);
 ```
 
 ---
@@ -97,11 +110,16 @@ makes tradeoffs easier to explain to reviewers, interviewers, and teammates.
 **Sample:**
 
 ```js
-// Concept: 1. Runtime and V8
 const http = require('http');
-http.createServer((req, res) => {
-  res.end('1. Runtime and V8');
-}).listen(3000);
+const crypto = require('crypto');
+
+const server = http.createServer((req, res) => {
+  const body = { requestId: crypto.randomUUID(), path: req.url, at: new Date().toISOString() };
+  res.setHeader('content-type', 'application/json');
+  res.end(JSON.stringify(body));
+});
+
+server.listen(3000);
 ```
 
 ---
@@ -117,11 +135,16 @@ browser. That usually leads to weak reasoning, overengineering, or fragile imple
 **Sample:**
 
 ```js
-// Concept: 1. Runtime and V8
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('1. Runtime and V8');
-}).listen(3000);
+const crypto = require('crypto');
+
+function hashPasswordSync(password) {
+  // Blocks the event loop for CPU-heavy work.
+  return crypto.pbkdf2Sync(password, 'salt', 200000, 64, 'sha512').toString('hex');
+}
+
+console.time('hash');
+hashPasswordSync('super-secret');
+console.timeEnd('hash');
 ```
 
 ---
@@ -138,11 +161,12 @@ the topic.
 **Sample:**
 
 ```js
-// Concept: 1. Runtime and V8
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('1. Runtime and V8');
-}).listen(3000);
+console.log(`Runtime: ${process.release.name} on ${process.platform}`);
+
+setTimeout(() => console.log('timer callback from event loop'), 0);
+Promise.resolve().then(() => console.log('microtask callback'));
+
+console.log('startup finished');
 ```
 
 ---
@@ -158,11 +182,15 @@ outside the browser. Interviewers usually care more about the reasoning than the
 **Sample:**
 
 ```js
-// Concept: 1. Runtime and V8
 const http = require('http');
-http.createServer((req, res) => {
-  res.end('1. Runtime and V8');
-}).listen(3000);
+
+http.createServer(async (req, res) => {
+  const user = { id: 42, name: 'Sai' };
+  res.setHeader('content-type', 'application/json');
+  res.end(JSON.stringify({ user, handledBy: process.version }));
+}).listen(3000, () => {
+  console.log('Orders API running on http://localhost:3000');
+});
 ```
 
 ---
@@ -178,11 +206,15 @@ intent, keep the implementation readable, and validate important paths early.
 **Sample:**
 
 ```js
-// Concept: 1. Runtime and V8
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('1. Runtime and V8');
-}).listen(3000);
+function validateNodeVersion() {
+  const major = Number(process.versions.node.split('.')[0]);
+  if (major < 20) {
+    throw new Error('Use Node.js 20+ in development and CI');
+  }
+}
+
+validateNodeVersion();
+console.log('Runtime check passed');
 ```
 
 ---
@@ -198,11 +230,13 @@ appears as poor decisions, weak debugging, or incomplete explanations.
 **Sample:**
 
 ```js
-// Concept: 1. Runtime and V8
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('1. Runtime and V8');
-}).listen(3000);
+try {
+  console.log(window.location.href);
+} catch (error) {
+  console.error('Browser globals are not available in Node.js:', error.message);
+}
+
+console.log(typeof globalThis.fetch); // available in modern Node.js
 ```
 
 ---
@@ -218,11 +252,15 @@ dependencies, inputs, configuration, logs, and edge cases before changing the de
 **Sample:**
 
 ```js
-// Concept: 1. Runtime and V8
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('1. Runtime and V8');
-}).listen(3000);
+process.on('uncaughtException', (error) => {
+  console.error('Fatal runtime issue', {
+    message: error.message,
+    memory: process.memoryUsage(),
+    uptime: process.uptime()
+  });
+});
+
+throw new Error('Outdated environment variable name');
 ```
 
 ---
@@ -238,10 +276,12 @@ that turns isolated facts into a coherent end-to-end explanation.
 **Sample:**
 
 ```js
-// Concept: 1. Runtime and V8
+const fs = require('fs/promises');
 const http = require('http');
-http.createServer((req, res) => {
-  res.end('1. Runtime and V8');
+
+http.createServer(async (_req, res) => {
+  const config = JSON.parse(await fs.readFile('./config.json', 'utf8'));
+  res.end(`env=${config.env} node=${process.version}`);
 }).listen(3000);
 ```
 
@@ -259,11 +299,14 @@ on the main thread. It is part of the foundation a candidate should be able to e
 **Sample:**
 
 ```js
-// Concept: 2. Event loop
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('2. Event loop');
-}).listen(3000);
+console.log('start request');
+
+setTimeout(() => console.log('timer phase'), 0);
+setImmediate(() => console.log('check phase'));
+Promise.resolve().then(() => console.log('microtask queue'));
+process.nextTick(() => console.log('nextTick queue'));
+
+console.log('end request');
 ```
 
 ---
@@ -279,10 +322,11 @@ security, or delivery depending on the situation.
 **Sample:**
 
 ```js
-// Concept: 2. Event loop
 const http = require('http');
+
 http.createServer((req, res) => {
-  res.end('2. Event loop');
+  setTimeout(() => res.end('payment confirmed'), 50);
+  console.log('accepted request without blocking the main thread');
 }).listen(3000);
 ```
 
@@ -299,11 +343,14 @@ decisions, debugging, or architecture conversations depend on that area.
 **Sample:**
 
 ```js
-// Concept: 2. Event loop
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('2. Event loop');
-}).listen(3000);
+setTimeout(() => console.log('This should run quickly'), 10);
+
+const started = Date.now();
+while (Date.now() - started < 3000) {
+  // Simulates CPU-bound work that blocks the event loop.
+}
+
+console.log('Event loop was blocked for 3 seconds');
 ```
 
 ---
@@ -319,11 +366,16 @@ depends on the stack, but the responsibility should stay predictable.
 **Sample:**
 
 ```js
-// Concept: 2. Event loop
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('2. Event loop');
-}).listen(3000);
+const jobs = Array.from({ length: 5000 }, (_, i) => i + 1);
+
+function processJobsInChunks(chunkSize = 250) {
+  const chunk = jobs.splice(0, chunkSize);
+  chunk.forEach((jobId) => console.log(`processed ${jobId}`));
+
+  if (jobs.length > 0) setImmediate(() => processJobsInChunks(chunkSize));
+}
+
+processJobsInChunks();
 ```
 
 ---
@@ -339,10 +391,13 @@ easier to explain to reviewers, interviewers, and teammates.
 **Sample:**
 
 ```js
-// Concept: 2. Event loop
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('2. Event loop');
+const activeConnections = new Set();
+
+require('http').createServer((req, res) => {
+  activeConnections.add(req.socket.remotePort);
+  setTimeout(() => {
+    res.end(`connections seen: ${activeConnections.size}`);
+  }, 20);
 }).listen(3000);
 ```
 
@@ -359,11 +414,14 @@ usually leads to weak reasoning, overengineering, or fragile implementations.
 **Sample:**
 
 ```js
-// Concept: 2. Event loop
 const http = require('http');
+
 http.createServer((req, res) => {
-  res.end('2. Event loop');
+  JSON.parse('[' + '0,'.repeat(5_000_000) + '0]'); // huge synchronous work
+  res.end('done');
 }).listen(3000);
+
+// One request can block every other request.
 ```
 
 ---
@@ -380,11 +438,13 @@ parts of the topic.
 **Sample:**
 
 ```js
-// Concept: 2. Event loop
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('2. Event loop');
-}).listen(3000);
+const fs = require('fs/promises');
+
+setImmediate(() => console.log('event loop schedules callback'));
+fs.readFile('./orders.json', 'utf8')
+  .then(() => console.log('non-blocking I/O finished'));
+
+console.log('main thread still free');
 ```
 
 ---
@@ -400,11 +460,15 @@ thread. Interviewers usually care more about the reasoning than the definition a
 **Sample:**
 
 ```js
-// Concept: 2. Event loop
 const http = require('http');
-http.createServer((req, res) => {
-  res.end('2. Event loop');
+
+http.createServer(async (req, res) => {
+  const started = Date.now();
+  await new Promise((resolve) => setTimeout(resolve, 100));
+  res.end(`Handled in ${Date.now() - started} ms`);
 }).listen(3000);
+
+console.log('The server can keep accepting other sockets while waiting.');
 ```
 
 ---
@@ -420,10 +484,15 @@ the implementation readable, and validate important paths early.
 **Sample:**
 
 ```js
-// Concept: 2. Event loop
+const fs = require('fs');
 const http = require('http');
+
 http.createServer((req, res) => {
-  res.end('2. Event loop');
+  // Avoid sync calls like readFileSync inside request handlers.
+  fs.readFile('./page.html', (error, data) => {
+    if (error) return res.writeHead(500).end('failed');
+    res.end(data);
+  });
 }).listen(3000);
 ```
 
@@ -440,10 +509,11 @@ decisions, weak debugging, or incomplete explanations.
 **Sample:**
 
 ```js
-// Concept: 2. Event loop
 const http = require('http');
+
 http.createServer((req, res) => {
-  res.end('2. Event loop');
+  for (let i = 0; i < 1e9; i += 1) {}
+  res.end('This route blocks everything else');
 }).listen(3000);
 ```
 
@@ -460,11 +530,15 @@ inputs, configuration, logs, and edge cases before changing the design.
 **Sample:**
 
 ```js
-// Concept: 2. Event loop
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('2. Event loop');
-}).listen(3000);
+const { monitorEventLoopDelay } = require('perf_hooks');
+
+const histogram = monitorEventLoopDelay({ resolution: 20 });
+histogram.enable();
+
+setInterval(() => {
+  console.log(`p95 lag: ${Math.round(histogram.percentile(95) / 1e6)} ms`);
+  histogram.reset();
+}, 5000);
 ```
 
 ---
@@ -480,10 +554,12 @@ facts into a coherent end-to-end explanation.
 **Sample:**
 
 ```js
-// Concept: 2. Event loop
+const fs = require('fs/promises');
 const http = require('http');
-http.createServer((req, res) => {
-  res.end('2. Event loop');
+
+http.createServer(async (_req, res) => {
+  const template = await fs.readFile('./template.html', 'utf8');
+  res.end(template.replace('{{time}}', new Date().toISOString()));
 }).listen(3000);
 ```
 
@@ -502,11 +578,16 @@ able to explain clearly.
 **Sample:**
 
 ```js
-// Concept: 3. Non-blocking I O
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('3. Non-blocking I O');
-}).listen(3000);
+const fs = require('fs/promises');
+
+async function loadDashboardData() {
+  const [ordersRaw, usersRaw] = await Promise.all([
+    fs.readFile('./orders.json', 'utf8'),
+    fs.readFile('./users.json', 'utf8')
+  ]);
+
+  return { orders: JSON.parse(ordersRaw), users: JSON.parse(usersRaw) };
+}
 ```
 
 ---
@@ -522,10 +603,14 @@ maintainability, performance, security, or delivery depending on the situation.
 **Sample:**
 
 ```js
-// Concept: 3. Non-blocking I O
 const http = require('http');
+const fs = require('fs');
+
 http.createServer((req, res) => {
-  res.end('3. Non-blocking I O');
+  fs.readFile('./report.csv', (error, data) => {
+    if (error) return res.writeHead(500).end('report missing');
+    res.end(data);
+  });
 }).listen(3000);
 ```
 
@@ -542,11 +627,13 @@ important when design decisions, debugging, or architecture conversations depend
 **Sample:**
 
 ```js
-// Concept: 3. Non-blocking I O
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('3. Non-blocking I O');
-}).listen(3000);
+async function shouldUseStreaming(fileSizeMB) {
+  return fileSizeMB > 20;
+}
+
+shouldUseStreaming(150).then((result) => {
+  console.log(`Use non-blocking stream pipeline: ${result}`);
+});
 ```
 
 ---
@@ -562,11 +649,15 @@ pattern. The exact shape depends on the stack, but the responsibility should sta
 **Sample:**
 
 ```js
-// Concept: 3. Non-blocking I O
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('3. Non-blocking I O');
-}).listen(3000);
+const fs = require('fs/promises');
+
+async function loadTenantConfigs(tenantIds) {
+  return Promise.all(
+    tenantIds.map((tenantId) => fs.readFile(`./tenants/${tenantId}.json`, 'utf8'))
+  );
+}
+
+loadTenantConfigs(['us', 'eu', 'apac']).then(console.log);
 ```
 
 ---
@@ -582,11 +673,17 @@ It also makes tradeoffs easier to explain to reviewers, interviewers, and teamma
 **Sample:**
 
 ```js
-// Concept: 3. Non-blocking I O
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('3. Non-blocking I O');
-}).listen(3000);
+const { performance } = require('perf_hooks');
+const fs = require('fs/promises');
+
+async function fetchAssets() {
+  const start = performance.now();
+  await Promise.all([
+    fs.readFile('./banner.html', 'utf8'),
+    fs.readFile('./styles.css', 'utf8')
+  ]);
+  console.log(`loaded assets in ${Math.round(performance.now() - start)} ms`);
+}
 ```
 
 ---
@@ -603,11 +700,15 @@ implementations.
 **Sample:**
 
 ```js
-// Concept: 3. Non-blocking I O
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('3. Non-blocking I O');
-}).listen(3000);
+const fs = require('fs/promises');
+
+async function loadManyFiles(files) {
+  // Too much parallelism can exhaust file descriptors.
+  for (const file of files) {
+    const content = await fs.readFile(file, 'utf8');
+    console.log(content.length);
+  }
+}
 ```
 
 ---
@@ -624,11 +725,14 @@ the topic.
 **Sample:**
 
 ```js
-// Concept: 3. Non-blocking I O
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('3. Non-blocking I O');
-}).listen(3000);
+const fs = require('fs/promises');
+const tax = require('./tax-service');
+
+fs.readFile('./invoice.json', 'utf8')
+  .then((text) => tax.calculate(JSON.parse(text)))
+  .then(console.log);
+
+// File reads are I/O. require() is module loading.
 ```
 
 ---
@@ -645,11 +749,16 @@ definition alone.
 **Sample:**
 
 ```js
-// Concept: 3. Non-blocking I O
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('3. Non-blocking I O');
-}).listen(3000);
+const fs = require('fs');
+const readline = require('readline');
+
+const stream = fs.createReadStream('./transactions.csv');
+const rl = readline.createInterface({ input: stream });
+
+rl.on('line', (line) => {
+  const [id, amount] = line.split(',');
+  console.log(`Imported transaction ${id} for ${amount}`);
+});
 ```
 
 ---
@@ -665,11 +774,19 @@ document intent, keep the implementation readable, and validate important paths 
 **Sample:**
 
 ```js
-// Concept: 3. Non-blocking I O
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('3. Non-blocking I O');
-}).listen(3000);
+const fs = require('fs');
+const { pipeline } = require('stream/promises');
+const zlib = require('zlib');
+
+async function compressAccessLog() {
+  await pipeline(
+    fs.createReadStream('./logs/access.log'),
+    zlib.createGzip(),
+    fs.createWriteStream('./logs/access.log.gz')
+  );
+}
+
+compressAccessLog().catch(console.error);
 ```
 
 ---
@@ -685,11 +802,15 @@ usually appears as poor decisions, weak debugging, or incomplete explanations.
 **Sample:**
 
 ```js
-// Concept: 3. Non-blocking I O
 const http = require('http');
-http.createServer((req, res) => {
-  res.end('3. Non-blocking I O');
+const fs = require('fs');
+
+http.createServer((_req, res) => {
+  const report = fs.readFileSync('./report.pdf');
+  res.end(report);
 }).listen(3000);
+
+// readFileSync blocks every incoming request.
 ```
 
 ---
@@ -705,11 +826,18 @@ surrounding dependencies, inputs, configuration, logs, and edge cases before cha
 **Sample:**
 
 ```js
-// Concept: 3. Non-blocking I O
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('3. Non-blocking I O');
-}).listen(3000);
+const fs = require('fs/promises');
+
+async function timedRead(file) {
+  console.time(file);
+  try {
+    return await fs.readFile(file, 'utf8');
+  } finally {
+    console.timeEnd(file);
+  }
+}
+
+timedRead('./orders.json').catch(console.error);
 ```
 
 ---
@@ -725,11 +853,14 @@ that turns isolated facts into a coherent end-to-end explanation.
 **Sample:**
 
 ```js
-// Concept: 3. Non-blocking I O
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('3. Non-blocking I O');
-}).listen(3000);
+const orderStore = require('./order-store');
+
+async function getOpenOrders() {
+  const orders = await orderStore.fetchAll();
+  return orders.filter((order) => order.status === 'OPEN');
+}
+
+getOpenOrders().then(console.log);
 ```
 
 ---
@@ -746,11 +877,10 @@ Node.js code. It is part of the foundation a candidate should be able to explain
 **Sample:**
 
 ```js
-// Concept: 4. Module systems
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('4. Module systems');
-}).listen(3000);
+const currency = require('./lib/currency');
+const totals = require('./services/totals');
+
+console.log(currency.format(totals.sum([19.99, 5.0, 4.5])));
 ```
 
 ---
@@ -766,11 +896,13 @@ or delivery depending on the situation.
 **Sample:**
 
 ```js
-// Concept: 4. Module systems
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('4. Module systems');
-}).listen(3000);
+// routes/orders.js
+module.exports = function registerOrderRoutes(app, orderService) {
+  app.get('/orders/:id', async (req, res) => {
+    const order = await orderService.getById(req.params.id);
+    res.json(order);
+  });
+};
 ```
 
 ---
@@ -786,11 +918,13 @@ debugging, or architecture conversations depend on that area.
 **Sample:**
 
 ```js
-// Concept: 4. Module systems
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('4. Module systems');
-}).listen(3000);
+// package.json -> { "type": "module" }
+import { readFile } from 'node:fs/promises';
+
+const config = JSON.parse(await readFile('./config.json', 'utf8'));
+console.log(config.env);
+
+// Pick one module system per package to avoid confusion.
 ```
 
 ---
@@ -806,11 +940,15 @@ depends on the stack, but the responsibility should stay predictable.
 **Sample:**
 
 ```js
-// Concept: 4. Module systems
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('4. Module systems');
-}).listen(3000);
+// config/index.js
+module.exports = {
+  port: Number(process.env.PORT ?? 3000),
+  cacheTtlSeconds: 300
+};
+
+// server.js
+const config = require('./config');
+console.log(`Server starts on port ${config.port}`);
 ```
 
 ---
@@ -826,11 +964,13 @@ explain to reviewers, interviewers, and teammates.
 **Sample:**
 
 ```js
-// Concept: 4. Module systems
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('4. Module systems');
-}).listen(3000);
+// services/invoice-service.js
+module.exports.createInvoice = (order) => ({
+  id: `inv_${order.id}`,
+  total: order.items.reduce((sum, item) => sum + item.price, 0)
+});
+
+// Clear module boundaries make testing easier.
 ```
 
 ---
@@ -846,11 +986,11 @@ leads to weak reasoning, overengineering, or fragile implementations.
 **Sample:**
 
 ```js
-// Concept: 4. Module systems
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('4. Module systems');
-}).listen(3000);
+// CommonJS file
+module.exports = { greet: () => 'hello' };
+
+// ESM file trying to import it incorrectly can cause interop confusion:
+// import greet from './legacy.cjs'; // may not match named exports as expected
 ```
 
 ---
@@ -866,11 +1006,12 @@ around package.json and npm. They often work together, but they solve different 
 **Sample:**
 
 ```js
-// Concept: 4. Module systems
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('4. Module systems');
-}).listen(3000);
+// Module systems decide how code is imported/exported.
+const slugify = require('./utils/slugify');
+
+// npm metadata decides versions, scripts, and package entry points.
+const packageJson = require('./package.json');
+console.log(slugify(packageJson.name));
 ```
 
 ---
@@ -886,11 +1027,15 @@ Interviewers usually care more about the reasoning than the definition alone.
 **Sample:**
 
 ```js
-// Concept: 4. Module systems
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('4. Module systems');
-}).listen(3000);
+// controller -> service -> repository
+const orderRepository = require('./repositories/order-repository');
+
+async function getOrderSummary(orderId) {
+  const order = await orderRepository.findById(orderId);
+  return { id: order.id, total: order.items.length, status: order.status };
+}
+
+module.exports = { getOrderSummary };
 ```
 
 ---
@@ -906,11 +1051,14 @@ implementation readable, and validate important paths early.
 **Sample:**
 
 ```js
-// Concept: 4. Module systems
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('4. Module systems');
-}).listen(3000);
+// index.js
+module.exports = {
+  createOrder: require('./create-order'),
+  cancelOrder: require('./cancel-order'),
+  listOrders: require('./list-orders')
+};
+
+// Consumers import one stable entry point.
 ```
 
 ---
@@ -926,11 +1074,15 @@ weak debugging, or incomplete explanations.
 **Sample:**
 
 ```js
-// Concept: 4. Module systems
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('4. Module systems');
-}).listen(3000);
+// a.js
+const b = require('./b');
+module.exports.valueFromB = b.value;
+
+// b.js
+const a = require('./a');
+module.exports.value = `A says ${a.valueFromB}`;
+
+// Circular imports can produce undefined values during initialization.
 ```
 
 ---
@@ -946,11 +1098,14 @@ configuration, logs, and edge cases before changing the design.
 **Sample:**
 
 ```js
-// Concept: 4. Module systems
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('4. Module systems');
-}).listen(3000);
+try {
+  require('./services/payment-service');
+} catch (error) {
+  console.error('Module resolution failed', {
+    message: error.message,
+    cwd: process.cwd()
+  });
+}
 ```
 
 ---
@@ -966,11 +1121,13 @@ into a coherent end-to-end explanation.
 **Sample:**
 
 ```js
-// Concept: 4. Module systems
 const http = require('http');
-http.createServer((req, res) => {
-  res.end('4. Module systems');
-}).listen(3000);
+const routes = require('./routes');
+const packageJson = require('./package.json');
+
+http.createServer(routes).listen(3000, () => {
+  console.log(`${packageJson.name} ${packageJson.version} started`);
+});
 ```
 
 ---
@@ -988,11 +1145,14 @@ explain clearly.
 **Sample:**
 
 ```js
-// Concept: 5. npm and package metadata
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('5. npm and package metadata');
-}).listen(3000);
+const packageJson = require('./package.json');
+
+console.log({
+  name: packageJson.name,
+  version: packageJson.version,
+  startScript: packageJson.scripts.start,
+  engines: packageJson.engines
+});
 ```
 
 ---
@@ -1008,11 +1168,13 @@ performance, security, or delivery depending on the situation.
 **Sample:**
 
 ```js
-// Concept: 5. npm and package metadata
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('5. npm and package metadata');
-}).listen(3000);
+const packageJson = require('./package.json');
+
+if (!packageJson.scripts.test) {
+  throw new Error('Add a test script so CI can run predictably');
+}
+
+console.log(`Package ${packageJson.name} is ready for CI`);
 ```
 
 ---
@@ -1028,11 +1190,12 @@ design decisions, debugging, or architecture conversations depend on that area.
 **Sample:**
 
 ```js
-// Concept: 5. npm and package metadata
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('5. npm and package metadata');
-}).listen(3000);
+const packageJson = require('./package.json');
+
+const needsAttention = ['engines', 'main', 'scripts', 'dependencies']
+  .filter((field) => !packageJson[field]);
+
+console.log({ publishChecklistMissing: needsAttention });
 ```
 
 ---
@@ -1048,11 +1211,13 @@ The exact shape depends on the stack, but the responsibility should stay predict
 **Sample:**
 
 ```js
-// Concept: 5. npm and package metadata
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('5. npm and package metadata');
-}).listen(3000);
+const packageJson = require('./package.json');
+
+function hasRequiredScripts(pkg) {
+  return ['start', 'test', 'lint'].every((script) => pkg.scripts?.[script]);
+}
+
+console.log(hasRequiredScripts(packageJson));
 ```
 
 ---
@@ -1068,11 +1233,12 @@ also makes tradeoffs easier to explain to reviewers, interviewers, and teammates
 **Sample:**
 
 ```js
-// Concept: 5. npm and package metadata
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('5. npm and package metadata');
-}).listen(3000);
+const packageJson = require('./package.json');
+
+const commands = Object.entries(packageJson.scripts)
+  .map(([name, command]) => `${name}: ${command}`);
+
+console.log(commands.join('\n'));
 ```
 
 ---
@@ -1088,11 +1254,12 @@ and npm. That usually leads to weak reasoning, overengineering, or fragile imple
 **Sample:**
 
 ```js
-// Concept: 5. npm and package metadata
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('5. npm and package metadata');
-}).listen(3000);
+const packageJson = require('./package.json');
+
+const dependencyCount = Object.keys(packageJson.dependencies ?? {}).length;
+if (dependencyCount > 50) {
+  console.warn('Dependency sprawl detected. Revisit package choices.');
+}
 ```
 
 ---
@@ -1109,11 +1276,11 @@ topic.
 **Sample:**
 
 ```js
-// Concept: 5. npm and package metadata
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('5. npm and package metadata');
-}).listen(3000);
+const fs = require('node:fs');
+const expressVersion = require('./package.json').dependencies.express;
+
+console.log(typeof fs.readFile); // built-in module API
+console.log(expressVersion); // external package version from npm metadata
 ```
 
 ---
@@ -1129,10 +1296,11 @@ package.json and npm. Interviewers usually care more about the reasoning than th
 **Sample:**
 
 ```js
-// Concept: 5. npm and package metadata
 const http = require('http');
-http.createServer((req, res) => {
-  res.end('5. npm and package metadata');
+const packageJson = require('./package.json');
+
+http.createServer((_req, res) => {
+  res.end(`${packageJson.name}@${packageJson.version}`);
 }).listen(3000);
 ```
 
@@ -1149,11 +1317,13 @@ intent, keep the implementation readable, and validate important paths early.
 **Sample:**
 
 ```js
-// Concept: 5. npm and package metadata
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('5. npm and package metadata');
-}).listen(3000);
+const packageJson = require('./package.json');
+
+if (!packageJson.engines?.node) {
+  console.warn('Declare a supported Node.js version range in package.json');
+}
+
+console.log(packageJson.scripts);
 ```
 
 ---
@@ -1169,11 +1339,14 @@ usually appears as poor decisions, weak debugging, or incomplete explanations.
 **Sample:**
 
 ```js
-// Concept: 5. npm and package metadata
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('5. npm and package metadata');
-}).listen(3000);
+const packageJson = require('./package.json');
+
+const runtimeDeps = packageJson.dependencies ?? {};
+const devDeps = packageJson.devDependencies ?? {};
+console.log({
+  hasJestInProd: Boolean(runtimeDeps.jest),
+  hasPgInDevOnly: Boolean(devDeps.pg)
+});
 ```
 
 ---
@@ -1189,11 +1362,12 @@ surrounding dependencies, inputs, configuration, logs, and edge cases before cha
 **Sample:**
 
 ```js
-// Concept: 5. npm and package metadata
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('5. npm and package metadata');
-}).listen(3000);
+const packageJson = require('./package.json');
+
+console.log({
+  packageManager: packageJson.packageManager,
+  lockfilePresent: require('fs').existsSync('./package-lock.json')
+});
 ```
 
 ---
@@ -1209,11 +1383,10 @@ that turns isolated facts into a coherent end-to-end explanation.
 **Sample:**
 
 ```js
-// Concept: 5. npm and package metadata
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('5. npm and package metadata');
-}).listen(3000);
+const packageJson = require('./package.json');
+const cluster = require('cluster');
+
+console.log(`${packageJson.name} boots in ${cluster.isPrimary ? 'primary' : 'worker'} mode`);
 ```
 
 ---
@@ -1230,11 +1403,15 @@ events, and process. It is part of the foundation a candidate should be able to 
 **Sample:**
 
 ```js
-// Concept: 6. Built-in modules
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('6. Built-in modules');
-}).listen(3000);
+const { readFile } = require('node:fs/promises');
+const { createHash } = require('node:crypto');
+
+async function fingerprintFile(file) {
+  const content = await readFile(file);
+  return createHash('sha256').update(content).digest('hex');
+}
+
+fingerprintFile('./invoice.pdf').then(console.log);
 ```
 
 ---
@@ -1250,11 +1427,13 @@ security, or delivery depending on the situation.
 **Sample:**
 
 ```js
-// Concept: 6. Built-in modules
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('6. Built-in modules');
-}).listen(3000);
+const path = require('node:path');
+const os = require('node:os');
+
+const uploadDir = path.join(os.tmpdir(), 'uploads');
+console.log(uploadDir);
+
+// Built-in modules often remove the need for extra dependencies.
 ```
 
 ---
@@ -1270,11 +1449,12 @@ debugging, or architecture conversations depend on that area.
 **Sample:**
 
 ```js
-// Concept: 6. Built-in modules
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('6. Built-in modules');
-}).listen(3000);
+const { randomUUID } = require('node:crypto');
+const { URL } = require('node:url');
+
+const uploadId = randomUUID();
+const signedUrl = new URL(`/files/${uploadId}`, 'https://api.example.com');
+console.log(signedUrl.toString());
 ```
 
 ---
@@ -1290,11 +1470,14 @@ depends on the stack, but the responsibility should stay predictable.
 **Sample:**
 
 ```js
-// Concept: 6. Built-in modules
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('6. Built-in modules');
-}).listen(3000);
+const path = require('node:path');
+const fs = require('node:fs/promises');
+
+async function saveInvoice(id, data) {
+  const filePath = path.join(__dirname, 'data', `${id}.json`);
+  await fs.writeFile(filePath, JSON.stringify(data, null, 2));
+  return filePath;
+}
 ```
 
 ---
@@ -1310,11 +1493,12 @@ tradeoffs easier to explain to reviewers, interviewers, and teammates.
 **Sample:**
 
 ```js
-// Concept: 6. Built-in modules
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('6. Built-in modules');
-}).listen(3000);
+const crypto = require('node:crypto');
+
+const token = crypto.randomBytes(32).toString('hex');
+const requestId = crypto.randomUUID();
+
+console.log({ token, requestId });
 ```
 
 ---
@@ -1330,11 +1514,12 @@ That usually leads to weak reasoning, overengineering, or fragile implementation
 **Sample:**
 
 ```js
-// Concept: 6. Built-in modules
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('6. Built-in modules');
-}).listen(3000);
+const path = require('node:path');
+
+const manual = __dirname + '/reports/2026/april.csv';
+const safe = path.join(__dirname, 'reports', '2026', 'april.csv');
+
+console.log({ manual, safe });
 ```
 
 ---
@@ -1350,11 +1535,14 @@ handle asynchronous logic. They often work together, but they solve different pa
 **Sample:**
 
 ```js
-// Concept: 6. Built-in modules
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('6. Built-in modules');
-}).listen(3000);
+const fs = require('node:fs/promises');
+
+async function loadConfig() {
+  return JSON.parse(await fs.readFile('./config.json', 'utf8'));
+}
+
+// fs is a built-in module. async/await is the async pattern used with it.
+loadConfig().then(console.log);
 ```
 
 ---
@@ -1370,11 +1558,16 @@ and process. Interviewers usually care more about the reasoning than the definit
 **Sample:**
 
 ```js
-// Concept: 6. Built-in modules
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('6. Built-in modules');
-}).listen(3000);
+const fs = require('node:fs/promises');
+const path = require('node:path');
+const crypto = require('node:crypto');
+
+async function createUploadRecord(originalName) {
+  const id = crypto.randomUUID();
+  const target = path.join(__dirname, 'uploads', `${id}-${originalName}`);
+  await fs.writeFile(target, '');
+  return { id, target };
+}
 ```
 
 ---
@@ -1390,11 +1583,14 @@ implementation readable, and validate important paths early.
 **Sample:**
 
 ```js
-// Concept: 6. Built-in modules
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('6. Built-in modules');
-}).listen(3000);
+const { readFile } = require('node:fs/promises');
+
+async function readJson(file) {
+  const text = await readFile(file, 'utf8');
+  return JSON.parse(text);
+}
+
+readJson('./settings.json').then(console.log);
 ```
 
 ---
@@ -1410,11 +1606,12 @@ poor decisions, weak debugging, or incomplete explanations.
 **Sample:**
 
 ```js
-// Concept: 6. Built-in modules
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('6. Built-in modules');
-}).listen(3000);
+const path = require('node:path');
+
+const bad = __dirname + '\\uploads\\' + 'invoice.pdf';
+const good = path.join(__dirname, 'uploads', 'invoice.pdf');
+
+console.log({ bad, good });
 ```
 
 ---
@@ -1430,11 +1627,15 @@ inputs, configuration, logs, and edge cases before changing the design.
 **Sample:**
 
 ```js
-// Concept: 6. Built-in modules
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('6. Built-in modules');
-}).listen(3000);
+const fs = require('node:fs/promises');
+
+fs.readFile('./missing.json', 'utf8').catch((error) => {
+  console.error({
+    code: error.code,
+    message: error.message,
+    cwd: process.cwd()
+  });
+});
 ```
 
 ---
@@ -1450,10 +1651,12 @@ facts into a coherent end-to-end explanation.
 **Sample:**
 
 ```js
-// Concept: 6. Built-in modules
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('6. Built-in modules');
+const http = require('node:http');
+const fs = require('node:fs/promises');
+
+http.createServer(async (_req, res) => {
+  const health = await fs.readFile('./health.txt', 'utf8');
+  res.end(health);
 }).listen(3000);
 ```
 
@@ -1472,11 +1675,12 @@ clearly.
 **Sample:**
 
 ```js
-// Concept: 7. Async patterns
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('7. Async patterns');
-}).listen(3000);
+async function sendWelcomeEmail(user) {
+  await new Promise((resolve) => setTimeout(resolve, 50));
+  return `welcome email queued for ${user.email}`;
+}
+
+sendWelcomeEmail({ email: 'sai@example.com' }).then(console.log);
 ```
 
 ---
@@ -1492,11 +1696,14 @@ performance, security, or delivery depending on the situation.
 **Sample:**
 
 ```js
-// Concept: 7. Async patterns
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('7. Async patterns');
-}).listen(3000);
+async function loadDashboard() {
+  const [orders, invoices] = await Promise.all([
+    fetch('https://api.example.com/orders').then((res) => res.json()),
+    fetch('https://api.example.com/invoices').then((res) => res.json())
+  ]);
+
+  return { orders: orders.length, invoices: invoices.length };
+}
 ```
 
 ---
@@ -1512,11 +1719,14 @@ decisions, debugging, or architecture conversations depend on that area.
 **Sample:**
 
 ```js
-// Concept: 7. Async patterns
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('7. Async patterns');
-}).listen(3000);
+async function processOrders(orderIds) {
+  for (const orderId of orderIds) {
+    const response = await fetch(`https://api.example.com/orders/${orderId}`);
+    console.log(await response.json());
+  }
+}
+
+// Focus on async patterns when you coordinate multiple remote calls.
 ```
 
 ---
@@ -1532,11 +1742,15 @@ shape depends on the stack, but the responsibility should stay predictable.
 **Sample:**
 
 ```js
-// Concept: 7. Async patterns
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('7. Async patterns');
-}).listen(3000);
+async function withRetry(task, retries = 3) {
+  for (let attempt = 1; attempt <= retries; attempt += 1) {
+    try { return await task(); } catch (error) {
+      if (attempt === retries) throw error;
+    }
+  }
+}
+
+withRetry(() => fetch('https://api.example.com/health')).then(() => console.log('ok'));
 ```
 
 ---
@@ -1552,11 +1766,15 @@ tradeoffs easier to explain to reviewers, interviewers, and teammates.
 **Sample:**
 
 ```js
-// Concept: 7. Async patterns
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('7. Async patterns');
-}).listen(3000);
+async function loadPageData() {
+  const [profile, notifications, stats] = await Promise.all([
+    fetch('https://api.example.com/profile').then((res) => res.json()),
+    fetch('https://api.example.com/notifications').then((res) => res.json()),
+    fetch('https://api.example.com/stats').then((res) => res.json())
+  ]);
+
+  return { profile, notifications, stats };
+}
 ```
 
 ---
@@ -1572,11 +1790,13 @@ That usually leads to weak reasoning, overengineering, or fragile implementation
 **Sample:**
 
 ```js
-// Concept: 7. Async patterns
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('7. Async patterns');
-}).listen(3000);
+async function badSequentialCalls() {
+  const a = await fetch('https://api.example.com/a');
+  const b = await fetch('https://api.example.com/b');
+  return [a.status, b.status];
+}
+
+// Sequential awaits are slower when the calls are independent.
 ```
 
 ---
@@ -1593,11 +1813,15 @@ different parts of the topic.
 **Sample:**
 
 ```js
-// Concept: 7. Async patterns
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('7. Async patterns');
-}).listen(3000);
+const fs = require('node:fs');
+
+async function getOrderIds() {
+  return ['o-1', 'o-2'];
+}
+
+const stream = fs.createReadStream('./orders.ndjson');
+console.log(typeof stream.pipe); // streams/buffers move data chunks
+getOrderIds().then(console.log); // async patterns coordinate completion
 ```
 
 ---
@@ -1613,11 +1837,14 @@ logic. Interviewers usually care more about the reasoning than the definition al
 **Sample:**
 
 ```js
-// Concept: 7. Async patterns
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('7. Async patterns');
-}).listen(3000);
+async function getOrderSummary(orderId) {
+  const [order, payments] = await Promise.all([
+    fetch(`https://api.example.com/orders/${orderId}`).then((res) => res.json()),
+    fetch(`https://api.example.com/orders/${orderId}/payments`).then((res) => res.json())
+  ]);
+
+  return { orderId: order.id, paymentCount: payments.length };
+}
 ```
 
 ---
@@ -1633,11 +1860,15 @@ keep the implementation readable, and validate important paths early.
 **Sample:**
 
 ```js
-// Concept: 7. Async patterns
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('7. Async patterns');
-}).listen(3000);
+async function loadWidgets() {
+  const results = await Promise.allSettled([
+    fetch('https://api.example.com/weather'),
+    fetch('https://api.example.com/news'),
+    fetch('https://api.example.com/stocks')
+  ]);
+
+  return results.map((result) => result.status);
+}
 ```
 
 ---
@@ -1653,11 +1884,14 @@ appears as poor decisions, weak debugging, or incomplete explanations.
 **Sample:**
 
 ```js
-// Concept: 7. Async patterns
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('7. Async patterns');
-}).listen(3000);
+async function createInvoice() {
+  async function saveInvoiceToDb() {
+    return { id: 'inv_1024' };
+  }
+
+  const invoice = saveInvoiceToDb(); // forgot await
+  console.log(invoice.id); // undefined if saveInvoiceToDb returns a Promise
+}
 ```
 
 ---
@@ -1673,11 +1907,13 @@ dependencies, inputs, configuration, logs, and edge cases before changing the de
 **Sample:**
 
 ```js
-// Concept: 7. Async patterns
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('7. Async patterns');
-}).listen(3000);
+async function timedTask(name, task) {
+  console.time(name);
+  try { return await task(); }
+  finally { console.timeEnd(name); }
+}
+
+timedTask('load-users', () => fetch('https://api.example.com/users'));
 ```
 
 ---
@@ -1693,11 +1929,14 @@ isolated facts into a coherent end-to-end explanation.
 **Sample:**
 
 ```js
-// Concept: 7. Async patterns
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('7. Async patterns');
-}).listen(3000);
+const { pipeline } = require('node:stream/promises');
+const fs = require('node:fs');
+
+async function exportData() {
+  await pipeline(fs.createReadStream('./report.csv'), fs.createWriteStream('./backup/report.csv'));
+}
+
+process.on('SIGTERM', () => console.log('finish async work before shutdown'));
 ```
 
 ---
@@ -1715,11 +1954,19 @@ explain clearly.
 **Sample:**
 
 ```js
-// Concept: 8. Streams and buffers
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('8. Streams and buffers');
-}).listen(3000);
+const fs = require('node:fs');
+const { pipeline } = require('node:stream/promises');
+const zlib = require('node:zlib');
+
+async function archiveLogs() {
+  await pipeline(
+    fs.createReadStream('./logs/app.log'),
+    zlib.createGzip(),
+    fs.createWriteStream('./logs/app.log.gz')
+  );
+}
+
+archiveLogs().catch(console.error);
 ```
 
 ---
@@ -1735,11 +1982,12 @@ maintainability, performance, security, or delivery depending on the situation.
 **Sample:**
 
 ```js
-// Concept: 8. Streams and buffers
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('8. Streams and buffers');
-}).listen(3000);
+const fs = require('node:fs');
+
+const stream = fs.createReadStream('./video.mp4', { highWaterMark: 64 * 1024 });
+let bytes = 0;
+stream.on('data', (chunk) => { bytes += chunk.length; });
+stream.on('end', () => console.log(`streamed ${bytes} bytes without loading all into memory`));
 ```
 
 ---
@@ -1755,11 +2003,11 @@ important when design decisions, debugging, or architecture conversations depend
 **Sample:**
 
 ```js
-// Concept: 8. Streams and buffers
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('8. Streams and buffers');
-}).listen(3000);
+function shouldUseStream(fileSizeMB) {
+  return fileSizeMB > 10;
+}
+
+console.log(shouldUseStream(250)); // true for large exports, media, backups
 ```
 
 ---
@@ -1775,11 +2023,25 @@ pattern. The exact shape depends on the stack, but the responsibility should sta
 **Sample:**
 
 ```js
-// Concept: 8. Streams and buffers
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('8. Streams and buffers');
-}).listen(3000);
+const fs = require('node:fs');
+const { Transform } = require('node:stream');
+const { pipeline } = require('node:stream/promises');
+
+const uppercase = new Transform({
+  transform(chunk, _enc, callback) {
+    callback(null, chunk.toString().toUpperCase());
+  }
+});
+
+async function uppercaseCustomerFile() {
+  await pipeline(
+    fs.createReadStream('./customers.csv'),
+    uppercase,
+    fs.createWriteStream('./customers-upper.csv')
+  );
+}
+
+uppercaseCustomerFile().catch(console.error);
 ```
 
 ---
@@ -1795,11 +2057,11 @@ also makes tradeoffs easier to explain to reviewers, interviewers, and teammates
 **Sample:**
 
 ```js
-// Concept: 8. Streams and buffers
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('8. Streams and buffers');
-}).listen(3000);
+const buffer = Buffer.from('payment-approved');
+console.log(buffer.length);
+console.log(buffer.toString('utf8'));
+
+// Buffers give precise byte-level control for protocols and binary payloads.
 ```
 
 ---
@@ -1815,11 +2077,14 @@ binary data. That usually leads to weak reasoning, overengineering, or fragile i
 **Sample:**
 
 ```js
-// Concept: 8. Streams and buffers
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('8. Streams and buffers');
-}).listen(3000);
+const chunks = [];
+
+function onData(chunk) {
+  chunks.push(chunk);
+  // If the producer is faster than the consumer, memory can keep growing.
+}
+
+console.log(onData.name);
 ```
 
 ---
@@ -1836,11 +2101,11 @@ different parts of the topic.
 **Sample:**
 
 ```js
-// Concept: 8. Streams and buffers
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('8. Streams and buffers');
-}).listen(3000);
+const fs = require('node:fs');
+
+const fileStream = fs.createReadStream('./audit.log');
+console.log(typeof fileStream.pipe); // stream for data flow
+console.log(process.env.NODE_ENV); // process/environment for runtime config
 ```
 
 ---
@@ -1857,11 +2122,14 @@ definition alone.
 **Sample:**
 
 ```js
-// Concept: 8. Streams and buffers
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('8. Streams and buffers');
-}).listen(3000);
+const fs = require('node:fs');
+const readline = require('node:readline');
+
+const rl = readline.createInterface({ input: fs.createReadStream('./orders.ndjson') });
+rl.on('line', (line) => {
+  const order = JSON.parse(line);
+  console.log(`Order ${order.id} => ${order.status}`);
+});
 ```
 
 ---
@@ -1877,11 +2145,19 @@ document intent, keep the implementation readable, and validate important paths 
 **Sample:**
 
 ```js
-// Concept: 8. Streams and buffers
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('8. Streams and buffers');
-}).listen(3000);
+const fs = require('node:fs');
+const { pipeline } = require('node:stream/promises');
+
+async function archiveRawData() {
+  await pipeline(
+    fs.createReadStream('./raw-data.csv'),
+    fs.createWriteStream('./archive/raw-data.csv')
+  );
+}
+
+archiveRawData().catch(console.error);
+
+// pipeline forwards backpressure and errors for you.
 ```
 
 ---
@@ -1897,11 +2173,14 @@ usually appears as poor decisions, weak debugging, or incomplete explanations.
 **Sample:**
 
 ```js
-// Concept: 8. Streams and buffers
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('8. Streams and buffers');
-}).listen(3000);
+const fs = require('node:fs/promises');
+
+async function badUploadHandler() {
+  const file = await fs.readFile('./huge-video.mov');
+  console.log(file.length);
+}
+
+// Reading the whole file into memory is often the wrong choice.
 ```
 
 ---
@@ -1917,11 +2196,12 @@ surrounding dependencies, inputs, configuration, logs, and edge cases before cha
 **Sample:**
 
 ```js
-// Concept: 8. Streams and buffers
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('8. Streams and buffers');
-}).listen(3000);
+const fs = require('node:fs');
+
+const stream = fs.createReadStream('./broken.csv');
+stream.on('open', () => console.log('opened'));
+stream.on('error', (error) => console.error(error.code, error.message));
+stream.on('close', () => console.log('closed'));
 ```
 
 ---
@@ -1937,11 +2217,15 @@ turns isolated facts into a coherent end-to-end explanation.
 **Sample:**
 
 ```js
-// Concept: 8. Streams and buffers
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('8. Streams and buffers');
-}).listen(3000);
+const fs = require('node:fs');
+
+async function readLines(file) {
+  for await (const chunk of fs.createReadStream(file, { encoding: 'utf8' })) {
+    process.stdout.write(chunk);
+  }
+}
+
+readLines('./notes.txt');
 ```
 
 ---
@@ -1959,11 +2243,12 @@ explain clearly.
 **Sample:**
 
 ```js
-// Concept: 9. Process and environment
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('9. Process and environment');
-}).listen(3000);
+console.log({
+  pid: process.pid,
+  env: process.env.NODE_ENV,
+  port: process.env.PORT,
+  argv: process.argv.slice(2)
+});
 ```
 
 ---
@@ -1979,11 +2264,14 @@ performance, security, or delivery depending on the situation.
 **Sample:**
 
 ```js
-// Concept: 9. Process and environment
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('9. Process and environment');
-}).listen(3000);
+function getDbUrl() {
+  if (!process.env.DATABASE_URL) {
+    throw new Error('DATABASE_URL is required');
+  }
+  return process.env.DATABASE_URL;
+}
+
+console.log(getDbUrl());
 ```
 
 ---
@@ -1999,11 +2287,12 @@ when design decisions, debugging, or architecture conversations depend on that a
 **Sample:**
 
 ```js
-// Concept: 9. Process and environment
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('9. Process and environment');
-}).listen(3000);
+const required = ['NODE_ENV', 'PORT', 'DATABASE_URL'];
+const missing = required.filter((key) => !process.env[key]);
+
+if (missing.length) {
+  console.error('Missing environment variables:', missing.join(', '));
+}
 ```
 
 ---
@@ -2019,11 +2308,15 @@ exact shape depends on the stack, but the responsibility should stay predictable
 **Sample:**
 
 ```js
-// Concept: 9. Process and environment
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('9. Process and environment');
-}).listen(3000);
+function loadConfig() {
+  return {
+    env: process.env.NODE_ENV ?? 'development',
+    port: Number(process.env.PORT ?? 3000),
+    logLevel: process.env.LOG_LEVEL ?? 'info'
+  };
+}
+
+console.log(loadConfig());
 ```
 
 ---
@@ -2039,11 +2332,12 @@ makes tradeoffs easier to explain to reviewers, interviewers, and teammates.
 **Sample:**
 
 ```js
-// Concept: 9. Process and environment
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('9. Process and environment');
-}).listen(3000);
+console.log({
+  pid: process.pid,
+  uptime: process.uptime(),
+  platform: process.platform,
+  memory: process.memoryUsage().rss
+});
 ```
 
 ---
@@ -2059,11 +2353,12 @@ object. That usually leads to weak reasoning, overengineering, or fragile implem
 **Sample:**
 
 ```js
-// Concept: 9. Process and environment
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('9. Process and environment');
-}).listen(3000);
+const port = Number(process.env.PORT);
+if (Number.isNaN(port)) {
+  throw new Error('PORT must be numeric');
+}
+
+// Process/env flexibility is powerful, but weak validation creates fragile deploys.
 ```
 
 ---
@@ -2080,11 +2375,8 @@ different parts of the topic.
 **Sample:**
 
 ```js
-// Concept: 9. Process and environment
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('9. Process and environment');
-}).listen(3000);
+console.log(`Single process config: pid=${process.pid}, env=${process.env.NODE_ENV}`);
+console.log('Scaling strategies answer whether we need more workers or more pods.');
 ```
 
 ---
@@ -2100,11 +2392,13 @@ process object. Interviewers usually care more about the reasoning than the defi
 **Sample:**
 
 ```js
-// Concept: 9. Process and environment
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('9. Process and environment');
-}).listen(3000);
+const server = require('node:http').createServer((_req, res) => res.end('ok'));
+server.listen(process.env.PORT ?? 3000);
+
+process.on('SIGTERM', () => {
+  console.log('Received SIGTERM. Closing server gracefully...');
+  server.close(() => process.exit(0));
+});
 ```
 
 ---
@@ -2120,11 +2414,12 @@ intent, keep the implementation readable, and validate important paths early.
 **Sample:**
 
 ```js
-// Concept: 9. Process and environment
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('9. Process and environment');
-}).listen(3000);
+const schema = {
+  NODE_ENV: ['development', 'test', 'production'],
+  PORT: (value) => Number.isInteger(Number(value))
+};
+
+console.log(schema);
 ```
 
 ---
@@ -2140,11 +2435,10 @@ as poor decisions, weak debugging, or incomplete explanations.
 **Sample:**
 
 ```js
-// Concept: 9. Process and environment
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('9. Process and environment');
-}).listen(3000);
+const jwtSecret = process.env.JWT_SECRET ?? 'secret';
+console.log(jwtSecret);
+
+// Silent insecure defaults are a common production mistake.
 ```
 
 ---
@@ -2160,11 +2454,12 @@ dependencies, inputs, configuration, logs, and edge cases before changing the de
 **Sample:**
 
 ```js
-// Concept: 9. Process and environment
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('9. Process and environment');
-}).listen(3000);
+console.log({
+  pid: process.pid,
+  cwd: process.cwd(),
+  nodeEnv: process.env.NODE_ENV,
+  rssMB: Math.round(process.memoryUsage().rss / 1024 / 1024)
+});
 ```
 
 ---
@@ -2180,11 +2475,13 @@ isolated facts into a coherent end-to-end explanation.
 **Sample:**
 
 ```js
-// Concept: 9. Process and environment
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('9. Process and environment');
-}).listen(3000);
+const cluster = require('node:cluster');
+
+console.log({
+  processId: process.pid,
+  role: cluster.isPrimary ? 'primary' : 'worker',
+  env: process.env.NODE_ENV
+});
 ```
 
 ---
@@ -2202,11 +2499,16 @@ to explain clearly.
 **Sample:**
 
 ```js
-// Concept: 10. Scaling strategies
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('10. Scaling strategies');
-}).listen(3000);
+const cluster = require('node:cluster');
+const os = require('node:os');
+
+if (cluster.isPrimary) {
+  for (let i = 0; i < os.availableParallelism(); i += 1) {
+    cluster.fork();
+  }
+} else {
+  require('node:http').createServer((_req, res) => res.end(`worker ${process.pid}`)).listen(3000);
+}
 ```
 
 ---
@@ -2222,11 +2524,9 @@ maintainability, performance, security, or delivery depending on the situation.
 **Sample:**
 
 ```js
-// Concept: 10. Scaling strategies
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('10. Scaling strategies');
-}).listen(3000);
+const os = require('node:os');
+console.log(`Available CPUs: ${os.availableParallelism()}`);
+console.log('A single Node.js process uses one main thread for JavaScript execution.');
 ```
 
 ---
@@ -2242,11 +2542,13 @@ important when design decisions, debugging, or architecture conversations depend
 **Sample:**
 
 ```js
-// Concept: 10. Scaling strategies
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('10. Scaling strategies');
-}).listen(3000);
+function chooseScaling({ concurrentUsers, cpuBound }) {
+  if (cpuBound) return 'worker_threads or external workers';
+  if (concurrentUsers > 5000) return 'cluster or containers behind a load balancer';
+  return 'single instance is enough';
+}
+
+console.log(chooseScaling({ concurrentUsers: 12000, cpuBound: false }));
 ```
 
 ---
@@ -2263,11 +2565,13 @@ predictable.
 **Sample:**
 
 ```js
-// Concept: 10. Scaling strategies
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('10. Scaling strategies');
-}).listen(3000);
+const cluster = require('node:cluster');
+const os = require('node:os');
+
+if (cluster.isPrimary) {
+  for (let i = 0; i < os.availableParallelism(); i += 1) cluster.fork();
+  cluster.on('exit', () => cluster.fork());
+}
 ```
 
 ---
@@ -2283,11 +2587,13 @@ grow. It also makes tradeoffs easier to explain to reviewers, interviewers, and 
 **Sample:**
 
 ```js
-// Concept: 10. Scaling strategies
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('10. Scaling strategies');
-}).listen(3000);
+const summary = {
+  throughput: 'more requests handled across CPU cores',
+  resilience: 'one worker can restart without killing every connection',
+  deployment: 'horizontal scale with multiple app instances'
+};
+
+console.log(summary);
 ```
 
 ---
@@ -2304,11 +2610,13 @@ implementations.
 **Sample:**
 
 ```js
-// Concept: 10. Scaling strategies
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('10. Scaling strategies');
-}).listen(3000);
+const sessions = new Map();
+
+function storeSessionInMemory(sessionId, userId) {
+  sessions.set(sessionId, userId);
+}
+
+console.log('In-memory state becomes hard to manage when traffic is spread across workers.');
 ```
 
 ---
@@ -2325,11 +2633,8 @@ solve different parts of the topic.
 **Sample:**
 
 ```js
-// Concept: 10. Scaling strategies
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('10. Scaling strategies');
-}).listen(3000);
+console.log(`Runtime detail: ${process.version}`);
+console.log('Scaling strategy: how many processes, workers, or containers we run.');
 ```
 
 ---
@@ -2346,11 +2651,15 @@ definition alone.
 **Sample:**
 
 ```js
-// Concept: 10. Scaling strategies
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('10. Scaling strategies');
-}).listen(3000);
+const { Worker } = require('node:worker_threads');
+
+function resizeImage(file) {
+  return new Promise((resolve, reject) => {
+    const worker = new Worker('./image-worker.js', { workerData: file });
+    worker.once('message', resolve);
+    worker.once('error', reject);
+  });
+}
 ```
 
 ---
@@ -2366,11 +2675,14 @@ should document intent, keep the implementation readable, and validate important
 **Sample:**
 
 ```js
-// Concept: 10. Scaling strategies
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('10. Scaling strategies');
+const http = require('node:http');
+
+http.createServer((_req, res) => {
+  res.setHeader('x-worker-id', process.pid);
+  res.end('stateless response');
 }).listen(3000);
+
+// Stateless workers are easier to scale behind a load balancer.
 ```
 
 ---
@@ -2386,11 +2698,14 @@ usually appears as poor decisions, weak debugging, or incomplete explanations.
 **Sample:**
 
 ```js
-// Concept: 10. Scaling strategies
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('10. Scaling strategies');
-}).listen(3000);
+const sessions = {};
+
+function login(req, res) {
+  sessions[req.headers['x-session-id']] = { userId: 42 };
+  res.end('stored only in this process');
+}
+
+// Another worker will not see this in-memory session.
 ```
 
 ---
@@ -2406,11 +2721,14 @@ surrounding dependencies, inputs, configuration, logs, and edge cases before cha
 **Sample:**
 
 ```js
-// Concept: 10. Scaling strategies
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('10. Scaling strategies');
-}).listen(3000);
+const cluster = require('node:cluster');
+
+if (cluster.isPrimary) {
+  cluster.on('exit', (worker, code, signal) => {
+    console.error(`worker ${worker.process.pid} died`, { code, signal });
+    cluster.fork();
+  });
+}
 ```
 
 ---
@@ -2426,9 +2744,12 @@ that turns isolated facts into a coherent end-to-end explanation.
 **Sample:**
 
 ```js
-// Concept: 10. Scaling strategies
-const http = require('http');
-http.createServer((req, res) => {
-  res.end('10. Scaling strategies');
-}).listen(3000);
+const cluster = require('node:cluster');
+const v8 = require('node:v8');
+
+console.log({
+  role: cluster.isPrimary ? 'primary' : 'worker',
+  node: process.version,
+  heapMB: Math.round(v8.getHeapStatistics().heap_size_limit / 1024 / 1024)
+});
 ```
