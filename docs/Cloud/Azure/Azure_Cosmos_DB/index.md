@@ -1,506 +1,2314 @@
-### 1. What is the goal of Cosmos DB ?
+# Azure Cosmos DB Interview Questions
 
-**Azure Cosmos DB** is Microsoft’s globally distributed, multi-model database service designed to meet the modern application needs of scalability, performance, and availability.
+This page stays focused on globally distributed NoSQL design concepts in Azure Cosmos DB.
 
-The **primary goal** of Azure Cosmos DB is to provide a **globally distributed, highly available, low-latency database platform** that supports multiple data models and offers **guaranteed performance** at scale.
+## 1. Global distribution
 
-✅ Key Objectives
+### 1. What is the role of Global distribution in Azure Cosmos DB?
 
-1.  **Global Distribution**
+**Answer:**
 
-    - Offer seamless **multi-region replication**.
-    - Enable users to **read and write data locally** from anywhere in the world.
-    - Built-in **multi-master replication** for high availability.
+In Azure Cosmos DB, the term Global distribution refers to the ability to replicate data across regions for
+latency, availability, and resilience goals. It is part of the foundation a candidate should be able
+to explain clearly.
 
-2.  **High Availability**
-
-    - **99.999% availability SLA** for multi-region deployments.
-    - Automatic failover and redundancy for disaster recovery.
-
-3.  **Low Latency**
-
-    - Target **<10ms latency for reads** and **<15ms for writes** at the 99th percentile.
-    - Optimized for high-performance real-time applications.
-
-4.  **Elastic Scalability**
-
-    - **Instant and automatic scaling** of throughput (RU/s) and storage.
-    - Supports millions of transactions per second across regions.
-
-5.  **Multi-Model Support**
-
-    - Allows storing and querying data in multiple formats:
-    - Document (JSON - MongoDB API)
-    - Key-Value
-    - Graph (Gremlin)
-    - Column-family (Cassandra API)
-    - Table API
-
-6.  **Multiple APIs**
-
-    - Supports multiple APIs to integrate with popular databases:
-    - **SQL (Core API)**
-
-    - **MongoDB**
-
-    - **Cassandra**
-    - **Gremlin**
-    - **Azure Table Storage**
-
-7.  **Comprehensive SLAs**
-
-    - Only database to offer **guaranteed SLAs** on:
-    - Availability
-    - Throughput
-    - Consistency
-    - Latency
-
-8.  **Five Consistency Levels**
-
-    - Strong
-    - Bounded Staleness
-    - Session (default)
-    - Consistent Prefix
-    - Eventual
-
-🚀 Real-World Use Cases
-
-    - Global e-commerce platforms
-    - IoT & telemetry ingestion
-    - Real-time personalization & recommendation engines
-    - Gaming leaderboards
-    - Financial transaction processing
-    - Supply chain and logistics systems
-
-🔗 References
-
-- [Azure Cosmos DB Overview – Microsoft Docs](https://learn.microsoft.com/en-us/azure/cosmos-db/introduction)
-- [SLA for Azure Cosmos DB](https://azure.microsoft.com/en-us/support/legal/sla/cosmos-db/)
-
-### 2. Explain the word planet-scale ?
-
-🌍 Definition
-
-**Planet-scale** refers to the ability of a software system — especially databases and cloud applications — to **operate reliably, efficiently, and securely across the entire globe**, serving **millions or billions of users** simultaneously from multiple geographic locations.
-
-✅ Key Characteristics of Planet-Scale Systems
-
-| Feature                        | Description                                                                                        |
-| ------------------------------ | -------------------------------------------------------------------------------------------------- |
-| **Global Distribution**        | Data and services are automatically replicated across multiple continents and regions.             |
-| **Low Latency Worldwide**      | Reads and writes are served from the nearest datacenter to reduce delay for end users globally.    |
-| **Elastic Scalability**        | Can instantly scale up/down to handle sudden changes in workload or user traffic across countries. |
-| **Multi-Master Write Support** | Allows write operations from multiple regions with automatic conflict resolution.                  |
-| **High Availability**          | Designed for 99.999% uptime using built-in failover and redundancy across regions.                 |
-| **Geo-Compliance**             | Supports data residency, privacy, and compliance requirements in different countries.              |
-
-🚀 Example: Planet-Scale in Azure Cosmos DB
-
-Azure Cosmos DB is called a **"planet-scale" database** because it provides:
-
-- Global data replication across any Azure region.
-- Sub-10 ms latency read/write performance at 99th percentile.
-- Multi-region writes and automatic failover.
-- Support for localized access and compliance (e.g., GDPR, data sovereignty).
-
-📦 Real-World Scenarios
-
-| Use Case                               | Why Planet-Scale Matters                                 |
-| -------------------------------------- | -------------------------------------------------------- |
-| **Global e-commerce platforms**        | Users expect fast performance globally.                  |
-| **Real-time multiplayer gaming**       | Millisecond latency is critical.                         |
-| **IoT/Telemetry across continents**    | Devices constantly sending data from all over the world. |
-| **Social networks and messaging apps** | Users from different countries interacting 24/7.         |
-
-🧠 Summary
-
-> **Planet-scale** means building software and systems that perform reliably, quickly, and securely for a **global audience**, no matter where users are located.
-
-It’s about **scaling across the planet**, not just within a single region or datacenter.
-
-🔗 References
-
-- [Planet-Scale Databases – Microsoft Azure Cosmos DB](https://learn.microsoft.com/en-us/azure/cosmos-db/introduction)
-- [Distributed Systems Principles](https://en.wikipedia.org/wiki/Distributed_computing)
-
-### 3. Explain consistency problem in Cosmos ?
-
-What is Consistency?
-
-Consistency refers to the **guarantee that all users see the same data at the same time** after a write operation. In distributed databases like Cosmos DB, ensuring consistency across multiple geographically distributed replicas is challenging.
-
-The Consistency Problem
-
-In a globally distributed system, data is **replicated across multiple regions** to provide high availability and low latency. However, this replication introduces **challenges in keeping data consistent** everywhere:
-
-- When a client writes data to one region, **other regions may not immediately see that update**.
-- This can lead to **conflicting versions** or **stale reads**, where some users see older data.
-- The system must **balance trade-offs** between consistency, availability, and latency (the CAP theorem).
-
-Cosmos DB Consistency Levels
-
-Azure Cosmos DB addresses the consistency problem by offering **five tunable consistency levels**, allowing developers to choose the right balance for their application:
-
-| Consistency Level     | Description                                                                      | Use Case                              |
-| --------------------- | -------------------------------------------------------------------------------- | ------------------------------------- |
-| **Strong**            | Guarantees linearizability; reads always see the latest committed write.         | Financial transactions, critical apps |
-| **Bounded Staleness** | Reads lag behind writes by a known, fixed amount of time or versions.            | Gaming leaderboards, social feeds     |
-| **Session (default)** | Guarantees monotonic reads and writes within a single client session.            | User sessions, personalized apps      |
-| **Consistent Prefix** | Reads see updates in the order they were committed, without gaps.                | Event processing                      |
-| **Eventual**          | Reads may see out-of-order or stale data but eventual consistency is guaranteed. | Non-critical analytics, caching       |
-
-Why is Consistency Challenging?
-
-- **Network latency:** Propagating changes worldwide takes time.
-- **Partition tolerance:** In case of network partitions, consistency may be sacrificed for availability.
-- **Multi-master writes:** Allowing writes in multiple regions simultaneously can cause conflicts.
-
-Trade-Offs in Cosmos DB
-
-| Property           | Strong   | Bounded Staleness | Session        | Consistent Prefix | Eventual |
-| ------------------ | -------- | ----------------- | -------------- | ----------------- | -------- |
-| **Latency**        | High     | Medium            | Low            | Low               | Lowest   |
-| **Availability**   | Lower    | High              | High           | High              | Highest  |
-| **Throughput**     | Lower    | Medium            | High           | High              | Highest  |
-| **Data Freshness** | Absolute | Bounded           | Session-scoped | Ordered           | Eventual |
-
-Summary
-
-The **consistency problem** in Cosmos DB arises from the need to keep **distributed replicas synchronized** while providing **low latency and high availability** globally. Cosmos DB’s **tunable consistency levels** give developers control over this trade-off to best fit their application's needs.
-
-References
-
-- [Azure Cosmos DB Consistency Levels](https://learn.microsoft.com/en-us/azure/cosmos-db/consistency-levels)
-- [CAP Theorem Explained](https://en.wikipedia.org/wiki/CAP_theorem)
-
-### 4. Why is DR , BCP not the main goal of cosmos , how is it different ?
-
-Understanding DR and BCP
-
-- **Disaster Recovery (DR)** refers to the strategies and processes to **recover data and resume operations after catastrophic events** (e.g., data center failure, natural disasters).
-- **Business Continuity Planning (BCP)** is a broader approach to ensure that **critical business functions continue during and after a disaster**.
-
-Both focus on **minimizing downtime and data loss after an incident**.
-
-Azure Cosmos DB’s Primary Goal
-
-Azure Cosmos DB is designed to be a **planet-scale, globally distributed, multi-model database** that offers:
-
-- **Seamless global distribution** of data with **multi-region replication**.
-- **Low latency and high availability** with **99.999% SLA**.
-- Tunable **consistency models** for application-specific requirements.
-- **Elastic scalability** across throughput and storage.
-- **Multi-master writes** and **automatic conflict resolution**.
-
-Why DR and BCP Are Not Its Main Goal
-
-| Aspect                    | DR & BCP Focus                                             | Cosmos DB Focus                                                |
-| ------------------------- | ---------------------------------------------------------- | -------------------------------------------------------------- |
-| **Objective**             | Recovery and resumption after failures                     | Continuous availability and global scale                       |
-| **Scope**                 | Prepare for rare catastrophic events                       | Built-in global distribution and availability for everyday use |
-| **Data Availability**     | Restore data from backups or replicas post-disaster        | Always-on read/write access across regions                     |
-| **Latency**               | Not primary concern                                        | Sub-10 ms latency globally                                     |
-| **User Experience**       | Possible downtime during failover                          | Transparent failover with no downtime                          |
-| **Consistency Trade-off** | May sacrifice consistency for availability during recovery | Offers tunable consistency levels with predictable SLAs        |
-
-How Cosmos DB Differs from Traditional DR/BCP Solutions
-
-- **Built-in Geo-Replication:** Cosmos DB replicates data across regions automatically, providing **continuous data availability**, not just backup copies.
-- **Multi-Master Writes:** Allows writes in multiple regions simultaneously with **automatic conflict resolution**, reducing failover complexity.
-- **Automatic Failover:** Cosmos DB provides **automatic and transparent regional failover**, minimizing downtime without manual intervention.
-- **SLAs Cover Availability & Latency:** Cosmos DB guarantees **99.999% availability** and low latency as a core design goal, not just post-disaster recovery.
-
-Summary
-
-- DR and BCP are about **recovering from disasters**, often with some downtime or data loss.
-- Cosmos DB’s goal is to provide **always-on, globally distributed data access** with **low latency and high availability**, making downtime or data loss a **non-issue** in most scenarios.
-- Cosmos DB **enables business continuity as part of its core functionality**, not as an afterthought.
-
-References
-
-- [Azure Cosmos DB Overview](https://learn.microsoft.com/en-us/azure/cosmos-db/introduction)
-- [Disaster Recovery and Business Continuity](https://en.wikipedia.org/wiki/Business_continuity_management)
-- [Azure Cosmos DB SLA](https://azure.microsoft.com/en-us/support/legal/sla/cosmos-db/)
-
-### 5. consistency is best when Performance is more important than consistency.
-
-When Is Consistency Relaxed for Better Performance?
-
-In distributed systems, **there is often a trade-off between consistency and performance** due to network latency and replication delays.
-
-- **Consistency is relaxed (weaker consistency levels)** when **performance (latency and throughput) is more important than always reading the latest data**.
-- This means the system may return **slightly stale or out-of-date data** to achieve **lower latency and higher availability**.
-- Examples include using **Eventual Consistency** or **Consistent Prefix**, where reads may lag behind writes but performance is optimized.
-
-Summary
-
-| Priority                                          | Choose Consistency Level                                                        |
-| ------------------------------------------------- | ------------------------------------------------------------------------------- |
-| **Strong Consistency**                            | When correctness and latest data are critical, accepting higher latency         |
-| **Relaxed Consistency** (e.g., Session, Eventual) | When fast response and high availability matter more than immediate consistency |
-
-This trade-off is a key design consideration in systems like **Azure Cosmos DB**, which offers tunable consistency levels to fit your application needs.
-
-### 6. consistency should be selected for high consistency and for most recent data.
-
-**Strong consistency** should be selected when your application requires:
-
-- **High data accuracy**
-- Always reading the **most recent and up-to-date data**
-- Operations where stale or outdated data can cause errors or inconsistencies (e.g., financial transactions, inventory systems)
-
-Key Benefits of Strong Consistency
-
-- Guarantees that **all reads return the latest committed write**
-- Ensures **linearizability** across all replicas
-- Suitable for **mission-critical applications** demanding correctness over latency
-
-Trade-Offs
-
-- May incur **higher latency** due to synchronization between replicas
-- Potentially lower availability during network partitions (CAP theorem)
-
-Choose strong consistency when **data correctness is paramount** and slight latency increases are acceptable.
-
-### 7. Explain session , bounded and prefix consistencies ?
-
-Azure Cosmos DB offers multiple consistency levels to balance latency, availability, and data freshness. Below are explanations for three commonly used levels:
-
-1.  Session Consistency
-
-    **Scope:** Guarantees consistency **within a single client session**.
-
-    **Behavior:**
-
-    Reads your own writes — after a write completes, subsequent reads from the same client session will see that write or a more recent one.
-
-    Provides **monotonic reads** and **monotonic writes** within a session.
-
-    **Use Cases:**
-
-    Personalized user experiences (e.g., user profiles, shopping carts).
-
-    Scenarios where clients need to see their latest writes, but strict global consistency is not necessary.
-
-    Performance: Low latency, high availability.
-
-2.  Bounded Staleness Consistency
-
-    **Scope:** Guarantees reads lag behind writes by at most a **specified time interval** or **number of versions** (staleness window)
-
-    **Behavior:**
-
-    Reads might not see the most recent writes but will see all writes within the configured staleness bound.
-
-    Provides **global order** of updates within the staleness window.
-
-    **Use Cases:**
-
-    Applications tolerating slightly stale data but requiring some ordering guarantees, e.g., leaderboards, social feeds.
-
-    **Performance:** Moderate latency with stronger consistency guarantees than session.
-
-3.  Consistent Prefix Consistency
-
-    - **Scope:** Guarantees that reads see **writes in the order they were committed** without gaps.
-    - **Behavior:**
-    - Reads never see out-of-order writes. For example, if updates A, B, and C occur in that order, a client will never see C before B.
-    - However, reads may lag and see earlier writes (e.g., A only), but **never a later write without seeing all previous ones**.
-
-    **Use Cases:**
-
-    Event processing pipelines, logging systems, or any workload that needs ordered events but can tolerate some staleness.
-
-    **Performance:** Lower latency than bounded staleness, but no absolute freshness guarantee.
-
-Summary Table
-
-| Consistency Level     | Guarantees                                             | Typical Use Cases              | Latency         |
-| --------------------- | ------------------------------------------------------ | ------------------------------ | --------------- |
-| **Session**           | Monotonic reads/writes per session                     | User sessions, personalization | Low             |
-| **Bounded Staleness** | Reads lag behind writes by a fixed time/version window | Leaderboards, social feeds     | Moderate        |
-| **Consistent Prefix** | Reads see writes in order, no gaps                     | Event streams, logs            | Low to moderate |
-
-References
-
-- [Azure Cosmos DB Consistency Levels](https://learn.microsoft.com/en-us/azure/cosmos-db/consistency-levels)
-- [CAP Theorem and Distributed Consistency](https://en.wikipedia.org/wiki/CAP_theorem)
-
-### 8. What is multi-api support in cosmos ?
-
-Azure Cosmos DB is a **multi-model, globally distributed database service** that supports multiple APIs, enabling developers to use familiar data models and query languages while benefiting from Cosmos DB’s scalability and low latency.
-
-What Does Multi-API Support Mean?
-
-**Multi-API Support** means that Cosmos DB allows you to interact with the same underlying database service using different APIs, each designed for a specific data model or developer ecosystem. This flexibility lets you:
-
-- Use the APIs and tools you already know.
-- Migrate existing applications to Cosmos DB with minimal changes.
-- Work with multiple data models (document, graph, key-value, column-family) within a single service.
-
-Supported APIs in Azure Cosmos DB
-
-| API Name           | Data Model      | Description                                                                        | Use Cases                               |
-| ------------------ | --------------- | ---------------------------------------------------------------------------------- | --------------------------------------- |
-| **Core (SQL) API** | Document (JSON) | Native Cosmos DB API for querying JSON documents using SQL-like syntax.            | Web apps, mobile apps, IoT data         |
-| **MongoDB API**    | Document (JSON) | Enables applications written for MongoDB to run on Cosmos DB without code changes. | Apps using MongoDB drivers & tools      |
-| **Cassandra API**  | Column-family   | Supports Cassandra Query Language (CQL) for wide-column data.                      | Big data, time series, distributed apps |
-| **Gremlin API**    | Graph           | Enables graph database features using Gremlin traversal language.                  | Social networks, recommendation engines |
-| **Table API**      | Key-Value       | Provides a key-value store compatible with Azure Table Storage API.                | Simple key-value storage, metadata      |
-
-Benefits of Multi-API Support
-
-- **Flexibility:** Choose the API that best fits your application requirements.
-- **Compatibility:** Migrate existing workloads easily to Cosmos DB without rewriting application logic.
-- **Unified Service:** All APIs benefit from Cosmos DB’s global distribution, elastic scalability, and SLAs.
-- **Simplified Management:** One backend service to manage multiple data models and APIs.
-
-Summary
-
-Azure Cosmos DB’s multi-API support enables developers to use their preferred database models and query languages while leveraging Cosmos DB’s globally distributed, scalable, and low-latency architecture — all within a single fully managed service.
-
-References
-
-- [Azure Cosmos DB APIs](https://learn.microsoft.com/en-us/azure/cosmos-db/apis-overview)
-- [Choosing the Right API in Cosmos DB](https://learn.microsoft.com/en-us/azure/cosmos-db/choose-api)
-
-### 9. Explain the hierarchical structure of Cosmos DB ?
-
-Azure Cosmos DB organizes data and resources in a hierarchy to manage and scale globally distributed applications efficiently.
-
-Hierarchy Levels
-
-1.  **Account**
-
-    - The top-level resource.
-    - Represents a Cosmos DB service endpoint.
-    - Associated with one or more Azure regions for global distribution.
-    - Contains databases, offers throughput provisioning.
-
-2.  **Database**
-
-    - Logical container for a set of containers (collections).
-    - Acts as a scope for provisioning throughput (manual or shared).
-    - Can contain multiple containers.
-    - Similar to a database in traditional database systems.
-
-3.  **Container**
-
-    - Core unit of scalability and distribution.
-    - Also known as **Collection**, **Table**, or **Graph** depending on the API used.
-    - Stores JSON documents, key-value pairs, or graph data.
-    - Has a **partition key** to distribute data across physical partitions.
-    - Provisioned with throughput measured in Request Units (RUs).
-
-4.  **Item (Document/Row/Vertex/Edge)**
-
-    - The individual data entity stored in a container.
-    - For Core (SQL) and MongoDB APIs, an item is a **JSON document**.
-    - For Cassandra API, an item is a **row**.
-    - For Gremlin API, items are **vertices** and **edges**.
-    - Each item is uniquely identified by an **id** (or primary key).
-
-Visualization of the Hierarchy
-
-Cosmos DB Account
-└── Database
-└── Container (Collection/Table/Graph)
-└── Items (Documents/Rows/Vertices/Edges)
-
-Additional Notes
-
-- **Partitioning:** Containers use partition keys to shard data across multiple physical partitions for scalability.
-- **Throughput:** Throughput (RU/s) can be provisioned at the account, database, or container level depending on configuration.
-- **Global Distribution:** Cosmos DB accounts can replicate data across multiple regions transparently.
-
-References
-
-- [Azure Cosmos DB Core Concepts](https://learn.microsoft.com/en-us/azure/cosmos-db/introduction)
-- [Data Model in Azure Cosmos DB](https://learn.microsoft.com/en-us/azure/cosmos-db/data-model)
-
-### 10. How to connect to Cosmos DB using C# language ?
-
-This guide shows you how to connect to Azure Cosmos DB using the **Azure Cosmos DB .NET SDK** in C#.
-
-Prerequisites
-
-- An **Azure Cosmos DB account** (Core SQL API)
-- Your **connection string** or **URI and primary key**
-- .NET development environment (Visual Studio, .NET SDK)
-- Install the **Azure Cosmos SDK** NuGet package:
-
-  ```
-  dotnet add package Microsoft.Azure.Cosmos
-  ```
+**Sample:**
 
 ```csharp
-  using System;
-  using System.Threading.Tasks;
-  using Microsoft.Azure.Cosmos;
-  class Program
-  {
-  private static readonly string endpointUri = "https://<your-account>.documents.azure.com:443/";
-  private static readonly string primaryKey = "<your-primary-key>";
-  private CosmosClient cosmosClient;
-  private Database database;
-  private Container container;
-
-    private string databaseId = "SampleDatabase";
-    private string containerId = "SampleContainer";
-
-    public static async Task Main(string[] args)
-    {
-        try
-        {
-            Program p = new Program();
-            await p.ConnectCosmosAsync();
-        }
-        catch (CosmosException ex)
-        {
-            Console.WriteLine($"Cosmos DB error: {ex.StatusCode} - {ex.Message}");
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine($"Error: {e.Message}");
-        }
-    }
-
-    public async Task ConnectCosmosAsync()
-    {
-        // Create a new CosmosClient instance
-        cosmosClient = new CosmosClient(endpointUri, primaryKey);
-
-        // Create the database if it does not exist
-        database = await cosmosClient.CreateDatabaseIfNotExistsAsync(databaseId);
-        Console.WriteLine($"Created Database: {database.Id}");
-
-        // Create the container if it does not exist
-        container = await database.CreateContainerIfNotExistsAsync(containerId, "/partitionKey");
-        Console.WriteLine($"Created Container: {container.Id}");
-
-        // Example: Add an item to the container
-        var newItem = new { id = Guid.NewGuid().ToString(), partitionKey = "example", name = "Sample Item" };
-        ItemResponse<dynamic> response = await container.CreateItemAsync(newItem, new PartitionKey(newItem.partitionKey));
-        Console.WriteLine($"Created item with id: {response.Resource.id}");
-    }
-  }
+// Concept: 1. Global distribution
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
 ```
 
-Explanation of Key Cosmos DB SDK Methods in C#
+---
 
-- **CosmosClient:**
-  The main client class used to establish a connection to Azure Cosmos DB.
+### 2. Why is the concept of Global distribution important in Azure Cosmos DB?
 
-- **CreateDatabaseIfNotExistsAsync:**
-  Creates the database if it does not already exist in the Cosmos DB account.
+**Answer:**
 
-- **CreateContainerIfNotExistsAsync:**
-  Creates the container (also called collection) within the database if it doesn’t exist, specifying the partition key path.
+This concept matters because it influences the ability to replicate data across regions for
+latency, availability, and resilience goals. Good interview answers connect it to clarity,
+maintainability, performance, security, or delivery depending on the situation.
 
-- **CreateItemAsync:**
-  Adds a new item (document) to the specified container.
+**Sample:**
 
-References
+```csharp
+// Concept: 1. Global distribution
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
 
-- [Azure Cosmos DB .NET SDK documentation](https://learn.microsoft.com/en-us/azure/cosmos-db/sql/sql-api-sdk-dotnet)
-- [Quickstart: Use Azure Cosmos DB SDK for .NET](https://learn.microsoft.com/en-us/azure/cosmos-db/sql/create-sql-api-dotnet)
+---
+
+### 3. When should a team focus on Global distribution?
+
+**Answer:**
+
+A team should focus on Global distribution when the requirement depends on the ability to replicate
+data across regions for latency, availability, and resilience goals. It becomes especially important
+when design decisions, scaling choices, or debugging depend on that area.
+
+**Sample:**
+
+```csharp
+// Concept: 1. Global distribution
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 4. How is Global distribution applied in practice?
+
+**Answer:**
+
+In practice, Global distribution is applied by making the ability to replicate data across regions
+for latency, availability, and resilience goals explicit in the implementation or workflow. The
+exact shape depends on the service design, but the responsibility should stay predictable.
+
+**Sample:**
+
+```csharp
+// Concept: 1. Global distribution
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 5. What strengths does Global distribution bring?
+
+**Answer:**
+
+The strengths of Global distribution are better structure, better communication, and better control
+over the ability to replicate data across regions for latency, availability, and resilience goals.
+It also makes tradeoffs easier to explain to both interviewers and project stakeholders.
+
+**Sample:**
+
+```csharp
+// Concept: 1. Global distribution
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 6. What tradeoffs come with Global distribution?
+
+**Answer:**
+
+The main tradeoff is extra complexity if Global distribution is introduced without a real need or a
+clear understanding of the ability to replicate data across regions for latency, availability, and
+resilience goals. That usually leads to higher cost, weaker design, or harder troubleshooting.
+
+**Sample:**
+
+```csharp
+// Concept: 1. Global distribution
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 7. How does Global distribution differ from Consistency levels?
+
+**Answer:**
+
+Global distribution is centered on the ability to replicate data across regions for latency,
+availability, and resilience goals, while Consistency levels is centered on the tunable balance
+between strict correctness guarantees and read performance across regions. They often work together,
+but they solve different parts of the topic.
+
+**Sample:**
+
+```csharp
+// Concept: 1. Global distribution
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 8. What is a good real-world example of Global distribution?
+
+**Answer:**
+
+A strong example is explaining how Global distribution affects a real feature, cost decision,
+failure mode, or architecture choice involving the ability to replicate data across regions for
+latency, availability, and resilience goals. Interviewers usually value the reasoning behind the
+example.
+
+**Sample:**
+
+```csharp
+// Concept: 1. Global distribution
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 9. What is a best practice for Global distribution?
+
+**Answer:**
+
+A good practice is to keep Global distribution aligned with the actual requirement around the
+ability to replicate data across regions for latency, availability, and resilience goals. Teams
+should document intent, keep the setup readable, and validate the most important paths early.
+
+**Sample:**
+
+```csharp
+// Concept: 1. Global distribution
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 10. What is a common mistake around Global distribution?
+
+**Answer:**
+
+A common mistake is naming Global distribution without understanding how it affects the ability to
+replicate data across regions for latency, availability, and resilience goals. In real work, that
+usually appears as weak sizing, poor troubleshooting, or the wrong operational choice.
+
+**Sample:**
+
+```csharp
+// Concept: 1. Global distribution
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 11. How do you troubleshoot Global distribution-related issues?
+
+**Answer:**
+
+When troubleshooting Global distribution, first verify whether the ability to replicate data across
+regions for latency, availability, and resilience goals is behaving as expected. Then check
+dependencies, configuration, metrics, logs, and edge cases before changing the design.
+
+**Sample:**
+
+```csharp
+// Concept: 1. Global distribution
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 12. How does Global distribution connect to the rest of Azure Cosmos DB?
+
+**Answer:**
+
+Global distribution connects to the rest of Azure Cosmos DB by giving structure to the ability to
+replicate data across regions for latency, availability, and resilience goals. It is one of the
+pieces that turns isolated facts into a usable end-to-end mental model.
+
+**Sample:**
+
+```csharp
+// Concept: 1. Global distribution
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+## 2. Consistency levels
+
+### 13. What is the role of Consistency levels in Azure Cosmos DB?
+
+**Answer:**
+
+In Azure Cosmos DB, the term Consistency levels refers to the tunable balance between strict correctness
+guarantees and read performance across regions. It is part of the foundation a candidate should be
+able to explain clearly.
+
+**Sample:**
+
+```csharp
+// Concept: 2. Consistency levels
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 14. Why is the concept of Consistency levels important in Azure Cosmos DB?
+
+**Answer:**
+
+This concept matters because it influences the tunable balance between strict correctness
+guarantees and read performance across regions. Good interview answers connect it to clarity,
+maintainability, performance, security, or delivery depending on the situation.
+
+**Sample:**
+
+```csharp
+// Concept: 2. Consistency levels
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 15. When should a team focus on Consistency levels?
+
+**Answer:**
+
+A team should focus on Consistency levels when the requirement depends on the tunable balance
+between strict correctness guarantees and read performance across regions. It becomes especially
+important when design decisions, scaling choices, or debugging depend on that area.
+
+**Sample:**
+
+```csharp
+// Concept: 2. Consistency levels
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 16. How is Consistency levels applied in practice?
+
+**Answer:**
+
+In practice, Consistency levels is applied by making the tunable balance between strict correctness
+guarantees and read performance across regions explicit in the implementation or workflow. The exact
+shape depends on the service design, but the responsibility should stay predictable.
+
+**Sample:**
+
+```csharp
+// Concept: 2. Consistency levels
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 17. What strengths does Consistency levels bring?
+
+**Answer:**
+
+The strengths of Consistency levels are better structure, better communication, and better control
+over the tunable balance between strict correctness guarantees and read performance across regions.
+It also makes tradeoffs easier to explain to both interviewers and project stakeholders.
+
+**Sample:**
+
+```csharp
+// Concept: 2. Consistency levels
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 18. What tradeoffs come with Consistency levels?
+
+**Answer:**
+
+The main tradeoff is extra complexity if Consistency levels is introduced without a real need or a
+clear understanding of the tunable balance between strict correctness guarantees and read
+performance across regions. That usually leads to higher cost, weaker design, or harder
+troubleshooting.
+
+**Sample:**
+
+```csharp
+// Concept: 2. Consistency levels
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 19. How does Consistency levels differ from Partition keys?
+
+**Answer:**
+
+Consistency levels is centered on the tunable balance between strict correctness guarantees and read
+performance across regions, while Partition keys is centered on the data distribution strategy that
+determines how workload and storage are spread internally. They often work together, but they solve
+different parts of the topic.
+
+**Sample:**
+
+```csharp
+// Concept: 2. Consistency levels
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 20. What is a good real-world example of Consistency levels?
+
+**Answer:**
+
+A strong example is explaining how Consistency levels affects a real feature, cost decision, failure
+mode, or architecture choice involving the tunable balance between strict correctness guarantees and
+read performance across regions. Interviewers usually value the reasoning behind the example.
+
+**Sample:**
+
+```csharp
+// Concept: 2. Consistency levels
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 21. What is a best practice for Consistency levels?
+
+**Answer:**
+
+A good practice is to keep Consistency levels aligned with the actual requirement around the tunable
+balance between strict correctness guarantees and read performance across regions. Teams should
+document intent, keep the setup readable, and validate the most important paths early.
+
+**Sample:**
+
+```csharp
+// Concept: 2. Consistency levels
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 22. What is a common mistake around Consistency levels?
+
+**Answer:**
+
+A common mistake is naming Consistency levels without understanding how it affects the tunable
+balance between strict correctness guarantees and read performance across regions. In real work,
+that usually appears as weak sizing, poor troubleshooting, or the wrong operational choice.
+
+**Sample:**
+
+```csharp
+// Concept: 2. Consistency levels
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 23. How do you troubleshoot Consistency levels-related issues?
+
+**Answer:**
+
+When troubleshooting Consistency levels, first verify whether the tunable balance between strict
+correctness guarantees and read performance across regions is behaving as expected. Then check
+dependencies, configuration, metrics, logs, and edge cases before changing the design.
+
+**Sample:**
+
+```csharp
+// Concept: 2. Consistency levels
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 24. How does Consistency levels connect to the rest of Azure Cosmos DB?
+
+**Answer:**
+
+Consistency levels connects to the rest of Azure Cosmos DB by giving structure to the tunable
+balance between strict correctness guarantees and read performance across regions. It is one of the
+pieces that turns isolated facts into a usable end-to-end mental model.
+
+**Sample:**
+
+```csharp
+// Concept: 2. Consistency levels
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+## 3. Partition keys
+
+### 25. What is the role of Partition keys in Azure Cosmos DB?
+
+**Answer:**
+
+In Azure Cosmos DB, the term Partition keys refers to the data distribution strategy that determines how
+workload and storage are spread internally. It is part of the foundation a candidate should be able
+to explain clearly.
+
+**Sample:**
+
+```csharp
+// Concept: 3. Partition keys
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 26. Why is the concept of Partition keys important in Azure Cosmos DB?
+
+**Answer:**
+
+This concept matters because it influences the data distribution strategy that determines how
+workload and storage are spread internally. Good interview answers connect it to clarity,
+maintainability, performance, security, or delivery depending on the situation.
+
+**Sample:**
+
+```csharp
+// Concept: 3. Partition keys
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 27. When should a team focus on Partition keys?
+
+**Answer:**
+
+A team should focus on Partition keys when the requirement depends on the data distribution strategy
+that determines how workload and storage are spread internally. It becomes especially important when
+design decisions, scaling choices, or debugging depend on that area.
+
+**Sample:**
+
+```csharp
+// Concept: 3. Partition keys
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 28. How is Partition keys applied in practice?
+
+**Answer:**
+
+In practice, Partition keys is applied by making the data distribution strategy that determines how
+workload and storage are spread internally explicit in the implementation or workflow. The exact
+shape depends on the service design, but the responsibility should stay predictable.
+
+**Sample:**
+
+```csharp
+// Concept: 3. Partition keys
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 29. What strengths does Partition keys bring?
+
+**Answer:**
+
+The strengths of Partition keys are better structure, better communication, and better control over
+the data distribution strategy that determines how workload and storage are spread internally. It
+also makes tradeoffs easier to explain to both interviewers and project stakeholders.
+
+**Sample:**
+
+```csharp
+// Concept: 3. Partition keys
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 30. What tradeoffs come with Partition keys?
+
+**Answer:**
+
+The main tradeoff is extra complexity if Partition keys is introduced without a real need or a clear
+understanding of the data distribution strategy that determines how workload and storage are spread
+internally. That usually leads to higher cost, weaker design, or harder troubleshooting.
+
+**Sample:**
+
+```csharp
+// Concept: 3. Partition keys
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 31. How does Partition keys differ from Request units?
+
+**Answer:**
+
+Partition keys is centered on the data distribution strategy that determines how workload and
+storage are spread internally, while Request units is centered on the throughput currency used to
+measure and provision Cosmos DB workload capacity. They often work together, but they solve
+different parts of the topic.
+
+**Sample:**
+
+```csharp
+// Concept: 3. Partition keys
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 32. What is a good real-world example of Partition keys?
+
+**Answer:**
+
+A strong example is explaining how Partition keys affects a real feature, cost decision, failure
+mode, or architecture choice involving the data distribution strategy that determines how workload
+and storage are spread internally. Interviewers usually value the reasoning behind the example.
+
+**Sample:**
+
+```csharp
+// Concept: 3. Partition keys
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 33. What is a best practice for Partition keys?
+
+**Answer:**
+
+A good practice is to keep Partition keys aligned with the actual requirement around the data
+distribution strategy that determines how workload and storage are spread internally. Teams should
+document intent, keep the setup readable, and validate the most important paths early.
+
+**Sample:**
+
+```csharp
+// Concept: 3. Partition keys
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 34. What is a common mistake around Partition keys?
+
+**Answer:**
+
+A common mistake is naming Partition keys without understanding how it affects the data distribution
+strategy that determines how workload and storage are spread internally. In real work, that usually
+appears as weak sizing, poor troubleshooting, or the wrong operational choice.
+
+**Sample:**
+
+```csharp
+// Concept: 3. Partition keys
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 35. How do you troubleshoot Partition keys-related issues?
+
+**Answer:**
+
+When troubleshooting Partition keys, first verify whether the data distribution strategy that
+determines how workload and storage are spread internally is behaving as expected. Then check
+dependencies, configuration, metrics, logs, and edge cases before changing the design.
+
+**Sample:**
+
+```csharp
+// Concept: 3. Partition keys
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 36. How does Partition keys connect to the rest of Azure Cosmos DB?
+
+**Answer:**
+
+Partition keys connects to the rest of Azure Cosmos DB by giving structure to the data distribution
+strategy that determines how workload and storage are spread internally. It is one of the pieces
+that turns isolated facts into a usable end-to-end mental model.
+
+**Sample:**
+
+```csharp
+// Concept: 3. Partition keys
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+## 4. Request units
+
+### 37. What is the role of Request units in Azure Cosmos DB?
+
+**Answer:**
+
+In Azure Cosmos DB, the term Request units refers to the throughput currency used to measure and provision
+Cosmos DB workload capacity. It is part of the foundation a candidate should be able to explain
+clearly.
+
+**Sample:**
+
+```csharp
+// Concept: 4. Request units
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 38. Why is the concept of Request units important in Azure Cosmos DB?
+
+**Answer:**
+
+This concept matters because it influences the throughput currency used to measure and provision
+Cosmos DB workload capacity. Good interview answers connect it to clarity, maintainability,
+performance, security, or delivery depending on the situation.
+
+**Sample:**
+
+```csharp
+// Concept: 4. Request units
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 39. When should a team focus on Request units?
+
+**Answer:**
+
+A team should focus on Request units when the requirement depends on the throughput currency used to
+measure and provision Cosmos DB workload capacity. It becomes especially important when design
+decisions, scaling choices, or debugging depend on that area.
+
+**Sample:**
+
+```csharp
+// Concept: 4. Request units
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 40. How is Request units applied in practice?
+
+**Answer:**
+
+In practice, Request units is applied by making the throughput currency used to measure and
+provision Cosmos DB workload capacity explicit in the implementation or workflow. The exact shape
+depends on the service design, but the responsibility should stay predictable.
+
+**Sample:**
+
+```csharp
+// Concept: 4. Request units
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 41. What strengths does Request units bring?
+
+**Answer:**
+
+The strengths of Request units are better structure, better communication, and better control over
+the throughput currency used to measure and provision Cosmos DB workload capacity. It also makes
+tradeoffs easier to explain to both interviewers and project stakeholders.
+
+**Sample:**
+
+```csharp
+// Concept: 4. Request units
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 42. What tradeoffs come with Request units?
+
+**Answer:**
+
+The main tradeoff is extra complexity if Request units is introduced without a real need or a clear
+understanding of the throughput currency used to measure and provision Cosmos DB workload capacity.
+That usually leads to higher cost, weaker design, or harder troubleshooting.
+
+**Sample:**
+
+```csharp
+// Concept: 4. Request units
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 43. How does Request units differ from APIs and data models?
+
+**Answer:**
+
+Request units is centered on the throughput currency used to measure and provision Cosmos DB
+workload capacity, while APIs and data models is centered on the supported interfaces such as SQL,
+MongoDB, Cassandra, Gremlin, and Table styles. They often work together, but they solve different
+parts of the topic.
+
+**Sample:**
+
+```csharp
+// Concept: 4. Request units
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 44. What is a good real-world example of Request units?
+
+**Answer:**
+
+A strong example is explaining how Request units affects a real feature, cost decision, failure
+mode, or architecture choice involving the throughput currency used to measure and provision Cosmos
+DB workload capacity. Interviewers usually value the reasoning behind the example.
+
+**Sample:**
+
+```csharp
+// Concept: 4. Request units
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 45. What is a best practice for Request units?
+
+**Answer:**
+
+A good practice is to keep Request units aligned with the actual requirement around the throughput
+currency used to measure and provision Cosmos DB workload capacity. Teams should document intent,
+keep the setup readable, and validate the most important paths early.
+
+**Sample:**
+
+```csharp
+// Concept: 4. Request units
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 46. What is a common mistake around Request units?
+
+**Answer:**
+
+A common mistake is naming Request units without understanding how it affects the throughput
+currency used to measure and provision Cosmos DB workload capacity. In real work, that usually
+appears as weak sizing, poor troubleshooting, or the wrong operational choice.
+
+**Sample:**
+
+```csharp
+// Concept: 4. Request units
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 47. How do you troubleshoot Request units-related issues?
+
+**Answer:**
+
+When troubleshooting Request units, first verify whether the throughput currency used to measure and
+provision Cosmos DB workload capacity is behaving as expected. Then check dependencies,
+configuration, metrics, logs, and edge cases before changing the design.
+
+**Sample:**
+
+```csharp
+// Concept: 4. Request units
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 48. How does Request units connect to the rest of Azure Cosmos DB?
+
+**Answer:**
+
+Request units connects to the rest of Azure Cosmos DB by giving structure to the throughput currency
+used to measure and provision Cosmos DB workload capacity. It is one of the pieces that turns
+isolated facts into a usable end-to-end mental model.
+
+**Sample:**
+
+```csharp
+// Concept: 4. Request units
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+## 5. APIs and data models
+
+### 49. What is the role of APIs and data models in Azure Cosmos DB?
+
+**Answer:**
+
+In Azure Cosmos DB, the term APIs and data models refers to the supported interfaces such as SQL, MongoDB,
+Cassandra, Gremlin, and Table styles. It is part of the foundation a candidate should be able to
+explain clearly.
+
+**Sample:**
+
+```csharp
+// Concept: 5. APIs and data models
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 50. Why is the concept of APIs and data models important in Azure Cosmos DB?
+
+**Answer:**
+
+This concept matters because it influences the supported interfaces such as SQL, MongoDB,
+Cassandra, Gremlin, and Table styles. Good interview answers connect it to clarity, maintainability,
+performance, security, or delivery depending on the situation.
+
+**Sample:**
+
+```csharp
+// Concept: 5. APIs and data models
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 51. When should a team focus on APIs and data models?
+
+**Answer:**
+
+A team should focus on APIs and data models when the requirement depends on the supported interfaces
+such as SQL, MongoDB, Cassandra, Gremlin, and Table styles. It becomes especially important when
+design decisions, scaling choices, or debugging depend on that area.
+
+**Sample:**
+
+```csharp
+// Concept: 5. APIs and data models
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 52. How is APIs and data models applied in practice?
+
+**Answer:**
+
+In practice, APIs and data models is applied by making the supported interfaces such as SQL,
+MongoDB, Cassandra, Gremlin, and Table styles explicit in the implementation or workflow. The exact
+shape depends on the service design, but the responsibility should stay predictable.
+
+**Sample:**
+
+```csharp
+// Concept: 5. APIs and data models
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 53. What strengths does APIs and data models bring?
+
+**Answer:**
+
+The strengths of APIs and data models are better structure, better communication, and better control
+over the supported interfaces such as SQL, MongoDB, Cassandra, Gremlin, and Table styles. It also
+makes tradeoffs easier to explain to both interviewers and project stakeholders.
+
+**Sample:**
+
+```csharp
+// Concept: 5. APIs and data models
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 54. What tradeoffs come with APIs and data models?
+
+**Answer:**
+
+The main tradeoff is extra complexity if APIs and data models is introduced without a real need or a
+clear understanding of the supported interfaces such as SQL, MongoDB, Cassandra, Gremlin, and Table
+styles. That usually leads to higher cost, weaker design, or harder troubleshooting.
+
+**Sample:**
+
+```csharp
+// Concept: 5. APIs and data models
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 55. How does APIs and data models differ from Indexing model?
+
+**Answer:**
+
+APIs and data models is centered on the supported interfaces such as SQL, MongoDB, Cassandra,
+Gremlin, and Table styles, while Indexing model is centered on the internal indexing behavior that
+affects query flexibility and write cost. They often work together, but they solve different parts
+of the topic.
+
+**Sample:**
+
+```csharp
+// Concept: 5. APIs and data models
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 56. What is a good real-world example of APIs and data models?
+
+**Answer:**
+
+A strong example is explaining how APIs and data models affects a real feature, cost decision,
+failure mode, or architecture choice involving the supported interfaces such as SQL, MongoDB,
+Cassandra, Gremlin, and Table styles. Interviewers usually value the reasoning behind the example.
+
+**Sample:**
+
+```csharp
+// Concept: 5. APIs and data models
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 57. What is a best practice for APIs and data models?
+
+**Answer:**
+
+A good practice is to keep APIs and data models aligned with the actual requirement around the
+supported interfaces such as SQL, MongoDB, Cassandra, Gremlin, and Table styles. Teams should
+document intent, keep the setup readable, and validate the most important paths early.
+
+**Sample:**
+
+```csharp
+// Concept: 5. APIs and data models
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 58. What is a common mistake around APIs and data models?
+
+**Answer:**
+
+A common mistake is naming APIs and data models without understanding how it affects the supported
+interfaces such as SQL, MongoDB, Cassandra, Gremlin, and Table styles. In real work, that usually
+appears as weak sizing, poor troubleshooting, or the wrong operational choice.
+
+**Sample:**
+
+```csharp
+// Concept: 5. APIs and data models
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 59. How do you troubleshoot APIs and data models-related issues?
+
+**Answer:**
+
+When troubleshooting APIs and data models, first verify whether the supported interfaces such as
+SQL, MongoDB, Cassandra, Gremlin, and Table styles is behaving as expected. Then check dependencies,
+configuration, metrics, logs, and edge cases before changing the design.
+
+**Sample:**
+
+```csharp
+// Concept: 5. APIs and data models
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 60. How does APIs and data models connect to the rest of Azure Cosmos DB?
+
+**Answer:**
+
+APIs and data models connects to the rest of Azure Cosmos DB by giving structure to the supported
+interfaces such as SQL, MongoDB, Cassandra, Gremlin, and Table styles. It is one of the pieces that
+turns isolated facts into a usable end-to-end mental model.
+
+**Sample:**
+
+```csharp
+// Concept: 5. APIs and data models
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+## 6. Indexing model
+
+### 61. What is the role of Indexing model in Azure Cosmos DB?
+
+**Answer:**
+
+In Azure Cosmos DB, the term Indexing model refers to the internal indexing behavior that affects query
+flexibility and write cost. It is part of the foundation a candidate should be able to explain
+clearly.
+
+**Sample:**
+
+```csharp
+// Concept: 6. Indexing model
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 62. Why is the concept of Indexing model important in Azure Cosmos DB?
+
+**Answer:**
+
+This concept matters because it influences the internal indexing behavior that affects query
+flexibility and write cost. Good interview answers connect it to clarity, maintainability,
+performance, security, or delivery depending on the situation.
+
+**Sample:**
+
+```csharp
+// Concept: 6. Indexing model
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 63. When should a team focus on Indexing model?
+
+**Answer:**
+
+A team should focus on Indexing model when the requirement depends on the internal indexing behavior
+that affects query flexibility and write cost. It becomes especially important when design
+decisions, scaling choices, or debugging depend on that area.
+
+**Sample:**
+
+```csharp
+// Concept: 6. Indexing model
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 64. How is Indexing model applied in practice?
+
+**Answer:**
+
+In practice, Indexing model is applied by making the internal indexing behavior that affects query
+flexibility and write cost explicit in the implementation or workflow. The exact shape depends on
+the service design, but the responsibility should stay predictable.
+
+**Sample:**
+
+```csharp
+// Concept: 6. Indexing model
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 65. What strengths does Indexing model bring?
+
+**Answer:**
+
+The strengths of Indexing model are better structure, better communication, and better control over
+the internal indexing behavior that affects query flexibility and write cost. It also makes
+tradeoffs easier to explain to both interviewers and project stakeholders.
+
+**Sample:**
+
+```csharp
+// Concept: 6. Indexing model
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 66. What tradeoffs come with Indexing model?
+
+**Answer:**
+
+The main tradeoff is extra complexity if Indexing model is introduced without a real need or a clear
+understanding of the internal indexing behavior that affects query flexibility and write cost. That
+usually leads to higher cost, weaker design, or harder troubleshooting.
+
+**Sample:**
+
+```csharp
+// Concept: 6. Indexing model
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 67. How does Indexing model differ from Change feed?
+
+**Answer:**
+
+Indexing model is centered on the internal indexing behavior that affects query flexibility and
+write cost, while Change feed is centered on the ordered stream of item modifications used to build
+reactive and downstream processing solutions. They often work together, but they solve different
+parts of the topic.
+
+**Sample:**
+
+```csharp
+// Concept: 6. Indexing model
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 68. What is a good real-world example of Indexing model?
+
+**Answer:**
+
+A strong example is explaining how Indexing model affects a real feature, cost decision, failure
+mode, or architecture choice involving the internal indexing behavior that affects query flexibility
+and write cost. Interviewers usually value the reasoning behind the example.
+
+**Sample:**
+
+```csharp
+// Concept: 6. Indexing model
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 69. What is a best practice for Indexing model?
+
+**Answer:**
+
+A good practice is to keep Indexing model aligned with the actual requirement around the internal
+indexing behavior that affects query flexibility and write cost. Teams should document intent, keep
+the setup readable, and validate the most important paths early.
+
+**Sample:**
+
+```csharp
+// Concept: 6. Indexing model
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 70. What is a common mistake around Indexing model?
+
+**Answer:**
+
+A common mistake is naming Indexing model without understanding how it affects the internal indexing
+behavior that affects query flexibility and write cost. In real work, that usually appears as weak
+sizing, poor troubleshooting, or the wrong operational choice.
+
+**Sample:**
+
+```csharp
+// Concept: 6. Indexing model
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 71. How do you troubleshoot Indexing model-related issues?
+
+**Answer:**
+
+When troubleshooting Indexing model, first verify whether the internal indexing behavior that
+affects query flexibility and write cost is behaving as expected. Then check dependencies,
+configuration, metrics, logs, and edge cases before changing the design.
+
+**Sample:**
+
+```csharp
+// Concept: 6. Indexing model
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 72. How does Indexing model connect to the rest of Azure Cosmos DB?
+
+**Answer:**
+
+Indexing model connects to the rest of Azure Cosmos DB by giving structure to the internal indexing
+behavior that affects query flexibility and write cost. It is one of the pieces that turns isolated
+facts into a usable end-to-end mental model.
+
+**Sample:**
+
+```csharp
+// Concept: 6. Indexing model
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+## 7. Change feed
+
+### 73. What is the role of Change feed in Azure Cosmos DB?
+
+**Answer:**
+
+In Azure Cosmos DB, the term Change feed refers to the ordered stream of item modifications used to build
+reactive and downstream processing solutions. It is part of the foundation a candidate should be
+able to explain clearly.
+
+**Sample:**
+
+```csharp
+// Concept: 7. Change feed
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 74. Why is the concept of Change feed important in Azure Cosmos DB?
+
+**Answer:**
+
+This concept matters because it influences the ordered stream of item modifications used to build
+reactive and downstream processing solutions. Good interview answers connect it to clarity,
+maintainability, performance, security, or delivery depending on the situation.
+
+**Sample:**
+
+```csharp
+// Concept: 7. Change feed
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 75. When should a team focus on Change feed?
+
+**Answer:**
+
+A team should focus on Change feed when the requirement depends on the ordered stream of item
+modifications used to build reactive and downstream processing solutions. It becomes especially
+important when design decisions, scaling choices, or debugging depend on that area.
+
+**Sample:**
+
+```csharp
+// Concept: 7. Change feed
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 76. How is Change feed applied in practice?
+
+**Answer:**
+
+In practice, Change feed is applied by making the ordered stream of item modifications used to build
+reactive and downstream processing solutions explicit in the implementation or workflow. The exact
+shape depends on the service design, but the responsibility should stay predictable.
+
+**Sample:**
+
+```csharp
+// Concept: 7. Change feed
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 77. What strengths does Change feed bring?
+
+**Answer:**
+
+The strengths of Change feed are better structure, better communication, and better control over the
+ordered stream of item modifications used to build reactive and downstream processing solutions. It
+also makes tradeoffs easier to explain to both interviewers and project stakeholders.
+
+**Sample:**
+
+```csharp
+// Concept: 7. Change feed
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 78. What tradeoffs come with Change feed?
+
+**Answer:**
+
+The main tradeoff is extra complexity if Change feed is introduced without a real need or a clear
+understanding of the ordered stream of item modifications used to build reactive and downstream
+processing solutions. That usually leads to higher cost, weaker design, or harder troubleshooting.
+
+**Sample:**
+
+```csharp
+// Concept: 7. Change feed
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 79. How does Change feed differ from Transactions and procedures?
+
+**Answer:**
+
+Change feed is centered on the ordered stream of item modifications used to build reactive and
+downstream processing solutions, while Transactions and procedures is centered on the limited
+transactional and programmable capabilities available inside partition scope. They often work
+together, but they solve different parts of the topic.
+
+**Sample:**
+
+```csharp
+// Concept: 7. Change feed
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 80. What is a good real-world example of Change feed?
+
+**Answer:**
+
+A strong example is explaining how Change feed affects a real feature, cost decision, failure mode,
+or architecture choice involving the ordered stream of item modifications used to build reactive and
+downstream processing solutions. Interviewers usually value the reasoning behind the example.
+
+**Sample:**
+
+```csharp
+// Concept: 7. Change feed
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 81. What is a best practice for Change feed?
+
+**Answer:**
+
+A good practice is to keep Change feed aligned with the actual requirement around the ordered stream
+of item modifications used to build reactive and downstream processing solutions. Teams should
+document intent, keep the setup readable, and validate the most important paths early.
+
+**Sample:**
+
+```csharp
+// Concept: 7. Change feed
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 82. What is a common mistake around Change feed?
+
+**Answer:**
+
+A common mistake is naming Change feed without understanding how it affects the ordered stream of
+item modifications used to build reactive and downstream processing solutions. In real work, that
+usually appears as weak sizing, poor troubleshooting, or the wrong operational choice.
+
+**Sample:**
+
+```csharp
+// Concept: 7. Change feed
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 83. How do you troubleshoot Change feed-related issues?
+
+**Answer:**
+
+When troubleshooting Change feed, first verify whether the ordered stream of item modifications used
+to build reactive and downstream processing solutions is behaving as expected. Then check
+dependencies, configuration, metrics, logs, and edge cases before changing the design.
+
+**Sample:**
+
+```csharp
+// Concept: 7. Change feed
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 84. How does Change feed connect to the rest of Azure Cosmos DB?
+
+**Answer:**
+
+Change feed connects to the rest of Azure Cosmos DB by giving structure to the ordered stream of
+item modifications used to build reactive and downstream processing solutions. It is one of the
+pieces that turns isolated facts into a usable end-to-end mental model.
+
+**Sample:**
+
+```csharp
+// Concept: 7. Change feed
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+## 8. Transactions and procedures
+
+### 85. What is the role of Transactions and procedures in Azure Cosmos DB?
+
+**Answer:**
+
+In Azure Cosmos DB, the term Transactions and procedures refers to the limited transactional and programmable
+capabilities available inside partition scope. It is part of the foundation a candidate should be
+able to explain clearly.
+
+**Sample:**
+
+```csharp
+// Concept: 8. Transactions and procedures
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 86. Why is the concept of Transactions and procedures important in Azure Cosmos DB?
+
+**Answer:**
+
+This concept matters because it influences the limited transactional and programmable
+capabilities available inside partition scope. Good interview answers connect it to clarity,
+maintainability, performance, security, or delivery depending on the situation.
+
+**Sample:**
+
+```csharp
+// Concept: 8. Transactions and procedures
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 87. When should a team focus on Transactions and procedures?
+
+**Answer:**
+
+A team should focus on Transactions and procedures when the requirement depends on the limited
+transactional and programmable capabilities available inside partition scope. It becomes especially
+important when design decisions, scaling choices, or debugging depend on that area.
+
+**Sample:**
+
+```csharp
+// Concept: 8. Transactions and procedures
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 88. How is Transactions and procedures applied in practice?
+
+**Answer:**
+
+In practice, Transactions and procedures is applied by making the limited transactional and
+programmable capabilities available inside partition scope explicit in the implementation or
+workflow. The exact shape depends on the service design, but the responsibility should stay
+predictable.
+
+**Sample:**
+
+```csharp
+// Concept: 8. Transactions and procedures
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 89. What strengths does Transactions and procedures bring?
+
+**Answer:**
+
+The strengths of Transactions and procedures are better structure, better communication, and better
+control over the limited transactional and programmable capabilities available inside partition
+scope. It also makes tradeoffs easier to explain to both interviewers and project stakeholders.
+
+**Sample:**
+
+```csharp
+// Concept: 8. Transactions and procedures
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 90. What tradeoffs come with Transactions and procedures?
+
+**Answer:**
+
+The main tradeoff is extra complexity if Transactions and procedures is introduced without a real
+need or a clear understanding of the limited transactional and programmable capabilities available
+inside partition scope. That usually leads to higher cost, weaker design, or harder troubleshooting.
+
+**Sample:**
+
+```csharp
+// Concept: 8. Transactions and procedures
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 91. How does Transactions and procedures differ from Performance tuning?
+
+**Answer:**
+
+Transactions and procedures is centered on the limited transactional and programmable capabilities
+available inside partition scope, while Performance tuning is centered on the work of improving
+partition balance, query efficiency, and RU consumption. They often work together, but they solve
+different parts of the topic.
+
+**Sample:**
+
+```csharp
+// Concept: 8. Transactions and procedures
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 92. What is a good real-world example of Transactions and procedures?
+
+**Answer:**
+
+A strong example is explaining how Transactions and procedures affects a real feature, cost
+decision, failure mode, or architecture choice involving the limited transactional and programmable
+capabilities available inside partition scope. Interviewers usually value the reasoning behind the
+example.
+
+**Sample:**
+
+```csharp
+// Concept: 8. Transactions and procedures
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 93. What is a best practice for Transactions and procedures?
+
+**Answer:**
+
+A good practice is to keep Transactions and procedures aligned with the actual requirement around
+the limited transactional and programmable capabilities available inside partition scope. Teams
+should document intent, keep the setup readable, and validate the most important paths early.
+
+**Sample:**
+
+```csharp
+// Concept: 8. Transactions and procedures
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 94. What is a common mistake around Transactions and procedures?
+
+**Answer:**
+
+A common mistake is naming Transactions and procedures without understanding how it affects the
+limited transactional and programmable capabilities available inside partition scope. In real work,
+that usually appears as weak sizing, poor troubleshooting, or the wrong operational choice.
+
+**Sample:**
+
+```csharp
+// Concept: 8. Transactions and procedures
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 95. How do you troubleshoot Transactions and procedures-related issues?
+
+**Answer:**
+
+When troubleshooting Transactions and procedures, first verify whether the limited transactional and
+programmable capabilities available inside partition scope is behaving as expected. Then check
+dependencies, configuration, metrics, logs, and edge cases before changing the design.
+
+**Sample:**
+
+```csharp
+// Concept: 8. Transactions and procedures
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 96. How does Transactions and procedures connect to the rest of Azure Cosmos DB?
+
+**Answer:**
+
+Transactions and procedures connects to the rest of Azure Cosmos DB by giving structure to the
+limited transactional and programmable capabilities available inside partition scope. It is one of
+the pieces that turns isolated facts into a usable end-to-end mental model.
+
+**Sample:**
+
+```csharp
+// Concept: 8. Transactions and procedures
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+## 9. Performance tuning
+
+### 97. What is the role of Performance tuning in Azure Cosmos DB?
+
+**Answer:**
+
+In Azure Cosmos DB, the term Performance tuning refers to the work of improving partition balance, query
+efficiency, and RU consumption. It is part of the foundation a candidate should be able to explain
+clearly.
+
+**Sample:**
+
+```csharp
+// Concept: 9. Performance tuning
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 98. Why is the concept of Performance tuning important in Azure Cosmos DB?
+
+**Answer:**
+
+This concept matters because it influences the work of improving partition balance, query
+efficiency, and RU consumption. Good interview answers connect it to clarity, maintainability,
+performance, security, or delivery depending on the situation.
+
+**Sample:**
+
+```csharp
+// Concept: 9. Performance tuning
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 99. When should a team focus on Performance tuning?
+
+**Answer:**
+
+A team should focus on Performance tuning when the requirement depends on the work of improving
+partition balance, query efficiency, and RU consumption. It becomes especially important when design
+decisions, scaling choices, or debugging depend on that area.
+
+**Sample:**
+
+```csharp
+// Concept: 9. Performance tuning
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 100. How is Performance tuning applied in practice?
+
+**Answer:**
+
+In practice, Performance tuning is applied by making the work of improving partition balance, query
+efficiency, and RU consumption explicit in the implementation or workflow. The exact shape depends
+on the service design, but the responsibility should stay predictable.
+
+**Sample:**
+
+```csharp
+// Concept: 9. Performance tuning
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 101. What strengths does Performance tuning bring?
+
+**Answer:**
+
+The strengths of Performance tuning are better structure, better communication, and better control
+over the work of improving partition balance, query efficiency, and RU consumption. It also makes
+tradeoffs easier to explain to both interviewers and project stakeholders.
+
+**Sample:**
+
+```csharp
+// Concept: 9. Performance tuning
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 102. What tradeoffs come with Performance tuning?
+
+**Answer:**
+
+The main tradeoff is extra complexity if Performance tuning is introduced without a real need or a
+clear understanding of the work of improving partition balance, query efficiency, and RU
+consumption. That usually leads to higher cost, weaker design, or harder troubleshooting.
+
+**Sample:**
+
+```csharp
+// Concept: 9. Performance tuning
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 103. How does Performance tuning differ from Use case fit?
+
+**Answer:**
+
+Performance tuning is centered on the work of improving partition balance, query efficiency, and RU
+consumption, while Use case fit is centered on the reasoning used to decide whether Cosmos DB is the
+right database for a system. They often work together, but they solve different parts of the topic.
+
+**Sample:**
+
+```csharp
+// Concept: 9. Performance tuning
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 104. What is a good real-world example of Performance tuning?
+
+**Answer:**
+
+A strong example is explaining how Performance tuning affects a real feature, cost decision, failure
+mode, or architecture choice involving the work of improving partition balance, query efficiency,
+and RU consumption. Interviewers usually value the reasoning behind the example.
+
+**Sample:**
+
+```csharp
+// Concept: 9. Performance tuning
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 105. What is a best practice for Performance tuning?
+
+**Answer:**
+
+A good practice is to keep Performance tuning aligned with the actual requirement around the work of
+improving partition balance, query efficiency, and RU consumption. Teams should document intent,
+keep the setup readable, and validate the most important paths early.
+
+**Sample:**
+
+```csharp
+// Concept: 9. Performance tuning
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 106. What is a common mistake around Performance tuning?
+
+**Answer:**
+
+A common mistake is naming Performance tuning without understanding how it affects the work of
+improving partition balance, query efficiency, and RU consumption. In real work, that usually
+appears as weak sizing, poor troubleshooting, or the wrong operational choice.
+
+**Sample:**
+
+```csharp
+// Concept: 9. Performance tuning
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 107. How do you troubleshoot Performance tuning-related issues?
+
+**Answer:**
+
+When troubleshooting Performance tuning, first verify whether the work of improving partition
+balance, query efficiency, and RU consumption is behaving as expected. Then check dependencies,
+configuration, metrics, logs, and edge cases before changing the design.
+
+**Sample:**
+
+```csharp
+// Concept: 9. Performance tuning
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 108. How does Performance tuning connect to the rest of Azure Cosmos DB?
+
+**Answer:**
+
+Performance tuning connects to the rest of Azure Cosmos DB by giving structure to the work of
+improving partition balance, query efficiency, and RU consumption. It is one of the pieces that
+turns isolated facts into a usable end-to-end mental model.
+
+**Sample:**
+
+```csharp
+// Concept: 9. Performance tuning
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+## 10. Use case fit
+
+### 109. What is the role of Use case fit in Azure Cosmos DB?
+
+**Answer:**
+
+In Azure Cosmos DB, the term Use case fit refers to the reasoning used to decide whether Cosmos DB is the
+right database for a system. It is part of the foundation a candidate should be able to explain
+clearly.
+
+**Sample:**
+
+```csharp
+// Concept: 10. Use case fit
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 110. Why is the concept of Use case fit important in Azure Cosmos DB?
+
+**Answer:**
+
+This concept matters because it influences the reasoning used to decide whether Cosmos DB is the
+right database for a system. Good interview answers connect it to clarity, maintainability,
+performance, security, or delivery depending on the situation.
+
+**Sample:**
+
+```csharp
+// Concept: 10. Use case fit
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 111. When should a team focus on Use case fit?
+
+**Answer:**
+
+A team should focus on Use case fit when the requirement depends on the reasoning used to decide
+whether Cosmos DB is the right database for a system. It becomes especially important when design
+decisions, scaling choices, or debugging depend on that area.
+
+**Sample:**
+
+```csharp
+// Concept: 10. Use case fit
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 112. How is Use case fit applied in practice?
+
+**Answer:**
+
+In practice, Use case fit is applied by making the reasoning used to decide whether Cosmos DB is the
+right database for a system explicit in the implementation or workflow. The exact shape depends on
+the service design, but the responsibility should stay predictable.
+
+**Sample:**
+
+```csharp
+// Concept: 10. Use case fit
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 113. What strengths does Use case fit bring?
+
+**Answer:**
+
+The strengths of Use case fit are better structure, better communication, and better control over
+the reasoning used to decide whether Cosmos DB is the right database for a system. It also makes
+tradeoffs easier to explain to both interviewers and project stakeholders.
+
+**Sample:**
+
+```csharp
+// Concept: 10. Use case fit
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 114. What tradeoffs come with Use case fit?
+
+**Answer:**
+
+The main tradeoff is extra complexity if Use case fit is introduced without a real need or a clear
+understanding of the reasoning used to decide whether Cosmos DB is the right database for a system.
+That usually leads to higher cost, weaker design, or harder troubleshooting.
+
+**Sample:**
+
+```csharp
+// Concept: 10. Use case fit
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 115. How does Use case fit differ from Global distribution?
+
+**Answer:**
+
+Use case fit is centered on the reasoning used to decide whether Cosmos DB is the right database for
+a system, while Global distribution is centered on the ability to replicate data across regions for
+latency, availability, and resilience goals. They often work together, but they solve different
+parts of the topic.
+
+**Sample:**
+
+```csharp
+// Concept: 10. Use case fit
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 116. What is a good real-world example of Use case fit?
+
+**Answer:**
+
+A strong example is explaining how Use case fit affects a real feature, cost decision, failure mode,
+or architecture choice involving the reasoning used to decide whether Cosmos DB is the right
+database for a system. Interviewers usually value the reasoning behind the example.
+
+**Sample:**
+
+```csharp
+// Concept: 10. Use case fit
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 117. What is a best practice for Use case fit?
+
+**Answer:**
+
+A good practice is to keep Use case fit aligned with the actual requirement around the reasoning
+used to decide whether Cosmos DB is the right database for a system. Teams should document intent,
+keep the setup readable, and validate the most important paths early.
+
+**Sample:**
+
+```csharp
+// Concept: 10. Use case fit
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 118. What is a common mistake around Use case fit?
+
+**Answer:**
+
+A common mistake is naming Use case fit without understanding how it affects the reasoning used to
+decide whether Cosmos DB is the right database for a system. In real work, that usually appears as
+weak sizing, poor troubleshooting, or the wrong operational choice.
+
+**Sample:**
+
+```csharp
+// Concept: 10. Use case fit
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 119. How do you troubleshoot Use case fit-related issues?
+
+**Answer:**
+
+When troubleshooting Use case fit, first verify whether the reasoning used to decide whether Cosmos
+DB is the right database for a system is behaving as expected. Then check dependencies,
+configuration, metrics, logs, and edge cases before changing the design.
+
+**Sample:**
+
+```csharp
+// Concept: 10. Use case fit
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```
+
+---
+
+### 120. How does Use case fit connect to the rest of Azure Cosmos DB?
+
+**Answer:**
+
+Use case fit connects to the rest of Azure Cosmos DB by giving structure to the reasoning used to
+decide whether Cosmos DB is the right database for a system. It is one of the pieces that turns
+isolated facts into a usable end-to-end mental model.
+
+**Sample:**
+
+```csharp
+// Concept: 10. Use case fit
+var client = new CosmosClient(endpoint, key);
+var container = client.GetContainer("appdb", "items");
+var item = await container.ReadItemAsync<dynamic>("1", new PartitionKey("orders"));
+```

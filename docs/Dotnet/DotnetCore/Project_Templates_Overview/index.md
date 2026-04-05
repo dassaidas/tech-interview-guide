@@ -1,472 +1,2321 @@
+# .NET Project Templates Interview Questions
 
----
+This page focuses on the main .NET project templates and on choosing the right project starting point.
 
-## What “template” means in ASP.NET Core (`dotnet new`)
+## 1. Console application template
 
-A **template** is a predefined set of files and configuration that creates a ready-to-run project.
+### 1. What is the role of Console application template in .NET project templates?
 
-Example:
-- an API template gives you controllers/minimal endpoints, DI setup, and launch settings.
-- an MVC template gives controllers + views + layout.
-- a Blazor template gives UI components and routing.
+**Answer:**
 
-**Why templates exist:**  
-They save time and set best-practice defaults.
+In .NET project templates, the term Console application template refers to the simple project type used for
+command-line programs and small runtime experiments. It is part of the foundation a candidate should
+be able to explain clearly.
 
----
-
-## Common ASP.NET Core templates and when to use them
-
-### `webapi`
-Best for:
-- REST APIs
-- microservices
-- backend for SPA (React/Angular)
-- mobile backends
-
-### `mvc`
-Best for:
-- server-rendered websites with controllers + views
-- apps that need SEO-friendly pages rendered on server
-- classic web apps
-
-### `razor`
-(Razor Pages) Best for:
-- page-focused apps (each page has its own model)
-- simpler websites/admin portals
-- fewer moving parts than MVC
-
-### `blazor`
-Best for:
-- interactive UI using C# components
-- internal apps/dashboards
-- when you want to share code across client/server
-
----
-
-## Choosing the right template (API vs MVC vs Razor vs Blazor)
-
-**Decision shortcut:**
-- If you need only backend endpoints → **Web API**
-- If you need server-rendered HTML with MVC pattern → **MVC**
-- If you want simple page-based site → **Razor Pages**
-- If you want SPA-like UI in C# → **Blazor**
-
-**Kid-simple:**  
-- API = a “kitchen” that only serves data (JSON).
-- MVC/Razor = a “restaurant” that serves finished plates (HTML pages).
-- Blazor = a “restaurant with interactive tables” (UI components).
-
----
-
-## Target framework selection (.NET 6/7/8)
-
-Target framework is the .NET version your app runs on.
-
-General guidance:
-- Use **.NET 8** for new projects (longer support and latest features).
-- Use **.NET 6** if your company is still standardized on it.
-- Use **.NET 7** only if you must match an existing stack (it’s not LTS).
-
-**Interview-safe tip:**  
-Pick the version your organization supports (LTS usually preferred).
-
----
-
-## Minimal hosting model (single Program.cs)
-
-New templates (since .NET 6) usually use minimal hosting:
-- one file `Program.cs`
-- builder registers services
-- app configures middleware and routes
-
-This reduces boilerplate like Startup.cs.
-
----
-
-## Template options (auth, HTTPS, OpenAPI, Docker, controllers, etc.)
-
-Templates can include optional features at creation time:
-- Authentication (Individual Accounts, Windows, etc.)
-- HTTPS
-- OpenAPI/Swagger
-- Docker support
-- Controllers vs minimal APIs
-- Top-level statements vs classic Program/Main
-- Razor runtime compilation (dev convenience)
-
----
-
-## CLI vs Visual Studio template creation
-
-### CLI (`dotnet new`)
-Pros:
-- fast and scriptable (CI-friendly)
-- works on any OS
-- easy to reproduce in docs
-
-### Visual Studio
-Pros:
-- guided UI (easy for beginners)
-- automatically sets launch profiles and IIS Express
-- easy add scaffolding
-
----
-
-## Solution vs Project: when to create multiple projects
-
-### Project
-A single runnable unit (a web app, API, class library).
-
-### Solution
-A container that can hold multiple projects.
-
-**When to use multiple projects:**
-- clean separation (API, Domain, Infrastructure)
-- shared libraries (common utilities)
-- test projects (unit/integration)
-- modular architecture
-
----
-
-## “Monolith vs modular vs microservices” template choices
-
-### Monolith
-One application for everything.
-- simplest to start
-- can become hard to maintain at scale
-
-### Modular monolith
-Still one deployable app, but internally separated modules/projects.
-- best middle-ground for many teams
-- easier to refactor later
-
-### Microservices
-Many small services deployed independently.
-- good for large scale and independent teams
-- more operational complexity (network, devops, observability)
-
-**Template impact:**
-- Monolith: one `webapi` or `mvc` project
-- Modular monolith: solution with API + multiple class libraries
-- Microservices: multiple `webapi` projects, one per service, plus shared packages
-
----
-
-# CLI Examples (Copy/Paste)
-
-## 1) List installed templates
+**Sample:**
 
 ```bash
-dotnet new list
+# Concept: 1. Console application template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
 ```
 
 ---
 
-## 2) Create a Web API project targeting .NET 8
+### 2. Why is the concept of Console application template important in .NET project templates?
+
+**Answer:**
+
+This concept matters because it influences the simple project type used for command-
+line programs and small runtime experiments. Good interview answers connect it to clarity,
+maintainability, performance, security, or delivery depending on the situation.
+
+**Sample:**
 
 ```bash
-dotnet new webapi -n MyApi -f net8.0
+# Concept: 1. Console application template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
 ```
 
 ---
 
-## 3) Create an MVC project
+### 3. When should a team focus on Console application template?
+
+**Answer:**
+
+A team should focus on Console application template when the requirement depends on the simple
+project type used for command-line programs and small runtime experiments. It becomes especially
+important when design decisions, scalability, or debugging depend on that area.
+
+**Sample:**
 
 ```bash
-dotnet new mvc -n MyMvcApp -f net8.0
+# Concept: 1. Console application template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
 ```
 
 ---
 
-## 4) Create Razor Pages project
+### 4. How is Console application template applied in practice?
+
+**Answer:**
+
+In practice, Console application template is applied by making the simple project type used for
+command-line programs and small runtime experiments explicit in the code, runtime setup, or delivery
+workflow. The exact shape depends on the application, but the responsibility should stay
+predictable.
+
+**Sample:**
 
 ```bash
-dotnet new razor -n MyRazorApp -f net8.0
+# Concept: 1. Console application template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
 ```
 
 ---
 
-## 5) Create a solution + multiple projects (modular style)
+### 5. What strengths does Console application template bring?
+
+**Answer:**
+
+The strengths of Console application template are better structure, better communication, and better
+control over the simple project type used for command-line programs and small runtime experiments.
+It also makes tradeoffs easier to explain to reviewers, interviewers, and teammates.
+
+**Sample:**
 
 ```bash
-dotnet new sln -n MySolution
-
-dotnet new webapi -n MySolution.Api -f net8.0
-dotnet new classlib -n MySolution.Domain -f net8.0
-dotnet new classlib -n MySolution.Infrastructure -f net8.0
-dotnet new xunit -n MySolution.Tests -f net8.0
-
-dotnet sln MySolution.sln add MySolution.Api/MySolution.Api.csproj
-dotnet sln MySolution.sln add MySolution.Domain/MySolution.Domain.csproj
-dotnet sln MySolution.sln add MySolution.Infrastructure/MySolution.Infrastructure.csproj
-dotnet sln MySolution.sln add MySolution.Tests/MySolution.Tests.csproj
+# Concept: 1. Console application template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
 ```
 
 ---
 
-## 6) Add OpenAPI/Swagger in an API template (common)
+### 6. What tradeoffs come with Console application template?
 
-Many API templates already include Swagger in Development.  
-If needed, add packages + code and enable only in Development.
+**Answer:**
 
----
+The main tradeoff is extra complexity if Console application template is introduced without a real
+need or a clear understanding of the simple project type used for command-line programs and small
+runtime experiments. That usually leads to overengineering, hidden bugs, or confusing architecture.
 
+**Sample:**
 
-
-### 1) What does “template” mean in ASP.NET Core?
-A template is a starter project structure created by `dotnet new` or Visual Studio.
-
-### 2) Why do templates exist?
-To save time and give best-practice defaults so you can start coding quickly.
-
-### 3) What command creates a new project from a template?
-`dotnet new <template-name>`.
-
-### 4) What is `dotnet new webapi` used for?
-Creating REST API backend projects.
-
-### 5) What is `dotnet new mvc` used for?
-Creating server-rendered web apps with controllers and views.
-
-### 6) What is Razor Pages template used for?
-Page-based server-rendered apps, often simpler than MVC.
-
-### 7) What is Blazor template used for?
-Interactive UI apps built with C# components.
-
-### 8) How do you pick API vs MVC?
-API returns JSON; MVC returns HTML pages.
-
-### 9) What’s the minimal hosting model?
-A simplified startup where Program.cs contains both DI registration and middleware configuration.
-
-### 10) Which .NET version should you pick for new projects?
-Usually .NET 8 for new apps (current LTS at the time of .NET 8 release).
-
-### 11) What is target framework in simple words?
-The .NET version your project is built to run on (net6.0/net7.0/net8.0).
-
-### 12) Can you create projects via Visual Studio without CLI?
-Yes, Visual Studio offers the same templates through UI.
-
-### 13) What’s the advantage of CLI creation?
-Repeatable and scriptable across machines and CI.
-
-### 14) What is a solution?
-A container that can hold multiple projects.
-
-### 15) What is a project?
-A buildable unit like an API app or class library.
-
-### 16) When would you create multiple projects?
-To separate concerns: API layer, domain layer, infrastructure layer, tests.
-
-### 17) What is monolith?
-Everything in one application.
-
-### 18) What is microservices?
-Multiple small services deployed independently.
-
-### 19) What is modular monolith?
-One deployable app but organized into modules/layers.
-
-### 20) What is OpenAPI/Swagger used for?
-API documentation and testing endpoints.
-
-### 21) Why enable Swagger only in Development?
-To avoid exposing internal API details publicly.
-
-### 22) What is HTTPS option in templates?
-Template configures TLS for secure local development and deployment.
-
-### 23) What is Docker support option?
-Creates Dockerfile and related configs to run the app in a container.
-
-### 24) What are “controllers” in API template?
-Classes that handle HTTP requests and return responses.
-
-### 25) One-line summary
-Templates give you a ready project; options choose features; architecture decides project layout.
+```bash
+# Concept: 1. Console application template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
 
 ---
 
+### 7. How does Console application template differ from Class library template?
 
-### 26) What does `-n` do in `dotnet new`?
-Sets the project name.
+**Answer:**
 
-### 27) What does `-f net8.0` do?
-Targets the project to .NET 8.
+Console application template is centered on the simple project type used for command-line programs
+and small runtime experiments, while Class library template is centered on the reusable project type
+used to package shared code without its own executable entry point. They often work together, but
+they solve different parts of the topic.
 
-### 28) Why do companies prefer LTS versions?
-Long-term support and stability for production systems.
+**Sample:**
 
-### 29) What is the key difference between Razor Pages and MVC?
-Razor Pages is page-centric; MVC is controller-centric.
-
-### 30) When is Razor Pages often a better choice?
-Small to medium apps, admin portals, and form-heavy pages.
-
-### 31) When is MVC better?
-When you need strong separation of controllers/views, complex routing, or established MVC patterns.
-
-### 32) When is Web API template best?
-When UI is separate (React/Angular/mobile) and backend exposes endpoints.
-
-### 33) When is Blazor best?
-When you want interactive UI with C# and component-based design.
-
-### 34) What are template “options”?
-Flags that enable/disable included features (auth, docker, https, swagger).
-
-### 35) Why do template options matter in interviews?
-They show you understand what boilerplate is created and why.
-
-### 36) How do you decide to include authentication at template creation?
-Include it when you want built-in identity setup; otherwise add later for custom auth.
-
-### 37) What does “controllers vs minimal APIs” mean?
-Controllers use MVC pattern; minimal APIs are function-based endpoints.
-
-### 38) Why use minimal APIs?
-Smaller, faster to write, great for small services.
-
-### 39) Why use controllers?
-Better organization for large APIs, filters, model binding features.
-
-### 40) How does minimal hosting affect Startup.cs?
-Startup.cs becomes optional; Program.cs contains all startup logic.
-
-### 41) If you have a big enterprise app, is a single project good?
-Often not. A solution with multiple projects improves separation and testing.
-
-### 42) What is a common layered solution structure?
-Api → Application → Domain → Infrastructure → Tests.
-
-### 43) Why keep Domain separate?
-So business rules are independent from web frameworks and databases.
-
-### 44) Why keep Infrastructure separate?
-So DB, external API, file storage details are isolated from business logic.
-
-### 45) Why do microservices increase complexity?
-They require network communication, distributed tracing, service discovery, and extra DevOps.
-
-### 46) What is the biggest benefit of microservices?
-Independent deployment and scaling by service.
-
-### 47) What is the biggest benefit of modular monolith?
-Lower ops complexity while maintaining clean modular design.
-
-### 48) How do templates relate to architecture?
-Templates create starting structure; architecture is how you organize code and deployments.
-
-### 49) What’s the common production setup for API services?
-Web API project deployed behind load balancer/ingress, usually containerized.
-
-### 50) Why should you avoid putting everything in one project?
-It becomes hard to test, hard to refactor, and tightly coupled.
-
-### 51) What is a “class library” project used for?
-Reusable code like domain models, services, utilities.
-
-### 52) What is a “test project” used for?
-Unit and integration tests to validate logic and endpoints.
-
-### 53) How do you add projects to a solution via CLI?
-Use `dotnet sln add`.
-
-### 54) Why is CLI-based creation good for teams?
-Everyone can reproduce the same structure quickly.
-
-### 55) Interview summary sentence
-Pick templates based on UI style and deployment, choose LTS framework, and structure solutions to match architecture.
+```bash
+# Concept: 1. Console application template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
 
 ---
 
+### 8. What is a good real-world example of Console application template?
 
-### 56) What is a common “template trap”?
-Using a template with auth/scaffolding you don’t understand, then struggling to customize it.
+**Answer:**
 
-### 57) Why not always select “auth enabled” template?
-It can add complexity and assumptions; sometimes you want custom JWT/OAuth.
+A strong example is explaining how Console application template affects a real feature, production
+issue, migration, or architecture decision involving the simple project type used for command-line
+programs and small runtime experiments. Interviewers usually care more about the reasoning than the
+definition alone.
 
-### 58) How do you decide between monolith and microservices early?
-Start modular monolith unless you have strong reasons (team independence, scaling, domain boundaries).
+**Sample:**
 
-### 59) What is the “distributed systems tax” of microservices?
-More work in networking, monitoring, retries, idempotency, and deployments.
-
-### 60) What is a safe migration path from monolith to microservices?
-Design modules cleanly first, then extract services when boundaries stabilize.
-
-### 61) Why is target framework selection a business decision?
-Support lifecycle affects security patches and production stability.
-
-### 62) What’s a strong answer if asked “Why .NET 8?” 
-Because it provides latest performance/features and a longer support window for production.
-
-### 63) How do templates differ between CLI and Visual Studio?
-Same core template, but VS adds IDE-specific launch profiles and convenience settings.
-
-### 64) If you run multiple projects, how do you manage startup?
-Use solution startup settings in VS or scripts/docker-compose in CLI workflows.
-
-### 65) What template fits “API + background jobs”?
-A webapi project plus hosted services, or separate worker service project.
-
-### 66) When should background processing be separate project?
-When it scales independently, has different deployment, or avoids web app resource contention.
-
-### 67) What is the template for worker services?
-`dotnet new worker`.
-
-### 68) Why not run heavy background work inside MVC app?
-It can impact request latency; separate worker improves reliability.
-
-### 69) What does Docker option help with?
-Creates container build/run configuration and encourages consistent runtime.
-
-### 70) What is OpenAPI important for in microservices?
-Standard contract documentation; helps client generation and integration.
-
-### 71) Why do large APIs prefer controllers over minimal APIs?
-Organization, filters, model binding features, and maintainability.
-
-### 72) Why do small internal services prefer minimal APIs?
-Less code, faster development, still supports DI and middleware.
-
-### 73) What is a good folder structure approach in templates?
-Keep controllers/endpoints in API; domain/application logic in separate projects.
-
-### 74) How to avoid “template spaghetti” in interviews?
-Explain that templates are starters and you restructure to architecture patterns.
-
-### 75) What does “solution vs project” show about maturity?
-Knowing when to split responsibilities shows real-world experience.
-
-### 76) Why do modular templates help testing?
-Domain logic in class libraries is easy to unit test without web server.
-
-### 77) What is a strong monolith choice?
-One webapi/mvc app with clean layers and well-defined boundaries.
-
-### 78) What is a strong microservices choice?
-Many webapi services + shared contracts + gateway/ingress + observability.
-
-### 79) What’s a good interview closing statement?
-Choose templates based on UI needs, pick LTS framework, and match solution structure to architecture and scaling needs.
-
-### 80) One-line final summary
-Templates are starters; real architecture comes from how you organize projects and deploy them.
+```bash
+# Concept: 1. Console application template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
 
 ---
 
-## Key Takeaways
+### 9. What is a best practice for Console application template?
 
-- Templates (`dotnet new`) create a starter structure with defaults.
-- Pick template based on output: JSON API vs HTML pages vs component UI.
-- Use .NET 8 for new apps unless your org requires .NET 6/7.
-- Minimal hosting puts startup in Program.cs.
-- Use solutions with multiple projects for clean architecture and testing.
-- Start modular monolith, extract microservices only when needed.
+**Answer:**
+
+A good practice is to keep Console application template aligned with the actual requirement around
+the simple project type used for command-line programs and small runtime experiments. Teams should
+document intent, keep implementation readable, and validate important paths early.
+
+**Sample:**
+
+```bash
+# Concept: 1. Console application template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 10. What is a common mistake around Console application template?
+
+**Answer:**
+
+A common mistake is naming Console application template without understanding how it affects the
+simple project type used for command-line programs and small runtime experiments. In real work, that
+usually appears as weak design choices, poor debugging, or incomplete explanations.
+
+**Sample:**
+
+```bash
+# Concept: 1. Console application template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 11. How do you troubleshoot Console application template-related issues?
+
+**Answer:**
+
+When troubleshooting Console application template, first verify whether the simple project type used
+for command-line programs and small runtime experiments is behaving as expected. Then check
+surrounding dependencies, configuration, logs, runtime behavior, and edge cases before changing the
+design.
+
+**Sample:**
+
+```bash
+# Concept: 1. Console application template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 12. How does Console application template connect to the rest of .NET project templates?
+
+**Answer:**
+
+Console application template connects to the rest of .NET project templates by giving structure to
+the simple project type used for command-line programs and small runtime experiments. It is one of
+the pieces that turns isolated facts into a coherent end-to-end explanation.
+
+**Sample:**
+
+```bash
+# Concept: 1. Console application template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+## 2. Class library template
+
+### 13. What is the role of Class library template in .NET project templates?
+
+**Answer:**
+
+In .NET project templates, the term Class library template refers to the reusable project type used to
+package shared code without its own executable entry point. It is part of the foundation a candidate
+should be able to explain clearly.
+
+**Sample:**
+
+```bash
+# Concept: 2. Class library template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 14. Why is the concept of Class library template important in .NET project templates?
+
+**Answer:**
+
+This concept matters because it influences the reusable project type used to package
+shared code without its own executable entry point. Good interview answers connect it to clarity,
+maintainability, performance, security, or delivery depending on the situation.
+
+**Sample:**
+
+```bash
+# Concept: 2. Class library template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 15. When should a team focus on Class library template?
+
+**Answer:**
+
+A team should focus on Class library template when the requirement depends on the reusable project
+type used to package shared code without its own executable entry point. It becomes especially
+important when design decisions, scalability, or debugging depend on that area.
+
+**Sample:**
+
+```bash
+# Concept: 2. Class library template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 16. How is Class library template applied in practice?
+
+**Answer:**
+
+In practice, Class library template is applied by making the reusable project type used to package
+shared code without its own executable entry point explicit in the code, runtime setup, or delivery
+workflow. The exact shape depends on the application, but the responsibility should stay
+predictable.
+
+**Sample:**
+
+```bash
+# Concept: 2. Class library template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 17. What strengths does Class library template bring?
+
+**Answer:**
+
+The strengths of Class library template are better structure, better communication, and better
+control over the reusable project type used to package shared code without its own executable entry
+point. It also makes tradeoffs easier to explain to reviewers, interviewers, and teammates.
+
+**Sample:**
+
+```bash
+# Concept: 2. Class library template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 18. What tradeoffs come with Class library template?
+
+**Answer:**
+
+The main tradeoff is extra complexity if Class library template is introduced without a real need or
+a clear understanding of the reusable project type used to package shared code without its own
+executable entry point. That usually leads to overengineering, hidden bugs, or confusing
+architecture.
+
+**Sample:**
+
+```bash
+# Concept: 2. Class library template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 19. How does Class library template differ from Web API template?
+
+**Answer:**
+
+Class library template is centered on the reusable project type used to package shared code without
+its own executable entry point, while Web API template is centered on the project template optimized
+for HTTP APIs and backend services. They often work together, but they solve different parts of the
+topic.
+
+**Sample:**
+
+```bash
+# Concept: 2. Class library template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 20. What is a good real-world example of Class library template?
+
+**Answer:**
+
+A strong example is explaining how Class library template affects a real feature, production issue,
+migration, or architecture decision involving the reusable project type used to package shared code
+without its own executable entry point. Interviewers usually care more about the reasoning than the
+definition alone.
+
+**Sample:**
+
+```bash
+# Concept: 2. Class library template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 21. What is a best practice for Class library template?
+
+**Answer:**
+
+A good practice is to keep Class library template aligned with the actual requirement around the
+reusable project type used to package shared code without its own executable entry point. Teams
+should document intent, keep implementation readable, and validate important paths early.
+
+**Sample:**
+
+```bash
+# Concept: 2. Class library template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 22. What is a common mistake around Class library template?
+
+**Answer:**
+
+A common mistake is naming Class library template without understanding how it affects the reusable
+project type used to package shared code without its own executable entry point. In real work, that
+usually appears as weak design choices, poor debugging, or incomplete explanations.
+
+**Sample:**
+
+```bash
+# Concept: 2. Class library template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 23. How do you troubleshoot Class library template-related issues?
+
+**Answer:**
+
+When troubleshooting Class library template, first verify whether the reusable project type used to
+package shared code without its own executable entry point is behaving as expected. Then check
+surrounding dependencies, configuration, logs, runtime behavior, and edge cases before changing the
+design.
+
+**Sample:**
+
+```bash
+# Concept: 2. Class library template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 24. How does Class library template connect to the rest of .NET project templates?
+
+**Answer:**
+
+Class library template connects to the rest of .NET project templates by giving structure to the
+reusable project type used to package shared code without its own executable entry point. It is one
+of the pieces that turns isolated facts into a coherent end-to-end explanation.
+
+**Sample:**
+
+```bash
+# Concept: 2. Class library template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+## 3. Web API template
+
+### 25. What is the role of Web API template in .NET project templates?
+
+**Answer:**
+
+In .NET project templates, the term Web API template refers to the project template optimized for HTTP APIs
+and backend services. It is part of the foundation a candidate should be able to explain clearly.
+
+**Sample:**
+
+```bash
+# Concept: 3. Web API template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 26. Why is the concept of Web API template important in .NET project templates?
+
+**Answer:**
+
+This concept matters because it influences the project template optimized for HTTP APIs and
+backend services. Good interview answers connect it to clarity, maintainability, performance,
+security, or delivery depending on the situation.
+
+**Sample:**
+
+```bash
+# Concept: 3. Web API template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 27. When should a team focus on Web API template?
+
+**Answer:**
+
+A team should focus on Web API template when the requirement depends on the project template
+optimized for HTTP APIs and backend services. It becomes especially important when design decisions,
+scalability, or debugging depend on that area.
+
+**Sample:**
+
+```bash
+# Concept: 3. Web API template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 28. How is Web API template applied in practice?
+
+**Answer:**
+
+In practice, Web API template is applied by making the project template optimized for HTTP APIs and
+backend services explicit in the code, runtime setup, or delivery workflow. The exact shape depends
+on the application, but the responsibility should stay predictable.
+
+**Sample:**
+
+```bash
+# Concept: 3. Web API template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 29. What strengths does Web API template bring?
+
+**Answer:**
+
+The strengths of Web API template are better structure, better communication, and better control
+over the project template optimized for HTTP APIs and backend services. It also makes tradeoffs
+easier to explain to reviewers, interviewers, and teammates.
+
+**Sample:**
+
+```bash
+# Concept: 3. Web API template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 30. What tradeoffs come with Web API template?
+
+**Answer:**
+
+The main tradeoff is extra complexity if Web API template is introduced without a real need or a
+clear understanding of the project template optimized for HTTP APIs and backend services. That
+usually leads to overengineering, hidden bugs, or confusing architecture.
+
+**Sample:**
+
+```bash
+# Concept: 3. Web API template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 31. How does Web API template differ from MVC template?
+
+**Answer:**
+
+Web API template is centered on the project template optimized for HTTP APIs and backend services,
+while MVC template is centered on the web template used when server-rendered pages and controller-
+based flow are needed. They often work together, but they solve different parts of the topic.
+
+**Sample:**
+
+```bash
+# Concept: 3. Web API template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 32. What is a good real-world example of Web API template?
+
+**Answer:**
+
+A strong example is explaining how Web API template affects a real feature, production issue,
+migration, or architecture decision involving the project template optimized for HTTP APIs and
+backend services. Interviewers usually care more about the reasoning than the definition alone.
+
+**Sample:**
+
+```bash
+# Concept: 3. Web API template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 33. What is a best practice for Web API template?
+
+**Answer:**
+
+A good practice is to keep Web API template aligned with the actual requirement around the project
+template optimized for HTTP APIs and backend services. Teams should document intent, keep
+implementation readable, and validate important paths early.
+
+**Sample:**
+
+```bash
+# Concept: 3. Web API template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 34. What is a common mistake around Web API template?
+
+**Answer:**
+
+A common mistake is naming Web API template without understanding how it affects the project
+template optimized for HTTP APIs and backend services. In real work, that usually appears as weak
+design choices, poor debugging, or incomplete explanations.
+
+**Sample:**
+
+```bash
+# Concept: 3. Web API template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 35. How do you troubleshoot Web API template-related issues?
+
+**Answer:**
+
+When troubleshooting Web API template, first verify whether the project template optimized for HTTP
+APIs and backend services is behaving as expected. Then check surrounding dependencies,
+configuration, logs, runtime behavior, and edge cases before changing the design.
+
+**Sample:**
+
+```bash
+# Concept: 3. Web API template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 36. How does Web API template connect to the rest of .NET project templates?
+
+**Answer:**
+
+Web API template connects to the rest of .NET project templates by giving structure to the project
+template optimized for HTTP APIs and backend services. It is one of the pieces that turns isolated
+facts into a coherent end-to-end explanation.
+
+**Sample:**
+
+```bash
+# Concept: 3. Web API template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+## 4. MVC template
+
+### 37. What is the role of MVC template in .NET project templates?
+
+**Answer:**
+
+In .NET project templates, the term MVC template refers to the web template used when server-rendered pages
+and controller-based flow are needed. It is part of the foundation a candidate should be able to
+explain clearly.
+
+**Sample:**
+
+```bash
+# Concept: 4. MVC template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 38. Why is the concept of MVC template important in .NET project templates?
+
+**Answer:**
+
+This concept matters because it influences the web template used when server-rendered pages and
+controller-based flow are needed. Good interview answers connect it to clarity, maintainability,
+performance, security, or delivery depending on the situation.
+
+**Sample:**
+
+```bash
+# Concept: 4. MVC template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 39. When should a team focus on MVC template?
+
+**Answer:**
+
+A team should focus on MVC template when the requirement depends on the web template used when
+server-rendered pages and controller-based flow are needed. It becomes especially important when
+design decisions, scalability, or debugging depend on that area.
+
+**Sample:**
+
+```bash
+# Concept: 4. MVC template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 40. How is MVC template applied in practice?
+
+**Answer:**
+
+In practice, MVC template is applied by making the web template used when server-rendered pages and
+controller-based flow are needed explicit in the code, runtime setup, or delivery workflow. The
+exact shape depends on the application, but the responsibility should stay predictable.
+
+**Sample:**
+
+```bash
+# Concept: 4. MVC template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 41. What strengths does MVC template bring?
+
+**Answer:**
+
+The strengths of MVC template are better structure, better communication, and better control over
+the web template used when server-rendered pages and controller-based flow are needed. It also makes
+tradeoffs easier to explain to reviewers, interviewers, and teammates.
+
+**Sample:**
+
+```bash
+# Concept: 4. MVC template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 42. What tradeoffs come with MVC template?
+
+**Answer:**
+
+The main tradeoff is extra complexity if MVC template is introduced without a real need or a clear
+understanding of the web template used when server-rendered pages and controller-based flow are
+needed. That usually leads to overengineering, hidden bugs, or confusing architecture.
+
+**Sample:**
+
+```bash
+# Concept: 4. MVC template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 43. How does MVC template differ from Razor Pages template?
+
+**Answer:**
+
+MVC template is centered on the web template used when server-rendered pages and controller-based
+flow are needed, while Razor Pages template is centered on the page-focused web template used for
+simpler server-rendered applications. They often work together, but they solve different parts of
+the topic.
+
+**Sample:**
+
+```bash
+# Concept: 4. MVC template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 44. What is a good real-world example of MVC template?
+
+**Answer:**
+
+A strong example is explaining how MVC template affects a real feature, production issue, migration,
+or architecture decision involving the web template used when server-rendered pages and controller-
+based flow are needed. Interviewers usually care more about the reasoning than the definition alone.
+
+**Sample:**
+
+```bash
+# Concept: 4. MVC template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 45. What is a best practice for MVC template?
+
+**Answer:**
+
+A good practice is to keep MVC template aligned with the actual requirement around the web template
+used when server-rendered pages and controller-based flow are needed. Teams should document intent,
+keep implementation readable, and validate important paths early.
+
+**Sample:**
+
+```bash
+# Concept: 4. MVC template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 46. What is a common mistake around MVC template?
+
+**Answer:**
+
+A common mistake is naming MVC template without understanding how it affects the web template used
+when server-rendered pages and controller-based flow are needed. In real work, that usually appears
+as weak design choices, poor debugging, or incomplete explanations.
+
+**Sample:**
+
+```bash
+# Concept: 4. MVC template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 47. How do you troubleshoot MVC template-related issues?
+
+**Answer:**
+
+When troubleshooting MVC template, first verify whether the web template used when server-rendered
+pages and controller-based flow are needed is behaving as expected. Then check surrounding
+dependencies, configuration, logs, runtime behavior, and edge cases before changing the design.
+
+**Sample:**
+
+```bash
+# Concept: 4. MVC template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 48. How does MVC template connect to the rest of .NET project templates?
+
+**Answer:**
+
+MVC template connects to the rest of .NET project templates by giving structure to the web template
+used when server-rendered pages and controller-based flow are needed. It is one of the pieces that
+turns isolated facts into a coherent end-to-end explanation.
+
+**Sample:**
+
+```bash
+# Concept: 4. MVC template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+## 5. Razor Pages template
+
+### 49. What is the role of Razor Pages template in .NET project templates?
+
+**Answer:**
+
+In .NET project templates, the term Razor Pages template refers to the page-focused web template used for
+simpler server-rendered applications. It is part of the foundation a candidate should be able to
+explain clearly.
+
+**Sample:**
+
+```bash
+# Concept: 5. Razor Pages template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 50. Why is the concept of Razor Pages template important in .NET project templates?
+
+**Answer:**
+
+This concept matters because it influences the page-focused web template used for simpler
+server-rendered applications. Good interview answers connect it to clarity, maintainability,
+performance, security, or delivery depending on the situation.
+
+**Sample:**
+
+```bash
+# Concept: 5. Razor Pages template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 51. When should a team focus on Razor Pages template?
+
+**Answer:**
+
+A team should focus on Razor Pages template when the requirement depends on the page-focused web
+template used for simpler server-rendered applications. It becomes especially important when design
+decisions, scalability, or debugging depend on that area.
+
+**Sample:**
+
+```bash
+# Concept: 5. Razor Pages template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 52. How is Razor Pages template applied in practice?
+
+**Answer:**
+
+In practice, Razor Pages template is applied by making the page-focused web template used for
+simpler server-rendered applications explicit in the code, runtime setup, or delivery workflow. The
+exact shape depends on the application, but the responsibility should stay predictable.
+
+**Sample:**
+
+```bash
+# Concept: 5. Razor Pages template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 53. What strengths does Razor Pages template bring?
+
+**Answer:**
+
+The strengths of Razor Pages template are better structure, better communication, and better control
+over the page-focused web template used for simpler server-rendered applications. It also makes
+tradeoffs easier to explain to reviewers, interviewers, and teammates.
+
+**Sample:**
+
+```bash
+# Concept: 5. Razor Pages template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 54. What tradeoffs come with Razor Pages template?
+
+**Answer:**
+
+The main tradeoff is extra complexity if Razor Pages template is introduced without a real need or a
+clear understanding of the page-focused web template used for simpler server-rendered applications.
+That usually leads to overengineering, hidden bugs, or confusing architecture.
+
+**Sample:**
+
+```bash
+# Concept: 5. Razor Pages template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 55. How does Razor Pages template differ from Blazor template?
+
+**Answer:**
+
+Razor Pages template is centered on the page-focused web template used for simpler server-rendered
+applications, while Blazor template is centered on the .NET UI template family used to build
+interactive web interfaces with C#. They often work together, but they solve different parts of the
+topic.
+
+**Sample:**
+
+```bash
+# Concept: 5. Razor Pages template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 56. What is a good real-world example of Razor Pages template?
+
+**Answer:**
+
+A strong example is explaining how Razor Pages template affects a real feature, production issue,
+migration, or architecture decision involving the page-focused web template used for simpler server-
+rendered applications. Interviewers usually care more about the reasoning than the definition alone.
+
+**Sample:**
+
+```bash
+# Concept: 5. Razor Pages template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 57. What is a best practice for Razor Pages template?
+
+**Answer:**
+
+A good practice is to keep Razor Pages template aligned with the actual requirement around the page-
+focused web template used for simpler server-rendered applications. Teams should document intent,
+keep implementation readable, and validate important paths early.
+
+**Sample:**
+
+```bash
+# Concept: 5. Razor Pages template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 58. What is a common mistake around Razor Pages template?
+
+**Answer:**
+
+A common mistake is naming Razor Pages template without understanding how it affects the page-
+focused web template used for simpler server-rendered applications. In real work, that usually
+appears as weak design choices, poor debugging, or incomplete explanations.
+
+**Sample:**
+
+```bash
+# Concept: 5. Razor Pages template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 59. How do you troubleshoot Razor Pages template-related issues?
+
+**Answer:**
+
+When troubleshooting Razor Pages template, first verify whether the page-focused web template used
+for simpler server-rendered applications is behaving as expected. Then check surrounding
+dependencies, configuration, logs, runtime behavior, and edge cases before changing the design.
+
+**Sample:**
+
+```bash
+# Concept: 5. Razor Pages template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 60. How does Razor Pages template connect to the rest of .NET project templates?
+
+**Answer:**
+
+Razor Pages template connects to the rest of .NET project templates by giving structure to the page-
+focused web template used for simpler server-rendered applications. It is one of the pieces that
+turns isolated facts into a coherent end-to-end explanation.
+
+**Sample:**
+
+```bash
+# Concept: 5. Razor Pages template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+## 6. Blazor template
+
+### 61. What is the role of Blazor template in .NET project templates?
+
+**Answer:**
+
+In .NET project templates, the term Blazor template refers to the .NET UI template family used to build
+interactive web interfaces with C#. It is part of the foundation a candidate should be able to
+explain clearly.
+
+**Sample:**
+
+```bash
+# Concept: 6. Blazor template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 62. Why is the concept of Blazor template important in .NET project templates?
+
+**Answer:**
+
+This concept matters because it influences the .NET UI template family used to build interactive
+web interfaces with C#. Good interview answers connect it to clarity, maintainability, performance,
+security, or delivery depending on the situation.
+
+**Sample:**
+
+```bash
+# Concept: 6. Blazor template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 63. When should a team focus on Blazor template?
+
+**Answer:**
+
+A team should focus on Blazor template when the requirement depends on the .NET UI template family
+used to build interactive web interfaces with C#. It becomes especially important when design
+decisions, scalability, or debugging depend on that area.
+
+**Sample:**
+
+```bash
+# Concept: 6. Blazor template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 64. How is Blazor template applied in practice?
+
+**Answer:**
+
+In practice, Blazor template is applied by making the .NET UI template family used to build
+interactive web interfaces with C# explicit in the code, runtime setup, or delivery workflow. The
+exact shape depends on the application, but the responsibility should stay predictable.
+
+**Sample:**
+
+```bash
+# Concept: 6. Blazor template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 65. What strengths does Blazor template bring?
+
+**Answer:**
+
+The strengths of Blazor template are better structure, better communication, and better control over
+the .NET UI template family used to build interactive web interfaces with C#. It also makes
+tradeoffs easier to explain to reviewers, interviewers, and teammates.
+
+**Sample:**
+
+```bash
+# Concept: 6. Blazor template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 66. What tradeoffs come with Blazor template?
+
+**Answer:**
+
+The main tradeoff is extra complexity if Blazor template is introduced without a real need or a
+clear understanding of the .NET UI template family used to build interactive web interfaces with C#.
+That usually leads to overengineering, hidden bugs, or confusing architecture.
+
+**Sample:**
+
+```bash
+# Concept: 6. Blazor template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 67. How does Blazor template differ from Worker Service template?
+
+**Answer:**
+
+Blazor template is centered on the .NET UI template family used to build interactive web interfaces
+with C#, while Worker Service template is centered on the background process template used for
+hosted jobs and long-running tasks. They often work together, but they solve different parts of the
+topic.
+
+**Sample:**
+
+```bash
+# Concept: 6. Blazor template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 68. What is a good real-world example of Blazor template?
+
+**Answer:**
+
+A strong example is explaining how Blazor template affects a real feature, production issue,
+migration, or architecture decision involving the .NET UI template family used to build interactive
+web interfaces with C#. Interviewers usually care more about the reasoning than the definition
+alone.
+
+**Sample:**
+
+```bash
+# Concept: 6. Blazor template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 69. What is a best practice for Blazor template?
+
+**Answer:**
+
+A good practice is to keep Blazor template aligned with the actual requirement around the .NET UI
+template family used to build interactive web interfaces with C#. Teams should document intent, keep
+implementation readable, and validate important paths early.
+
+**Sample:**
+
+```bash
+# Concept: 6. Blazor template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 70. What is a common mistake around Blazor template?
+
+**Answer:**
+
+A common mistake is naming Blazor template without understanding how it affects the .NET UI template
+family used to build interactive web interfaces with C#. In real work, that usually appears as weak
+design choices, poor debugging, or incomplete explanations.
+
+**Sample:**
+
+```bash
+# Concept: 6. Blazor template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 71. How do you troubleshoot Blazor template-related issues?
+
+**Answer:**
+
+When troubleshooting Blazor template, first verify whether the .NET UI template family used to build
+interactive web interfaces with C# is behaving as expected. Then check surrounding dependencies,
+configuration, logs, runtime behavior, and edge cases before changing the design.
+
+**Sample:**
+
+```bash
+# Concept: 6. Blazor template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 72. How does Blazor template connect to the rest of .NET project templates?
+
+**Answer:**
+
+Blazor template connects to the rest of .NET project templates by giving structure to the .NET UI
+template family used to build interactive web interfaces with C#. It is one of the pieces that turns
+isolated facts into a coherent end-to-end explanation.
+
+**Sample:**
+
+```bash
+# Concept: 6. Blazor template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+## 7. Worker Service template
+
+### 73. What is the role of Worker Service template in .NET project templates?
+
+**Answer:**
+
+In .NET project templates, the term Worker Service template refers to the background process template used
+for hosted jobs and long-running tasks. It is part of the foundation a candidate should be able to
+explain clearly.
+
+**Sample:**
+
+```bash
+# Concept: 7. Worker Service template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 74. Why is the concept of Worker Service template important in .NET project templates?
+
+**Answer:**
+
+This concept matters because it influences the background process template used for
+hosted jobs and long-running tasks. Good interview answers connect it to clarity, maintainability,
+performance, security, or delivery depending on the situation.
+
+**Sample:**
+
+```bash
+# Concept: 7. Worker Service template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 75. When should a team focus on Worker Service template?
+
+**Answer:**
+
+A team should focus on Worker Service template when the requirement depends on the background
+process template used for hosted jobs and long-running tasks. It becomes especially important when
+design decisions, scalability, or debugging depend on that area.
+
+**Sample:**
+
+```bash
+# Concept: 7. Worker Service template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 76. How is Worker Service template applied in practice?
+
+**Answer:**
+
+In practice, Worker Service template is applied by making the background process template used for
+hosted jobs and long-running tasks explicit in the code, runtime setup, or delivery workflow. The
+exact shape depends on the application, but the responsibility should stay predictable.
+
+**Sample:**
+
+```bash
+# Concept: 7. Worker Service template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 77. What strengths does Worker Service template bring?
+
+**Answer:**
+
+The strengths of Worker Service template are better structure, better communication, and better
+control over the background process template used for hosted jobs and long-running tasks. It also
+makes tradeoffs easier to explain to reviewers, interviewers, and teammates.
+
+**Sample:**
+
+```bash
+# Concept: 7. Worker Service template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 78. What tradeoffs come with Worker Service template?
+
+**Answer:**
+
+The main tradeoff is extra complexity if Worker Service template is introduced without a real need
+or a clear understanding of the background process template used for hosted jobs and long-running
+tasks. That usually leads to overengineering, hidden bugs, or confusing architecture.
+
+**Sample:**
+
+```bash
+# Concept: 7. Worker Service template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 79. How does Worker Service template differ from Test project templates?
+
+**Answer:**
+
+Worker Service template is centered on the background process template used for hosted jobs and
+long-running tasks, while Test project templates is centered on the project types used to organize
+unit and integration testing in .NET solutions. They often work together, but they solve different
+parts of the topic.
+
+**Sample:**
+
+```bash
+# Concept: 7. Worker Service template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 80. What is a good real-world example of Worker Service template?
+
+**Answer:**
+
+A strong example is explaining how Worker Service template affects a real feature, production issue,
+migration, or architecture decision involving the background process template used for hosted jobs
+and long-running tasks. Interviewers usually care more about the reasoning than the definition
+alone.
+
+**Sample:**
+
+```bash
+# Concept: 7. Worker Service template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 81. What is a best practice for Worker Service template?
+
+**Answer:**
+
+A good practice is to keep Worker Service template aligned with the actual requirement around the
+background process template used for hosted jobs and long-running tasks. Teams should document
+intent, keep implementation readable, and validate important paths early.
+
+**Sample:**
+
+```bash
+# Concept: 7. Worker Service template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 82. What is a common mistake around Worker Service template?
+
+**Answer:**
+
+A common mistake is naming Worker Service template without understanding how it affects the
+background process template used for hosted jobs and long-running tasks. In real work, that usually
+appears as weak design choices, poor debugging, or incomplete explanations.
+
+**Sample:**
+
+```bash
+# Concept: 7. Worker Service template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 83. How do you troubleshoot Worker Service template-related issues?
+
+**Answer:**
+
+When troubleshooting Worker Service template, first verify whether the background process template
+used for hosted jobs and long-running tasks is behaving as expected. Then check surrounding
+dependencies, configuration, logs, runtime behavior, and edge cases before changing the design.
+
+**Sample:**
+
+```bash
+# Concept: 7. Worker Service template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 84. How does Worker Service template connect to the rest of .NET project templates?
+
+**Answer:**
+
+Worker Service template connects to the rest of .NET project templates by giving structure to the
+background process template used for hosted jobs and long-running tasks. It is one of the pieces
+that turns isolated facts into a coherent end-to-end explanation.
+
+**Sample:**
+
+```bash
+# Concept: 7. Worker Service template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+## 8. Test project templates
+
+### 85. What is the role of Test project templates in .NET project templates?
+
+**Answer:**
+
+In .NET project templates, the term Test project templates refers to the project types used to organize unit
+and integration testing in .NET solutions. It is part of the foundation a candidate should be able
+to explain clearly.
+
+**Sample:**
+
+```bash
+# Concept: 8. Test project templates
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 86. Why is the concept of Test project templates important in .NET project templates?
+
+**Answer:**
+
+This concept matters because it influences the project types used to organize unit and
+integration testing in .NET solutions. Good interview answers connect it to clarity,
+maintainability, performance, security, or delivery depending on the situation.
+
+**Sample:**
+
+```bash
+# Concept: 8. Test project templates
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 87. When should a team focus on Test project templates?
+
+**Answer:**
+
+A team should focus on Test project templates when the requirement depends on the project types used
+to organize unit and integration testing in .NET solutions. It becomes especially important when
+design decisions, scalability, or debugging depend on that area.
+
+**Sample:**
+
+```bash
+# Concept: 8. Test project templates
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 88. How is Test project templates applied in practice?
+
+**Answer:**
+
+In practice, Test project templates is applied by making the project types used to organize unit and
+integration testing in .NET solutions explicit in the code, runtime setup, or delivery workflow. The
+exact shape depends on the application, but the responsibility should stay predictable.
+
+**Sample:**
+
+```bash
+# Concept: 8. Test project templates
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 89. What strengths does Test project templates bring?
+
+**Answer:**
+
+The strengths of Test project templates are better structure, better communication, and better
+control over the project types used to organize unit and integration testing in .NET solutions. It
+also makes tradeoffs easier to explain to reviewers, interviewers, and teammates.
+
+**Sample:**
+
+```bash
+# Concept: 8. Test project templates
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 90. What tradeoffs come with Test project templates?
+
+**Answer:**
+
+The main tradeoff is extra complexity if Test project templates is introduced without a real need or
+a clear understanding of the project types used to organize unit and integration testing in .NET
+solutions. That usually leads to overengineering, hidden bugs, or confusing architecture.
+
+**Sample:**
+
+```bash
+# Concept: 8. Test project templates
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 91. How does Test project templates differ from CLI template usage?
+
+**Answer:**
+
+Test project templates is centered on the project types used to organize unit and integration
+testing in .NET solutions, while CLI template usage is centered on the dotnet new workflow used to
+create and customize projects from templates. They often work together, but they solve different
+parts of the topic.
+
+**Sample:**
+
+```bash
+# Concept: 8. Test project templates
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 92. What is a good real-world example of Test project templates?
+
+**Answer:**
+
+A strong example is explaining how Test project templates affects a real feature, production issue,
+migration, or architecture decision involving the project types used to organize unit and
+integration testing in .NET solutions. Interviewers usually care more about the reasoning than the
+definition alone.
+
+**Sample:**
+
+```bash
+# Concept: 8. Test project templates
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 93. What is a best practice for Test project templates?
+
+**Answer:**
+
+A good practice is to keep Test project templates aligned with the actual requirement around the
+project types used to organize unit and integration testing in .NET solutions. Teams should document
+intent, keep implementation readable, and validate important paths early.
+
+**Sample:**
+
+```bash
+# Concept: 8. Test project templates
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 94. What is a common mistake around Test project templates?
+
+**Answer:**
+
+A common mistake is naming Test project templates without understanding how it affects the project
+types used to organize unit and integration testing in .NET solutions. In real work, that usually
+appears as weak design choices, poor debugging, or incomplete explanations.
+
+**Sample:**
+
+```bash
+# Concept: 8. Test project templates
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 95. How do you troubleshoot Test project templates-related issues?
+
+**Answer:**
+
+When troubleshooting Test project templates, first verify whether the project types used to organize
+unit and integration testing in .NET solutions is behaving as expected. Then check surrounding
+dependencies, configuration, logs, runtime behavior, and edge cases before changing the design.
+
+**Sample:**
+
+```bash
+# Concept: 8. Test project templates
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 96. How does Test project templates connect to the rest of .NET project templates?
+
+**Answer:**
+
+Test project templates connects to the rest of .NET project templates by giving structure to the
+project types used to organize unit and integration testing in .NET solutions. It is one of the
+pieces that turns isolated facts into a coherent end-to-end explanation.
+
+**Sample:**
+
+```bash
+# Concept: 8. Test project templates
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+## 9. CLI template usage
+
+### 97. What is the role of CLI template usage in .NET project templates?
+
+**Answer:**
+
+In .NET project templates, the term CLI template usage refers to the dotnet new workflow used to create and
+customize projects from templates. It is part of the foundation a candidate should be able to
+explain clearly.
+
+**Sample:**
+
+```bash
+# Concept: 9. CLI template usage
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 98. Why is the concept of CLI template usage important in .NET project templates?
+
+**Answer:**
+
+This concept matters because it influences the dotnet new workflow used to create and
+customize projects from templates. Good interview answers connect it to clarity, maintainability,
+performance, security, or delivery depending on the situation.
+
+**Sample:**
+
+```bash
+# Concept: 9. CLI template usage
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 99. When should a team focus on CLI template usage?
+
+**Answer:**
+
+A team should focus on CLI template usage when the requirement depends on the dotnet new workflow
+used to create and customize projects from templates. It becomes especially important when design
+decisions, scalability, or debugging depend on that area.
+
+**Sample:**
+
+```bash
+# Concept: 9. CLI template usage
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 100. How is CLI template usage applied in practice?
+
+**Answer:**
+
+In practice, CLI template usage is applied by making the dotnet new workflow used to create and
+customize projects from templates explicit in the code, runtime setup, or delivery workflow. The
+exact shape depends on the application, but the responsibility should stay predictable.
+
+**Sample:**
+
+```bash
+# Concept: 9. CLI template usage
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 101. What strengths does CLI template usage bring?
+
+**Answer:**
+
+The strengths of CLI template usage are better structure, better communication, and better control
+over the dotnet new workflow used to create and customize projects from templates. It also makes
+tradeoffs easier to explain to reviewers, interviewers, and teammates.
+
+**Sample:**
+
+```bash
+# Concept: 9. CLI template usage
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 102. What tradeoffs come with CLI template usage?
+
+**Answer:**
+
+The main tradeoff is extra complexity if CLI template usage is introduced without a real need or a
+clear understanding of the dotnet new workflow used to create and customize projects from templates.
+That usually leads to overengineering, hidden bugs, or confusing architecture.
+
+**Sample:**
+
+```bash
+# Concept: 9. CLI template usage
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 103. How does CLI template usage differ from Choosing the right template?
+
+**Answer:**
+
+CLI template usage is centered on the dotnet new workflow used to create and customize projects from
+templates, while Choosing the right template is centered on the reasoning used to start with the
+project type that best fits the solution. They often work together, but they solve different parts
+of the topic.
+
+**Sample:**
+
+```bash
+# Concept: 9. CLI template usage
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 104. What is a good real-world example of CLI template usage?
+
+**Answer:**
+
+A strong example is explaining how CLI template usage affects a real feature, production issue,
+migration, or architecture decision involving the dotnet new workflow used to create and customize
+projects from templates. Interviewers usually care more about the reasoning than the definition
+alone.
+
+**Sample:**
+
+```bash
+# Concept: 9. CLI template usage
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 105. What is a best practice for CLI template usage?
+
+**Answer:**
+
+A good practice is to keep CLI template usage aligned with the actual requirement around the dotnet
+new workflow used to create and customize projects from templates. Teams should document intent,
+keep implementation readable, and validate important paths early.
+
+**Sample:**
+
+```bash
+# Concept: 9. CLI template usage
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 106. What is a common mistake around CLI template usage?
+
+**Answer:**
+
+A common mistake is naming CLI template usage without understanding how it affects the dotnet new
+workflow used to create and customize projects from templates. In real work, that usually appears as
+weak design choices, poor debugging, or incomplete explanations.
+
+**Sample:**
+
+```bash
+# Concept: 9. CLI template usage
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 107. How do you troubleshoot CLI template usage-related issues?
+
+**Answer:**
+
+When troubleshooting CLI template usage, first verify whether the dotnet new workflow used to create
+and customize projects from templates is behaving as expected. Then check surrounding dependencies,
+configuration, logs, runtime behavior, and edge cases before changing the design.
+
+**Sample:**
+
+```bash
+# Concept: 9. CLI template usage
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 108. How does CLI template usage connect to the rest of .NET project templates?
+
+**Answer:**
+
+CLI template usage connects to the rest of .NET project templates by giving structure to the dotnet
+new workflow used to create and customize projects from templates. It is one of the pieces that
+turns isolated facts into a coherent end-to-end explanation.
+
+**Sample:**
+
+```bash
+# Concept: 9. CLI template usage
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+## 10. Choosing the right template
+
+### 109. What is the role of Choosing the right template in .NET project templates?
+
+**Answer:**
+
+In .NET project templates, the term Choosing the right template refers to the reasoning used to start with
+the project type that best fits the solution. It is part of the foundation a candidate should be
+able to explain clearly.
+
+**Sample:**
+
+```bash
+# Concept: 10. Choosing the right template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 110. Why is the concept of Choosing the right template important in .NET project templates?
+
+**Answer:**
+
+This concept matters because it influences the reasoning used to start with the
+project type that best fits the solution. Good interview answers connect it to clarity,
+maintainability, performance, security, or delivery depending on the situation.
+
+**Sample:**
+
+```bash
+# Concept: 10. Choosing the right template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 111. When should a team focus on Choosing the right template?
+
+**Answer:**
+
+A team should focus on Choosing the right template when the requirement depends on the reasoning
+used to start with the project type that best fits the solution. It becomes especially important
+when design decisions, scalability, or debugging depend on that area.
+
+**Sample:**
+
+```bash
+# Concept: 10. Choosing the right template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 112. How is Choosing the right template applied in practice?
+
+**Answer:**
+
+In practice, Choosing the right template is applied by making the reasoning used to start with the
+project type that best fits the solution explicit in the code, runtime setup, or delivery workflow.
+The exact shape depends on the application, but the responsibility should stay predictable.
+
+**Sample:**
+
+```bash
+# Concept: 10. Choosing the right template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 113. What strengths does Choosing the right template bring?
+
+**Answer:**
+
+The strengths of Choosing the right template are better structure, better communication, and better
+control over the reasoning used to start with the project type that best fits the solution. It also
+makes tradeoffs easier to explain to reviewers, interviewers, and teammates.
+
+**Sample:**
+
+```bash
+# Concept: 10. Choosing the right template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 114. What tradeoffs come with Choosing the right template?
+
+**Answer:**
+
+The main tradeoff is extra complexity if Choosing the right template is introduced without a real
+need or a clear understanding of the reasoning used to start with the project type that best fits
+the solution. That usually leads to overengineering, hidden bugs, or confusing architecture.
+
+**Sample:**
+
+```bash
+# Concept: 10. Choosing the right template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 115. How does Choosing the right template differ from Console application template?
+
+**Answer:**
+
+Choosing the right template is centered on the reasoning used to start with the project type that
+best fits the solution, while Console application template is centered on the simple project type
+used for command-line programs and small runtime experiments. They often work together, but they
+solve different parts of the topic.
+
+**Sample:**
+
+```bash
+# Concept: 10. Choosing the right template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 116. What is a good real-world example of Choosing the right template?
+
+**Answer:**
+
+A strong example is explaining how Choosing the right template affects a real feature, production
+issue, migration, or architecture decision involving the reasoning used to start with the project
+type that best fits the solution. Interviewers usually care more about the reasoning than the
+definition alone.
+
+**Sample:**
+
+```bash
+# Concept: 10. Choosing the right template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 117. What is a best practice for Choosing the right template?
+
+**Answer:**
+
+A good practice is to keep Choosing the right template aligned with the actual requirement around
+the reasoning used to start with the project type that best fits the solution. Teams should document
+intent, keep implementation readable, and validate important paths early.
+
+**Sample:**
+
+```bash
+# Concept: 10. Choosing the right template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 118. What is a common mistake around Choosing the right template?
+
+**Answer:**
+
+A common mistake is naming Choosing the right template without understanding how it affects the
+reasoning used to start with the project type that best fits the solution. In real work, that
+usually appears as weak design choices, poor debugging, or incomplete explanations.
+
+**Sample:**
+
+```bash
+# Concept: 10. Choosing the right template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 119. How do you troubleshoot Choosing the right template-related issues?
+
+**Answer:**
+
+When troubleshooting Choosing the right template, first verify whether the reasoning used to start
+with the project type that best fits the solution is behaving as expected. Then check surrounding
+dependencies, configuration, logs, runtime behavior, and edge cases before changing the design.
+
+**Sample:**
+
+```bash
+# Concept: 10. Choosing the right template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```
+
+---
+
+### 120. How does Choosing the right template connect to the rest of .NET project templates?
+
+**Answer:**
+
+Choosing the right template connects to the rest of .NET project templates by giving structure to
+the reasoning used to start with the project type that best fits the solution. It is one of the
+pieces that turns isolated facts into a coherent end-to-end explanation.
+
+**Sample:**
+
+```bash
+# Concept: 10. Choosing the right template
+dotnet new console -n SampleApp
+dotnet new webapi -n SampleApi
+dotnet new worker -n SampleWorker
+```

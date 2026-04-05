@@ -22,7 +22,6 @@ ScaffoldingReadMe.txt
 # === Azure Publish Settings ===
 *.PublishSettings
 *.pubxml
-*.publishproj
 
 # === Azure Generated Site Folder ===
 site/

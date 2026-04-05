@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="300" viewBox="0 0 1160 300" role="img" aria-label="Knowledge Base Learning Flow">
+<defs>
+<style>
+.bg { fill: #f7f9fc; }
+.box { fill: #ffffff; stroke: #285a9b; stroke-width: 2.4; rx: 18; ry: 18; }
+.line { stroke: #285a9b; stroke-width: 3; fill: none; }
+.title { font: 700 28px Segoe UI, Arial, sans-serif; fill: #285a9b; }
+.text { font: 700 16px Segoe UI, Arial, sans-serif; fill: #285a9b; }
+</style>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#285a9b" /></marker>
+</defs>
+<rect class="bg" width="1160" height="300" />
+<text x="40" y="48" class="title">Knowledge Base Learning Flow</text>
+<rect x="40" y="118" width="140" height="92" class="box" />
+<text x="110" y="152" text-anchor="middle" class="text">Guide Map</text>
+<rect x="228" y="118" width="140" height="92" class="box" />
+<text x="298" y="152" text-anchor="middle" class="text">Fundamentals</text>
+<rect x="416" y="118" width="140" height="92" class="box" />
+<text x="486" y="152" text-anchor="middle" class="text">Frameworks</text>
+<rect x="604" y="118" width="140" height="92" class="box" />
+<text x="674" y="152" text-anchor="middle" class="text">Cloud & Tools</text>
+<rect x="792" y="118" width="140" height="92" class="box" />
+<text x="862" y="152" text-anchor="middle" class="text">Scenarios</text>
+<rect x="980" y="118" width="140" height="92" class="box" />
+<text x="1050" y="152" text-anchor="middle" class="text">Revision</text>
+<path class="line" marker-end="url(#arrow)" d="M180 164 H228" />
+<path class="line" marker-end="url(#arrow)" d="M368 164 H416" />
+<path class="line" marker-end="url(#arrow)" d="M556 164 H604" />
+<path class="line" marker-end="url(#arrow)" d="M744 164 H792" />
+<path class="line" marker-end="url(#arrow)" d="M932 164 H980" />
+</svg>

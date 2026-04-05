@@ -1,414 +1,2791 @@
+# Kestrel and Hosting Services Interview Questions
 
----
+![Kestrel and Hosting Services Interview Questions](../../../assets/hosting-services-flow.svg)
 
-### What is Kestrel?
+This page focuses on Kestrel and the hosting services that sit around an ASP.NET Core application in production.
 
-- The **default cross-platform web server** for ASP.NET Core.
-- **Fast and lightweight**, designed for modern async workloads.
-- Can run **standalone** or **behind a reverse proxy** (IIS, Nginx, Apache, Cloud Load Balancer).
+## 1. Kestrel web server
 
-Imagine your web app is a **shop**.  
-Kestrel is the **front door person**:
-- People (browsers/apps) come to the door (HTTP request)
-- Kestrel receives them and sends them inside (middleware + endpoints)
-- When the shop finishes the work, Kestrel returns the result (HTTP response)
+### 1. What is the role of Kestrel web server in ASP.NET Core hosting services?
 
----
+**Answer:**
 
-### Advantages of Kestrel
+In ASP.NET Core hosting services, the term Kestrel web server refers to the cross-platform web server used
+natively by ASP.NET Core. It is part of the foundation a candidate should be able to explain
+clearly.
 
-- **Performance**: very fast request handling, optimized networking and async patterns.
-- **Cross-platform**: runs on Windows, Linux, macOS, containers.
-- **Lightweight**: small footprint; great for microservices and cloud-native apps.
-- **Modern protocols**: supports HTTP/2 and (in supported environments) HTTP/3/QUIC.
-- **Configurable**: timeouts, max body size, connection limits, TLS settings.
+**Sample:**
 
----
-
-### Disadvantages of Kestrel (when exposed directly)
-
-- **No process supervision by itself** (restart, auto-recovery, log rotation) — use systemd/IIS/K8s.
-- **Edge security isn’t “bundled”** like a gateway (WAF, advanced rate limiting, IP filtering) — use reverse proxy / gateway.
-- **TLS/cert management at scale** can be harder if every app manages certificates.
-- Static files/caching can be done via middleware, but often **more efficient via Nginx/CDN**.
-
----
-
-### Why Kestrel usually sits behind a reverse proxy in production
-
-Kestrel is **production-grade**, but most internet-facing apps place a reverse proxy/load balancer in front for:
-
-1. **Security**: WAF, DDoS protections, request filtering, IP restrictions.
-2. **TLS termination**: centralized certificates, key management, rotation.
-3. **Operations**: zero-downtime reloads, standardized access logs, process supervision.
-4. **Performance offload**: static files, compression, caching.
-5. **Multi-site hosting**: host many domains on `:80/:443` (virtual hosts + SNI).
-6. **Observability**: consistent access logs, metrics, tracing at the edge.
-
----
-
-### Kestrel vs other servers
-
-| Server   | Pros | Cons |
-| --- | --- | --- |
-| **Kestrel** | Fast, cross-platform, container-friendly | Usually needs a proxy for edge hardening |
-| **IIS** | Windows integration, TLS mgmt, logs | Windows-only, extra hop |
-| **Nginx** | Lightweight, TLS, caching, WAF modules | Separate config/ops overhead |
-| **Apache** | Flexible, many modules | Heavier, complex configs |
-| **HTTP.sys** | Windows kernel-mode, Windows Auth | Windows-only |
-
----
-
-### When to use Kestrel alone vs when to use a reverse proxy
-
-**Use Kestrel alone when:**
-- Internal microservices **behind Kubernetes Ingress / Cloud LB / service mesh**
-- APIs inside a private network/VPC
-- Dev/test environments
-
- **Use a reverse proxy when:**
-- Internet-facing apps
-- Need TLS termination, WAF, rate limiting, mTLS
-- Multi-site hosting on `:80/:443`
-- Static-heavy workloads
-
----
-
-### Typical production topology
-
-```
-Internet → CDN/WAF → Reverse Proxy or Cloud LB → Kestrel (ASP.NET Core App) → Services/DB
-```
-
----
-
-### Code: Kestrel tuning (Program.cs)
-
-Configures:
-- Upload size limit
-- Keep-alive timeout
-- Removes Server header
-- HTTP + HTTPS endpoints
-- Strong TLS versions (TLS 1.2/1.3)
-
-```csharp
-using System.Security.Authentication;
-
-var builder = WebApplication.CreateBuilder(args);
-
-builder.WebHost.ConfigureKestrel(options =>
+```json
 {
-    // Upload limit (50 MB)
-    options.Limits.MaxRequestBodySize = 50 * 1024 * 1024;
-
-    // Keep connections alive longer for chatty clients (adjust as needed)
-    options.Limits.KeepAliveTimeout = TimeSpan.FromSeconds(120);
-
-    // Hide the "Server" header
-    options.AddServerHeader = false;
-
-    // HTTP endpoint
-    options.ListenAnyIP(5000);
-
-    // HTTPS endpoint
-    options.ListenAnyIP(5001, listen =>
-    {
-        listen.UseHttps(https =>
-        {
-            https.SslProtocols = SslProtocols.Tls12 | SslProtocols.Tls13;
-
-            // Optional: client certificates (mTLS)
-            // https.ClientCertificateMode = ClientCertificateMode.RequireCertificate;
-        });
-    });
-});
-
-var app = builder.Build();
-app.MapGet("/", () => "Hello from Kestrel!");
-app.Run();
-```
-
----
-
-### Code: Forwarded headers (real client IP behind a proxy)
-
-Use this when IIS/Nginx/Ingress is in front of Kestrel so ASP.NET Core reads:
-- `X-Forwarded-For` (client IP)
-- `X-Forwarded-Proto` (http/https)
-
-```csharp
-using Microsoft.AspNetCore.HttpOverrides;
-
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
-
-// IMPORTANT: In production, configure KnownProxies/KnownNetworks to trust only your proxy/LB.
-// Otherwise a client could spoof forwarded headers.
-app.UseForwardedHeaders(new ForwardedHeadersOptions
-{
-    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-});
-
-app.MapGet("/", (HttpContext ctx) =>
-{
-    return Results.Ok(new
-    {
-        RemoteIp = ctx.Connection.RemoteIpAddress?.ToString(),
-        Scheme = ctx.Request.Scheme
-    });
-});
-
-app.Run();
-```
-
----
-
-### Code: Nginx reverse proxy to Kestrel
-
-Typical pattern:
-- Port 80 redirects to 443
-- TLS handled by Nginx
-- Requests proxied to Kestrel on `127.0.0.1:5000`
-- Forwarded headers added
-
-```nginx
-server {
-    listen 80;
-    server_name example.com;
-    return 301 https://$host$request_uri;
-}
-
-server {
-    listen 443 ssl http2;
-    server_name example.com;
-
-    ssl_certificate     /etc/letsencrypt/live/example.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem;
-
-    client_max_body_size 50m;
-    proxy_read_timeout 120s;
-
-    location / {
-        proxy_pass http://127.0.0.1:5000;   # Kestrel
-        proxy_set_header Host $host;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
     }
+  },
+  "Concept": "1. Kestrel web server"
 }
 ```
 
 ---
 
+### 2. Why is the concept of Kestrel web server important in ASP.NET Core hosting services?
 
+**Answer:**
 
-### 1) What is Kestrel?
-Kestrel is the **web server inside an ASP.NET Core app** that listens for HTTP requests and sends responses.
+This concept matters because it influences the cross-platform web server used natively by
+ASP.NET Core. Good interview answers connect it to clarity, maintainability, performance, security,
+or delivery depending on the situation.
 
-### 2) Why do we need a web server at all?
-A web server is the thing that **opens a port** (like 80/443) and **speaks HTTP** with clients.
+**Sample:**
 
-### 3) Is Kestrel cross-platform?
-Yes. It runs on Windows, Linux, and macOS.
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "1. Kestrel web server"
+}
+```
 
-### 4) Is Kestrel the default server for ASP.NET Core?
-Yes. Most ASP.NET Core apps use Kestrel by default.
+---
 
-### 5) What happens when you run `dotnet run`?
-Your app starts and Kestrel begins listening on configured URLs/ports.
+### 3. When should a team focus on Kestrel web server?
 
-### 6) Is Kestrel the same as IIS?
-No. IIS is a Windows web server/proxy. Kestrel is the ASP.NET Core server running in your app.
+**Answer:**
 
-### 7) Can Kestrel run without IIS or Nginx?
-Yes. That’s “standalone Kestrel”.
+A team should focus on Kestrel web server when the requirement depends on the cross-platform web
+server used natively by ASP.NET Core. It becomes especially important when design decisions,
+scalability, or debugging depend on that area.
 
-### 8) Why is Kestrel called lightweight?
-It focuses on efficient HTTP handling and integrates tightly with ASP.NET Core.
+**Sample:**
 
-### 9) Why is Kestrel fast?
-Async I/O + optimized pipelines + less overhead than older stacks.
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "1. Kestrel web server"
+}
+```
 
-### 10) Does Kestrel support HTTPS?
-Yes. Kestrel can bind HTTPS endpoints with certificates.
+---
 
-### 11) What is the difference between HTTP and HTTPS?
-HTTPS is HTTP with **encryption (TLS)**.
+### 4. How is Kestrel web server applied in practice?
 
-### 12) What is TLS in simple words?
-A **secure lock** on data so nobody can read it while it travels.
+**Answer:**
 
-### 13) Where do production certificates come from?
-From a CA like Let’s Encrypt or enterprise PKI.
+In practice, Kestrel web server is applied by making the cross-platform web server used natively by
+ASP.NET Core explicit in the code, runtime setup, or delivery workflow. The exact shape depends on
+the application, but the responsibility should stay predictable.
 
-### 14) What is TLS termination?
-The proxy (Nginx/IIS/LB) handles HTTPS and forwards traffic to Kestrel (often over internal HTTP).
+**Sample:**
 
-### 15) Can Kestrel terminate TLS itself?
-Yes, but many orgs terminate TLS at the edge proxy/LB for easier management.
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "1. Kestrel web server"
+}
+```
 
-### 16) What is mTLS?
-Mutual TLS. Both client and server present certificates to authenticate each other.
+---
 
-### 17) When do you use client certificates?
-Service-to-service calls in high-security environments, internal APIs, regulated industries.
+### 5. What strengths does Kestrel web server bring?
 
-### 18) Does Kestrel support WebSockets?
-Yes. WebSockets are supported and used by SignalR.
+**Answer:**
 
-### 19) WebSockets in kid-simple words?
-It’s like a **phone call** (keeps the connection open) vs sending a letter (one request/response).
+The strengths of Kestrel web server are better structure, better communication, and better control
+over the cross-platform web server used natively by ASP.NET Core. It also makes tradeoffs easier to
+explain to reviewers, interviewers, and teammates.
 
-### 20) Why do proxies sometimes break WebSockets?
-If not configured to allow “upgrade” requests, the connection fails.
+**Sample:**
 
-### 21) What is a reverse proxy?
-A front server that receives requests and forwards them to Kestrel.
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "1. Kestrel web server"
+}
+```
 
-### 22) Why put Nginx/IIS in front of Kestrel?
-TLS management, WAF/rate limiting, static file caching, better ops (logs/restarts), multi-site hosting.
+---
 
-### 23) Is Kestrel production-ready?
-Yes. Production-ready. The “proxy in front” is mostly for edge/ops features.
+### 6. What tradeoffs come with Kestrel web server?
 
-### 24) When is it OK to run Kestrel without a proxy?
-Inside trusted networks, behind Kubernetes ingress/service mesh, internal APIs, dev/test.
+**Answer:**
 
-### 25) What is the typical topology for internet apps?
-Internet → WAF/CDN/LB → reverse proxy → Kestrel → services/db
+The main tradeoff is extra complexity if Kestrel web server is introduced without a real need or a
+clear understanding of the cross-platform web server used natively by ASP.NET Core. That usually
+leads to overengineering, hidden bugs, or confusing architecture.
 
-### 26) What is port binding?
-Selecting which port(s) Kestrel listens on (e.g., 5000, 80, 443).
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "1. Kestrel web server"
+}
+```
 
-### 27) Why do dev apps often use ports like 5000/5001?
-They avoid privileged ports and are easy for local development.
+---
 
-### 28) What is special about ports below 1024 on Linux?
-They require elevated permissions/capabilities.
+### 7. How does Kestrel web server differ from Reverse proxies?
 
-### 29) Why listen on `0.0.0.0` in containers?
-So the app is reachable from outside the container.
+**Answer:**
 
-### 30) Why listen only on `localhost` sometimes?
-For security: only local machine can access it.
+Kestrel web server is centered on the cross-platform web server used natively by ASP.NET Core, while
+Reverse proxies is centered on the front-door servers that sit in front of Kestrel in many
+deployments. They often work together, but they solve different parts of the topic.
 
-### 31) What is `ASPNETCORE_URLS`?
-An environment variable that tells Kestrel which URLs to bind to.
+**Sample:**
 
-### 32) Why do you see 502 Bad Gateway in Nginx?
-Nginx can’t reach Kestrel: wrong port, app down, firewall, binding mismatch.
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "1. Kestrel web server"
+}
+```
 
-### 33) What is `UseForwardedHeaders()` for?
-It tells ASP.NET Core to trust proxy headers like `X-Forwarded-For` and `X-Forwarded-Proto`.
+---
 
-### 34) Why is trusting forwarded headers dangerous?
-If you trust any client, they can spoof their IP/protocol. Configure KnownProxies/KnownNetworks.
+### 8. What is a good real-world example of Kestrel web server?
 
-### 35) What are Kestrel limits?
-Rules that protect resources: max body size, timeouts, max connections, header size limits.
+**Answer:**
 
-### 36) Why set a max request body size?
-To prevent huge uploads/DoS and control memory usage.
+A strong example is explaining how Kestrel web server affects a real feature, production issue,
+migration, or architecture decision involving the cross-platform web server used natively by ASP.NET
+Core. Interviewers usually care more about the reasoning than the definition alone.
 
-### 37) What causes “request body too large” errors?
-Kestrel limit or proxy limit (Nginx `client_max_body_size`, IIS request limits) is too low.
+**Sample:**
 
-### 38) What is Keep-Alive timeout?
-How long idle connections remain open. High can waste resources; low can increase reconnects.
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "1. Kestrel web server"
+}
+```
 
-### 39) What is RequestHeadersTimeout?
-Time allowed for client to send headers. Helps stop slow-client attacks.
+---
 
-### 40) What is MaxConcurrentConnections?
-A cap to prevent overload and protect the app.
+### 9. What is a best practice for Kestrel web server?
 
-### 41) What is the “transport layer” in Kestrel?
-The low-level networking code that reads/writes bytes over sockets.
+**Answer:**
 
-### 42) libuv vs managed sockets (simple)?
-Old Kestrel used libuv; modern Kestrel uses managed sockets by default.
+A good practice is to keep Kestrel web server aligned with the actual requirement around the cross-
+platform web server used natively by ASP.NET Core. Teams should document intent, keep implementation
+readable, and validate important paths early.
 
-### 43) Why move away from libuv?
-Fewer native dependencies, simpler debugging, easier maintenance.
+**Sample:**
 
-### 44) Does Kestrel create a thread per request?
-No. It uses async I/O and thread pool efficiently.
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "1. Kestrel web server"
+}
+```
 
-### 45) What is thread pool starvation?
-Too many blocked threads; new work waits; requests slow down.
+---
 
-### 46) Common code that causes starvation?
-Blocking calls like `.Result`, `.Wait()` in request handling.
+### 10. What is a common mistake around Kestrel web server?
 
-### 47) Fix for starvation?
-Use async/await, don’t block, offload heavy work to background processing.
+**Answer:**
 
-### 48) What is connection middleware?
-Low-level middleware that can work at connection/TCP level for advanced scenarios.
+A common mistake is naming Kestrel web server without understanding how it affects the cross-
+platform web server used natively by ASP.NET Core. In real work, that usually appears as weak design
+choices, poor debugging, or incomplete explanations.
 
-### 49) When do you need connection middleware?
-Special protocols, custom connection logic, advanced networking.
+**Sample:**
 
-### 50) How does Kestrel connect to the ASP.NET Core pipeline?
-Kestrel receives the request and passes it into the middleware pipeline.
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "1. Kestrel web server"
+}
+```
 
-### 51) Why does middleware order matter?
-Earlier middleware can change or stop the request before it reaches endpoints.
+---
 
-### 52) Where does routing happen?
-In middleware (endpoint routing), not inside Kestrel.
+### 11. How do you troubleshoot Kestrel web server-related issues?
 
-### 53) Where does authentication/authorization happen?
-In middleware pipeline.
+**Answer:**
 
-### 54) What’s a good security step for Kestrel?
-Disable server header: `options.AddServerHeader = false`.
+When troubleshooting Kestrel web server, first verify whether the cross-platform web server used
+natively by ASP.NET Core is behaving as expected. Then check surrounding dependencies,
+configuration, logs, runtime behavior, and edge cases before changing the design.
 
-### 55) Why disable the server header?
-Reduces information leakage (minor but good practice).
+**Sample:**
 
-### 56) What is HSTS?
-A browser rule that forces HTTPS. Often configured at proxy + app.
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "1. Kestrel web server"
+}
+```
 
-### 57) Kestrel vs HTTP.sys (key difference)?
-Kestrel is cross-platform. HTTP.sys is Windows-only and supports Windows Auth + kernel-mode stack.
+---
 
-### 58) Why use HTTP.sys sometimes?
-Need Windows Auth / port sharing / tight Windows integration.
+### 12. How does Kestrel web server connect to the rest of ASP.NET Core hosting services?
 
-### 59) Does Kestrel do WAF or DDoS protection?
-Not like a dedicated edge product. Use WAF/CDN/proxy/gateway.
+**Answer:**
 
-### 60) Nginx vs Kestrel for static content?
-Nginx is often more efficient; Kestrel can serve it via middleware but proxy/CDN is common.
+Kestrel web server connects to the rest of ASP.NET Core hosting services by giving structure to the
+cross-platform web server used natively by ASP.NET Core. It is one of the pieces that turns isolated
+facts into a coherent end-to-end explanation.
 
-### 61) What’s a “multi-site hosting” benefit of proxy?
-One proxy can host many domains on 80/443 and route each to different Kestrel ports.
+**Sample:**
 
-### 62) What is SNI?
-Server Name Indication allows multiple HTTPS certs/domains on same IP/port.
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "1. Kestrel web server"
+}
+```
 
-### 63) What logs are important for Kestrel/proxy troubleshooting?
-Access logs (proxy), application logs, connection/TLS errors, 502/504 metrics.
+---
 
-### 64) What does 504 Gateway Timeout often mean?
-The proxy waited too long for Kestrel/app response (timeout, slow code, deadlock).
+## 2. Reverse proxies
 
-### 65) How do you tune for large uploads?
-Increase Kestrel max body size and proxy max body size; stream uploads; adjust timeouts.
+### 13. What is the role of Reverse proxies in ASP.NET Core hosting services?
 
-### 66) Why can HTTP/2 improve performance?
-Multiplexing: multiple requests over one connection; less overhead.
+**Answer:**
 
-### 67) Will HTTP/2 always be faster?
-Not always; depends on workload, clients, proxies, TLS, and server resources.
+In ASP.NET Core hosting services, the term Reverse proxies refers to the front-door servers that sit in front
+of Kestrel in many deployments. It is part of the foundation a candidate should be able to explain
+clearly.
 
-### 68) What’s a common performance mistake for big responses?
-Buffering everything in memory. Use streaming for large payloads.
+**Sample:**
 
-### 69) What is the best general performance advice?
-Measure first (logs/metrics/traces), then tune.
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "2. Reverse proxies"
+}
+```
 
-### 70) Give a short “interview gold” summary of Kestrel.
-Kestrel is the fast, cross-platform server built into ASP.NET Core.  
-In production it commonly sits behind a reverse proxy/load balancer for TLS, security hardening, and operational features.
+---
 
+### 14. Why is the concept of Reverse proxies important in ASP.NET Core hosting services?
+
+**Answer:**
+
+This concept matters because it influences the front-door servers that sit in front of Kestrel in
+many deployments. Good interview answers connect it to clarity, maintainability, performance,
+security, or delivery depending on the situation.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "2. Reverse proxies"
+}
+```
+
+---
+
+### 15. When should a team focus on Reverse proxies?
+
+**Answer:**
+
+A team should focus on Reverse proxies when the requirement depends on the front-door servers that
+sit in front of Kestrel in many deployments. It becomes especially important when design decisions,
+scalability, or debugging depend on that area.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "2. Reverse proxies"
+}
+```
+
+---
+
+### 16. How is Reverse proxies applied in practice?
+
+**Answer:**
+
+In practice, Reverse proxies is applied by making the front-door servers that sit in front of
+Kestrel in many deployments explicit in the code, runtime setup, or delivery workflow. The exact
+shape depends on the application, but the responsibility should stay predictable.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "2. Reverse proxies"
+}
+```
+
+---
+
+### 17. What strengths does Reverse proxies bring?
+
+**Answer:**
+
+The strengths of Reverse proxies are better structure, better communication, and better control over
+the front-door servers that sit in front of Kestrel in many deployments. It also makes tradeoffs
+easier to explain to reviewers, interviewers, and teammates.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "2. Reverse proxies"
+}
+```
+
+---
+
+### 18. What tradeoffs come with Reverse proxies?
+
+**Answer:**
+
+The main tradeoff is extra complexity if Reverse proxies is introduced without a real need or a
+clear understanding of the front-door servers that sit in front of Kestrel in many deployments. That
+usually leads to overengineering, hidden bugs, or confusing architecture.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "2. Reverse proxies"
+}
+```
+
+---
+
+### 19. How does Reverse proxies differ from IIS hosting?
+
+**Answer:**
+
+Reverse proxies is centered on the front-door servers that sit in front of Kestrel in many
+deployments, while IIS hosting is centered on the Windows hosting model where IIS can front or
+integrate with ASP.NET Core. They often work together, but they solve different parts of the topic.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "2. Reverse proxies"
+}
+```
+
+---
+
+### 20. What is a good real-world example of Reverse proxies?
+
+**Answer:**
+
+A strong example is explaining how Reverse proxies affects a real feature, production issue,
+migration, or architecture decision involving the front-door servers that sit in front of Kestrel in
+many deployments. Interviewers usually care more about the reasoning than the definition alone.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "2. Reverse proxies"
+}
+```
+
+---
+
+### 21. What is a best practice for Reverse proxies?
+
+**Answer:**
+
+A good practice is to keep Reverse proxies aligned with the actual requirement around the front-door
+servers that sit in front of Kestrel in many deployments. Teams should document intent, keep
+implementation readable, and validate important paths early.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "2. Reverse proxies"
+}
+```
+
+---
+
+### 22. What is a common mistake around Reverse proxies?
+
+**Answer:**
+
+A common mistake is naming Reverse proxies without understanding how it affects the front-door
+servers that sit in front of Kestrel in many deployments. In real work, that usually appears as weak
+design choices, poor debugging, or incomplete explanations.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "2. Reverse proxies"
+}
+```
+
+---
+
+### 23. How do you troubleshoot Reverse proxies-related issues?
+
+**Answer:**
+
+When troubleshooting Reverse proxies, first verify whether the front-door servers that sit in front
+of Kestrel in many deployments is behaving as expected. Then check surrounding dependencies,
+configuration, logs, runtime behavior, and edge cases before changing the design.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "2. Reverse proxies"
+}
+```
+
+---
+
+### 24. How does Reverse proxies connect to the rest of ASP.NET Core hosting services?
+
+**Answer:**
+
+Reverse proxies connects to the rest of ASP.NET Core hosting services by giving structure to the
+front-door servers that sit in front of Kestrel in many deployments. It is one of the pieces that
+turns isolated facts into a coherent end-to-end explanation.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "2. Reverse proxies"
+}
+```
+
+---
+
+## 3. IIS hosting
+
+### 25. What is the role of IIS hosting in ASP.NET Core hosting services?
+
+**Answer:**
+
+In ASP.NET Core hosting services, the term IIS hosting refers to the Windows hosting model where IIS can
+front or integrate with ASP.NET Core. It is part of the foundation a candidate should be able to
+explain clearly.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "3. IIS hosting"
+}
+```
+
+---
+
+### 26. Why is the concept of IIS hosting important in ASP.NET Core hosting services?
+
+**Answer:**
+
+This concept matters because it influences the Windows hosting model where IIS can front or integrate
+with ASP.NET Core. Good interview answers connect it to clarity, maintainability, performance,
+security, or delivery depending on the situation.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "3. IIS hosting"
+}
+```
+
+---
+
+### 27. When should a team focus on IIS hosting?
+
+**Answer:**
+
+A team should focus on IIS hosting when the requirement depends on the Windows hosting model where
+IIS can front or integrate with ASP.NET Core. It becomes especially important when design decisions,
+scalability, or debugging depend on that area.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "3. IIS hosting"
+}
+```
+
+---
+
+### 28. How is IIS hosting applied in practice?
+
+**Answer:**
+
+In practice, IIS hosting is applied by making the Windows hosting model where IIS can front or
+integrate with ASP.NET Core explicit in the code, runtime setup, or delivery workflow. The exact
+shape depends on the application, but the responsibility should stay predictable.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "3. IIS hosting"
+}
+```
+
+---
+
+### 29. What strengths does IIS hosting bring?
+
+**Answer:**
+
+The strengths of IIS hosting are better structure, better communication, and better control over the
+Windows hosting model where IIS can front or integrate with ASP.NET Core. It also makes tradeoffs
+easier to explain to reviewers, interviewers, and teammates.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "3. IIS hosting"
+}
+```
+
+---
+
+### 30. What tradeoffs come with IIS hosting?
+
+**Answer:**
+
+The main tradeoff is extra complexity if IIS hosting is introduced without a real need or a clear
+understanding of the Windows hosting model where IIS can front or integrate with ASP.NET Core. That
+usually leads to overengineering, hidden bugs, or confusing architecture.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "3. IIS hosting"
+}
+```
+
+---
+
+### 31. How does IIS hosting differ from Nginx and Apache hosting?
+
+**Answer:**
+
+IIS hosting is centered on the Windows hosting model where IIS can front or integrate with ASP.NET
+Core, while Nginx and Apache hosting is centered on the common Linux reverse proxy patterns used
+with Kestrel. They often work together, but they solve different parts of the topic.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "3. IIS hosting"
+}
+```
+
+---
+
+### 32. What is a good real-world example of IIS hosting?
+
+**Answer:**
+
+A strong example is explaining how IIS hosting affects a real feature, production issue, migration,
+or architecture decision involving the Windows hosting model where IIS can front or integrate with
+ASP.NET Core. Interviewers usually care more about the reasoning than the definition alone.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "3. IIS hosting"
+}
+```
+
+---
+
+### 33. What is a best practice for IIS hosting?
+
+**Answer:**
+
+A good practice is to keep IIS hosting aligned with the actual requirement around the Windows
+hosting model where IIS can front or integrate with ASP.NET Core. Teams should document intent, keep
+implementation readable, and validate important paths early.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "3. IIS hosting"
+}
+```
+
+---
+
+### 34. What is a common mistake around IIS hosting?
+
+**Answer:**
+
+A common mistake is naming IIS hosting without understanding how it affects the Windows hosting
+model where IIS can front or integrate with ASP.NET Core. In real work, that usually appears as weak
+design choices, poor debugging, or incomplete explanations.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "3. IIS hosting"
+}
+```
+
+---
+
+### 35. How do you troubleshoot IIS hosting-related issues?
+
+**Answer:**
+
+When troubleshooting IIS hosting, first verify whether the Windows hosting model where IIS can front
+or integrate with ASP.NET Core is behaving as expected. Then check surrounding dependencies,
+configuration, logs, runtime behavior, and edge cases before changing the design.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "3. IIS hosting"
+}
+```
+
+---
+
+### 36. How does IIS hosting connect to the rest of ASP.NET Core hosting services?
+
+**Answer:**
+
+IIS hosting connects to the rest of ASP.NET Core hosting services by giving structure to the Windows
+hosting model where IIS can front or integrate with ASP.NET Core. It is one of the pieces that turns
+isolated facts into a coherent end-to-end explanation.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "3. IIS hosting"
+}
+```
+
+---
+
+## 4. Nginx and Apache hosting
+
+### 37. What is the role of Nginx and Apache hosting in ASP.NET Core hosting services?
+
+**Answer:**
+
+In ASP.NET Core hosting services, the term Nginx and Apache hosting refers to the common Linux reverse proxy
+patterns used with Kestrel. It is part of the foundation a candidate should be able to explain
+clearly.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "4. Nginx and Apache hosting"
+}
+```
+
+---
+
+### 38. Why is the concept of Nginx and Apache hosting important in ASP.NET Core hosting services?
+
+**Answer:**
+
+This concept matters because it influences the common Linux reverse proxy patterns used
+with Kestrel. Good interview answers connect it to clarity, maintainability, performance, security,
+or delivery depending on the situation.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "4. Nginx and Apache hosting"
+}
+```
+
+---
+
+### 39. When should a team focus on Nginx and Apache hosting?
+
+**Answer:**
+
+A team should focus on Nginx and Apache hosting when the requirement depends on the common Linux
+reverse proxy patterns used with Kestrel. It becomes especially important when design decisions,
+scalability, or debugging depend on that area.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "4. Nginx and Apache hosting"
+}
+```
+
+---
+
+### 40. How is Nginx and Apache hosting applied in practice?
+
+**Answer:**
+
+In practice, Nginx and Apache hosting is applied by making the common Linux reverse proxy patterns
+used with Kestrel explicit in the code, runtime setup, or delivery workflow. The exact shape depends
+on the application, but the responsibility should stay predictable.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "4. Nginx and Apache hosting"
+}
+```
+
+---
+
+### 41. What strengths does Nginx and Apache hosting bring?
+
+**Answer:**
+
+The strengths of Nginx and Apache hosting are better structure, better communication, and better
+control over the common Linux reverse proxy patterns used with Kestrel. It also makes tradeoffs
+easier to explain to reviewers, interviewers, and teammates.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "4. Nginx and Apache hosting"
+}
+```
+
+---
+
+### 42. What tradeoffs come with Nginx and Apache hosting?
+
+**Answer:**
+
+The main tradeoff is extra complexity if Nginx and Apache hosting is introduced without a real need
+or a clear understanding of the common Linux reverse proxy patterns used with Kestrel. That usually
+leads to overengineering, hidden bugs, or confusing architecture.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "4. Nginx and Apache hosting"
+}
+```
+
+---
+
+### 43. How does Nginx and Apache hosting differ from Windows services?
+
+**Answer:**
+
+Nginx and Apache hosting is centered on the common Linux reverse proxy patterns used with Kestrel,
+while Windows services is centered on the hosting approach used when an ASP.NET Core process runs as
+a Windows background service. They often work together, but they solve different parts of the topic.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "4. Nginx and Apache hosting"
+}
+```
+
+---
+
+### 44. What is a good real-world example of Nginx and Apache hosting?
+
+**Answer:**
+
+A strong example is explaining how Nginx and Apache hosting affects a real feature, production
+issue, migration, or architecture decision involving the common Linux reverse proxy patterns used
+with Kestrel. Interviewers usually care more about the reasoning than the definition alone.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "4. Nginx and Apache hosting"
+}
+```
+
+---
+
+### 45. What is a best practice for Nginx and Apache hosting?
+
+**Answer:**
+
+A good practice is to keep Nginx and Apache hosting aligned with the actual requirement around the
+common Linux reverse proxy patterns used with Kestrel. Teams should document intent, keep
+implementation readable, and validate important paths early.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "4. Nginx and Apache hosting"
+}
+```
+
+---
+
+### 46. What is a common mistake around Nginx and Apache hosting?
+
+**Answer:**
+
+A common mistake is naming Nginx and Apache hosting without understanding how it affects the common
+Linux reverse proxy patterns used with Kestrel. In real work, that usually appears as weak design
+choices, poor debugging, or incomplete explanations.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "4. Nginx and Apache hosting"
+}
+```
+
+---
+
+### 47. How do you troubleshoot Nginx and Apache hosting-related issues?
+
+**Answer:**
+
+When troubleshooting Nginx and Apache hosting, first verify whether the common Linux reverse proxy
+patterns used with Kestrel is behaving as expected. Then check surrounding dependencies,
+configuration, logs, runtime behavior, and edge cases before changing the design.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "4. Nginx and Apache hosting"
+}
+```
+
+---
+
+### 48. How does Nginx and Apache hosting connect to the rest of ASP.NET Core hosting services?
+
+**Answer:**
+
+Nginx and Apache hosting connects to the rest of ASP.NET Core hosting services by giving structure
+to the common Linux reverse proxy patterns used with Kestrel. It is one of the pieces that turns
+isolated facts into a coherent end-to-end explanation.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "4. Nginx and Apache hosting"
+}
+```
+
+---
+
+## 5. Windows services
+
+### 49. What is the role of Windows services in ASP.NET Core hosting services?
+
+**Answer:**
+
+In ASP.NET Core hosting services, the term Windows services refers to the hosting approach used when an
+ASP.NET Core process runs as a Windows background service. It is part of the foundation a candidate
+should be able to explain clearly.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "5. Windows services"
+}
+```
+
+---
+
+### 50. Why is the concept of Windows services important in ASP.NET Core hosting services?
+
+**Answer:**
+
+This concept matters because it influences the hosting approach used when an ASP.NET Core
+process runs as a Windows background service. Good interview answers connect it to clarity,
+maintainability, performance, security, or delivery depending on the situation.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "5. Windows services"
+}
+```
+
+---
+
+### 51. When should a team focus on Windows services?
+
+**Answer:**
+
+A team should focus on Windows services when the requirement depends on the hosting approach used
+when an ASP.NET Core process runs as a Windows background service. It becomes especially important
+when design decisions, scalability, or debugging depend on that area.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "5. Windows services"
+}
+```
+
+---
+
+### 52. How is Windows services applied in practice?
+
+**Answer:**
+
+In practice, Windows services is applied by making the hosting approach used when an ASP.NET Core
+process runs as a Windows background service explicit in the code, runtime setup, or delivery
+workflow. The exact shape depends on the application, but the responsibility should stay
+predictable.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "5. Windows services"
+}
+```
+
+---
+
+### 53. What strengths does Windows services bring?
+
+**Answer:**
+
+The strengths of Windows services are better structure, better communication, and better control
+over the hosting approach used when an ASP.NET Core process runs as a Windows background service. It
+also makes tradeoffs easier to explain to reviewers, interviewers, and teammates.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "5. Windows services"
+}
+```
+
+---
+
+### 54. What tradeoffs come with Windows services?
+
+**Answer:**
+
+The main tradeoff is extra complexity if Windows services is introduced without a real need or a
+clear understanding of the hosting approach used when an ASP.NET Core process runs as a Windows
+background service. That usually leads to overengineering, hidden bugs, or confusing architecture.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "5. Windows services"
+}
+```
+
+---
+
+### 55. How does Windows services differ from Linux and systemd?
+
+**Answer:**
+
+Windows services is centered on the hosting approach used when an ASP.NET Core process runs as a
+Windows background service, while Linux and systemd is centered on the service management model used
+when hosting ASP.NET Core on Linux. They often work together, but they solve different parts of the
+topic.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "5. Windows services"
+}
+```
+
+---
+
+### 56. What is a good real-world example of Windows services?
+
+**Answer:**
+
+A strong example is explaining how Windows services affects a real feature, production issue,
+migration, or architecture decision involving the hosting approach used when an ASP.NET Core process
+runs as a Windows background service. Interviewers usually care more about the reasoning than the
+definition alone.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "5. Windows services"
+}
+```
+
+---
+
+### 57. What is a best practice for Windows services?
+
+**Answer:**
+
+A good practice is to keep Windows services aligned with the actual requirement around the hosting
+approach used when an ASP.NET Core process runs as a Windows background service. Teams should
+document intent, keep implementation readable, and validate important paths early.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "5. Windows services"
+}
+```
+
+---
+
+### 58. What is a common mistake around Windows services?
+
+**Answer:**
+
+A common mistake is naming Windows services without understanding how it affects the hosting
+approach used when an ASP.NET Core process runs as a Windows background service. In real work, that
+usually appears as weak design choices, poor debugging, or incomplete explanations.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "5. Windows services"
+}
+```
+
+---
+
+### 59. How do you troubleshoot Windows services-related issues?
+
+**Answer:**
+
+When troubleshooting Windows services, first verify whether the hosting approach used when an
+ASP.NET Core process runs as a Windows background service is behaving as expected. Then check
+surrounding dependencies, configuration, logs, runtime behavior, and edge cases before changing the
+design.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "5. Windows services"
+}
+```
+
+---
+
+### 60. How does Windows services connect to the rest of ASP.NET Core hosting services?
+
+**Answer:**
+
+Windows services connects to the rest of ASP.NET Core hosting services by giving structure to the
+hosting approach used when an ASP.NET Core process runs as a Windows background service. It is one
+of the pieces that turns isolated facts into a coherent end-to-end explanation.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "5. Windows services"
+}
+```
+
+---
+
+## 6. Linux and systemd
+
+### 61. What is the role of Linux and systemd in ASP.NET Core hosting services?
+
+**Answer:**
+
+In ASP.NET Core hosting services, the term Linux and systemd refers to the service management model used when
+hosting ASP.NET Core on Linux. It is part of the foundation a candidate should be able to explain
+clearly.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "6. Linux and systemd"
+}
+```
+
+---
+
+### 62. Why is the concept of Linux and systemd important in ASP.NET Core hosting services?
+
+**Answer:**
+
+This concept matters because it influences the service management model used when hosting
+ASP.NET Core on Linux. Good interview answers connect it to clarity, maintainability, performance,
+security, or delivery depending on the situation.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "6. Linux and systemd"
+}
+```
+
+---
+
+### 63. When should a team focus on Linux and systemd?
+
+**Answer:**
+
+A team should focus on Linux and systemd when the requirement depends on the service management
+model used when hosting ASP.NET Core on Linux. It becomes especially important when design
+decisions, scalability, or debugging depend on that area.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "6. Linux and systemd"
+}
+```
+
+---
+
+### 64. How is Linux and systemd applied in practice?
+
+**Answer:**
+
+In practice, Linux and systemd is applied by making the service management model used when hosting
+ASP.NET Core on Linux explicit in the code, runtime setup, or delivery workflow. The exact shape
+depends on the application, but the responsibility should stay predictable.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "6. Linux and systemd"
+}
+```
+
+---
+
+### 65. What strengths does Linux and systemd bring?
+
+**Answer:**
+
+The strengths of Linux and systemd are better structure, better communication, and better control
+over the service management model used when hosting ASP.NET Core on Linux. It also makes tradeoffs
+easier to explain to reviewers, interviewers, and teammates.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "6. Linux and systemd"
+}
+```
+
+---
+
+### 66. What tradeoffs come with Linux and systemd?
+
+**Answer:**
+
+The main tradeoff is extra complexity if Linux and systemd is introduced without a real need or a
+clear understanding of the service management model used when hosting ASP.NET Core on Linux. That
+usually leads to overengineering, hidden bugs, or confusing architecture.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "6. Linux and systemd"
+}
+```
+
+---
+
+### 67. How does Linux and systemd differ from HTTPS and certificates?
+
+**Answer:**
+
+Linux and systemd is centered on the service management model used when hosting ASP.NET Core on
+Linux, while HTTPS and certificates is centered on the transport security setup required for secure
+web communication. They often work together, but they solve different parts of the topic.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "6. Linux and systemd"
+}
+```
+
+---
+
+### 68. What is a good real-world example of Linux and systemd?
+
+**Answer:**
+
+A strong example is explaining how Linux and systemd affects a real feature, production issue,
+migration, or architecture decision involving the service management model used when hosting ASP.NET
+Core on Linux. Interviewers usually care more about the reasoning than the definition alone.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "6. Linux and systemd"
+}
+```
+
+---
+
+### 69. What is a best practice for Linux and systemd?
+
+**Answer:**
+
+A good practice is to keep Linux and systemd aligned with the actual requirement around the service
+management model used when hosting ASP.NET Core on Linux. Teams should document intent, keep
+implementation readable, and validate important paths early.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "6. Linux and systemd"
+}
+```
+
+---
+
+### 70. What is a common mistake around Linux and systemd?
+
+**Answer:**
+
+A common mistake is naming Linux and systemd without understanding how it affects the service
+management model used when hosting ASP.NET Core on Linux. In real work, that usually appears as weak
+design choices, poor debugging, or incomplete explanations.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "6. Linux and systemd"
+}
+```
+
+---
+
+### 71. How do you troubleshoot Linux and systemd-related issues?
+
+**Answer:**
+
+When troubleshooting Linux and systemd, first verify whether the service management model used when
+hosting ASP.NET Core on Linux is behaving as expected. Then check surrounding dependencies,
+configuration, logs, runtime behavior, and edge cases before changing the design.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "6. Linux and systemd"
+}
+```
+
+---
+
+### 72. How does Linux and systemd connect to the rest of ASP.NET Core hosting services?
+
+**Answer:**
+
+Linux and systemd connects to the rest of ASP.NET Core hosting services by giving structure to the
+service management model used when hosting ASP.NET Core on Linux. It is one of the pieces that turns
+isolated facts into a coherent end-to-end explanation.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "6. Linux and systemd"
+}
+```
+
+---
+
+## 7. HTTPS and certificates
+
+### 73. What is the role of HTTPS and certificates in ASP.NET Core hosting services?
+
+**Answer:**
+
+In ASP.NET Core hosting services, the term HTTPS and certificates refers to the transport security setup
+required for secure web communication. It is part of the foundation a candidate should be able to
+explain clearly.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "7. HTTPS and certificates"
+}
+```
+
+---
+
+### 74. Why is the concept of HTTPS and certificates important in ASP.NET Core hosting services?
+
+**Answer:**
+
+This concept matters because it influences the transport security setup required for
+secure web communication. Good interview answers connect it to clarity, maintainability,
+performance, security, or delivery depending on the situation.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "7. HTTPS and certificates"
+}
+```
+
+---
+
+### 75. When should a team focus on HTTPS and certificates?
+
+**Answer:**
+
+A team should focus on HTTPS and certificates when the requirement depends on the transport security
+setup required for secure web communication. It becomes especially important when design decisions,
+scalability, or debugging depend on that area.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "7. HTTPS and certificates"
+}
+```
+
+---
+
+### 76. How is HTTPS and certificates applied in practice?
+
+**Answer:**
+
+In practice, HTTPS and certificates is applied by making the transport security setup required for
+secure web communication explicit in the code, runtime setup, or delivery workflow. The exact shape
+depends on the application, but the responsibility should stay predictable.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "7. HTTPS and certificates"
+}
+```
+
+---
+
+### 77. What strengths does HTTPS and certificates bring?
+
+**Answer:**
+
+The strengths of HTTPS and certificates are better structure, better communication, and better
+control over the transport security setup required for secure web communication. It also makes
+tradeoffs easier to explain to reviewers, interviewers, and teammates.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "7. HTTPS and certificates"
+}
+```
+
+---
+
+### 78. What tradeoffs come with HTTPS and certificates?
+
+**Answer:**
+
+The main tradeoff is extra complexity if HTTPS and certificates is introduced without a real need or
+a clear understanding of the transport security setup required for secure web communication. That
+usually leads to overengineering, hidden bugs, or confusing architecture.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "7. HTTPS and certificates"
+}
+```
+
+---
+
+### 79. How does HTTPS and certificates differ from Load balancing?
+
+**Answer:**
+
+HTTPS and certificates is centered on the transport security setup required for secure web
+communication, while Load balancing is centered on the distribution of traffic across multiple
+instances to improve scale and resilience. They often work together, but they solve different parts
+of the topic.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "7. HTTPS and certificates"
+}
+```
+
+---
+
+### 80. What is a good real-world example of HTTPS and certificates?
+
+**Answer:**
+
+A strong example is explaining how HTTPS and certificates affects a real feature, production issue,
+migration, or architecture decision involving the transport security setup required for secure web
+communication. Interviewers usually care more about the reasoning than the definition alone.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "7. HTTPS and certificates"
+}
+```
+
+---
+
+### 81. What is a best practice for HTTPS and certificates?
+
+**Answer:**
+
+A good practice is to keep HTTPS and certificates aligned with the actual requirement around the
+transport security setup required for secure web communication. Teams should document intent, keep
+implementation readable, and validate important paths early.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "7. HTTPS and certificates"
+}
+```
+
+---
+
+### 82. What is a common mistake around HTTPS and certificates?
+
+**Answer:**
+
+A common mistake is naming HTTPS and certificates without understanding how it affects the transport
+security setup required for secure web communication. In real work, that usually appears as weak
+design choices, poor debugging, or incomplete explanations.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "7. HTTPS and certificates"
+}
+```
+
+---
+
+### 83. How do you troubleshoot HTTPS and certificates-related issues?
+
+**Answer:**
+
+When troubleshooting HTTPS and certificates, first verify whether the transport security setup
+required for secure web communication is behaving as expected. Then check surrounding dependencies,
+configuration, logs, runtime behavior, and edge cases before changing the design.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "7. HTTPS and certificates"
+}
+```
+
+---
+
+### 84. How does HTTPS and certificates connect to the rest of ASP.NET Core hosting services?
+
+**Answer:**
+
+HTTPS and certificates connects to the rest of ASP.NET Core hosting services by giving structure to
+the transport security setup required for secure web communication. It is one of the pieces that
+turns isolated facts into a coherent end-to-end explanation.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "7. HTTPS and certificates"
+}
+```
+
+---
+
+## 8. Load balancing
+
+### 85. What is the role of Load balancing in ASP.NET Core hosting services?
+
+**Answer:**
+
+In ASP.NET Core hosting services, the term Load balancing refers to the distribution of traffic across
+multiple instances to improve scale and resilience. It is part of the foundation a candidate should
+be able to explain clearly.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "8. Load balancing"
+}
+```
+
+---
+
+### 86. Why is the concept of Load balancing important in ASP.NET Core hosting services?
+
+**Answer:**
+
+This concept matters because it influences the distribution of traffic across multiple instances
+to improve scale and resilience. Good interview answers connect it to clarity, maintainability,
+performance, security, or delivery depending on the situation.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "8. Load balancing"
+}
+```
+
+---
+
+### 87. When should a team focus on Load balancing?
+
+**Answer:**
+
+A team should focus on Load balancing when the requirement depends on the distribution of traffic
+across multiple instances to improve scale and resilience. It becomes especially important when
+design decisions, scalability, or debugging depend on that area.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "8. Load balancing"
+}
+```
+
+---
+
+### 88. How is Load balancing applied in practice?
+
+**Answer:**
+
+In practice, Load balancing is applied by making the distribution of traffic across multiple
+instances to improve scale and resilience explicit in the code, runtime setup, or delivery workflow.
+The exact shape depends on the application, but the responsibility should stay predictable.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "8. Load balancing"
+}
+```
+
+---
+
+### 89. What strengths does Load balancing bring?
+
+**Answer:**
+
+The strengths of Load balancing are better structure, better communication, and better control over
+the distribution of traffic across multiple instances to improve scale and resilience. It also makes
+tradeoffs easier to explain to reviewers, interviewers, and teammates.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "8. Load balancing"
+}
+```
+
+---
+
+### 90. What tradeoffs come with Load balancing?
+
+**Answer:**
+
+The main tradeoff is extra complexity if Load balancing is introduced without a real need or a clear
+understanding of the distribution of traffic across multiple instances to improve scale and
+resilience. That usually leads to overengineering, hidden bugs, or confusing architecture.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "8. Load balancing"
+}
+```
+
+---
+
+### 91. How does Load balancing differ from Health checks?
+
+**Answer:**
+
+Load balancing is centered on the distribution of traffic across multiple instances to improve scale
+and resilience, while Health checks is centered on the endpoint and operational signals used to
+verify service readiness and liveness. They often work together, but they solve different parts of
+the topic.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "8. Load balancing"
+}
+```
+
+---
+
+### 92. What is a good real-world example of Load balancing?
+
+**Answer:**
+
+A strong example is explaining how Load balancing affects a real feature, production issue,
+migration, or architecture decision involving the distribution of traffic across multiple instances
+to improve scale and resilience. Interviewers usually care more about the reasoning than the
+definition alone.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "8. Load balancing"
+}
+```
+
+---
+
+### 93. What is a best practice for Load balancing?
+
+**Answer:**
+
+A good practice is to keep Load balancing aligned with the actual requirement around the
+distribution of traffic across multiple instances to improve scale and resilience. Teams should
+document intent, keep implementation readable, and validate important paths early.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "8. Load balancing"
+}
+```
+
+---
+
+### 94. What is a common mistake around Load balancing?
+
+**Answer:**
+
+A common mistake is naming Load balancing without understanding how it affects the distribution of
+traffic across multiple instances to improve scale and resilience. In real work, that usually
+appears as weak design choices, poor debugging, or incomplete explanations.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "8. Load balancing"
+}
+```
+
+---
+
+### 95. How do you troubleshoot Load balancing-related issues?
+
+**Answer:**
+
+When troubleshooting Load balancing, first verify whether the distribution of traffic across
+multiple instances to improve scale and resilience is behaving as expected. Then check surrounding
+dependencies, configuration, logs, runtime behavior, and edge cases before changing the design.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "8. Load balancing"
+}
+```
+
+---
+
+### 96. How does Load balancing connect to the rest of ASP.NET Core hosting services?
+
+**Answer:**
+
+Load balancing connects to the rest of ASP.NET Core hosting services by giving structure to the
+distribution of traffic across multiple instances to improve scale and resilience. It is one of the
+pieces that turns isolated facts into a coherent end-to-end explanation.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "8. Load balancing"
+}
+```
+
+---
+
+## 9. Health checks
+
+### 97. What is the role of Health checks in ASP.NET Core hosting services?
+
+**Answer:**
+
+In ASP.NET Core hosting services, the term Health checks refers to the endpoint and operational signals used
+to verify service readiness and liveness. It is part of the foundation a candidate should be able to
+explain clearly.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "9. Health checks"
+}
+```
+
+---
+
+### 98. Why is the concept of Health checks important in ASP.NET Core hosting services?
+
+**Answer:**
+
+This concept matters because it influences the endpoint and operational signals used to verify
+service readiness and liveness. Good interview answers connect it to clarity, maintainability,
+performance, security, or delivery depending on the situation.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "9. Health checks"
+}
+```
+
+---
+
+### 99. When should a team focus on Health checks?
+
+**Answer:**
+
+A team should focus on Health checks when the requirement depends on the endpoint and operational
+signals used to verify service readiness and liveness. It becomes especially important when design
+decisions, scalability, or debugging depend on that area.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "9. Health checks"
+}
+```
+
+---
+
+### 100. How is Health checks applied in practice?
+
+**Answer:**
+
+In practice, Health checks is applied by making the endpoint and operational signals used to verify
+service readiness and liveness explicit in the code, runtime setup, or delivery workflow. The exact
+shape depends on the application, but the responsibility should stay predictable.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "9. Health checks"
+}
+```
+
+---
+
+### 101. What strengths does Health checks bring?
+
+**Answer:**
+
+The strengths of Health checks are better structure, better communication, and better control over
+the endpoint and operational signals used to verify service readiness and liveness. It also makes
+tradeoffs easier to explain to reviewers, interviewers, and teammates.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "9. Health checks"
+}
+```
+
+---
+
+### 102. What tradeoffs come with Health checks?
+
+**Answer:**
+
+The main tradeoff is extra complexity if Health checks is introduced without a real need or a clear
+understanding of the endpoint and operational signals used to verify service readiness and liveness.
+That usually leads to overengineering, hidden bugs, or confusing architecture.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "9. Health checks"
+}
+```
+
+---
+
+### 103. How does Health checks differ from Deployment topology?
+
+**Answer:**
+
+Health checks is centered on the endpoint and operational signals used to verify service readiness
+and liveness, while Deployment topology is centered on the overall shape of the runtime environment
+around the web application. They often work together, but they solve different parts of the topic.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "9. Health checks"
+}
+```
+
+---
+
+### 104. What is a good real-world example of Health checks?
+
+**Answer:**
+
+A strong example is explaining how Health checks affects a real feature, production issue,
+migration, or architecture decision involving the endpoint and operational signals used to verify
+service readiness and liveness. Interviewers usually care more about the reasoning than the
+definition alone.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "9. Health checks"
+}
+```
+
+---
+
+### 105. What is a best practice for Health checks?
+
+**Answer:**
+
+A good practice is to keep Health checks aligned with the actual requirement around the endpoint and
+operational signals used to verify service readiness and liveness. Teams should document intent,
+keep implementation readable, and validate important paths early.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "9. Health checks"
+}
+```
+
+---
+
+### 106. What is a common mistake around Health checks?
+
+**Answer:**
+
+A common mistake is naming Health checks without understanding how it affects the endpoint and
+operational signals used to verify service readiness and liveness. In real work, that usually
+appears as weak design choices, poor debugging, or incomplete explanations.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "9. Health checks"
+}
+```
+
+---
+
+### 107. How do you troubleshoot Health checks-related issues?
+
+**Answer:**
+
+When troubleshooting Health checks, first verify whether the endpoint and operational signals used
+to verify service readiness and liveness is behaving as expected. Then check surrounding
+dependencies, configuration, logs, runtime behavior, and edge cases before changing the design.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "9. Health checks"
+}
+```
+
+---
+
+### 108. How does Health checks connect to the rest of ASP.NET Core hosting services?
+
+**Answer:**
+
+Health checks connects to the rest of ASP.NET Core hosting services by giving structure to the
+endpoint and operational signals used to verify service readiness and liveness. It is one of the
+pieces that turns isolated facts into a coherent end-to-end explanation.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "9. Health checks"
+}
+```
+
+---
+
+## 10. Deployment topology
+
+### 109. What is the role of Deployment topology in ASP.NET Core hosting services?
+
+**Answer:**
+
+In ASP.NET Core hosting services, the term Deployment topology refers to the overall shape of the runtime
+environment around the web application. It is part of the foundation a candidate should be able to
+explain clearly.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "10. Deployment topology"
+}
+```
+
+---
+
+### 110. Why is the concept of Deployment topology important in ASP.NET Core hosting services?
+
+**Answer:**
+
+This concept matters because it influences the overall shape of the runtime environment
+around the web application. Good interview answers connect it to clarity, maintainability,
+performance, security, or delivery depending on the situation.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "10. Deployment topology"
+}
+```
+
+---
+
+### 111. When should a team focus on Deployment topology?
+
+**Answer:**
+
+A team should focus on Deployment topology when the requirement depends on the overall shape of the
+runtime environment around the web application. It becomes especially important when design
+decisions, scalability, or debugging depend on that area.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "10. Deployment topology"
+}
+```
+
+---
+
+### 112. How is Deployment topology applied in practice?
+
+**Answer:**
+
+In practice, Deployment topology is applied by making the overall shape of the runtime environment
+around the web application explicit in the code, runtime setup, or delivery workflow. The exact
+shape depends on the application, but the responsibility should stay predictable.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "10. Deployment topology"
+}
+```
+
+---
+
+### 113. What strengths does Deployment topology bring?
+
+**Answer:**
+
+The strengths of Deployment topology are better structure, better communication, and better control
+over the overall shape of the runtime environment around the web application. It also makes
+tradeoffs easier to explain to reviewers, interviewers, and teammates.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "10. Deployment topology"
+}
+```
+
+---
+
+### 114. What tradeoffs come with Deployment topology?
+
+**Answer:**
+
+The main tradeoff is extra complexity if Deployment topology is introduced without a real need or a
+clear understanding of the overall shape of the runtime environment around the web application. That
+usually leads to overengineering, hidden bugs, or confusing architecture.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "10. Deployment topology"
+}
+```
+
+---
+
+### 115. How does Deployment topology differ from Kestrel web server?
+
+**Answer:**
+
+Deployment topology is centered on the overall shape of the runtime environment around the web
+application, while Kestrel web server is centered on the cross-platform web server used natively by
+ASP.NET Core. They often work together, but they solve different parts of the topic.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "10. Deployment topology"
+}
+```
+
+---
+
+### 116. What is a good real-world example of Deployment topology?
+
+**Answer:**
+
+A strong example is explaining how Deployment topology affects a real feature, production issue,
+migration, or architecture decision involving the overall shape of the runtime environment around
+the web application. Interviewers usually care more about the reasoning than the definition alone.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "10. Deployment topology"
+}
+```
+
+---
+
+### 117. What is a best practice for Deployment topology?
+
+**Answer:**
+
+A good practice is to keep Deployment topology aligned with the actual requirement around the
+overall shape of the runtime environment around the web application. Teams should document intent,
+keep implementation readable, and validate important paths early.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "10. Deployment topology"
+}
+```
+
+---
+
+### 118. What is a common mistake around Deployment topology?
+
+**Answer:**
+
+A common mistake is naming Deployment topology without understanding how it affects the overall
+shape of the runtime environment around the web application. In real work, that usually appears as
+weak design choices, poor debugging, or incomplete explanations.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "10. Deployment topology"
+}
+```
+
+---
+
+### 119. How do you troubleshoot Deployment topology-related issues?
+
+**Answer:**
+
+When troubleshooting Deployment topology, first verify whether the overall shape of the runtime
+environment around the web application is behaving as expected. Then check surrounding dependencies,
+configuration, logs, runtime behavior, and edge cases before changing the design.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "10. Deployment topology"
+}
+```
+
+---
+
+### 120. How does Deployment topology connect to the rest of ASP.NET Core hosting services?
+
+**Answer:**
+
+Deployment topology connects to the rest of ASP.NET Core hosting services by giving structure to the
+overall shape of the runtime environment around the web application. It is one of the pieces that
+turns isolated facts into a coherent end-to-end explanation.
+
+**Sample:**
+
+```json
+{
+  "Kestrel": {
+    "Endpoints": {
+      "Https": { "Url": "https://0.0.0.0:5001" }
+    }
+  },
+  "Concept": "10. Deployment topology"
+}
+```

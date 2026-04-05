@@ -1,544 +1,2072 @@
-### 1. What is the problem of mapping work load with Azure configuration ?
+# DTU and eDTU Interview Questions
 
-Problem of Mapping Workload with Azure Configuration
+![DTU and eDTU Interview Questions](../../../assets/azure-sql-scaling.svg)
 
-Mapping workloads correctly with Azure configurations is critical to ensure optimal performance, cost-efficiency, and reliability. However, there are several challenges and problems that organizations face during this process:
+This page stays focused on Azure SQL performance sizing concepts rather than general database theory.
 
-⚠️ Common Problems
+## 1. DTU model
 
-**1. Incorrect Sizing of Resources**
+### 1. What is the role of DTU model in Azure SQL sizing models?
 
-- **Issue**: Choosing VM sizes or App Service plans that are too small or too large.
-- **Impact**: Under-provisioning leads to performance bottlenecks; over-provisioning causes unnecessary costs.
+**Answer:**
 
-**2. Lack of Understanding of Workload Characteristics**
+In Azure SQL sizing models, the term DTU model refers to the bundled sizing model that combines CPU, memory,
+and I O into one performance unit. It is part of the foundation a candidate should be able to
+explain clearly.
 
-- **Issue**: Not analyzing CPU, memory, I/O, and scaling behavior of the workload.
-- **Impact**: Results in misaligned service selection, such as using an App Service when a Function App would be more cost-effective.
-
-**3. Improper Use of Service Tiers**
-
-- **Issue**: Selecting wrong pricing tiers (e.g., Basic instead of Premium).
-- **Impact**: Missing out on features like auto-scaling, staging slots, or high availability.
-
-**4. Ignoring Network and Storage Needs**
-
-- **Issue**: Workload requires specific networking or storage configurations not accounted for.
-- **Impact**: Leads to network bottlenecks or data latency issues.
-
-**5. Overlooking Compliance and Security Requirements**
-
-- **Issue**: Not mapping workloads to services that meet regulatory or security needs.
-- **Impact**: Non-compliance with industry standards (e.g., HIPAA, GDPR).
-
-  🛠 Best Practices for Mapping
-
-- **Use Azure Advisor**: Get real-time suggestions for performance and cost optimizations.
-- **Perform Workload Assessment**: Analyze workload behavior using tools like Azure Migrate.
-- **Right-size Continuously**: Use autoscaling and cost monitoring tools to adjust as usage changes.
-- **Align with Business SLAs**: Choose configurations that support your uptime, latency, and DR requirements.
-- **Leverage Azure Well-Architected Framework**: Follow guidelines to optimize reliability, performance, and cost.
-
-✅ Conclusion
-
-Mapping workloads with the correct Azure configurations is not a one-time task. It requires continuous assessment and alignment with workload behavior, business goals, and cost considerations. Failure to do so can lead to degraded performance, security issues, and increased cloud bills.
-
-### 2. Explain DTU and EDTU ?
-
-Understanding DTU and eDTU in Azure SQL Database
-
-When using Azure SQL Database, it's important to understand how Microsoft defines and allocates performance using **DTUs** and **eDTUs**. These units simplify resource management but can be confusing without proper context.
-
-💡 What is a DTU?
-
-**DTU (Database Transaction Unit)** is a blended measure of:
-
-- **CPU**
-- **Memory**
-- **Reads and Writes (I/O)**
-
-It represents the overall performance level for a **single Azure SQL database** in the **DTU-based purchasing model**.
-
-> 💬 Think of it as a performance "package" that wraps CPU, memory, and storage IOPS into one simplified number.
-
-🔢 Example DTU Tiers:
-
-| **Tier** | **DTUs** | **Max Storage** |
-| -------- | -------- | --------------- |
-| Basic    | 5        | 2 GB            |
-| Standard | 10–300   | 250 GB          |
-| Premium  | 125–4000 | 1 TB            |
-
-📘 What is an eDTU?
-
-**eDTU (Elastic DTU)** is the equivalent of DTU but applied to **Elastic Pools**.
-
-- Elastic Pools are collections of databases that **share resources**.
-- **eDTUs** are the total pooled performance capacity available to all databases within the pool.
-
-> 🧠 eDTU = Shared DTU capacity across all databases in a pool
-
-🔄 Key Difference:
-
-- **DTU** = For **single database**
-- **eDTU** = For **elastic pool of databases**
-
-🆚 DTU vs vCore Model
-
-| Feature         | DTU Model                      | vCore Model                               |
-| --------------- | ------------------------------ | ----------------------------------------- |
-| Unit of measure | DTU (bundled)                  | vCore (CPU + memory separately)           |
-| Flexibility     | Less granular                  | More control over resources               |
-| Use case        | Simpler workloads, cost limits | Enterprise workloads, predictable scaling |
-| Transparency    | Lower                          | Higher (you know exact CPU/memory)        |
-
-✅ When to Use
-
-| Scenario                                                      | Choose                     |
-| ------------------------------------------------------------- | -------------------------- |
-| You want simple pricing and don't need fine-grained control   | **DTU model**              |
-| You want transparency, control, and scalability               | **vCore model**            |
-| You have multiple databases with unpredictable usage patterns | **eDTU with Elastic Pool** |
-
-📌 Summary
-
-- **DTU**: Performance metric for a **single database**, combining CPU, memory, and I/O.
-- **eDTU**: Shared DTU performance metric for **elastic pools** (multiple databases).
-- Useful for simplified performance planning, but less flexible than vCore-based pricing.
-
-### 3. On which factors does DTU depend ?
-
-🔍 Factors on Which DTU Depends
-
-A **DTU (Database Transaction Unit)** in Azure SQL Database is a pre-configured blend of three core resources:
-
-1. **CPU (Compute Power)**
-
-- Represents the **processing capability** of the database engine.
-- DTU includes CPU cycles for:
-  - Query execution
-  - Indexing
-  - Stored procedure processing
-  - Complex joins or calculations
-
-> ⚠️ CPU-bound queries can max out DTUs quickly.
-
-2.  **Memory (RAM)**
-
-- Used for:
-  - **Query caching**
-  - **Data buffering**
-  - Sorting and hashing operations
-  - Execution plans
-
-> 💡 Efficient use of memory can significantly reduce I/O and boost performance. 3. **Disk I/O (Reads and Writes)**
-
-- Includes:
-  - **Transaction log writes**
-  - **Data page reads/writes**
-  - TempDB usage
-- I/O-heavy operations (bulk inserts, frequent reads) consume more DTUs.
-
-> 📉 Poor indexing or large table scans increase I/O load and DTU usage.
-> 🔁 DTU = Blended Metric
-
-The DTU is essentially a **performance throttle** that balances:
-DTU = f(CPU, Memory, Disk I/O)
-If any one of the three resources hits its threshold, your **DTU usage approaches 100%**, throttling further performance.
-
-📊 What Affects DTU Consumption?
-
-| Factor                           | Impact on DTU         |
-| -------------------------------- | --------------------- |
-| Complex or nested queries        | High CPU usage        |
-| Missing indexes                  | Increased I/O         |
-| Large result sets                | More memory and I/O   |
-| High transaction volume          | CPU + I/O             |
-| Long-running or blocking queries | CPU + Memory          |
-| Poor query design                | All 3 (CPU, Mem, I/O) |
-
----
-
-🛠 Tools to Monitor DTU Usage
-
-- **Azure Portal → SQL Database → Monitoring → DTU %**
-- **Query Performance Insight**
-- **Extended Events or Query Store**
-
----
-
-✅ Optimization Tips
-
-- Use proper **indexing** and **query tuning**
-- Reduce **I/O operations** by filtering and batching
-- Enable **automatic tuning** in Azure SQL
-- Consider scaling to a higher DTU or switch to **vCore** model for more control
-
----
-
-📌 Summary
-
-DTU depends on:
-
-- **CPU usage**
-- **Memory pressure**
-- **Disk I/O operations**
-
-Understanding workload behavior helps you choose the right DTU tier and optimize performance effectively.
-
-### 4. How to calculate DTU ?
-
-📐 How to Calculate DTU (Database Transaction Units)
-
-Azure does not provide a direct formula to calculate DTUs because they are **abstract performance units**, blending CPU, memory, and I/O. However, Microsoft offers tools and guidance to help **estimate DTU requirements** based on your on-premise or existing workloads.
-
-⚙️ What is DTU?
-
-> **DTU = A blended measure of CPU + Memory + IOPS**  
-> It helps you choose the right Azure SQL Database performance level (Basic, Standard, Premium)
-
-🧮 How to Calculate or Estimate DTU Requirements
-
-✅ Option 1: Use Microsoft DTU Calculator (Recommended)
-
-Microsoft provides a tool:  
-👉 [DTU Calculator](https://dtucalculator.azurewebsites.net/)
-
-📋 Steps:
-
-1. Run a workload on your existing SQL Server (on-premise or VM).
-2. Collect performance metrics using **Performance Monitor (PerfMon)** for:
-   - Processor: `% Processor Time`
-   - Logical Disk: `Disk Reads/sec`, `Disk Writes/sec`
-   - SQL Server: `Batch Requests/sec`
-3. Export the data to a CSV.
-4. Upload to the DTU Calculator.
-5. The tool estimates the **minimum DTU tier** needed for Azure SQL Database.
-
-📊 Example Metrics Collected
-
-| Metric             | Description        |
-| ------------------ | ------------------ |
-| % Processor Time   | CPU utilization    |
-| Disk Reads/sec     | Read I/O load      |
-| Disk Writes/sec    | Write I/O load     |
-| Batch Requests/sec | Workload intensity |
-
-✅ Option 2: Use Azure SQL Query Performance Insight
-
-If you're already in Azure:
-
-- Go to **SQL Database → Monitoring → Query Performance Insight**
-- Check **DTU usage** over time
-- Analyze **top-consuming queries**
-
-⚠️ Notes
-
-- DTUs are only relevant in the **DTU-based pricing model**.
-- For **vCore-based models**, resource estimation is done separately (vCPU, RAM, IOPS).
-- DTUs do **not map 1:1** with any physical resource; they are **relative units**.
-
-📌 Summary
-
-| Method                              | Use When                                  |
-| ----------------------------------- | ----------------------------------------- |
-| DTU Calculator                      | Migrating from on-prem or VM to Azure SQL |
-| Azure Monitor & Insights            | Already in Azure environment              |
-| Manual Estimation (not recommended) | Lacks precision without real metrics      |
-
-> 🧠 DTU calculation is **estimative**, not exact. Always monitor after deployment to adjust tier if needed.
-
-### 5. How to measure the five factors which derive DTU ?
-
-📏 How to Measure the Five Factors That Drive DTU
-
-DTU (Database Transaction Unit) is a composite measure of **five core performance metrics** related to:
-
-1. CPU
-2. Memory
-3. Data Reads
-4. Data Writes
-5. Transaction Log Writes
-
-These metrics help estimate the **workload intensity** and choose the correct DTU tier.
-🧠 Why Measure These?
-
-Azure bundles CPU, memory, and I/O into DTUs. Understanding the **individual contributors** lets you:
-
-- Right-size your Azure SQL tier
-- Optimize queries and performance
-- Migrate on-prem workloads accurately using the **DTU Calculator**
-
-🖥️ Tools to Use
-
-- **Performance Monitor (PerfMon)** for on-prem SQL Server
-- **Azure Monitor / Query Performance Insight** for Azure SQL
-- **SQL Server Management Studio (SSMS)** for DMVs
-
-🔍 Factor-by-Factor Measurement
-
-**1. CPU Usage**
-
-**Metric**: `% Processor Time` (instance-wide)
-
-**How to Measure**:
-
-- PerfMon counter: `Processor(_Total)\% Processor Time`
-- DMV:
-  ```sql
-  SELECT record_id, SQLProcessUtilization FROM sys.dm_os_ring_buffers
-  ```
-
-**2. Memory Usage**
-
-**Metric**: Buffer cache usage / memory grants
-
-**How to Measure**:
-
-- PerfMon counter: `SQLServer:Memory Manager\Target Server Memory` & `Total Server Memory`
-- DMV:
-  ```sql
-  SELECT total_physical_memory_kb, available_physical_memory_kb FROM sys.dm_os_sys_memory;
-  ```
-
-**3. Data Reads (Logical/Physical)**
-
-**Metric**: `Disk Reads/sec`, `Page Reads/sec`
-
-**How to Measure**:
-
-- PerfMon counter: `LogicalDisk(_Total)\Disk Reads/sec`
-- DMV:
-  ```sql
-  SELECT * FROM sys.dm_io_virtual_file_stats(NULL, NULL);
-  ```
-
-**4. Data Writes**
-
-**Metric**: `Disk Writes/sec`
-
-**How to Measure**:
-
-- PerfMon counter: `LogicalDisk(_Total)\Disk Writes/sec`
-- DMV:
-  ```sql
-  SELECT * FROM sys.dm_io_virtual_file_stats(NULL, NULL);
-  ```
-
-**5. Transaction Log Writes**
-
-**Metric**: Log I/O throughput
-
-**How to Measure**:
-
-- PerfMon: `SQLServer:Databases\Log Bytes Flushed/sec`
-- DMV:
-  ```sql
-  SELECT database_id, log_write_percent, log_bytes_flushed FROM sys.dm_db_log_space_usage;
-  ```
-  📊 Suggested PerfMon Counters for DTU Estimation
-
-| Category           | Counter                    |
-| ------------------ | -------------------------- |
-| CPU                | `% Processor Time`         |
-| Memory             | `Total Server Memory (KB)` |
-| Data Read I/O      | `Disk Reads/sec`           |
-| Data Write I/O     | `Disk Writes/sec`          |
-| Log Writes         | `Log Bytes Flushed/sec`    |
-| Workload Intensity | `Batch Requests/sec`       |
-
-🧪 Using the DTU Calculator
-
-1. Collect PerfMon logs with above counters over typical workload.
-2. Export the data to CSV.
-3. Upload to [Azure DTU Calculator](https://dtucalculator.azurewebsites.net/)
-4. View estimated DTU requirements and recommended pricing tier.
-
-✅ Summary
-
-| Factor      | Measurement Tool | PerfMon Counter / DMV                            |
-| ----------- | ---------------- | ------------------------------------------------ |
-| CPU         | PerfMon, DMV     | `% Processor Time`, `SQLProcessUtilization`      |
-| Memory      | PerfMon, DMV     | `Total/Target Server Memory`, `dm_os_sys_memory` |
-| Data Reads  | PerfMon, DMV     | `Disk Reads/sec`, `dm_io_virtual_file_stats`     |
-| Data Writes | PerfMon, DMV     | `Disk Writes/sec`, `dm_io_virtual_file_stats`    |
-| Log Writes  | PerfMon, DMV     | `Log Bytes Flushed/sec`, `dm_db_log_space_usage` |
-
----
-
-> 💡 Tip: Monitor during **peak usage** periods to get the most accurate DTU estimation.
-
-### 6. How can you create SQL Server DB on Azure ?
-
-🛠️ How to Create a SQL Server Database on Azure
-
-You can create an Azure SQL Database (PaaS) via the **Azure Portal**, **Azure CLI**, **ARM Templates**, or **PowerShell**. Below is the most common and beginner-friendly method: **Azure Portal**.
-
-🌐 Option 1: Create via Azure Portal (GUI)
-✅ Step-by-Step
-
-**1. Sign in to Azure Portal**
-
-Go to 👉 https://portal.azure.com
-
-**Create a SQL Server (Logical Server)**
-
--Search for `SQL Server` in the search bar.
-
-- Click **Create** > **SQL Server**.
-
-**1. Fill in the following:**
-
-- **Server Name**: globally unique
-- **Admin Username** & **Password**
-- **Region**: where the server will reside
-
-- Click **Review + Create** → **Create**
-
-**Create SQL Database**
-
-- Go to the **SQL databases** service.
-
-- Click **Create** → **SQL Database**.
-
-Fill in:
-
-- **Database Name**
-- **Subscription** and **Resource Group**
-- **Select SQL Server** (use the one you just created)
-- **Compute + Storage**: choose DTU or vCore model
-- **Backup and Geo-redundancy** options
-
-- Click **Review + Create** → **Create**
-
-**Configure Firewall & Networking**
-
-- After creation, go to the SQL Server resource.
-
-- Open **Networking > Firewalls and virtual networks**.
-
-- Add your **client IP address** to allow external access.
-
-- Save changes.
-
-**Connect to the Database**
-
-- Use **SQL Server Management Studio (SSMS)** or **Azure Data Studio**
-- Server name format: <your-server-name>.database.windows.net
-- Use the admin username/password you provided.
-
----
-
-⚙️ Option 2: Create via Azure CLI
+**Sample:**
 
 ```bash
- Create Resource Group
-az group create --name myResourceGroup --location eastus
-
- Create SQL Server
-az sql server create \
---name my-sql-server \
---resource-group myResourceGroup \
---location eastus \
---admin-user myadmin \
---admin-password MyP@ssword123
-
- Create SQL Database
-az sql db create \
---resource-group myResourceGroup \
---server my-sql-server \
---name mySampleDatabase \
---service-objective S0
+# Concept: 1. DTU model
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
 ```
-
-### 7. Error while connecting to the azure database from SSMS
-
-**ERROR**
-
-```
-An instance-specific error occurred while establishing a connection to SQL Server.
-Connection was denied since Deny Public Network Access is set to
-Yes (https://docs.microsoft.com/azure/azure-sql/database/connectivity-settings#deny-public-network-access).
-To connect to this server, use the Private Endpoint from inside your virtual network (https://docs.microsoft.com/azure/sql-database/sql-database-private-endpoint-overview#how-to-set-up-private-link-for-azure-sql-database). (Microsoft SQL Server, Error: 47073)
-```
-
-Azure SQL Connectivity Setup
-
-This document outlines how to configure connectivity to an Azure SQL Server for **Production** and **Development/Test** environments.
-
-🔒 Production: Secure Access via Private Endpoint
-
-✅ Use Case:
-For production environments where public access is not permitted.
-
-🔧 Steps:
-
-**1. Create a Private Endpoint**
-
-- Go to the Azure Portal → SQL Server (not database).
-- Navigate to **Networking** → **Private endpoint connections**.
-- Click **+ Private endpoint** and follow the wizard.
-- Associate it with the correct **Virtual Network (VNet)** and **subnet**.
-
-**2. Configure Private DNS**
-
-- Use Azure Private DNS Zone: `privatelink.database.windows.net`
-- Link it to your VNet.
-- Ensure the DNS resolves the SQL Server name to the private IP.
-
-**3. Access from Azure Resources**
-
-- Ensure clients (VMs, App Services, Functions) are in the same VNet or peered VNet.
-- Use the regular server name (e.g., `yourserver.database.windows.net`) — it will resolve to the private IP.
-
-**4. Test Connection**
-
-- RDP into a VM within the VNet (or use VNet-integrated app).
-- Use SSMS or app connection string to verify access.
-
-**5. Ensure Public Access is Disabled**
-
-- Navigate to **SQL Server** → **Networking**.
-- Set **Public network access** to **Deny**.
-
-📘 [Private Link Setup Guide](https://learn.microsoft.com/azure/sql-database/sql-database-private-endpoint-overview)
 
 ---
 
-🧪 Development/Test: Controlled Public Access
+### 2. Why is the concept of DTU model important in Azure SQL sizing models?
 
-⚠️ Use Case:
-For local development or testing scenarios where secure access is relaxed.
+**Answer:**
 
-🔧 Steps:
+This concept matters because it influences the bundled sizing model that combines CPU, memory, and I O
+into one performance unit. Good interview answers connect it to clarity, maintainability,
+performance, security, or delivery depending on the situation.
 
-**1. Allow Public Network Access**
+**Sample:**
 
-- Go to **SQL Server** → **Networking**.
-- Set **Public network access** to **Yes**.
-
-**3. Add Client IP to Firewall Rules**
-
-- Under **Firewall and virtual networks**, add your current IP address.
-- Use `0.0.0.0 - 255.255.255.255` only for testing (not recommended).
-
-**3. Test SQL Connection**
-
-- Use SSMS, Azure Data Studio, or your application with:
-  - Server: `yourserver.database.windows.net`
-  - Authentication: SQL Auth / Azure AD / Managed Identity
-
-**4. Restrict When Done**
-
-- Remove test IPs and reset **Public network access** to **Deny** when testing is complete.
-
-📘 [Firewall Configuration Guide](https://learn.microsoft.com/azure/azure-sql/database/firewall-configure)
+```bash
+# Concept: 1. DTU model
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
 
 ---
 
-🧠 Best Practices
+### 3. When should a team focus on DTU model?
 
-- ✅ Always use **Private Endpoints** in production.
-- ✅ Monitor and alert on unexpected public access attempts.
-- ✅ Periodically review firewall rules and audit access.
-- 🚫 Never use `Allow All` IP range in production.
+**Answer:**
+
+A team should focus on DTU model when the requirement depends on the bundled sizing model that
+combines CPU, memory, and I O into one performance unit. It becomes especially important when design
+decisions, scaling choices, or debugging depend on that area.
+
+**Sample:**
+
+```bash
+# Concept: 1. DTU model
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 4. How is DTU model applied in practice?
+
+**Answer:**
+
+In practice, DTU model is applied by making the bundled sizing model that combines CPU, memory, and
+I O into one performance unit explicit in the implementation or workflow. The exact shape depends on
+the service design, but the responsibility should stay predictable.
+
+**Sample:**
+
+```bash
+# Concept: 1. DTU model
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 5. What strengths does DTU model bring?
+
+**Answer:**
+
+The strengths of DTU model are better structure, better communication, and better control over the
+bundled sizing model that combines CPU, memory, and I O into one performance unit. It also makes
+tradeoffs easier to explain to both interviewers and project stakeholders.
+
+**Sample:**
+
+```bash
+# Concept: 1. DTU model
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 6. What tradeoffs come with DTU model?
+
+**Answer:**
+
+The main tradeoff is extra complexity if DTU model is introduced without a real need or a clear
+understanding of the bundled sizing model that combines CPU, memory, and I O into one performance
+unit. That usually leads to higher cost, weaker design, or harder troubleshooting.
+
+**Sample:**
+
+```bash
+# Concept: 1. DTU model
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 7. How does DTU model differ from eDTU pools?
+
+**Answer:**
+
+DTU model is centered on the bundled sizing model that combines CPU, memory, and I O into one
+performance unit, while eDTU pools is centered on the elastic performance model where multiple
+databases share a pool of capacity. They often work together, but they solve different parts of the
+topic.
+
+**Sample:**
+
+```bash
+# Concept: 1. DTU model
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 8. What is a good real-world example of DTU model?
+
+**Answer:**
+
+A strong example is explaining how DTU model affects a real feature, cost decision, failure mode, or
+architecture choice involving the bundled sizing model that combines CPU, memory, and I O into one
+performance unit. Interviewers usually value the reasoning behind the example.
+
+**Sample:**
+
+```bash
+# Concept: 1. DTU model
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 9. What is a best practice for DTU model?
+
+**Answer:**
+
+A good practice is to keep DTU model aligned with the actual requirement around the bundled sizing
+model that combines CPU, memory, and I O into one performance unit. Teams should document intent,
+keep the setup readable, and validate the most important paths early.
+
+**Sample:**
+
+```bash
+# Concept: 1. DTU model
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 10. What is a common mistake around DTU model?
+
+**Answer:**
+
+A common mistake is naming DTU model without understanding how it affects the bundled sizing model
+that combines CPU, memory, and I O into one performance unit. In real work, that usually appears as
+weak sizing, poor troubleshooting, or the wrong operational choice.
+
+**Sample:**
+
+```bash
+# Concept: 1. DTU model
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 11. How do you troubleshoot DTU model-related issues?
+
+**Answer:**
+
+When troubleshooting DTU model, first verify whether the bundled sizing model that combines CPU,
+memory, and I O into one performance unit is behaving as expected. Then check dependencies,
+configuration, metrics, logs, and edge cases before changing the design.
+
+**Sample:**
+
+```bash
+# Concept: 1. DTU model
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 12. How does DTU model connect to the rest of Azure SQL sizing models?
+
+**Answer:**
+
+DTU model connects to the rest of Azure SQL sizing models by giving structure to the bundled sizing
+model that combines CPU, memory, and I O into one performance unit. It is one of the pieces that
+turns isolated facts into a usable end-to-end mental model.
+
+**Sample:**
+
+```bash
+# Concept: 1. DTU model
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+## 2. eDTU pools
+
+### 13. What is the role of eDTU pools in Azure SQL sizing models?
+
+**Answer:**
+
+In Azure SQL sizing models, the term eDTU pools refers to the elastic performance model where multiple
+databases share a pool of capacity. It is part of the foundation a candidate should be able to
+explain clearly.
+
+**Sample:**
+
+```bash
+# Concept: 2. eDTU pools
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 14. Why is the concept of eDTU pools important in Azure SQL sizing models?
+
+**Answer:**
+
+This concept matters because it influences the elastic performance model where multiple databases
+share a pool of capacity. Good interview answers connect it to clarity, maintainability,
+performance, security, or delivery depending on the situation.
+
+**Sample:**
+
+```bash
+# Concept: 2. eDTU pools
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 15. When should a team focus on eDTU pools?
+
+**Answer:**
+
+A team should focus on eDTU pools when the requirement depends on the elastic performance model
+where multiple databases share a pool of capacity. It becomes especially important when design
+decisions, scaling choices, or debugging depend on that area.
+
+**Sample:**
+
+```bash
+# Concept: 2. eDTU pools
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 16. How is eDTU pools applied in practice?
+
+**Answer:**
+
+In practice, eDTU pools is applied by making the elastic performance model where multiple databases
+share a pool of capacity explicit in the implementation or workflow. The exact shape depends on the
+service design, but the responsibility should stay predictable.
+
+**Sample:**
+
+```bash
+# Concept: 2. eDTU pools
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 17. What strengths does eDTU pools bring?
+
+**Answer:**
+
+The strengths of eDTU pools are better structure, better communication, and better control over the
+elastic performance model where multiple databases share a pool of capacity. It also makes tradeoffs
+easier to explain to both interviewers and project stakeholders.
+
+**Sample:**
+
+```bash
+# Concept: 2. eDTU pools
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 18. What tradeoffs come with eDTU pools?
+
+**Answer:**
+
+The main tradeoff is extra complexity if eDTU pools is introduced without a real need or a clear
+understanding of the elastic performance model where multiple databases share a pool of capacity.
+That usually leads to higher cost, weaker design, or harder troubleshooting.
+
+**Sample:**
+
+```bash
+# Concept: 2. eDTU pools
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 19. How does eDTU pools differ from vCore model?
+
+**Answer:**
+
+eDTU pools is centered on the elastic performance model where multiple databases share a pool of
+capacity, while vCore model is centered on the more explicit sizing model that exposes compute and
+memory choices more directly. They often work together, but they solve different parts of the topic.
+
+**Sample:**
+
+```bash
+# Concept: 2. eDTU pools
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 20. What is a good real-world example of eDTU pools?
+
+**Answer:**
+
+A strong example is explaining how eDTU pools affects a real feature, cost decision, failure mode,
+or architecture choice involving the elastic performance model where multiple databases share a pool
+of capacity. Interviewers usually value the reasoning behind the example.
+
+**Sample:**
+
+```bash
+# Concept: 2. eDTU pools
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 21. What is a best practice for eDTU pools?
+
+**Answer:**
+
+A good practice is to keep eDTU pools aligned with the actual requirement around the elastic
+performance model where multiple databases share a pool of capacity. Teams should document intent,
+keep the setup readable, and validate the most important paths early.
+
+**Sample:**
+
+```bash
+# Concept: 2. eDTU pools
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 22. What is a common mistake around eDTU pools?
+
+**Answer:**
+
+A common mistake is naming eDTU pools without understanding how it affects the elastic performance
+model where multiple databases share a pool of capacity. In real work, that usually appears as weak
+sizing, poor troubleshooting, or the wrong operational choice.
+
+**Sample:**
+
+```bash
+# Concept: 2. eDTU pools
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 23. How do you troubleshoot eDTU pools-related issues?
+
+**Answer:**
+
+When troubleshooting eDTU pools, first verify whether the elastic performance model where multiple
+databases share a pool of capacity is behaving as expected. Then check dependencies, configuration,
+metrics, logs, and edge cases before changing the design.
+
+**Sample:**
+
+```bash
+# Concept: 2. eDTU pools
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 24. How does eDTU pools connect to the rest of Azure SQL sizing models?
+
+**Answer:**
+
+eDTU pools connects to the rest of Azure SQL sizing models by giving structure to the elastic
+performance model where multiple databases share a pool of capacity. It is one of the pieces that
+turns isolated facts into a usable end-to-end mental model.
+
+**Sample:**
+
+```bash
+# Concept: 2. eDTU pools
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+## 3. vCore model
+
+### 25. What is the role of vCore model in Azure SQL sizing models?
+
+**Answer:**
+
+In Azure SQL sizing models, the term vCore model refers to the more explicit sizing model that exposes
+compute and memory choices more directly. It is part of the foundation a candidate should be able to
+explain clearly.
+
+**Sample:**
+
+```bash
+# Concept: 3. vCore model
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 26. Why is the concept of vCore model important in Azure SQL sizing models?
+
+**Answer:**
+
+This concept matters because it influences the more explicit sizing model that exposes compute and
+memory choices more directly. Good interview answers connect it to clarity, maintainability,
+performance, security, or delivery depending on the situation.
+
+**Sample:**
+
+```bash
+# Concept: 3. vCore model
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 27. When should a team focus on vCore model?
+
+**Answer:**
+
+A team should focus on vCore model when the requirement depends on the more explicit sizing model
+that exposes compute and memory choices more directly. It becomes especially important when design
+decisions, scaling choices, or debugging depend on that area.
+
+**Sample:**
+
+```bash
+# Concept: 3. vCore model
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 28. How is vCore model applied in practice?
+
+**Answer:**
+
+In practice, vCore model is applied by making the more explicit sizing model that exposes compute
+and memory choices more directly explicit in the implementation or workflow. The exact shape depends
+on the service design, but the responsibility should stay predictable.
+
+**Sample:**
+
+```bash
+# Concept: 3. vCore model
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 29. What strengths does vCore model bring?
+
+**Answer:**
+
+The strengths of vCore model are better structure, better communication, and better control over the
+more explicit sizing model that exposes compute and memory choices more directly. It also makes
+tradeoffs easier to explain to both interviewers and project stakeholders.
+
+**Sample:**
+
+```bash
+# Concept: 3. vCore model
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 30. What tradeoffs come with vCore model?
+
+**Answer:**
+
+The main tradeoff is extra complexity if vCore model is introduced without a real need or a clear
+understanding of the more explicit sizing model that exposes compute and memory choices more
+directly. That usually leads to higher cost, weaker design, or harder troubleshooting.
+
+**Sample:**
+
+```bash
+# Concept: 3. vCore model
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 31. How does vCore model differ from Workload sizing?
+
+**Answer:**
+
+vCore model is centered on the more explicit sizing model that exposes compute and memory choices
+more directly, while Workload sizing is centered on the evaluation of how much compute, storage, and
+throughput a database really needs. They often work together, but they solve different parts of the
+topic.
+
+**Sample:**
+
+```bash
+# Concept: 3. vCore model
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 32. What is a good real-world example of vCore model?
+
+**Answer:**
+
+A strong example is explaining how vCore model affects a real feature, cost decision, failure mode,
+or architecture choice involving the more explicit sizing model that exposes compute and memory
+choices more directly. Interviewers usually value the reasoning behind the example.
+
+**Sample:**
+
+```bash
+# Concept: 3. vCore model
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 33. What is a best practice for vCore model?
+
+**Answer:**
+
+A good practice is to keep vCore model aligned with the actual requirement around the more explicit
+sizing model that exposes compute and memory choices more directly. Teams should document intent,
+keep the setup readable, and validate the most important paths early.
+
+**Sample:**
+
+```bash
+# Concept: 3. vCore model
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 34. What is a common mistake around vCore model?
+
+**Answer:**
+
+A common mistake is naming vCore model without understanding how it affects the more explicit sizing
+model that exposes compute and memory choices more directly. In real work, that usually appears as
+weak sizing, poor troubleshooting, or the wrong operational choice.
+
+**Sample:**
+
+```bash
+# Concept: 3. vCore model
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 35. How do you troubleshoot vCore model-related issues?
+
+**Answer:**
+
+When troubleshooting vCore model, first verify whether the more explicit sizing model that exposes
+compute and memory choices more directly is behaving as expected. Then check dependencies,
+configuration, metrics, logs, and edge cases before changing the design.
+
+**Sample:**
+
+```bash
+# Concept: 3. vCore model
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 36. How does vCore model connect to the rest of Azure SQL sizing models?
+
+**Answer:**
+
+vCore model connects to the rest of Azure SQL sizing models by giving structure to the more explicit
+sizing model that exposes compute and memory choices more directly. It is one of the pieces that
+turns isolated facts into a usable end-to-end mental model.
+
+**Sample:**
+
+```bash
+# Concept: 3. vCore model
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+## 4. Workload sizing
+
+### 37. What is the role of Workload sizing in Azure SQL sizing models?
+
+**Answer:**
+
+In Azure SQL sizing models, the term Workload sizing refers to the evaluation of how much compute, storage,
+and throughput a database really needs. It is part of the foundation a candidate should be able to
+explain clearly.
+
+**Sample:**
+
+```bash
+# Concept: 4. Workload sizing
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 38. Why is the concept of Workload sizing important in Azure SQL sizing models?
+
+**Answer:**
+
+This concept matters because it influences the evaluation of how much compute, storage, and
+throughput a database really needs. Good interview answers connect it to clarity, maintainability,
+performance, security, or delivery depending on the situation.
+
+**Sample:**
+
+```bash
+# Concept: 4. Workload sizing
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 39. When should a team focus on Workload sizing?
+
+**Answer:**
+
+A team should focus on Workload sizing when the requirement depends on the evaluation of how much
+compute, storage, and throughput a database really needs. It becomes especially important when
+design decisions, scaling choices, or debugging depend on that area.
+
+**Sample:**
+
+```bash
+# Concept: 4. Workload sizing
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 40. How is Workload sizing applied in practice?
+
+**Answer:**
+
+In practice, Workload sizing is applied by making the evaluation of how much compute, storage, and
+throughput a database really needs explicit in the implementation or workflow. The exact shape
+depends on the service design, but the responsibility should stay predictable.
+
+**Sample:**
+
+```bash
+# Concept: 4. Workload sizing
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 41. What strengths does Workload sizing bring?
+
+**Answer:**
+
+The strengths of Workload sizing are better structure, better communication, and better control over
+the evaluation of how much compute, storage, and throughput a database really needs. It also makes
+tradeoffs easier to explain to both interviewers and project stakeholders.
+
+**Sample:**
+
+```bash
+# Concept: 4. Workload sizing
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 42. What tradeoffs come with Workload sizing?
+
+**Answer:**
+
+The main tradeoff is extra complexity if Workload sizing is introduced without a real need or a
+clear understanding of the evaluation of how much compute, storage, and throughput a database really
+needs. That usually leads to higher cost, weaker design, or harder troubleshooting.
+
+**Sample:**
+
+```bash
+# Concept: 4. Workload sizing
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 43. How does Workload sizing differ from Azure SQL metrics?
+
+**Answer:**
+
+Workload sizing is centered on the evaluation of how much compute, storage, and throughput a
+database really needs, while Azure SQL metrics is centered on the measurements used to understand
+utilization, bottlenecks, and health. They often work together, but they solve different parts of
+the topic.
+
+**Sample:**
+
+```bash
+# Concept: 4. Workload sizing
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 44. What is a good real-world example of Workload sizing?
+
+**Answer:**
+
+A strong example is explaining how Workload sizing affects a real feature, cost decision, failure
+mode, or architecture choice involving the evaluation of how much compute, storage, and throughput a
+database really needs. Interviewers usually value the reasoning behind the example.
+
+**Sample:**
+
+```bash
+# Concept: 4. Workload sizing
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 45. What is a best practice for Workload sizing?
+
+**Answer:**
+
+A good practice is to keep Workload sizing aligned with the actual requirement around the evaluation
+of how much compute, storage, and throughput a database really needs. Teams should document intent,
+keep the setup readable, and validate the most important paths early.
+
+**Sample:**
+
+```bash
+# Concept: 4. Workload sizing
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 46. What is a common mistake around Workload sizing?
+
+**Answer:**
+
+A common mistake is naming Workload sizing without understanding how it affects the evaluation of
+how much compute, storage, and throughput a database really needs. In real work, that usually
+appears as weak sizing, poor troubleshooting, or the wrong operational choice.
+
+**Sample:**
+
+```bash
+# Concept: 4. Workload sizing
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 47. How do you troubleshoot Workload sizing-related issues?
+
+**Answer:**
+
+When troubleshooting Workload sizing, first verify whether the evaluation of how much compute,
+storage, and throughput a database really needs is behaving as expected. Then check dependencies,
+configuration, metrics, logs, and edge cases before changing the design.
+
+**Sample:**
+
+```bash
+# Concept: 4. Workload sizing
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 48. How does Workload sizing connect to the rest of Azure SQL sizing models?
+
+**Answer:**
+
+Workload sizing connects to the rest of Azure SQL sizing models by giving structure to the
+evaluation of how much compute, storage, and throughput a database really needs. It is one of the
+pieces that turns isolated facts into a usable end-to-end mental model.
+
+**Sample:**
+
+```bash
+# Concept: 4. Workload sizing
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+## 5. Azure SQL metrics
+
+### 49. What is the role of Azure SQL metrics in Azure SQL sizing models?
+
+**Answer:**
+
+In Azure SQL sizing models, the term Azure SQL metrics refers to the measurements used to understand
+utilization, bottlenecks, and health. It is part of the foundation a candidate should be able to
+explain clearly.
+
+**Sample:**
+
+```bash
+# Concept: 5. Azure SQL metrics
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 50. Why is the concept of Azure SQL metrics important in Azure SQL sizing models?
+
+**Answer:**
+
+This concept matters because it influences the measurements used to understand utilization,
+bottlenecks, and health. Good interview answers connect it to clarity, maintainability, performance,
+security, or delivery depending on the situation.
+
+**Sample:**
+
+```bash
+# Concept: 5. Azure SQL metrics
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 51. When should a team focus on Azure SQL metrics?
+
+**Answer:**
+
+A team should focus on Azure SQL metrics when the requirement depends on the measurements used to
+understand utilization, bottlenecks, and health. It becomes especially important when design
+decisions, scaling choices, or debugging depend on that area.
+
+**Sample:**
+
+```bash
+# Concept: 5. Azure SQL metrics
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 52. How is Azure SQL metrics applied in practice?
+
+**Answer:**
+
+In practice, Azure SQL metrics is applied by making the measurements used to understand utilization,
+bottlenecks, and health explicit in the implementation or workflow. The exact shape depends on the
+service design, but the responsibility should stay predictable.
+
+**Sample:**
+
+```bash
+# Concept: 5. Azure SQL metrics
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 53. What strengths does Azure SQL metrics bring?
+
+**Answer:**
+
+The strengths of Azure SQL metrics are better structure, better communication, and better control
+over the measurements used to understand utilization, bottlenecks, and health. It also makes
+tradeoffs easier to explain to both interviewers and project stakeholders.
+
+**Sample:**
+
+```bash
+# Concept: 5. Azure SQL metrics
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 54. What tradeoffs come with Azure SQL metrics?
+
+**Answer:**
+
+The main tradeoff is extra complexity if Azure SQL metrics is introduced without a real need or a
+clear understanding of the measurements used to understand utilization, bottlenecks, and health.
+That usually leads to higher cost, weaker design, or harder troubleshooting.
+
+**Sample:**
+
+```bash
+# Concept: 5. Azure SQL metrics
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 55. How does Azure SQL metrics differ from Query tuning?
+
+**Answer:**
+
+Azure SQL metrics is centered on the measurements used to understand utilization, bottlenecks, and
+health, while Query tuning is centered on the optimization of queries so they consume fewer
+resources and scale more predictably. They often work together, but they solve different parts of
+the topic.
+
+**Sample:**
+
+```bash
+# Concept: 5. Azure SQL metrics
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 56. What is a good real-world example of Azure SQL metrics?
+
+**Answer:**
+
+A strong example is explaining how Azure SQL metrics affects a real feature, cost decision, failure
+mode, or architecture choice involving the measurements used to understand utilization, bottlenecks,
+and health. Interviewers usually value the reasoning behind the example.
+
+**Sample:**
+
+```bash
+# Concept: 5. Azure SQL metrics
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 57. What is a best practice for Azure SQL metrics?
+
+**Answer:**
+
+A good practice is to keep Azure SQL metrics aligned with the actual requirement around the
+measurements used to understand utilization, bottlenecks, and health. Teams should document intent,
+keep the setup readable, and validate the most important paths early.
+
+**Sample:**
+
+```bash
+# Concept: 5. Azure SQL metrics
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 58. What is a common mistake around Azure SQL metrics?
+
+**Answer:**
+
+A common mistake is naming Azure SQL metrics without understanding how it affects the measurements
+used to understand utilization, bottlenecks, and health. In real work, that usually appears as weak
+sizing, poor troubleshooting, or the wrong operational choice.
+
+**Sample:**
+
+```bash
+# Concept: 5. Azure SQL metrics
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 59. How do you troubleshoot Azure SQL metrics-related issues?
+
+**Answer:**
+
+When troubleshooting Azure SQL metrics, first verify whether the measurements used to understand
+utilization, bottlenecks, and health is behaving as expected. Then check dependencies,
+configuration, metrics, logs, and edge cases before changing the design.
+
+**Sample:**
+
+```bash
+# Concept: 5. Azure SQL metrics
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 60. How does Azure SQL metrics connect to the rest of Azure SQL sizing models?
+
+**Answer:**
+
+Azure SQL metrics connects to the rest of Azure SQL sizing models by giving structure to the
+measurements used to understand utilization, bottlenecks, and health. It is one of the pieces that
+turns isolated facts into a usable end-to-end mental model.
+
+**Sample:**
+
+```bash
+# Concept: 5. Azure SQL metrics
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+## 6. Query tuning
+
+### 61. What is the role of Query tuning in Azure SQL sizing models?
+
+**Answer:**
+
+In Azure SQL sizing models, the term Query tuning refers to the optimization of queries so they consume fewer
+resources and scale more predictably. It is part of the foundation a candidate should be able to
+explain clearly.
+
+**Sample:**
+
+```bash
+# Concept: 6. Query tuning
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 62. Why is the concept of Query tuning important in Azure SQL sizing models?
+
+**Answer:**
+
+This concept matters because it influences the optimization of queries so they consume fewer
+resources and scale more predictably. Good interview answers connect it to clarity, maintainability,
+performance, security, or delivery depending on the situation.
+
+**Sample:**
+
+```bash
+# Concept: 6. Query tuning
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 63. When should a team focus on Query tuning?
+
+**Answer:**
+
+A team should focus on Query tuning when the requirement depends on the optimization of queries so
+they consume fewer resources and scale more predictably. It becomes especially important when design
+decisions, scaling choices, or debugging depend on that area.
+
+**Sample:**
+
+```bash
+# Concept: 6. Query tuning
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 64. How is Query tuning applied in practice?
+
+**Answer:**
+
+In practice, Query tuning is applied by making the optimization of queries so they consume fewer
+resources and scale more predictably explicit in the implementation or workflow. The exact shape
+depends on the service design, but the responsibility should stay predictable.
+
+**Sample:**
+
+```bash
+# Concept: 6. Query tuning
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 65. What strengths does Query tuning bring?
+
+**Answer:**
+
+The strengths of Query tuning are better structure, better communication, and better control over
+the optimization of queries so they consume fewer resources and scale more predictably. It also
+makes tradeoffs easier to explain to both interviewers and project stakeholders.
+
+**Sample:**
+
+```bash
+# Concept: 6. Query tuning
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 66. What tradeoffs come with Query tuning?
+
+**Answer:**
+
+The main tradeoff is extra complexity if Query tuning is introduced without a real need or a clear
+understanding of the optimization of queries so they consume fewer resources and scale more
+predictably. That usually leads to higher cost, weaker design, or harder troubleshooting.
+
+**Sample:**
+
+```bash
+# Concept: 6. Query tuning
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 67. How does Query tuning differ from Indexing strategy?
+
+**Answer:**
+
+Query tuning is centered on the optimization of queries so they consume fewer resources and scale
+more predictably, while Indexing strategy is centered on the choice of indexes that improves read
+performance without adding unnecessary write cost. They often work together, but they solve
+different parts of the topic.
+
+**Sample:**
+
+```bash
+# Concept: 6. Query tuning
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 68. What is a good real-world example of Query tuning?
+
+**Answer:**
+
+A strong example is explaining how Query tuning affects a real feature, cost decision, failure mode,
+or architecture choice involving the optimization of queries so they consume fewer resources and
+scale more predictably. Interviewers usually value the reasoning behind the example.
+
+**Sample:**
+
+```bash
+# Concept: 6. Query tuning
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 69. What is a best practice for Query tuning?
+
+**Answer:**
+
+A good practice is to keep Query tuning aligned with the actual requirement around the optimization
+of queries so they consume fewer resources and scale more predictably. Teams should document intent,
+keep the setup readable, and validate the most important paths early.
+
+**Sample:**
+
+```bash
+# Concept: 6. Query tuning
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 70. What is a common mistake around Query tuning?
+
+**Answer:**
+
+A common mistake is naming Query tuning without understanding how it affects the optimization of
+queries so they consume fewer resources and scale more predictably. In real work, that usually
+appears as weak sizing, poor troubleshooting, or the wrong operational choice.
+
+**Sample:**
+
+```bash
+# Concept: 6. Query tuning
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 71. How do you troubleshoot Query tuning-related issues?
+
+**Answer:**
+
+When troubleshooting Query tuning, first verify whether the optimization of queries so they consume
+fewer resources and scale more predictably is behaving as expected. Then check dependencies,
+configuration, metrics, logs, and edge cases before changing the design.
+
+**Sample:**
+
+```bash
+# Concept: 6. Query tuning
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 72. How does Query tuning connect to the rest of Azure SQL sizing models?
+
+**Answer:**
+
+Query tuning connects to the rest of Azure SQL sizing models by giving structure to the optimization
+of queries so they consume fewer resources and scale more predictably. It is one of the pieces that
+turns isolated facts into a usable end-to-end mental model.
+
+**Sample:**
+
+```bash
+# Concept: 6. Query tuning
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+## 7. Indexing strategy
+
+### 73. What is the role of Indexing strategy in Azure SQL sizing models?
+
+**Answer:**
+
+In Azure SQL sizing models, the term Indexing strategy refers to the choice of indexes that improves read
+performance without adding unnecessary write cost. It is part of the foundation a candidate should
+be able to explain clearly.
+
+**Sample:**
+
+```bash
+# Concept: 7. Indexing strategy
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 74. Why is the concept of Indexing strategy important in Azure SQL sizing models?
+
+**Answer:**
+
+This concept matters because it influences the choice of indexes that improves read performance
+without adding unnecessary write cost. Good interview answers connect it to clarity,
+maintainability, performance, security, or delivery depending on the situation.
+
+**Sample:**
+
+```bash
+# Concept: 7. Indexing strategy
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 75. When should a team focus on Indexing strategy?
+
+**Answer:**
+
+A team should focus on Indexing strategy when the requirement depends on the choice of indexes that
+improves read performance without adding unnecessary write cost. It becomes especially important
+when design decisions, scaling choices, or debugging depend on that area.
+
+**Sample:**
+
+```bash
+# Concept: 7. Indexing strategy
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 76. How is Indexing strategy applied in practice?
+
+**Answer:**
+
+In practice, Indexing strategy is applied by making the choice of indexes that improves read
+performance without adding unnecessary write cost explicit in the implementation or workflow. The
+exact shape depends on the service design, but the responsibility should stay predictable.
+
+**Sample:**
+
+```bash
+# Concept: 7. Indexing strategy
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 77. What strengths does Indexing strategy bring?
+
+**Answer:**
+
+The strengths of Indexing strategy are better structure, better communication, and better control
+over the choice of indexes that improves read performance without adding unnecessary write cost. It
+also makes tradeoffs easier to explain to both interviewers and project stakeholders.
+
+**Sample:**
+
+```bash
+# Concept: 7. Indexing strategy
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 78. What tradeoffs come with Indexing strategy?
+
+**Answer:**
+
+The main tradeoff is extra complexity if Indexing strategy is introduced without a real need or a
+clear understanding of the choice of indexes that improves read performance without adding
+unnecessary write cost. That usually leads to higher cost, weaker design, or harder troubleshooting.
+
+**Sample:**
+
+```bash
+# Concept: 7. Indexing strategy
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 79. How does Indexing strategy differ from Elastic pool fit?
+
+**Answer:**
+
+Indexing strategy is centered on the choice of indexes that improves read performance without adding
+unnecessary write cost, while Elastic pool fit is centered on the decision of whether pooled
+capacity is better than isolated database sizing. They often work together, but they solve different
+parts of the topic.
+
+**Sample:**
+
+```bash
+# Concept: 7. Indexing strategy
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 80. What is a good real-world example of Indexing strategy?
+
+**Answer:**
+
+A strong example is explaining how Indexing strategy affects a real feature, cost decision, failure
+mode, or architecture choice involving the choice of indexes that improves read performance without
+adding unnecessary write cost. Interviewers usually value the reasoning behind the example.
+
+**Sample:**
+
+```bash
+# Concept: 7. Indexing strategy
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 81. What is a best practice for Indexing strategy?
+
+**Answer:**
+
+A good practice is to keep Indexing strategy aligned with the actual requirement around the choice
+of indexes that improves read performance without adding unnecessary write cost. Teams should
+document intent, keep the setup readable, and validate the most important paths early.
+
+**Sample:**
+
+```bash
+# Concept: 7. Indexing strategy
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 82. What is a common mistake around Indexing strategy?
+
+**Answer:**
+
+A common mistake is naming Indexing strategy without understanding how it affects the choice of
+indexes that improves read performance without adding unnecessary write cost. In real work, that
+usually appears as weak sizing, poor troubleshooting, or the wrong operational choice.
+
+**Sample:**
+
+```bash
+# Concept: 7. Indexing strategy
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 83. How do you troubleshoot Indexing strategy-related issues?
+
+**Answer:**
+
+When troubleshooting Indexing strategy, first verify whether the choice of indexes that improves
+read performance without adding unnecessary write cost is behaving as expected. Then check
+dependencies, configuration, metrics, logs, and edge cases before changing the design.
+
+**Sample:**
+
+```bash
+# Concept: 7. Indexing strategy
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 84. How does Indexing strategy connect to the rest of Azure SQL sizing models?
+
+**Answer:**
+
+Indexing strategy connects to the rest of Azure SQL sizing models by giving structure to the choice
+of indexes that improves read performance without adding unnecessary write cost. It is one of the
+pieces that turns isolated facts into a usable end-to-end mental model.
+
+**Sample:**
+
+```bash
+# Concept: 7. Indexing strategy
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+## 8. Elastic pool fit
+
+### 85. What is the role of Elastic pool fit in Azure SQL sizing models?
+
+**Answer:**
+
+In Azure SQL sizing models, the term Elastic pool fit refers to the decision of whether pooled capacity is
+better than isolated database sizing. It is part of the foundation a candidate should be able to
+explain clearly.
+
+**Sample:**
+
+```bash
+# Concept: 8. Elastic pool fit
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 86. Why is the concept of Elastic pool fit important in Azure SQL sizing models?
+
+**Answer:**
+
+This concept matters because it influences the decision of whether pooled capacity is better
+than isolated database sizing. Good interview answers connect it to clarity, maintainability,
+performance, security, or delivery depending on the situation.
+
+**Sample:**
+
+```bash
+# Concept: 8. Elastic pool fit
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 87. When should a team focus on Elastic pool fit?
+
+**Answer:**
+
+A team should focus on Elastic pool fit when the requirement depends on the decision of whether
+pooled capacity is better than isolated database sizing. It becomes especially important when design
+decisions, scaling choices, or debugging depend on that area.
+
+**Sample:**
+
+```bash
+# Concept: 8. Elastic pool fit
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 88. How is Elastic pool fit applied in practice?
+
+**Answer:**
+
+In practice, Elastic pool fit is applied by making the decision of whether pooled capacity is better
+than isolated database sizing explicit in the implementation or workflow. The exact shape depends on
+the service design, but the responsibility should stay predictable.
+
+**Sample:**
+
+```bash
+# Concept: 8. Elastic pool fit
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 89. What strengths does Elastic pool fit bring?
+
+**Answer:**
+
+The strengths of Elastic pool fit are better structure, better communication, and better control
+over the decision of whether pooled capacity is better than isolated database sizing. It also makes
+tradeoffs easier to explain to both interviewers and project stakeholders.
+
+**Sample:**
+
+```bash
+# Concept: 8. Elastic pool fit
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 90. What tradeoffs come with Elastic pool fit?
+
+**Answer:**
+
+The main tradeoff is extra complexity if Elastic pool fit is introduced without a real need or a
+clear understanding of the decision of whether pooled capacity is better than isolated database
+sizing. That usually leads to higher cost, weaker design, or harder troubleshooting.
+
+**Sample:**
+
+```bash
+# Concept: 8. Elastic pool fit
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 91. How does Elastic pool fit differ from Scaling decisions?
+
+**Answer:**
+
+Elastic pool fit is centered on the decision of whether pooled capacity is better than isolated
+database sizing, while Scaling decisions is centered on the reasoning used to move up, down, or
+sideways between performance tiers. They often work together, but they solve different parts of the
+topic.
+
+**Sample:**
+
+```bash
+# Concept: 8. Elastic pool fit
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 92. What is a good real-world example of Elastic pool fit?
+
+**Answer:**
+
+A strong example is explaining how Elastic pool fit affects a real feature, cost decision, failure
+mode, or architecture choice involving the decision of whether pooled capacity is better than
+isolated database sizing. Interviewers usually value the reasoning behind the example.
+
+**Sample:**
+
+```bash
+# Concept: 8. Elastic pool fit
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 93. What is a best practice for Elastic pool fit?
+
+**Answer:**
+
+A good practice is to keep Elastic pool fit aligned with the actual requirement around the decision
+of whether pooled capacity is better than isolated database sizing. Teams should document intent,
+keep the setup readable, and validate the most important paths early.
+
+**Sample:**
+
+```bash
+# Concept: 8. Elastic pool fit
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 94. What is a common mistake around Elastic pool fit?
+
+**Answer:**
+
+A common mistake is naming Elastic pool fit without understanding how it affects the decision of
+whether pooled capacity is better than isolated database sizing. In real work, that usually appears
+as weak sizing, poor troubleshooting, or the wrong operational choice.
+
+**Sample:**
+
+```bash
+# Concept: 8. Elastic pool fit
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 95. How do you troubleshoot Elastic pool fit-related issues?
+
+**Answer:**
+
+When troubleshooting Elastic pool fit, first verify whether the decision of whether pooled capacity
+is better than isolated database sizing is behaving as expected. Then check dependencies,
+configuration, metrics, logs, and edge cases before changing the design.
+
+**Sample:**
+
+```bash
+# Concept: 8. Elastic pool fit
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 96. How does Elastic pool fit connect to the rest of Azure SQL sizing models?
+
+**Answer:**
+
+Elastic pool fit connects to the rest of Azure SQL sizing models by giving structure to the decision
+of whether pooled capacity is better than isolated database sizing. It is one of the pieces that
+turns isolated facts into a usable end-to-end mental model.
+
+**Sample:**
+
+```bash
+# Concept: 8. Elastic pool fit
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+## 9. Scaling decisions
+
+### 97. What is the role of Scaling decisions in Azure SQL sizing models?
+
+**Answer:**
+
+In Azure SQL sizing models, the term Scaling decisions refers to the reasoning used to move up, down, or
+sideways between performance tiers. It is part of the foundation a candidate should be able to
+explain clearly.
+
+**Sample:**
+
+```bash
+# Concept: 9. Scaling decisions
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 98. Why is the concept of Scaling decisions important in Azure SQL sizing models?
+
+**Answer:**
+
+This concept matters because it influences the reasoning used to move up, down, or sideways
+between performance tiers. Good interview answers connect it to clarity, maintainability,
+performance, security, or delivery depending on the situation.
+
+**Sample:**
+
+```bash
+# Concept: 9. Scaling decisions
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 99. When should a team focus on Scaling decisions?
+
+**Answer:**
+
+A team should focus on Scaling decisions when the requirement depends on the reasoning used to move
+up, down, or sideways between performance tiers. It becomes especially important when design
+decisions, scaling choices, or debugging depend on that area.
+
+**Sample:**
+
+```bash
+# Concept: 9. Scaling decisions
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 100. How is Scaling decisions applied in practice?
+
+**Answer:**
+
+In practice, Scaling decisions is applied by making the reasoning used to move up, down, or sideways
+between performance tiers explicit in the implementation or workflow. The exact shape depends on the
+service design, but the responsibility should stay predictable.
+
+**Sample:**
+
+```bash
+# Concept: 9. Scaling decisions
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 101. What strengths does Scaling decisions bring?
+
+**Answer:**
+
+The strengths of Scaling decisions are better structure, better communication, and better control
+over the reasoning used to move up, down, or sideways between performance tiers. It also makes
+tradeoffs easier to explain to both interviewers and project stakeholders.
+
+**Sample:**
+
+```bash
+# Concept: 9. Scaling decisions
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 102. What tradeoffs come with Scaling decisions?
+
+**Answer:**
+
+The main tradeoff is extra complexity if Scaling decisions is introduced without a real need or a
+clear understanding of the reasoning used to move up, down, or sideways between performance tiers.
+That usually leads to higher cost, weaker design, or harder troubleshooting.
+
+**Sample:**
+
+```bash
+# Concept: 9. Scaling decisions
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 103. How does Scaling decisions differ from Cost and performance tradeoffs?
+
+**Answer:**
+
+Scaling decisions is centered on the reasoning used to move up, down, or sideways between
+performance tiers, while Cost and performance tradeoffs is centered on the balance between budget
+efficiency and predictable database behavior. They often work together, but they solve different
+parts of the topic.
+
+**Sample:**
+
+```bash
+# Concept: 9. Scaling decisions
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 104. What is a good real-world example of Scaling decisions?
+
+**Answer:**
+
+A strong example is explaining how Scaling decisions affects a real feature, cost decision, failure
+mode, or architecture choice involving the reasoning used to move up, down, or sideways between
+performance tiers. Interviewers usually value the reasoning behind the example.
+
+**Sample:**
+
+```bash
+# Concept: 9. Scaling decisions
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 105. What is a best practice for Scaling decisions?
+
+**Answer:**
+
+A good practice is to keep Scaling decisions aligned with the actual requirement around the
+reasoning used to move up, down, or sideways between performance tiers. Teams should document
+intent, keep the setup readable, and validate the most important paths early.
+
+**Sample:**
+
+```bash
+# Concept: 9. Scaling decisions
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 106. What is a common mistake around Scaling decisions?
+
+**Answer:**
+
+A common mistake is naming Scaling decisions without understanding how it affects the reasoning used
+to move up, down, or sideways between performance tiers. In real work, that usually appears as weak
+sizing, poor troubleshooting, or the wrong operational choice.
+
+**Sample:**
+
+```bash
+# Concept: 9. Scaling decisions
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 107. How do you troubleshoot Scaling decisions-related issues?
+
+**Answer:**
+
+When troubleshooting Scaling decisions, first verify whether the reasoning used to move up, down, or
+sideways between performance tiers is behaving as expected. Then check dependencies, configuration,
+metrics, logs, and edge cases before changing the design.
+
+**Sample:**
+
+```bash
+# Concept: 9. Scaling decisions
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 108. How does Scaling decisions connect to the rest of Azure SQL sizing models?
+
+**Answer:**
+
+Scaling decisions connects to the rest of Azure SQL sizing models by giving structure to the
+reasoning used to move up, down, or sideways between performance tiers. It is one of the pieces that
+turns isolated facts into a usable end-to-end mental model.
+
+**Sample:**
+
+```bash
+# Concept: 9. Scaling decisions
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+## 10. Cost and performance tradeoffs
+
+### 109. What is the role of Cost and performance tradeoffs in Azure SQL sizing models?
+
+**Answer:**
+
+In Azure SQL sizing models, the term Cost and performance tradeoffs refers to the balance between budget
+efficiency and predictable database behavior. It is part of the foundation a candidate should be
+able to explain clearly.
+
+**Sample:**
+
+```bash
+# Concept: 10. Cost and performance tradeoffs
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 110. Why is the concept of Cost and performance tradeoffs important in Azure SQL sizing models?
+
+**Answer:**
+
+This concept matters because it influences the balance between budget efficiency
+and predictable database behavior. Good interview answers connect it to clarity, maintainability,
+performance, security, or delivery depending on the situation.
+
+**Sample:**
+
+```bash
+# Concept: 10. Cost and performance tradeoffs
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 111. When should a team focus on Cost and performance tradeoffs?
+
+**Answer:**
+
+A team should focus on Cost and performance tradeoffs when the requirement depends on the balance
+between budget efficiency and predictable database behavior. It becomes especially important when
+design decisions, scaling choices, or debugging depend on that area.
+
+**Sample:**
+
+```bash
+# Concept: 10. Cost and performance tradeoffs
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 112. How is Cost and performance tradeoffs applied in practice?
+
+**Answer:**
+
+In practice, Cost and performance tradeoffs is applied by making the balance between budget
+efficiency and predictable database behavior explicit in the implementation or workflow. The exact
+shape depends on the service design, but the responsibility should stay predictable.
+
+**Sample:**
+
+```bash
+# Concept: 10. Cost and performance tradeoffs
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 113. What strengths does Cost and performance tradeoffs bring?
+
+**Answer:**
+
+The strengths of Cost and performance tradeoffs are better structure, better communication, and
+better control over the balance between budget efficiency and predictable database behavior. It also
+makes tradeoffs easier to explain to both interviewers and project stakeholders.
+
+**Sample:**
+
+```bash
+# Concept: 10. Cost and performance tradeoffs
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 114. What tradeoffs come with Cost and performance tradeoffs?
+
+**Answer:**
+
+The main tradeoff is extra complexity if Cost and performance tradeoffs is introduced without a real
+need or a clear understanding of the balance between budget efficiency and predictable database
+behavior. That usually leads to higher cost, weaker design, or harder troubleshooting.
+
+**Sample:**
+
+```bash
+# Concept: 10. Cost and performance tradeoffs
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 115. How does Cost and performance tradeoffs differ from DTU model?
+
+**Answer:**
+
+Cost and performance tradeoffs is centered on the balance between budget efficiency and predictable
+database behavior, while DTU model is centered on the bundled sizing model that combines CPU,
+memory, and I O into one performance unit. They often work together, but they solve different parts
+of the topic.
+
+**Sample:**
+
+```bash
+# Concept: 10. Cost and performance tradeoffs
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 116. What is a good real-world example of Cost and performance tradeoffs?
+
+**Answer:**
+
+A strong example is explaining how Cost and performance tradeoffs affects a real feature, cost
+decision, failure mode, or architecture choice involving the balance between budget efficiency and
+predictable database behavior. Interviewers usually value the reasoning behind the example.
+
+**Sample:**
+
+```bash
+# Concept: 10. Cost and performance tradeoffs
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 117. What is a best practice for Cost and performance tradeoffs?
+
+**Answer:**
+
+A good practice is to keep Cost and performance tradeoffs aligned with the actual requirement around
+the balance between budget efficiency and predictable database behavior. Teams should document
+intent, keep the setup readable, and validate the most important paths early.
+
+**Sample:**
+
+```bash
+# Concept: 10. Cost and performance tradeoffs
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 118. What is a common mistake around Cost and performance tradeoffs?
+
+**Answer:**
+
+A common mistake is naming Cost and performance tradeoffs without understanding how it affects the
+balance between budget efficiency and predictable database behavior. In real work, that usually
+appears as weak sizing, poor troubleshooting, or the wrong operational choice.
+
+**Sample:**
+
+```bash
+# Concept: 10. Cost and performance tradeoffs
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 119. How do you troubleshoot Cost and performance tradeoffs-related issues?
+
+**Answer:**
+
+When troubleshooting Cost and performance tradeoffs, first verify whether the balance between budget
+efficiency and predictable database behavior is behaving as expected. Then check dependencies,
+configuration, metrics, logs, and edge cases before changing the design.
+
+**Sample:**
+
+```bash
+# Concept: 10. Cost and performance tradeoffs
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
+
+---
+
+### 120. How does Cost and performance tradeoffs connect to the rest of Azure SQL sizing models?
+
+**Answer:**
+
+Cost and performance tradeoffs connects to the rest of Azure SQL sizing models by giving structure
+to the balance between budget efficiency and predictable database behavior. It is one of the pieces
+that turns isolated facts into a usable end-to-end mental model.
+
+**Sample:**
+
+```bash
+# Concept: 10. Cost and performance tradeoffs
+az sql db show   --name appdb   --resource-group rg-app   --server sql-demo
+```
