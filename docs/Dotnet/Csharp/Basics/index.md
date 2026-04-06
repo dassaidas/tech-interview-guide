@@ -16,13 +16,12 @@ applications. It is part of the foundation a candidate should be able to explain
 **Sample:**
 
 ```csharp
-// Concept: 1. CLR and assemblies
-Console.WriteLine("1. CLR and assemblies");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+var assembly = typeof(string).Assembly;
+Console.WriteLine(assembly.GetName().Name);
+Console.WriteLine(assembly.GetName().Version);
+
+var currentAssembly = typeof(List<int>).Assembly;
+Console.WriteLine(currentAssembly.GetName().Name);
 ```
 
 ---
@@ -38,13 +37,12 @@ security, or delivery depending on the situation.
 **Sample:**
 
 ```csharp
-// Concept: 1. CLR and assemblies
-Console.WriteLine("1. CLR and assemblies");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+var assembly = typeof(string).Assembly;
+Console.WriteLine(assembly.GetName().Name);
+Console.WriteLine(assembly.GetName().Version);
+
+var currentAssembly = typeof(List<int>).Assembly;
+Console.WriteLine(currentAssembly.GetName().Name);
 ```
 
 ---
@@ -60,13 +58,12 @@ scalability, or debugging depend on that area.
 **Sample:**
 
 ```csharp
-// Concept: 1. CLR and assemblies
-Console.WriteLine("1. CLR and assemblies");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+var assembly = typeof(string).Assembly;
+Console.WriteLine(assembly.GetName().Name);
+Console.WriteLine(assembly.GetName().Version);
+
+var currentAssembly = typeof(List<int>).Assembly;
+Console.WriteLine(currentAssembly.GetName().Name);
 ```
 
 ---
@@ -82,13 +79,8 @@ depends on the application, but the responsibility should stay predictable.
 **Sample:**
 
 ```csharp
-// Concept: 1. CLR and assemblies
-Console.WriteLine("1. CLR and assemblies");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+var version = typeof(List<>).Assembly.GetName().Version;
+Console.WriteLine($".NET runtime library version: {version}");
 ```
 
 ---
@@ -104,13 +96,12 @@ easier to explain to reviewers, interviewers, and teammates.
 **Sample:**
 
 ```csharp
-// Concept: 1. CLR and assemblies
-Console.WriteLine("1. CLR and assemblies");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+var assembly = typeof(string).Assembly;
+Console.WriteLine(assembly.GetName().Name);
+Console.WriteLine(assembly.GetName().Version);
+
+var currentAssembly = typeof(List<int>).Assembly;
+Console.WriteLine(currentAssembly.GetName().Name);
 ```
 
 ---
@@ -126,13 +117,8 @@ usually leads to overengineering, hidden bugs, or confusing architecture.
 **Sample:**
 
 ```csharp
-// Concept: 1. CLR and assemblies
-Console.WriteLine("1. CLR and assemblies");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+Assembly.Load("Payments.Plugin");
+// Dynamic loading is powerful, but version mismatches and missing dependencies are easy to create.
 ```
 
 ---
@@ -149,13 +135,10 @@ topic.
 **Sample:**
 
 ```csharp
-// Concept: 1. CLR and assemblies
-Console.WriteLine("1. CLR and assemblies");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+int amount = 100;
+object boxed = amount;     // CLR boxing for a value type
+string status = "Paid";    // reference type stored differently
+Console.WriteLine($"{boxed}, {status}");
 ```
 
 ---
@@ -171,13 +154,8 @@ applications. Interviewers usually care more about the reasoning than the defini
 **Sample:**
 
 ```csharp
-// Concept: 1. CLR and assemblies
-Console.WriteLine("1. CLR and assemblies");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+var version = typeof(List<>).Assembly.GetName().Version;
+Console.WriteLine($".NET runtime library version: {version}");
 ```
 
 ---
@@ -193,13 +171,8 @@ implementation readable, and validate important paths early.
 **Sample:**
 
 ```csharp
-// Concept: 1. CLR and assemblies
-Console.WriteLine("1. CLR and assemblies");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+var version = typeof(List<>).Assembly.GetName().Version;
+Console.WriteLine($".NET runtime library version: {version}");
 ```
 
 ---
@@ -215,13 +188,8 @@ choices, poor debugging, or incomplete explanations.
 **Sample:**
 
 ```csharp
-// Concept: 1. CLR and assemblies
-Console.WriteLine("1. CLR and assemblies");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+Assembly.Load("Payments.Plugin");
+// Dynamic loading is powerful, but version mismatches and missing dependencies are easy to create.
 ```
 
 ---
@@ -237,13 +205,11 @@ configuration, logs, runtime behavior, and edge cases before changing the design
 **Sample:**
 
 ```csharp
-// Concept: 1. CLR and assemblies
-Console.WriteLine("1. CLR and assemblies");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+var loaded = AppDomain.CurrentDomain.GetAssemblies()
+    .Select(a => a.GetName().Name)
+    .OrderBy(name => name);
+
+Console.WriteLine(string.Join(", ", loaded));
 ```
 
 ---
@@ -259,13 +225,10 @@ coherent end-to-end explanation.
 **Sample:**
 
 ```csharp
-// Concept: 1. CLR and assemblies
-Console.WriteLine("1. CLR and assemblies");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+var numberText = "42";
+int number = int.Parse(numberText);
+Console.WriteLine(number + 8);
+// CLR executes the code, and basic types and conversions shape the data.
 ```
 
 ---
@@ -283,12 +246,14 @@ explain clearly.
 **Sample:**
 
 ```csharp
-// Concept: 2. Value and reference types
-Console.WriteLine("2. Value and reference types");
-int count = 1;
-if (count > 0)
+struct PriceTag
 {
-    Console.WriteLine("C# basics sample");
+    public decimal Amount { get; set; }
+}
+
+class CustomerProfile
+{
+    public string Name { get; set; } = "";
 }
 ```
 
@@ -305,12 +270,14 @@ maintainability, performance, security, or delivery depending on the situation.
 **Sample:**
 
 ```csharp
-// Concept: 2. Value and reference types
-Console.WriteLine("2. Value and reference types");
-int count = 1;
-if (count > 0)
+struct PriceTag
 {
-    Console.WriteLine("C# basics sample");
+    public decimal Amount { get; set; }
+}
+
+class CustomerProfile
+{
+    public string Name { get; set; } = "";
 }
 ```
 
@@ -327,12 +294,14 @@ important when design decisions, scalability, or debugging depend on that area.
 **Sample:**
 
 ```csharp
-// Concept: 2. Value and reference types
-Console.WriteLine("2. Value and reference types");
-int count = 1;
-if (count > 0)
+struct PriceTag
 {
-    Console.WriteLine("C# basics sample");
+    public decimal Amount { get; set; }
+}
+
+class CustomerProfile
+{
+    public string Name { get; set; } = "";
 }
 ```
 
@@ -350,13 +319,15 @@ predictable.
 **Sample:**
 
 ```csharp
-// Concept: 2. Value and reference types
-Console.WriteLine("2. Value and reference types");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+var first = new PriceTag { Amount = 499.99m };
+var second = first;
+second.Amount = 599.99m;
+Console.WriteLine(first.Amount); // 499.99
+
+var customer1 = new CustomerProfile { Name = "Asha" };
+var customer2 = customer1;
+customer2.Name = "Sai";
+Console.WriteLine(customer1.Name); // Sai
 ```
 
 ---
@@ -372,12 +343,14 @@ It also makes tradeoffs easier to explain to reviewers, interviewers, and teamma
 **Sample:**
 
 ```csharp
-// Concept: 2. Value and reference types
-Console.WriteLine("2. Value and reference types");
-int count = 1;
-if (count > 0)
+struct PriceTag
 {
-    Console.WriteLine("C# basics sample");
+    public decimal Amount { get; set; }
+}
+
+class CustomerProfile
+{
+    public string Name { get; set; } = "";
 }
 ```
 
@@ -394,13 +367,12 @@ object semantics. That usually leads to overengineering, hidden bugs, or confusi
 **Sample:**
 
 ```csharp
-// Concept: 2. Value and reference types
-Console.WriteLine("2. Value and reference types");
-int count = 1;
-if (count > 0)
+var prices = new List<PriceTag>();
+for (int i = 0; i < 100000; i++)
 {
-    Console.WriteLine("C# basics sample");
+    prices.Add(new PriceTag { Amount = i });
 }
+// Large structs copied repeatedly can become expensive.
 ```
 
 ---
@@ -417,13 +389,10 @@ parts of the topic.
 **Sample:**
 
 ```csharp
-// Concept: 2. Value and reference types
-Console.WriteLine("2. Value and reference types");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+int quantity = 5;
+string quantityText = quantity.ToString();
+Console.WriteLine(quantityText);
+// Value/reference semantics explain storage and copying. Conversions explain representation changes.
 ```
 
 ---
@@ -440,13 +409,15 @@ than the definition alone.
 **Sample:**
 
 ```csharp
-// Concept: 2. Value and reference types
-Console.WriteLine("2. Value and reference types");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+var first = new PriceTag { Amount = 499.99m };
+var second = first;
+second.Amount = 599.99m;
+Console.WriteLine(first.Amount); // 499.99
+
+var customer1 = new CustomerProfile { Name = "Asha" };
+var customer2 = customer1;
+customer2.Name = "Sai";
+Console.WriteLine(customer1.Name); // Sai
 ```
 
 ---
@@ -462,13 +433,15 @@ document intent, keep implementation readable, and validate important paths earl
 **Sample:**
 
 ```csharp
-// Concept: 2. Value and reference types
-Console.WriteLine("2. Value and reference types");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+var first = new PriceTag { Amount = 499.99m };
+var second = first;
+second.Amount = 599.99m;
+Console.WriteLine(first.Amount); // 499.99
+
+var customer1 = new CustomerProfile { Name = "Asha" };
+var customer2 = customer1;
+customer2.Name = "Sai";
+Console.WriteLine(customer1.Name); // Sai
 ```
 
 ---
@@ -484,13 +457,12 @@ that usually appears as weak design choices, poor debugging, or incomplete expla
 **Sample:**
 
 ```csharp
-// Concept: 2. Value and reference types
-Console.WriteLine("2. Value and reference types");
-int count = 1;
-if (count > 0)
+var prices = new List<PriceTag>();
+for (int i = 0; i < 100000; i++)
 {
-    Console.WriteLine("C# basics sample");
+    prices.Add(new PriceTag { Amount = i });
 }
+// Large structs copied repeatedly can become expensive.
 ```
 
 ---
@@ -507,13 +479,14 @@ design.
 **Sample:**
 
 ```csharp
-// Concept: 2. Value and reference types
-Console.WriteLine("2. Value and reference types");
-int count = 1;
-if (count > 0)
+void Rename(CustomerProfile profile)
 {
-    Console.WriteLine("C# basics sample");
+    profile.Name = "Updated";
 }
+
+var profile = new CustomerProfile { Name = "Original" };
+Rename(profile);
+Console.WriteLine(profile.Name);
 ```
 
 ---
@@ -529,13 +502,12 @@ that turns isolated facts into a coherent end-to-end explanation.
 **Sample:**
 
 ```csharp
-// Concept: 2. Value and reference types
-Console.WriteLine("2. Value and reference types");
-int count = 1;
-if (count > 0)
+var items = new List<CustomerProfile>
 {
-    Console.WriteLine("C# basics sample");
-}
+    new() { Name = "Ravi" },
+    new() { Name = "Neha" }
+};
+Console.WriteLine(items.Count);
 ```
 
 ---
@@ -552,13 +524,10 @@ ordinary C# code. It is part of the foundation a candidate should be able to exp
 **Sample:**
 
 ```csharp
-// Concept: 3. Variables and conversions
-Console.WriteLine("3. Variables and conversions");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+string input = "1250.75";
+decimal invoiceTotal = decimal.Parse(input);
+int rounded = (int)Math.Round(invoiceTotal);
+Console.WriteLine($"{invoiceTotal} -> {rounded}");
 ```
 
 ---
@@ -574,13 +543,10 @@ security, or delivery depending on the situation.
 **Sample:**
 
 ```csharp
-// Concept: 3. Variables and conversions
-Console.WriteLine("3. Variables and conversions");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+string input = "1250.75";
+decimal invoiceTotal = decimal.Parse(input);
+int rounded = (int)Math.Round(invoiceTotal);
+Console.WriteLine($"{invoiceTotal} -> {rounded}");
 ```
 
 ---
@@ -596,13 +562,10 @@ decisions, scalability, or debugging depend on that area.
 **Sample:**
 
 ```csharp
-// Concept: 3. Variables and conversions
-Console.WriteLine("3. Variables and conversions");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+string input = "1250.75";
+decimal invoiceTotal = decimal.Parse(input);
+int rounded = (int)Math.Round(invoiceTotal);
+Console.WriteLine($"{invoiceTotal} -> {rounded}");
 ```
 
 ---
@@ -618,13 +581,15 @@ depends on the application, but the responsibility should stay predictable.
 **Sample:**
 
 ```csharp
-// Concept: 3. Variables and conversions
-Console.WriteLine("3. Variables and conversions");
-int count = 1;
-if (count > 0)
+var values = new Dictionary<string, object?>
 {
-    Console.WriteLine("C# basics sample");
-}
+    ["orderId"] = 101,
+    ["status"] = "Packed"
+};
+
+int orderId = (int)values["orderId"]!;
+string status = values["status"]?.ToString() ?? "Unknown";
+Console.WriteLine($"{orderId}: {status}");
 ```
 
 ---
@@ -640,13 +605,10 @@ easier to explain to reviewers, interviewers, and teammates.
 **Sample:**
 
 ```csharp
-// Concept: 3. Variables and conversions
-Console.WriteLine("3. Variables and conversions");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+string input = "1250.75";
+decimal invoiceTotal = decimal.Parse(input);
+int rounded = (int)Math.Round(invoiceTotal);
+Console.WriteLine($"{invoiceTotal} -> {rounded}");
 ```
 
 ---
@@ -662,13 +624,10 @@ usually leads to overengineering, hidden bugs, or confusing architecture.
 **Sample:**
 
 ```csharp
-// Concept: 3. Variables and conversions
-Console.WriteLine("3. Variables and conversions");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+byte discount = 10;
+byte finalDiscount = (byte)(discount + 250);
+Console.WriteLine(finalDiscount);
+// Narrow conversions can overflow or silently wrap when used carelessly.
 ```
 
 ---
@@ -684,13 +643,10 @@ logic statements. They often work together, but they solve different parts of th
 **Sample:**
 
 ```csharp
-// Concept: 3. Variables and conversions
-Console.WriteLine("3. Variables and conversions");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+decimal subtotal = 999.95m;
+decimal tax = subtotal * 0.18m;
+Console.WriteLine(subtotal + tax);
+// Variables hold values. Operators and expressions combine them into results.
 ```
 
 ---
@@ -706,13 +662,15 @@ ordinary C# code. Interviewers usually care more about the reasoning than the de
 **Sample:**
 
 ```csharp
-// Concept: 3. Variables and conversions
-Console.WriteLine("3. Variables and conversions");
-int count = 1;
-if (count > 0)
+var values = new Dictionary<string, object?>
 {
-    Console.WriteLine("C# basics sample");
-}
+    ["orderId"] = 101,
+    ["status"] = "Packed"
+};
+
+int orderId = (int)values["orderId"]!;
+string status = values["status"]?.ToString() ?? "Unknown";
+Console.WriteLine($"{orderId}: {status}");
 ```
 
 ---
@@ -728,13 +686,15 @@ implementation readable, and validate important paths early.
 **Sample:**
 
 ```csharp
-// Concept: 3. Variables and conversions
-Console.WriteLine("3. Variables and conversions");
-int count = 1;
-if (count > 0)
+var values = new Dictionary<string, object?>
 {
-    Console.WriteLine("C# basics sample");
-}
+    ["orderId"] = 101,
+    ["status"] = "Packed"
+};
+
+int orderId = (int)values["orderId"]!;
+string status = values["status"]?.ToString() ?? "Unknown";
+Console.WriteLine($"{orderId}: {status}");
 ```
 
 ---
@@ -750,13 +710,10 @@ weak design choices, poor debugging, or incomplete explanations.
 **Sample:**
 
 ```csharp
-// Concept: 3. Variables and conversions
-Console.WriteLine("3. Variables and conversions");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+byte discount = 10;
+byte finalDiscount = (byte)(discount + 250);
+Console.WriteLine(finalDiscount);
+// Narrow conversions can overflow or silently wrap when used carelessly.
 ```
 
 ---
@@ -772,12 +729,13 @@ configuration, logs, runtime behavior, and edge cases before changing the design
 **Sample:**
 
 ```csharp
-// Concept: 3. Variables and conversions
-Console.WriteLine("3. Variables and conversions");
-int count = 1;
-if (count > 0)
+if (int.TryParse("2026", out int year))
 {
-    Console.WriteLine("C# basics sample");
+    Console.WriteLine($"Parsed year: {year}");
+}
+else
+{
+    Console.WriteLine("Invalid year");
 }
 ```
 
@@ -794,13 +752,9 @@ into a coherent end-to-end explanation.
 **Sample:**
 
 ```csharp
-// Concept: 3. Variables and conversions
-Console.WriteLine("3. Variables and conversions");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+var text = "42";
+int number = Convert.ToInt32(text);
+Console.WriteLine(number * 2);
 ```
 
 ---
@@ -817,13 +771,11 @@ statements. It is part of the foundation a candidate should be able to explain c
 **Sample:**
 
 ```csharp
-// Concept: 4. Operators and expressions
-Console.WriteLine("4. Operators and expressions");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+decimal price = 1499.50m;
+int quantity = 3;
+decimal taxRate = 0.18m;
+decimal total = (price * quantity) * (1 + taxRate);
+Console.WriteLine(total);
 ```
 
 ---
@@ -839,13 +791,11 @@ security, or delivery depending on the situation.
 **Sample:**
 
 ```csharp
-// Concept: 4. Operators and expressions
-Console.WriteLine("4. Operators and expressions");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+decimal price = 1499.50m;
+int quantity = 3;
+decimal taxRate = 0.18m;
+decimal total = (price * quantity) * (1 + taxRate);
+Console.WriteLine(total);
 ```
 
 ---
@@ -861,13 +811,11 @@ scalability, or debugging depend on that area.
 **Sample:**
 
 ```csharp
-// Concept: 4. Operators and expressions
-Console.WriteLine("4. Operators and expressions");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+decimal price = 1499.50m;
+int quantity = 3;
+decimal taxRate = 0.18m;
+decimal total = (price * quantity) * (1 + taxRate);
+Console.WriteLine(total);
 ```
 
 ---
@@ -883,13 +831,10 @@ depends on the application, but the responsibility should stay predictable.
 **Sample:**
 
 ```csharp
-// Concept: 4. Operators and expressions
-Console.WriteLine("4. Operators and expressions");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+string? coupon = null;
+string code = coupon ?? "NO-COUPON";
+bool canCheckout = code != "" && code.StartsWith("SAVE");
+Console.WriteLine($"{code} -> {canCheckout}");
 ```
 
 ---
@@ -905,13 +850,11 @@ easier to explain to reviewers, interviewers, and teammates.
 **Sample:**
 
 ```csharp
-// Concept: 4. Operators and expressions
-Console.WriteLine("4. Operators and expressions");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+decimal price = 1499.50m;
+int quantity = 3;
+decimal taxRate = 0.18m;
+decimal total = (price * quantity) * (1 + taxRate);
+Console.WriteLine(total);
 ```
 
 ---
@@ -927,13 +870,11 @@ usually leads to overengineering, hidden bugs, or confusing architecture.
 **Sample:**
 
 ```csharp
-// Concept: 4. Operators and expressions
-Console.WriteLine("4. Operators and expressions");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+int x = 5;
+int y = 0;
+bool valid = y != 0 && (x / y) > 1;
+Console.WriteLine(valid);
+// Operator order and short-circuit rules matter for correctness and safety.
 ```
 
 ---
@@ -949,13 +890,10 @@ execution moves. They often work together, but they solve different parts of the
 **Sample:**
 
 ```csharp
-// Concept: 4. Operators and expressions
-Console.WriteLine("4. Operators and expressions");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+int score = 85;
+string grade = score >= 90 ? "A" : "B";
+Console.WriteLine(grade);
+// Operators build expressions; control flow chooses which block runs next.
 ```
 
 ---
@@ -971,13 +909,10 @@ logic statements. Interviewers usually care more about the reasoning than the de
 **Sample:**
 
 ```csharp
-// Concept: 4. Operators and expressions
-Console.WriteLine("4. Operators and expressions");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+string? coupon = null;
+string code = coupon ?? "NO-COUPON";
+bool canCheckout = code != "" && code.StartsWith("SAVE");
+Console.WriteLine($"{code} -> {canCheckout}");
 ```
 
 ---
@@ -993,13 +928,10 @@ implementation readable, and validate important paths early.
 **Sample:**
 
 ```csharp
-// Concept: 4. Operators and expressions
-Console.WriteLine("4. Operators and expressions");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+string? coupon = null;
+string code = coupon ?? "NO-COUPON";
+bool canCheckout = code != "" && code.StartsWith("SAVE");
+Console.WriteLine($"{code} -> {canCheckout}");
 ```
 
 ---
@@ -1015,13 +947,11 @@ choices, poor debugging, or incomplete explanations.
 **Sample:**
 
 ```csharp
-// Concept: 4. Operators and expressions
-Console.WriteLine("4. Operators and expressions");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+int x = 5;
+int y = 0;
+bool valid = y != 0 && (x / y) > 1;
+Console.WriteLine(valid);
+// Operator order and short-circuit rules matter for correctness and safety.
 ```
 
 ---
@@ -1037,13 +967,10 @@ configuration, logs, runtime behavior, and edge cases before changing the design
 **Sample:**
 
 ```csharp
-// Concept: 4. Operators and expressions
-Console.WriteLine("4. Operators and expressions");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+int flags = 0b_0101;
+bool hasRead = (flags & 0b_0001) == 0b_0001;
+bool hasDelete = (flags & 0b_1000) == 0b_1000;
+Console.WriteLine($"{hasRead}, {hasDelete}");
 ```
 
 ---
@@ -1059,13 +986,9 @@ a coherent end-to-end explanation.
 **Sample:**
 
 ```csharp
-// Concept: 4. Operators and expressions
-Console.WriteLine("4. Operators and expressions");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+string? middleName = null;
+int length = middleName?.Length ?? 0;
+Console.WriteLine(length);
 ```
 
 ---
@@ -1082,12 +1005,18 @@ moves. It is part of the foundation a candidate should be able to explain clearl
 **Sample:**
 
 ```csharp
-// Concept: 5. Control flow
-Console.WriteLine("5. Control flow");
-int count = 1;
-if (count > 0)
+var orderStatus = "Paid";
+switch (orderStatus)
 {
-    Console.WriteLine("C# basics sample");
+    case "Draft":
+        Console.WriteLine("Order still editable");
+        break;
+    case "Paid":
+        Console.WriteLine("Ready for shipment");
+        break;
+    default:
+        Console.WriteLine("Check workflow");
+        break;
 }
 ```
 
@@ -1104,12 +1033,18 @@ delivery depending on the situation.
 **Sample:**
 
 ```csharp
-// Concept: 5. Control flow
-Console.WriteLine("5. Control flow");
-int count = 1;
-if (count > 0)
+var orderStatus = "Paid";
+switch (orderStatus)
 {
-    Console.WriteLine("C# basics sample");
+    case "Draft":
+        Console.WriteLine("Order still editable");
+        break;
+    case "Paid":
+        Console.WriteLine("Ready for shipment");
+        break;
+    default:
+        Console.WriteLine("Check workflow");
+        break;
 }
 ```
 
@@ -1126,12 +1061,18 @@ or debugging depend on that area.
 **Sample:**
 
 ```csharp
-// Concept: 5. Control flow
-Console.WriteLine("5. Control flow");
-int count = 1;
-if (count > 0)
+var orderStatus = "Paid";
+switch (orderStatus)
 {
-    Console.WriteLine("C# basics sample");
+    case "Draft":
+        Console.WriteLine("Order still editable");
+        break;
+    case "Paid":
+        Console.WriteLine("Ready for shipment");
+        break;
+    default:
+        Console.WriteLine("Check workflow");
+        break;
 }
 ```
 
@@ -1148,12 +1089,9 @@ on the application, but the responsibility should stay predictable.
 **Sample:**
 
 ```csharp
-// Concept: 5. Control flow
-Console.WriteLine("5. Control flow");
-int count = 1;
-if (count > 0)
+foreach (var sku in new[] { "KB-001", "MS-002", "HD-003" })
 {
-    Console.WriteLine("C# basics sample");
+    Console.WriteLine($"Picking {sku}");
 }
 ```
 
@@ -1170,12 +1108,18 @@ explain to reviewers, interviewers, and teammates.
 **Sample:**
 
 ```csharp
-// Concept: 5. Control flow
-Console.WriteLine("5. Control flow");
-int count = 1;
-if (count > 0)
+var orderStatus = "Paid";
+switch (orderStatus)
 {
-    Console.WriteLine("C# basics sample");
+    case "Draft":
+        Console.WriteLine("Order still editable");
+        break;
+    case "Paid":
+        Console.WriteLine("Ready for shipment");
+        break;
+    default:
+        Console.WriteLine("Check workflow");
+        break;
 }
 ```
 
@@ -1192,12 +1136,11 @@ to overengineering, hidden bugs, or confusing architecture.
 **Sample:**
 
 ```csharp
-// Concept: 5. Control flow
-Console.WriteLine("5. Control flow");
-int count = 1;
-if (count > 0)
+for (int i = 0; i < 10; i++)
 {
-    Console.WriteLine("C# basics sample");
+    if (i == 3) continue;
+    if (i == 7) break;
+    Console.WriteLine(i);
 }
 ```
 
@@ -1214,13 +1157,12 @@ They often work together, but they solve different parts of the topic.
 **Sample:**
 
 ```csharp
-// Concept: 5. Control flow
-Console.WriteLine("5. Control flow");
-int count = 1;
-if (count > 0)
+bool isVip = true;
+if (isVip)
 {
-    Console.WriteLine("C# basics sample");
+    Console.WriteLine("Apply premium lane");
 }
+// Control flow decides execution. Methods package reusable logic into named units.
 ```
 
 ---
@@ -1236,12 +1178,9 @@ Interviewers usually care more about the reasoning than the definition alone.
 **Sample:**
 
 ```csharp
-// Concept: 5. Control flow
-Console.WriteLine("5. Control flow");
-int count = 1;
-if (count > 0)
+foreach (var sku in new[] { "KB-001", "MS-002", "HD-003" })
 {
-    Console.WriteLine("C# basics sample");
+    Console.WriteLine($"Picking {sku}");
 }
 ```
 
@@ -1258,12 +1197,9 @@ readable, and validate important paths early.
 **Sample:**
 
 ```csharp
-// Concept: 5. Control flow
-Console.WriteLine("5. Control flow");
-int count = 1;
-if (count > 0)
+foreach (var sku in new[] { "KB-001", "MS-002", "HD-003" })
 {
-    Console.WriteLine("C# basics sample");
+    Console.WriteLine($"Picking {sku}");
 }
 ```
 
@@ -1280,12 +1216,11 @@ choices, poor debugging, or incomplete explanations.
 **Sample:**
 
 ```csharp
-// Concept: 5. Control flow
-Console.WriteLine("5. Control flow");
-int count = 1;
-if (count > 0)
+for (int i = 0; i < 10; i++)
 {
-    Console.WriteLine("C# basics sample");
+    if (i == 3) continue;
+    if (i == 7) break;
+    Console.WriteLine(i);
 }
 ```
 
@@ -1302,12 +1237,14 @@ logs, runtime behavior, and edge cases before changing the design.
 **Sample:**
 
 ```csharp
-// Concept: 5. Control flow
-Console.WriteLine("5. Control flow");
-int count = 1;
-if (count > 0)
+var amount = -5;
+if (amount < 0)
 {
-    Console.WriteLine("C# basics sample");
+    Console.WriteLine("Amount cannot be negative");
+}
+else
+{
+    Console.WriteLine("Amount accepted");
 }
 ```
 
@@ -1324,13 +1261,13 @@ coherent end-to-end explanation.
 **Sample:**
 
 ```csharp
-// Concept: 5. Control flow
-Console.WriteLine("5. Control flow");
-int count = 1;
-if (count > 0)
+var basket = new[] { 120m, 250m, 80m };
+decimal total = 0;
+foreach (var item in basket)
 {
-    Console.WriteLine("C# basics sample");
+    total += item;
 }
+Console.WriteLine(total);
 ```
 
 ---
@@ -1347,13 +1284,12 @@ receive. It is part of the foundation a candidate should be able to explain clea
 **Sample:**
 
 ```csharp
-// Concept: 6. Methods and parameters
-Console.WriteLine("6. Methods and parameters");
-int count = 1;
-if (count > 0)
+decimal CalculateTotal(decimal subtotal, decimal taxRate = 0.18m)
 {
-    Console.WriteLine("C# basics sample");
+    return subtotal + (subtotal * taxRate);
 }
+
+Console.WriteLine(CalculateTotal(1000m));
 ```
 
 ---
@@ -1369,13 +1305,12 @@ or delivery depending on the situation.
 **Sample:**
 
 ```csharp
-// Concept: 6. Methods and parameters
-Console.WriteLine("6. Methods and parameters");
-int count = 1;
-if (count > 0)
+decimal CalculateTotal(decimal subtotal, decimal taxRate = 0.18m)
 {
-    Console.WriteLine("C# basics sample");
+    return subtotal + (subtotal * taxRate);
 }
+
+Console.WriteLine(CalculateTotal(1000m));
 ```
 
 ---
@@ -1391,13 +1326,12 @@ scalability, or debugging depend on that area.
 **Sample:**
 
 ```csharp
-// Concept: 6. Methods and parameters
-Console.WriteLine("6. Methods and parameters");
-int count = 1;
-if (count > 0)
+decimal CalculateTotal(decimal subtotal, decimal taxRate = 0.18m)
 {
-    Console.WriteLine("C# basics sample");
+    return subtotal + (subtotal * taxRate);
 }
+
+Console.WriteLine(CalculateTotal(1000m));
 ```
 
 ---
@@ -1413,13 +1347,14 @@ depends on the application, but the responsibility should stay predictable.
 **Sample:**
 
 ```csharp
-// Concept: 6. Methods and parameters
-Console.WriteLine("6. Methods and parameters");
-int count = 1;
-if (count > 0)
+bool TryGetDiscount(string customerType, out decimal discount)
 {
-    Console.WriteLine("C# basics sample");
+    discount = customerType == "Premium" ? 0.15m : 0.05m;
+    return true;
 }
+
+TryGetDiscount("Premium", out var rate);
+Console.WriteLine(rate);
 ```
 
 ---
@@ -1435,13 +1370,12 @@ easier to explain to reviewers, interviewers, and teammates.
 **Sample:**
 
 ```csharp
-// Concept: 6. Methods and parameters
-Console.WriteLine("6. Methods and parameters");
-int count = 1;
-if (count > 0)
+decimal CalculateTotal(decimal subtotal, decimal taxRate = 0.18m)
 {
-    Console.WriteLine("C# basics sample");
+    return subtotal + (subtotal * taxRate);
 }
+
+Console.WriteLine(CalculateTotal(1000m));
 ```
 
 ---
@@ -1457,13 +1391,15 @@ leads to overengineering, hidden bugs, or confusing architecture.
 **Sample:**
 
 ```csharp
-// Concept: 6. Methods and parameters
-Console.WriteLine("6. Methods and parameters");
-int count = 1;
-if (count > 0)
+void AddFee(ref decimal amount, decimal fee)
 {
-    Console.WriteLine("C# basics sample");
+    amount += fee;
 }
+
+decimal total = 100m;
+AddFee(ref total, 15m);
+Console.WriteLine(total);
+// ref is useful but can make code harder to reason about if overused.
 ```
 
 ---
@@ -1479,13 +1415,9 @@ safely. They often work together, but they solve different parts of the topic.
 **Sample:**
 
 ```csharp
-// Concept: 6. Methods and parameters
-Console.WriteLine("6. Methods and parameters");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+void PrintLine(string value) => Console.WriteLine(value);
+PrintLine("Hello");
+// Methods package logic. Exception handling is about what happens when execution fails.
 ```
 
 ---
@@ -1501,13 +1433,14 @@ receive. Interviewers usually care more about the reasoning than the definition 
 **Sample:**
 
 ```csharp
-// Concept: 6. Methods and parameters
-Console.WriteLine("6. Methods and parameters");
-int count = 1;
-if (count > 0)
+bool TryGetDiscount(string customerType, out decimal discount)
 {
-    Console.WriteLine("C# basics sample");
+    discount = customerType == "Premium" ? 0.15m : 0.05m;
+    return true;
 }
+
+TryGetDiscount("Premium", out var rate);
+Console.WriteLine(rate);
 ```
 
 ---
@@ -1523,13 +1456,14 @@ implementation readable, and validate important paths early.
 **Sample:**
 
 ```csharp
-// Concept: 6. Methods and parameters
-Console.WriteLine("6. Methods and parameters");
-int count = 1;
-if (count > 0)
+bool TryGetDiscount(string customerType, out decimal discount)
 {
-    Console.WriteLine("C# basics sample");
+    discount = customerType == "Premium" ? 0.15m : 0.05m;
+    return true;
 }
+
+TryGetDiscount("Premium", out var rate);
+Console.WriteLine(rate);
 ```
 
 ---
@@ -1545,13 +1479,15 @@ choices, poor debugging, or incomplete explanations.
 **Sample:**
 
 ```csharp
-// Concept: 6. Methods and parameters
-Console.WriteLine("6. Methods and parameters");
-int count = 1;
-if (count > 0)
+void AddFee(ref decimal amount, decimal fee)
 {
-    Console.WriteLine("C# basics sample");
+    amount += fee;
 }
+
+decimal total = 100m;
+AddFee(ref total, 15m);
+Console.WriteLine(total);
+// ref is useful but can make code harder to reason about if overused.
 ```
 
 ---
@@ -1567,13 +1503,13 @@ logs, runtime behavior, and edge cases before changing the design.
 **Sample:**
 
 ```csharp
-// Concept: 6. Methods and parameters
-Console.WriteLine("6. Methods and parameters");
-int count = 1;
-if (count > 0)
+decimal Divide(decimal total, int count)
 {
-    Console.WriteLine("C# basics sample");
+    if (count == 0) throw new ArgumentException("Count cannot be zero.", nameof(count));
+    return total / count;
 }
+
+Console.WriteLine(Divide(100m, 4));
 ```
 
 ---
@@ -1589,13 +1525,12 @@ coherent end-to-end explanation.
 **Sample:**
 
 ```csharp
-// Concept: 6. Methods and parameters
-Console.WriteLine("6. Methods and parameters");
-int count = 1;
-if (count > 0)
+string BuildInvoiceNumber(int year, int sequence)
 {
-    Console.WriteLine("C# basics sample");
+    return $"INV-{year}-{sequence:D4}";
 }
+
+Console.WriteLine(BuildInvoiceNumber(2026, 23));
 ```
 
 ---
@@ -1612,12 +1547,14 @@ failures safely. It is part of the foundation a candidate should be able to expl
 **Sample:**
 
 ```csharp
-// Concept: 7. Exception handling
-Console.WriteLine("7. Exception handling");
-int count = 1;
-if (count > 0)
+try
 {
-    Console.WriteLine("C# basics sample");
+    int quantity = int.Parse("abc");
+    Console.WriteLine(quantity);
+}
+catch (FormatException ex)
+{
+    Console.WriteLine($"Invalid quantity: {ex.Message}");
 }
 ```
 
@@ -1634,12 +1571,14 @@ security, or delivery depending on the situation.
 **Sample:**
 
 ```csharp
-// Concept: 7. Exception handling
-Console.WriteLine("7. Exception handling");
-int count = 1;
-if (count > 0)
+try
 {
-    Console.WriteLine("C# basics sample");
+    int quantity = int.Parse("abc");
+    Console.WriteLine(quantity);
+}
+catch (FormatException ex)
+{
+    Console.WriteLine($"Invalid quantity: {ex.Message}");
 }
 ```
 
@@ -1656,12 +1595,14 @@ scalability, or debugging depend on that area.
 **Sample:**
 
 ```csharp
-// Concept: 7. Exception handling
-Console.WriteLine("7. Exception handling");
-int count = 1;
-if (count > 0)
+try
 {
-    Console.WriteLine("C# basics sample");
+    int quantity = int.Parse("abc");
+    Console.WriteLine(quantity);
+}
+catch (FormatException ex)
+{
+    Console.WriteLine($"Invalid quantity: {ex.Message}");
 }
 ```
 
@@ -1678,13 +1619,14 @@ depends on the application, but the responsibility should stay predictable.
 **Sample:**
 
 ```csharp
-// Concept: 7. Exception handling
-Console.WriteLine("7. Exception handling");
-int count = 1;
-if (count > 0)
+decimal ParseAmount(string value)
 {
-    Console.WriteLine("C# basics sample");
+    if (!decimal.TryParse(value, out var amount))
+        throw new ArgumentException("Amount is invalid.", nameof(value));
+    return amount;
 }
+
+Console.WriteLine(ParseAmount("1499.95"));
 ```
 
 ---
@@ -1700,12 +1642,14 @@ easier to explain to reviewers, interviewers, and teammates.
 **Sample:**
 
 ```csharp
-// Concept: 7. Exception handling
-Console.WriteLine("7. Exception handling");
-int count = 1;
-if (count > 0)
+try
 {
-    Console.WriteLine("C# basics sample");
+    int quantity = int.Parse("abc");
+    Console.WriteLine(quantity);
+}
+catch (FormatException ex)
+{
+    Console.WriteLine($"Invalid quantity: {ex.Message}");
 }
 ```
 
@@ -1722,12 +1666,13 @@ usually leads to overengineering, hidden bugs, or confusing architecture.
 **Sample:**
 
 ```csharp
-// Concept: 7. Exception handling
-Console.WriteLine("7. Exception handling");
-int count = 1;
-if (count > 0)
+try
 {
-    Console.WriteLine("C# basics sample");
+    File.ReadAllText("missing.txt");
+}
+catch
+{
+    // Swallowing exceptions hides the real problem.
 }
 ```
 
@@ -1744,13 +1689,9 @@ text and groups of values. They often work together, but they solve different pa
 **Sample:**
 
 ```csharp
-// Concept: 7. Exception handling
-Console.WriteLine("7. Exception handling");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+var names = new List<string> { "Asha", "Sai" };
+Console.WriteLine(string.Join(", ", names));
+// Exception handling reacts to failures. Strings and collections manage normal data.
 ```
 
 ---
@@ -1766,13 +1707,14 @@ failures safely. Interviewers usually care more about the reasoning than the def
 **Sample:**
 
 ```csharp
-// Concept: 7. Exception handling
-Console.WriteLine("7. Exception handling");
-int count = 1;
-if (count > 0)
+decimal ParseAmount(string value)
 {
-    Console.WriteLine("C# basics sample");
+    if (!decimal.TryParse(value, out var amount))
+        throw new ArgumentException("Amount is invalid.", nameof(value));
+    return amount;
 }
+
+Console.WriteLine(ParseAmount("1499.95"));
 ```
 
 ---
@@ -1788,13 +1730,14 @@ implementation readable, and validate important paths early.
 **Sample:**
 
 ```csharp
-// Concept: 7. Exception handling
-Console.WriteLine("7. Exception handling");
-int count = 1;
-if (count > 0)
+decimal ParseAmount(string value)
 {
-    Console.WriteLine("C# basics sample");
+    if (!decimal.TryParse(value, out var amount))
+        throw new ArgumentException("Amount is invalid.", nameof(value));
+    return amount;
 }
+
+Console.WriteLine(ParseAmount("1499.95"));
 ```
 
 ---
@@ -1810,12 +1753,13 @@ design choices, poor debugging, or incomplete explanations.
 **Sample:**
 
 ```csharp
-// Concept: 7. Exception handling
-Console.WriteLine("7. Exception handling");
-int count = 1;
-if (count > 0)
+try
 {
-    Console.WriteLine("C# basics sample");
+    File.ReadAllText("missing.txt");
+}
+catch
+{
+    // Swallowing exceptions hides the real problem.
 }
 ```
 
@@ -1832,12 +1776,14 @@ configuration, logs, runtime behavior, and edge cases before changing the design
 **Sample:**
 
 ```csharp
-// Concept: 7. Exception handling
-Console.WriteLine("7. Exception handling");
-int count = 1;
-if (count > 0)
+try
 {
-    Console.WriteLine("C# basics sample");
+    throw new InvalidOperationException("Payment gateway timed out.");
+}
+catch (Exception ex)
+{
+    Console.WriteLine(ex.GetType().Name);
+    Console.WriteLine(ex.Message);
 }
 ```
 
@@ -1854,13 +1800,9 @@ a coherent end-to-end explanation.
 **Sample:**
 
 ```csharp
-// Concept: 7. Exception handling
-Console.WriteLine("7. Exception handling");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+using var writer = new StreamWriter("audit.log");
+writer.WriteLine("Application started");
+// using combines basic exception-safe cleanup with ordinary I/O work.
 ```
 
 ---
@@ -1877,13 +1819,9 @@ and groups of values. It is part of the foundation a candidate should be able to
 **Sample:**
 
 ```csharp
-// Concept: 8. Strings and collections
-Console.WriteLine("8. Strings and collections");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+var customerNames = new List<string> { "Asha", "Sai", "Neha" };
+string csv = string.Join(", ", customerNames);
+Console.WriteLine(csv);
 ```
 
 ---
@@ -1899,13 +1837,9 @@ performance, security, or delivery depending on the situation.
 **Sample:**
 
 ```csharp
-// Concept: 8. Strings and collections
-Console.WriteLine("8. Strings and collections");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+var customerNames = new List<string> { "Asha", "Sai", "Neha" };
+string csv = string.Join(", ", customerNames);
+Console.WriteLine(csv);
 ```
 
 ---
@@ -1921,13 +1855,9 @@ decisions, scalability, or debugging depend on that area.
 **Sample:**
 
 ```csharp
-// Concept: 8. Strings and collections
-Console.WriteLine("8. Strings and collections");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+var customerNames = new List<string> { "Asha", "Sai", "Neha" };
+string csv = string.Join(", ", customerNames);
+Console.WriteLine(csv);
 ```
 
 ---
@@ -1943,13 +1873,13 @@ shape depends on the application, but the responsibility should stay predictable
 **Sample:**
 
 ```csharp
-// Concept: 8. Strings and collections
-Console.WriteLine("8. Strings and collections");
-int count = 1;
-if (count > 0)
+var inventory = new Dictionary<string, int>
 {
-    Console.WriteLine("C# basics sample");
-}
+    ["KB-001"] = 25,
+    ["MS-002"] = 14
+};
+
+Console.WriteLine(inventory["KB-001"]);
 ```
 
 ---
@@ -1965,13 +1895,9 @@ tradeoffs easier to explain to reviewers, interviewers, and teammates.
 **Sample:**
 
 ```csharp
-// Concept: 8. Strings and collections
-Console.WriteLine("8. Strings and collections");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+var customerNames = new List<string> { "Asha", "Sai", "Neha" };
+string csv = string.Join(", ", customerNames);
+Console.WriteLine(csv);
 ```
 
 ---
@@ -1987,13 +1913,13 @@ values. That usually leads to overengineering, hidden bugs, or confusing archite
 **Sample:**
 
 ```csharp
-// Concept: 8. Strings and collections
-Console.WriteLine("8. Strings and collections");
-int count = 1;
-if (count > 0)
+string result = "";
+for (int i = 1; i <= 5; i++)
 {
-    Console.WriteLine("C# basics sample");
+    result += i;
 }
+Console.WriteLine(result);
+// Repeated string concatenation can create unnecessary allocations.
 ```
 
 ---
@@ -2010,12 +1936,14 @@ topic.
 **Sample:**
 
 ```csharp
-// Concept: 8. Strings and collections
-Console.WriteLine("8. Strings and collections");
-int count = 1;
-if (count > 0)
+var user = new Customer("Ravi");
+Console.WriteLine(user.Name);
+// Strings and collections hold data. Classes and objects bundle data with behavior.
+
+public class Customer
 {
-    Console.WriteLine("C# basics sample");
+    public string Name { get; }
+    public Customer(string name) => Name = name;
 }
 ```
 
@@ -2032,13 +1960,13 @@ and groups of values. Interviewers usually care more about the reasoning than th
 **Sample:**
 
 ```csharp
-// Concept: 8. Strings and collections
-Console.WriteLine("8. Strings and collections");
-int count = 1;
-if (count > 0)
+var inventory = new Dictionary<string, int>
 {
-    Console.WriteLine("C# basics sample");
-}
+    ["KB-001"] = 25,
+    ["MS-002"] = 14
+};
+
+Console.WriteLine(inventory["KB-001"]);
 ```
 
 ---
@@ -2054,13 +1982,13 @@ keep implementation readable, and validate important paths early.
 **Sample:**
 
 ```csharp
-// Concept: 8. Strings and collections
-Console.WriteLine("8. Strings and collections");
-int count = 1;
-if (count > 0)
+var inventory = new Dictionary<string, int>
 {
-    Console.WriteLine("C# basics sample");
-}
+    ["KB-001"] = 25,
+    ["MS-002"] = 14
+};
+
+Console.WriteLine(inventory["KB-001"]);
 ```
 
 ---
@@ -2076,13 +2004,13 @@ weak design choices, poor debugging, or incomplete explanations.
 **Sample:**
 
 ```csharp
-// Concept: 8. Strings and collections
-Console.WriteLine("8. Strings and collections");
-int count = 1;
-if (count > 0)
+string result = "";
+for (int i = 1; i <= 5; i++)
 {
-    Console.WriteLine("C# basics sample");
+    result += i;
 }
+Console.WriteLine(result);
+// Repeated string concatenation can create unnecessary allocations.
 ```
 
 ---
@@ -2098,13 +2026,14 @@ configuration, logs, runtime behavior, and edge cases before changing the design
 **Sample:**
 
 ```csharp
-// Concept: 8. Strings and collections
-Console.WriteLine("8. Strings and collections");
-int count = 1;
-if (count > 0)
+var uniqueTags = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
 {
-    Console.WriteLine("C# basics sample");
-}
+    "dotnet",
+    "DotNet",
+    "csharp"
+};
+
+Console.WriteLine(uniqueTags.Count);
 ```
 
 ---
@@ -2120,13 +2049,11 @@ facts into a coherent end-to-end explanation.
 **Sample:**
 
 ```csharp
-// Concept: 8. Strings and collections
-Console.WriteLine("8. Strings and collections");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+var builder = new System.Text.StringBuilder();
+builder.Append("INV");
+builder.Append('-');
+builder.Append(DateTime.UtcNow.Year);
+Console.WriteLine(builder.ToString());
 ```
 
 ---
@@ -2143,12 +2070,18 @@ and behavior in C#. It is part of the foundation a candidate should be able to e
 **Sample:**
 
 ```csharp
-// Concept: 9. Basic classes and objects
-Console.WriteLine("9. Basic classes and objects");
-int count = 1;
-if (count > 0)
+public class Product
 {
-    Console.WriteLine("C# basics sample");
+    public string Name { get; }
+    public decimal Price { get; private set; }
+
+    public Product(string name, decimal price)
+    {
+        Name = name;
+        Price = price;
+    }
+
+    public void ApplyDiscount(decimal percentage) => Price -= Price * percentage;
 }
 ```
 
@@ -2165,12 +2098,18 @@ security, or delivery depending on the situation.
 **Sample:**
 
 ```csharp
-// Concept: 9. Basic classes and objects
-Console.WriteLine("9. Basic classes and objects");
-int count = 1;
-if (count > 0)
+public class Product
 {
-    Console.WriteLine("C# basics sample");
+    public string Name { get; }
+    public decimal Price { get; private set; }
+
+    public Product(string name, decimal price)
+    {
+        Name = name;
+        Price = price;
+    }
+
+    public void ApplyDiscount(decimal percentage) => Price -= Price * percentage;
 }
 ```
 
@@ -2187,12 +2126,18 @@ decisions, scalability, or debugging depend on that area.
 **Sample:**
 
 ```csharp
-// Concept: 9. Basic classes and objects
-Console.WriteLine("9. Basic classes and objects");
-int count = 1;
-if (count > 0)
+public class Product
 {
-    Console.WriteLine("C# basics sample");
+    public string Name { get; }
+    public decimal Price { get; private set; }
+
+    public Product(string name, decimal price)
+    {
+        Name = name;
+        Price = price;
+    }
+
+    public void ApplyDiscount(decimal percentage) => Price -= Price * percentage;
 }
 ```
 
@@ -2209,13 +2154,9 @@ shape depends on the application, but the responsibility should stay predictable
 **Sample:**
 
 ```csharp
-// Concept: 9. Basic classes and objects
-Console.WriteLine("9. Basic classes and objects");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+var product = new Product("Mechanical Keyboard", 4999m);
+product.ApplyDiscount(0.10m);
+Console.WriteLine(product.Price);
 ```
 
 ---
@@ -2231,12 +2172,18 @@ tradeoffs easier to explain to reviewers, interviewers, and teammates.
 **Sample:**
 
 ```csharp
-// Concept: 9. Basic classes and objects
-Console.WriteLine("9. Basic classes and objects");
-int count = 1;
-if (count > 0)
+public class Product
 {
-    Console.WriteLine("C# basics sample");
+    public string Name { get; }
+    public decimal Price { get; private set; }
+
+    public Product(string name, decimal price)
+    {
+        Name = name;
+        Price = price;
+    }
+
+    public void ApplyDiscount(decimal percentage) => Price -= Price * percentage;
 }
 ```
 
@@ -2253,13 +2200,14 @@ That usually leads to overengineering, hidden bugs, or confusing architecture.
 **Sample:**
 
 ```csharp
-// Concept: 9. Basic classes and objects
-Console.WriteLine("9. Basic classes and objects");
-int count = 1;
-if (count > 0)
+public class UserService
 {
-    Console.WriteLine("C# basics sample");
+    public void Register() { }
+    public void Login() { }
+    public void ExportAudit() { }
+    public void GeneratePayroll() { }
 }
+// Even in basics, a class can become too broad.
 ```
 
 ---
@@ -2276,13 +2224,15 @@ topic.
 **Sample:**
 
 ```csharp
-// Concept: 9. Basic classes and objects
-Console.WriteLine("9. Basic classes and objects");
-int count = 1;
-if (count > 0)
+public class OrderSummary
 {
-    Console.WriteLine("C# basics sample");
+    public decimal Total { get; }
+    public OrderSummary(decimal total) => Total = total;
 }
+
+OrderSummary summary = new(1200m);
+Console.WriteLine(summary.Total);
+// Basic classes model business concepts. Memory/GC explains lifetime and cleanup.
 ```
 
 ---
@@ -2299,13 +2249,9 @@ alone.
 **Sample:**
 
 ```csharp
-// Concept: 9. Basic classes and objects
-Console.WriteLine("9. Basic classes and objects");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+var product = new Product("Mechanical Keyboard", 4999m);
+product.ApplyDiscount(0.10m);
+Console.WriteLine(product.Price);
 ```
 
 ---
@@ -2321,13 +2267,9 @@ implementation readable, and validate important paths early.
 **Sample:**
 
 ```csharp
-// Concept: 9. Basic classes and objects
-Console.WriteLine("9. Basic classes and objects");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+var product = new Product("Mechanical Keyboard", 4999m);
+product.ApplyDiscount(0.10m);
+Console.WriteLine(product.Price);
 ```
 
 ---
@@ -2343,13 +2285,14 @@ as weak design choices, poor debugging, or incomplete explanations.
 **Sample:**
 
 ```csharp
-// Concept: 9. Basic classes and objects
-Console.WriteLine("9. Basic classes and objects");
-int count = 1;
-if (count > 0)
+public class UserService
 {
-    Console.WriteLine("C# basics sample");
+    public void Register() { }
+    public void Login() { }
+    public void ExportAudit() { }
+    public void GeneratePayroll() { }
 }
+// Even in basics, a class can become too broad.
 ```
 
 ---
@@ -2365,12 +2308,13 @@ configuration, logs, runtime behavior, and edge cases before changing the design
 **Sample:**
 
 ```csharp
-// Concept: 9. Basic classes and objects
-Console.WriteLine("9. Basic classes and objects");
-int count = 1;
-if (count > 0)
+var customer = new Customer("Asha");
+Console.WriteLine(customer.Name);
+
+public class Customer
 {
-    Console.WriteLine("C# basics sample");
+    public string Name { get; }
+    public Customer(string name) => Name = name;
 }
 ```
 
@@ -2387,13 +2331,8 @@ isolated facts into a coherent end-to-end explanation.
 **Sample:**
 
 ```csharp
-// Concept: 9. Basic classes and objects
-Console.WriteLine("9. Basic classes and objects");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+var product = new Product("SSD", 7499m);
+Console.WriteLine($"{product.Name}: {product.Price}");
 ```
 
 ---
@@ -2410,13 +2349,9 @@ the .NET runtime. It is part of the foundation a candidate should be able to exp
 **Sample:**
 
 ```csharp
-// Concept: 10. Memory and garbage collection
-Console.WriteLine("10. Memory and garbage collection");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+using var reader = new StreamReader("orders.txt");
+string? firstLine = reader.ReadLine();
+Console.WriteLine(firstLine);
 ```
 
 ---
@@ -2432,13 +2367,9 @@ performance, security, or delivery depending on the situation.
 **Sample:**
 
 ```csharp
-// Concept: 10. Memory and garbage collection
-Console.WriteLine("10. Memory and garbage collection");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+using var reader = new StreamReader("orders.txt");
+string? firstLine = reader.ReadLine();
+Console.WriteLine(firstLine);
 ```
 
 ---
@@ -2454,13 +2385,9 @@ decisions, scalability, or debugging depend on that area.
 **Sample:**
 
 ```csharp
-// Concept: 10. Memory and garbage collection
-Console.WriteLine("10. Memory and garbage collection");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+using var reader = new StreamReader("orders.txt");
+string? firstLine = reader.ReadLine();
+Console.WriteLine(firstLine);
 ```
 
 ---
@@ -2476,13 +2403,12 @@ shape depends on the application, but the responsibility should stay predictable
 **Sample:**
 
 ```csharp
-// Concept: 10. Memory and garbage collection
-Console.WriteLine("10. Memory and garbage collection");
-int count = 1;
-if (count > 0)
+var texts = new List<string>();
+for (int i = 0; i < 1000; i++)
 {
-    Console.WriteLine("C# basics sample");
+    texts.Add($"Item-{i}");
 }
+Console.WriteLine(texts.Count);
 ```
 
 ---
@@ -2498,13 +2424,9 @@ tradeoffs easier to explain to reviewers, interviewers, and teammates.
 **Sample:**
 
 ```csharp
-// Concept: 10. Memory and garbage collection
-Console.WriteLine("10. Memory and garbage collection");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+using var reader = new StreamReader("orders.txt");
+string? firstLine = reader.ReadLine();
+Console.WriteLine(firstLine);
 ```
 
 ---
@@ -2520,13 +2442,13 @@ That usually leads to overengineering, hidden bugs, or confusing architecture.
 **Sample:**
 
 ```csharp
-// Concept: 10. Memory and garbage collection
-Console.WriteLine("10. Memory and garbage collection");
-int count = 1;
-if (count > 0)
+var cache = new List<byte[]>();
+for (int i = 0; i < 50; i++)
 {
-    Console.WriteLine("C# basics sample");
+    cache.Add(new byte[1024 * 1024]);
 }
+Console.WriteLine(cache.Count);
+// Holding references means the GC cannot reclaim the objects.
 ```
 
 ---
@@ -2542,13 +2464,9 @@ C# applications. They often work together, but they solve different parts of the
 **Sample:**
 
 ```csharp
-// Concept: 10. Memory and garbage collection
-Console.WriteLine("10. Memory and garbage collection");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+var assemblyName = typeof(string).Assembly.GetName().Name;
+Console.WriteLine(assemblyName);
+// CLR runs the code. GC manages object lifetime while the program is running.
 ```
 
 ---
@@ -2564,13 +2482,12 @@ the .NET runtime. Interviewers usually care more about the reasoning than the de
 **Sample:**
 
 ```csharp
-// Concept: 10. Memory and garbage collection
-Console.WriteLine("10. Memory and garbage collection");
-int count = 1;
-if (count > 0)
+var texts = new List<string>();
+for (int i = 0; i < 1000; i++)
 {
-    Console.WriteLine("C# basics sample");
+    texts.Add($"Item-{i}");
 }
+Console.WriteLine(texts.Count);
 ```
 
 ---
@@ -2586,13 +2503,12 @@ implementation readable, and validate important paths early.
 **Sample:**
 
 ```csharp
-// Concept: 10. Memory and garbage collection
-Console.WriteLine("10. Memory and garbage collection");
-int count = 1;
-if (count > 0)
+var texts = new List<string>();
+for (int i = 0; i < 1000; i++)
 {
-    Console.WriteLine("C# basics sample");
+    texts.Add($"Item-{i}");
 }
+Console.WriteLine(texts.Count);
 ```
 
 ---
@@ -2608,13 +2524,13 @@ weak design choices, poor debugging, or incomplete explanations.
 **Sample:**
 
 ```csharp
-// Concept: 10. Memory and garbage collection
-Console.WriteLine("10. Memory and garbage collection");
-int count = 1;
-if (count > 0)
+var cache = new List<byte[]>();
+for (int i = 0; i < 50; i++)
 {
-    Console.WriteLine("C# basics sample");
+    cache.Add(new byte[1024 * 1024]);
 }
+Console.WriteLine(cache.Count);
+// Holding references means the GC cannot reclaim the objects.
 ```
 
 ---
@@ -2630,13 +2546,10 @@ dependencies, configuration, logs, runtime behavior, and edge cases before chang
 **Sample:**
 
 ```csharp
-// Concept: 10. Memory and garbage collection
-Console.WriteLine("10. Memory and garbage collection");
-int count = 1;
-if (count > 0)
-{
-    Console.WriteLine("C# basics sample");
-}
+Console.WriteLine($"Managed bytes: {GC.GetTotalMemory(false)}");
+GC.Collect();
+GC.WaitForPendingFinalizers();
+Console.WriteLine($"After collection: {GC.GetTotalMemory(true)}");
 ```
 
 ---
@@ -2652,11 +2565,192 @@ into a coherent end-to-end explanation.
 **Sample:**
 
 ```csharp
-// Concept: 10. Memory and garbage collection
-Console.WriteLine("10. Memory and garbage collection");
-int count = 1;
-if (count > 0)
+var lines = new List<string> { "INV-001", "INV-002" };
+Console.WriteLine(string.Join(Environment.NewLine, lines));
+// Memory behavior affects even simple strings, lists, and objects.
+```
+---
+
+## 11. Tricky interview questions
+
+### 121. Why is boxing a tricky C# basics interview question?
+
+**Answer:**
+
+Boxing silently wraps a value type inside an object reference. It is easy to miss, and it can add
+extra allocations or surprising behavior in collections and APIs that use `object`.
+
+**Sample:**
+
+```csharp
+int count = 5;
+object boxed = count;      // boxing
+int unboxed = (int)boxed;  // unboxing
+Console.WriteLine(unboxed);
+```
+
+---
+
+### 122. What is tricky about string interning in C#?
+
+**Answer:**
+
+Two string variables can point to the same interned value even though they look like separate
+objects. Candidates often mix up reference equality and value equality when strings are involved.
+
+**Sample:**
+
+```csharp
+string first = "dotnet";
+string second = "dot" + "net";
+string third = new string(new[] { 'd', 'o', 't', 'n', 'e', 't' });
+
+Console.WriteLine(first == second);
+Console.WriteLine(object.ReferenceEquals(first, second));
+Console.WriteLine(object.ReferenceEquals(first, third));
+```
+
+---
+
+### 123. Why are `checked` and `unchecked` worth knowing in basics?
+
+**Answer:**
+
+Integer overflow can either throw or wrap depending on context. That makes arithmetic bugs tricky,
+especially when code moves between debug assumptions and production scenarios.
+
+**Sample:**
+
+```csharp
+checked
 {
-    Console.WriteLine("C# basics sample");
+    try
+    {
+        int max = int.MaxValue;
+        Console.WriteLine(max + 1);
+    }
+    catch (OverflowException ex)
+    {
+        Console.WriteLine(ex.GetType().Name);
+    }
 }
+```
+
+---
+
+### 124. What is the subtle difference between `const` and `readonly`?
+
+**Answer:**
+
+`const` is baked into compiled code at compile time, while `readonly` is assigned at runtime. That
+difference matters for versioning, configuration, and values that should not be inlined.
+
+**Sample:**
+
+```csharp
+public class TaxSettings
+{
+    public const decimal VatRateConst = 0.18m;
+    public readonly decimal VatRateReadonly;
+
+    public TaxSettings(decimal vatRateReadonly)
+    {
+        VatRateReadonly = vatRateReadonly;
+    }
+}
+```
+
+---
+
+### 125. Why can `foreach` feel tricky with mutable objects?
+
+**Answer:**
+
+The loop variable may look isolated, but if the items are reference types you are still mutating the
+same underlying objects. Developers sometimes expect copy behavior and do not get it.
+
+**Sample:**
+
+```csharp
+var users = new List<User>
+{
+    new("Asha"),
+    new("Sai")
+};
+
+foreach (var user in users)
+{
+    user.Name = user.Name.ToUpperInvariant();
+}
+
+Console.WriteLine(string.Join(", ", users.Select(u => u.Name)));
+
+public class User
+{
+    public string Name { get; set; }
+    public User(string name) => Name = name;
+}
+```
+
+---
+
+### 126. What makes `default` tricky for value types and reference types?
+
+**Answer:**
+
+`default` depends on the target type. For a reference type it becomes `null`, while for a value type
+it becomes the zeroed-out version of that struct or numeric type.
+
+**Sample:**
+
+```csharp
+int number = default;
+DateTime date = default;
+string? text = default;
+
+Console.WriteLine(number);
+Console.WriteLine(date);
+Console.WriteLine(text is null);
+```
+
+---
+
+### 127. Why do `ref`, `out`, and `in` confuse many beginners?
+
+**Answer:**
+
+They all pass arguments by reference, but with different intent and rules. Interviewers like this
+topic because syntax similarity hides important differences in behavior.
+
+**Sample:**
+
+```csharp
+void Increment(ref int value) => value++;
+void Create(out int value) => value = 10;
+void Print(in int value) => Console.WriteLine(value);
+
+int a = 1;
+Increment(ref a);
+Create(out int b);
+Print(in b);
+```
+
+---
+
+### 128. Why is `using` important even in C# basics?
+
+**Answer:**
+
+Garbage collection does not automatically release unmanaged resources at the exact moment you need.
+`using` is how you express deterministic cleanup for streams, files, and similar resources.
+
+**Sample:**
+
+```csharp
+using (var writer = new StreamWriter("app.log"))
+{
+    writer.WriteLine("Application started");
+}
+
+Console.WriteLine("Writer disposed");
 ```
