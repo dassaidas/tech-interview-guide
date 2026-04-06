@@ -1,79 +1,89 @@
 site_name: Tech Interview Guide
 
 theme:
-    name: material
-    features:
-        - navigation.expand
-          - navigation.sections
-          - navigation.prune
-          - navigation.indexes
-          - content.code.copy
-    palette:
-        scheme: default
-        toggle:
-            icon: material/weather-night
-            name: Switch to dark mode
+      name: material
+      features:
+            - navigation.expand
+              - navigation.sections
+              - navigation.prune
+              - navigation.indexes
+              - content.code.copy
+      palette:
+            scheme: default
+            toggle:
+                  icon: material/weather-night
+                  name: Switch to dark mode
 
 extra_css:
-    - extra.css
+      - extra.css
 extra_javascript:
-    - extra.js
+      - extra.js
 
 nav:
-    - Home: index.md
+      - Home: index.md
 
-    - .NET:
-          - C#:
-                - Basics: Dotnet/Csharp/Basics/index.md
-                - OOP Concepts: Dotnet/Csharp/OOPS/index.md
-                - Advanced Topics: Dotnet/Csharp/Advancded/index.md
-          - dotnetCore:
-                - Fundamentals: Dotnet/DotnetCore/Fundamentals/index.md
-                - Kestrel and otherservices: Dotnet/DotnetCore/Kestrel_and_other_services/index.md
-                - Dotnetcore_vs_donetframework: Dotnet/DotnetCore/Dotnetcore_vs_donetframework/index.md
-                - Cross_Platform_Runtime: Dotnet/DotnetCore/Cross_Platform_Runtime/index.md
-                - Middleware_Pipeline: Dotnet/DotnetCore/Middleware_Pipeline/index.md
-                - Dependencies_in_ASP.NET_Core: Dotnet/DotnetCore/Dependencies_in_ASP.NET_Core/index.md
-                - Hosting_Models: Dotnet/DotnetCore/Hosting_Models/index.md
-                - Program.cs_Startup.cs_Lifecycle: Dotnet/DotnetCore/Program.cs_Startup.cs_Lifecycle/index.md
-                - Environment_based_Configuration: Dotnet/DotnetCore/Environment_based_Configuration/index.md
-                - Configuration_System: Dotnet/DotnetCore/Configuration_System/index.md
-                - appsettings.json_secrets.json: Dotnet/DotnetCore/appsettings.json_secrets.json/index.md
-                - Project_Templates_Overview: Dotnet/DotnetCore/Project_Templates_Overview/index.md
+      - .NET:
+              - C#:
+                      - Basics: Dotnet/Csharp/Basics/index.md
+                      - Fundamentals: Dotnet/Csharp/Fundamentals/index.md
+                      - OOP Concepts: Dotnet/Csharp/OOPS/index.md
+                      - Advanced Topics: Dotnet/Csharp/Advancded/index.md
+                      - DELEGATES_EVENTS_LAMDA_LINQ_GENERICS: Dotnet/Csharp/DELEGATES_EVENTS_LAMDA_LINQ_GENERICS/index.md
+                      - Multithreading_Async_Programming: Dotnet/Csharp/Multithreading_Async_Programming/index.md
+                      - Memory_Management_Performance: Dotnet/Csharp/Memory_Management_Performance/index.md
+                      - Exception_Handling_Logging: Dotnet/Csharp/Exception_Handling_Logging/index.md
+                      - Security_C_Sharp: Dotnet/Csharp/Security_C_Sharp/index.md
+                      - File_Handling_Serialization: Dotnet/Csharp/File_Handling_Serialization/index.md
+                      - Reflection_Attributes: Dotnet/Csharp/Reflection_Attributes/index.md
+                      - Collections_Data_Structures: Dotnet/Csharp/Collections_Data_Structures/index.md
+                      - Unit_Testing: Dotnet/Csharp/Unit_Testing/index.md
+              - dotnetCore:
+                      - Fundamentals: Dotnet/DotnetCore/Fundamentals/index.md
+                      - Kestrel and otherservices: Dotnet/DotnetCore/Kestrel_and_other_services/index.md
+                      - Dotnetcore_vs_donetframework: Dotnet/DotnetCore/Dotnetcore_vs_donetframework/index.md
+                      - Cross_Platform_Runtime: Dotnet/DotnetCore/Cross_Platform_Runtime/index.md
+                      - Middleware_Pipeline: Dotnet/DotnetCore/Middleware_Pipeline/index.md
+                      - Dependencies_in_ASP.NET_Core: Dotnet/DotnetCore/Dependencies_in_ASP.NET_Core/index.md
+                      - Hosting_Models: Dotnet/DotnetCore/Hosting_Models/index.md
+                      - Program.cs_Startup.cs_Lifecycle: Dotnet/DotnetCore/Program.cs_Startup.cs_Lifecycle/index.md
+                      - Environment_based_Configuration: Dotnet/DotnetCore/Environment_based_Configuration/index.md
+                      - Configuration_System: Dotnet/DotnetCore/Configuration_System/index.md
+                      - appsettings.json_secrets.json: Dotnet/DotnetCore/appsettings.json_secrets.json/index.md
+                      - Project_Templates_Overview: Dotnet/DotnetCore/Project_Templates_Overview/index.md
 
-    - Angular:
-          - Fundamentals: Angular/Fundamentals/index.md
-          - Forms: Angular/Forms/index.md
-          - Migration Guide: Angular/MigrationGuide/index.md
-    - React:
-          - Hooks: React/Hooks/index.md
-          - State Management: React/State/index.md
-    - Project Management:
-          - Jira:
-                - Basics: Project_Management/Jira/Basics/index.md
-                - JiraDetailed: Project_Management/Jira/Jira_detailed_course/index.md
-    - Cloud:
-          - Azure:
-                - IASS_PASS_SAAS: Cloud/Azure/IAAS_PASS_SAAS/index.md
-                - DTU_EDTU: Cloud/Azure/DTU_EDTU/index.md
-                - AzureFunctions: Cloud/Azure/AzureFunctions/index.md
-                - AzureStorage: Cloud/Azure/Azure_storage/index.md
-                - AzureCosmosDB: Cloud/Azure/Azure_Cosmos_DB/index.md
-                - AzureFabricandMicroServices: Cloud/Azure/Azure_Fabric_microservices/index.md
-                - AzureTables: Cloud/Azure/Azure_Tables/index.md
-                - AzureBlobs(block,append,page): Cloud/Azure/Azure_blobs(block,append,page)/index.md
-                - Azure_Queues: Cloud/Azure/Azure_Queues(Azure Queues , visibility timeouts ,Peek & De-Queue)/index.md
-                - Azure_Services: Cloud/Azure/Azure_Services(App services and Cloud services)/index.md
-                - Azure_WebJobs: Cloud/Azure/Azure_WebJobs(WebJob and background processing.)/index.md
-    - Scenarios:
-          - Legacy Migration: Scenarios/Migration/index.md
-          - Real-World QA: Scenarios/Realworld/index.md
-    - BrowserStack:
-          - Basics: BrowserStack/Basics/index.md
-    - Oracle:
-          - PL_SQL:
-                - Introduction: Oracle/PL_SQL/Introduction/index.md
-                - Pullagale_Databse: Oracle/PL_SQL/Pullagale_Databse/index.md
-    - Nodejs:
-          - Topics:
-                - Basics: Nodejs/Topics/Basics/index.md
+      - Angular:
+              - Fundamentals: Angular/Fundamentals/index.md
+              - Forms: Angular/Forms/index.md
+              - Migration Guide: Angular/MigrationGuide/index.md
+      - React:
+              - Hooks: React/Hooks/index.md
+              - State Management: React/State/index.md
+      - Project Management:
+              - Jira:
+                      - Basics: Project_Management/Jira/Basics/index.md
+                      - JiraDetailed: Project_Management/Jira/Jira_detailed_course/index.md
+      - Cloud:
+              - Azure:
+                      - IASS_PASS_SAAS: Cloud/Azure/IAAS_PASS_SAAS/index.md
+                      - DTU_EDTU: Cloud/Azure/DTU_EDTU/index.md
+                      - AzureFunctions: Cloud/Azure/AzureFunctions/index.md
+                      - AzureStorage: Cloud/Azure/Azure_storage/index.md
+                      - AzureCosmosDB: Cloud/Azure/Azure_Cosmos_DB/index.md
+                      - AzureFabricandMicroServices: Cloud/Azure/Azure_Fabric_microservices/index.md
+                      - AzureTables: Cloud/Azure/Azure_Tables/index.md
+                      - AzureBlobs(block,append,page): Cloud/Azure/Azure_blobs(block,append,page)/index.md
+                      - Azure_Queues: Cloud/Azure/Azure_Queues(Azure Queues , visibility timeouts ,Peek & De-Queue)/index.md
+                      - Azure_Services: Cloud/Azure/Azure_Services(App services and Cloud services)/index.md
+                      - Azure_WebJobs: Cloud/Azure/Azure_WebJobs(WebJob and background processing.)/index.md
+      - Scenarios:
+              - Legacy Migration: Scenarios/Migration/index.md
+              - Real-World QA: Scenarios/Realworld/index.md
+      - BrowserStack:
+              - Basics: BrowserStack/Basics/index.md
+      - Oracle:
+              - PL_SQL:
+                      - Introduction: Oracle/PL_SQL/Introduction/index.md
+                      - Pullagale_Databse: Oracle/PL_SQL/Pullagale_Databse/index.md
+      - Nodejs:
+              - Topics:
+                      - Basics: Nodejs/Topics/Basics/index.md

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" viewBox="0 0 1200 420" role="img" aria-labelledby="title desc">
+  <title id="title">C# Delegates, Events, Lambda, LINQ, Generics, Extension Methods</title>
+  <desc id="desc">A visual map of advanced C# interview topics with five grouped areas.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="420" fill="url(#bg)"/>
+  <text x="60" y="70" fill="#f8fafc" font-family="Segoe UI, Arial, sans-serif" font-size="30" font-weight="700">
+    C# Delegates, Events, Lambda, LINQ, Generics
+  </text>
+  <text x="60" y="108" fill="#cbd5e1" font-family="Segoe UI, Arial, sans-serif" font-size="18">
+    Practical interview map from basic concepts to tricky production scenarios
+  </text>
+
+  <rect x="55" y="150" width="210" height="180" rx="18" fill="#1d4ed8"/>
+  <text x="80" y="190" fill="#eff6ff" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Delegates</text>
+  <text x="80" y="220" fill="#dbeafe" font-family="Segoe UI, Arial, sans-serif" font-size="16">Custom delegates</text>
+  <text x="80" y="245" fill="#dbeafe" font-family="Segoe UI, Arial, sans-serif" font-size="16">Events and handlers</text>
+  <text x="80" y="270" fill="#dbeafe" font-family="Segoe UI, Arial, sans-serif" font-size="16">Func / Action / Predicate</text>
+  <text x="80" y="295" fill="#dbeafe" font-family="Segoe UI, Arial, sans-serif" font-size="16">Multicast pipelines</text>
+
+  <rect x="285" y="150" width="210" height="180" rx="18" fill="#0f766e"/>
+  <text x="310" y="190" fill="#ecfeff" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Lambda</text>
+  <text x="310" y="220" fill="#ccfbf1" font-family="Segoe UI, Arial, sans-serif" font-size="16">Expression syntax</text>
+  <text x="310" y="245" fill="#ccfbf1" font-family="Segoe UI, Arial, sans-serif" font-size="16">Closures</text>
+  <text x="310" y="270" fill="#ccfbf1" font-family="Segoe UI, Arial, sans-serif" font-size="16">Captures</text>
+  <text x="310" y="295" fill="#ccfbf1" font-family="Segoe UI, Arial, sans-serif" font-size="16">Query composition</text>
+
+  <rect x="515" y="150" width="210" height="180" rx="18" fill="#7c3aed"/>
+  <text x="540" y="190" fill="#f5f3ff" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">LINQ</text>
+  <text x="540" y="220" fill="#ede9fe" font-family="Segoe UI, Arial, sans-serif" font-size="16">Query syntax</text>
+  <text x="540" y="245" fill="#ede9fe" font-family="Segoe UI, Arial, sans-serif" font-size="16">Method syntax</text>
+  <text x="540" y="270" fill="#ede9fe" font-family="Segoe UI, Arial, sans-serif" font-size="16">Deferred execution</text>
+  <text x="540" y="295" fill="#ede9fe" font-family="Segoe UI, Arial, sans-serif" font-size="16">Grouping and joins</text>
+
+  <rect x="745" y="150" width="210" height="180" rx="18" fill="#b45309"/>
+  <text x="770" y="190" fill="#fff7ed" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Generics</text>
+  <text x="770" y="220" fill="#ffedd5" font-family="Segoe UI, Arial, sans-serif" font-size="16">Type parameters</text>
+  <text x="770" y="245" fill="#ffedd5" font-family="Segoe UI, Arial, sans-serif" font-size="16">Constraints</text>
+  <text x="770" y="270" fill="#ffedd5" font-family="Segoe UI, Arial, sans-serif" font-size="16">Reusable APIs</text>
+  <text x="770" y="295" fill="#ffedd5" font-family="Segoe UI, Arial, sans-serif" font-size="16">Performance tradeoffs</text>
+
+  <rect x="975" y="150" width="170" height="180" rx="18" fill="#be123c"/>
+  <text x="998" y="190" fill="#fff1f2" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Extensions</text>
+  <text x="998" y="220" fill="#ffe4e6" font-family="Segoe UI, Arial, sans-serif" font-size="16">Fluent helpers</text>
+  <text x="998" y="245" fill="#ffe4e6" font-family="Segoe UI, Arial, sans-serif" font-size="16">Domain utilities</text>
+  <text x="998" y="270" fill="#ffe4e6" font-family="Segoe UI, Arial, sans-serif" font-size="16">Discoverability</text>
+  <text x="998" y="295" fill="#ffe4e6" font-family="Segoe UI, Arial, sans-serif" font-size="16">Safe design</text>
+</svg>

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="430" viewBox="0 0 1200 430" role="img" aria-labelledby="title desc">
+  <title id="title">C# Security Interview Map</title>
+  <desc id="desc">A visual map of authentication, authorization, JWT, refresh tokens, encryption, hashing, and secure coding practices.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="430" fill="url(#bg)"/>
+  <text x="54" y="64" fill="#f8fafc" font-family="Segoe UI, Arial, sans-serif" font-size="30" font-weight="700">
+    C# Security and Authentication Interview Guide
+  </text>
+  <text x="54" y="102" fill="#cbd5e1" font-family="Segoe UI, Arial, sans-serif" font-size="18">
+    Practical interview map for auth, JWT, hashing, refresh tokens, and secure coding
+  </text>
+
+  <rect x="48" y="148" width="210" height="190" rx="18" fill="#1d4ed8"/>
+  <text x="72" y="190" fill="#eff6ff" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Auth</text>
+  <text x="72" y="220" fill="#dbeafe" font-family="Segoe UI, Arial, sans-serif" font-size="16">Authentication</text>
+  <text x="72" y="244" fill="#dbeafe" font-family="Segoe UI, Arial, sans-serif" font-size="16">Authorization</text>
+  <text x="72" y="268" fill="#dbeafe" font-family="Segoe UI, Arial, sans-serif" font-size="16">Policies & roles</text>
+  <text x="72" y="292" fill="#dbeafe" font-family="Segoe UI, Arial, sans-serif" font-size="16">Claims</text>
+
+  <rect x="280" y="148" width="210" height="190" rx="18" fill="#0f766e"/>
+  <text x="304" y="190" fill="#ecfeff" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">JWT</text>
+  <text x="304" y="220" fill="#ccfbf1" font-family="Segoe UI, Arial, sans-serif" font-size="16">Token creation</text>
+  <text x="304" y="244" fill="#ccfbf1" font-family="Segoe UI, Arial, sans-serif" font-size="16">Validation</text>
+  <text x="304" y="268" fill="#ccfbf1" font-family="Segoe UI, Arial, sans-serif" font-size="16">Claims</text>
+  <text x="304" y="292" fill="#ccfbf1" font-family="Segoe UI, Arial, sans-serif" font-size="16">Expiry</text>
+
+  <rect x="512" y="148" width="210" height="190" rx="18" fill="#7c3aed"/>
+  <text x="536" y="190" fill="#f5f3ff" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Refresh</text>
+  <text x="536" y="220" fill="#ede9fe" font-family="Segoe UI, Arial, sans-serif" font-size="16">Rotation</text>
+  <text x="536" y="244" fill="#ede9fe" font-family="Segoe UI, Arial, sans-serif" font-size="16">Revocation</text>
+  <text x="536" y="268" fill="#ede9fe" font-family="Segoe UI, Arial, sans-serif" font-size="16">Token families</text>
+  <text x="536" y="292" fill="#ede9fe" font-family="Segoe UI, Arial, sans-serif" font-size="16">Session safety</text>
+
+  <rect x="744" y="148" width="210" height="190" rx="18" fill="#b45309"/>
+  <text x="768" y="190" fill="#fff7ed" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Crypto</text>
+  <text x="768" y="220" fill="#ffedd5" font-family="Segoe UI, Arial, sans-serif" font-size="16">Encryption</text>
+  <text x="768" y="244" fill="#ffedd5" font-family="Segoe UI, Arial, sans-serif" font-size="16">Hashing</text>
+  <text x="768" y="268" fill="#ffedd5" font-family="Segoe UI, Arial, sans-serif" font-size="16">Salts</text>
+  <text x="768" y="292" fill="#ffedd5" font-family="Segoe UI, Arial, sans-serif" font-size="16">Key storage</text>
+
+  <rect x="976" y="148" width="176" height="190" rx="18" fill="#be123c"/>
+  <text x="998" y="190" fill="#fff1f2" font-family="Segoe UI, Arial, sans-serif" font-size="21" font-weight="700">Secure Code</text>
+  <text x="998" y="220" fill="#ffe4e6" font-family="Segoe UI, Arial, sans-serif" font-size="15">Validation</text>
+  <text x="998" y="244" fill="#ffe4e6" font-family="Segoe UI, Arial, sans-serif" font-size="15">Secrets</text>
+  <text x="998" y="268" fill="#ffe4e6" font-family="Segoe UI, Arial, sans-serif" font-size="15">Least privilege</text>
+  <text x="998" y="292" fill="#ffe4e6" font-family="Segoe UI, Arial, sans-serif" font-size="15">Safe defaults</text>
+</svg>

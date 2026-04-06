@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="430" viewBox="0 0 1200 430" role="img" aria-labelledby="title desc">
+  <title id="title">C# Exception Handling and Logging Interview Map</title>
+  <desc id="desc">A visual map of try catch finally, custom exceptions, global exception handling, logging, and framework comparisons.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#1f2937"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="430" fill="url(#bg)"/>
+  <text x="54" y="64" fill="#f9fafb" font-family="Segoe UI, Arial, sans-serif" font-size="30" font-weight="700">
+    C# Exception Handling and Logging
+  </text>
+  <text x="54" y="102" fill="#d1d5db" font-family="Segoe UI, Arial, sans-serif" font-size="18">
+    Practical interview map from try-catch basics to global handlers, observability, and framework tradeoffs
+  </text>
+
+  <rect x="48" y="148" width="200" height="190" rx="18" fill="#1d4ed8"/>
+  <text x="72" y="190" fill="#eff6ff" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Try/Catch</text>
+  <text x="72" y="220" fill="#dbeafe" font-family="Segoe UI, Arial, sans-serif" font-size="16">Catch order</text>
+  <text x="72" y="244" fill="#dbeafe" font-family="Segoe UI, Arial, sans-serif" font-size="16">Finally blocks</text>
+  <text x="72" y="268" fill="#dbeafe" font-family="Segoe UI, Arial, sans-serif" font-size="16">throw vs throw ex</text>
+  <text x="72" y="292" fill="#dbeafe" font-family="Segoe UI, Arial, sans-serif" font-size="16">Recovery decisions</text>
+
+  <rect x="270" y="148" width="210" height="190" rx="18" fill="#0f766e"/>
+  <text x="294" y="190" fill="#ecfeff" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Custom Errors</text>
+  <text x="294" y="220" fill="#ccfbf1" font-family="Segoe UI, Arial, sans-serif" font-size="16">Domain exceptions</text>
+  <text x="294" y="244" fill="#ccfbf1" font-family="Segoe UI, Arial, sans-serif" font-size="16">InnerException</text>
+  <text x="294" y="268" fill="#ccfbf1" font-family="Segoe UI, Arial, sans-serif" font-size="16">API contracts</text>
+  <text x="294" y="292" fill="#ccfbf1" font-family="Segoe UI, Arial, sans-serif" font-size="16">Hierarchy design</text>
+
+  <rect x="502" y="148" width="220" height="190" rx="18" fill="#7c3aed"/>
+  <text x="526" y="190" fill="#f5f3ff" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Global Handling</text>
+  <text x="526" y="220" fill="#ede9fe" font-family="Segoe UI, Arial, sans-serif" font-size="16">Middleware</text>
+  <text x="526" y="244" fill="#ede9fe" font-family="Segoe UI, Arial, sans-serif" font-size="16">ProblemDetails</text>
+  <text x="526" y="268" fill="#ede9fe" font-family="Segoe UI, Arial, sans-serif" font-size="16">Background services</text>
+  <text x="526" y="292" fill="#ede9fe" font-family="Segoe UI, Arial, sans-serif" font-size="16">Unhandled tasks</text>
+
+  <rect x="744" y="148" width="200" height="190" rx="18" fill="#b45309"/>
+  <text x="768" y="190" fill="#fff7ed" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Logging</text>
+  <text x="768" y="220" fill="#ffedd5" font-family="Segoe UI, Arial, sans-serif" font-size="16">Levels</text>
+  <text x="768" y="244" fill="#ffedd5" font-family="Segoe UI, Arial, sans-serif" font-size="16">Structured context</text>
+  <text x="768" y="268" fill="#ffedd5" font-family="Segoe UI, Arial, sans-serif" font-size="16">Correlation IDs</text>
+  <text x="768" y="292" fill="#ffedd5" font-family="Segoe UI, Arial, sans-serif" font-size="16">Sensitive data</text>
+
+  <rect x="966" y="148" width="186" height="190" rx="18" fill="#be123c"/>
+  <text x="990" y="190" fill="#fff1f2" font-family="Segoe UI, Arial, sans-serif" font-size="21" font-weight="700">Frameworks</text>
+  <text x="990" y="220" fill="#ffe4e6" font-family="Segoe UI, Arial, sans-serif" font-size="15">Serilog</text>
+  <text x="990" y="244" fill="#ffe4e6" font-family="Segoe UI, Arial, sans-serif" font-size="15">NLog</text>
+  <text x="990" y="268" fill="#ffe4e6" font-family="Segoe UI, Arial, sans-serif" font-size="15">log4net / Log4j</text>
+  <text x="990" y="292" fill="#ffe4e6" font-family="Segoe UI, Arial, sans-serif" font-size="15">Sinks and routing</text>
+</svg>

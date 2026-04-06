@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="430" viewBox="0 0 1200 430" role="img" aria-labelledby="title desc">
+  <title id="title">C# Collections and Data Structures Interview Map</title>
+  <desc id="desc">A visual map of linear collections, queues, stacks, sets, dictionaries, concurrent collections, and Big-O basics.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#1f2937"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="430" fill="url(#bg)"/>
+  <text x="54" y="64" fill="#f9fafb" font-family="Segoe UI, Arial, sans-serif" font-size="30" font-weight="700">
+    C# Collections and Data Structures
+  </text>
+  <text x="54" y="102" fill="#d1d5db" font-family="Segoe UI, Arial, sans-serif" font-size="18">
+    Practical interview map for arrays, lists, queues, stacks, sets, dictionaries, concurrent collections, and complexity
+  </text>
+
+  <rect x="42" y="148" width="150" height="190" rx="18" fill="#1d4ed8"/>
+  <text x="62" y="188" fill="#eff6ff" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Linear</text>
+  <text x="62" y="220" fill="#dbeafe" font-family="Segoe UI, Arial, sans-serif" font-size="15">Array</text>
+  <text x="62" y="244" fill="#dbeafe" font-family="Segoe UI, Arial, sans-serif" font-size="15">List<T></text>
+  <text x="62" y="268" fill="#dbeafe" font-family="Segoe UI, Arial, sans-serif" font-size="15">LinkedList<T></text>
+  <text x="62" y="292" fill="#dbeafe" font-family="Segoe UI, Arial, sans-serif" font-size="15">Span / Memory</text>
+
+  <rect x="210" y="148" width="150" height="190" rx="18" fill="#0f766e"/>
+  <text x="232" y="188" fill="#ecfeff" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Order</text>
+  <text x="232" y="220" fill="#ccfbf1" font-family="Segoe UI, Arial, sans-serif" font-size="15">Queue<T></text>
+  <text x="232" y="244" fill="#ccfbf1" font-family="Segoe UI, Arial, sans-serif" font-size="15">PriorityQueue</text>
+  <text x="232" y="268" fill="#ccfbf1" font-family="Segoe UI, Arial, sans-serif" font-size="15">Stack<T></text>
+  <text x="232" y="292" fill="#ccfbf1" font-family="Segoe UI, Arial, sans-serif" font-size="15">Deque patterns</text>
+
+  <rect x="378" y="148" width="150" height="190" rx="18" fill="#7c3aed"/>
+  <text x="404" y="188" fill="#f5f3ff" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Sets</text>
+  <text x="404" y="220" fill="#ede9fe" font-family="Segoe UI, Arial, sans-serif" font-size="15">HashSet<T></text>
+  <text x="404" y="244" fill="#ede9fe" font-family="Segoe UI, Arial, sans-serif" font-size="15">SortedSet<T></text>
+  <text x="404" y="268" fill="#ede9fe" font-family="Segoe UI, Arial, sans-serif" font-size="15">Distinct / unions</text>
+  <text x="404" y="292" fill="#ede9fe" font-family="Segoe UI, Arial, sans-serif" font-size="15">Equality</text>
+
+  <rect x="546" y="148" width="170" height="190" rx="18" fill="#b45309"/>
+  <text x="568" y="188" fill="#fff7ed" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Maps</text>
+  <text x="568" y="220" fill="#ffedd5" font-family="Segoe UI, Arial, sans-serif" font-size="15">Dictionary</text>
+  <text x="568" y="244" fill="#ffedd5" font-family="Segoe UI, Arial, sans-serif" font-size="15">SortedDictionary</text>
+  <text x="568" y="268" fill="#ffedd5" font-family="Segoe UI, Arial, sans-serif" font-size="15">SortedList</text>
+  <text x="568" y="292" fill="#ffedd5" font-family="Segoe UI, Arial, sans-serif" font-size="15">Lookup</text>
+
+  <rect x="734" y="148" width="170" height="190" rx="18" fill="#be123c"/>
+  <text x="754" y="188" fill="#fff1f2" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Concurrent</text>
+  <text x="754" y="220" fill="#ffe4e6" font-family="Segoe UI, Arial, sans-serif" font-size="15">ConcurrentDictionary</text>
+  <text x="754" y="244" fill="#ffe4e6" font-family="Segoe UI, Arial, sans-serif" font-size="15">Queue / Stack</text>
+  <text x="754" y="268" fill="#ffe4e6" font-family="Segoe UI, Arial, sans-serif" font-size="15">Bag / Blocking</text>
+  <text x="754" y="292" fill="#ffe4e6" font-family="Segoe UI, Arial, sans-serif" font-size="15">Immutable</text>
+
+  <rect x="922" y="148" width="230" height="190" rx="18" fill="#334155"/>
+  <text x="946" y="188" fill="#f8fafc" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Big-O & Selection</text>
+  <text x="946" y="220" fill="#e2e8f0" font-family="Segoe UI, Arial, sans-serif" font-size="15">Lookup vs scan</text>
+  <text x="946" y="244" fill="#e2e8f0" font-family="Segoe UI, Arial, sans-serif" font-size="15">Insertion / removal</text>
+  <text x="946" y="268" fill="#e2e8f0" font-family="Segoe UI, Arial, sans-serif" font-size="15">Memory tradeoffs</text>
+  <text x="946" y="292" fill="#e2e8f0" font-family="Segoe UI, Arial, sans-serif" font-size="15">Hot path choice</text>
+</svg>
