@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Node.js Advanced Networking Architecture</title>
+  <desc id="desc">Diagram showing WebSockets, gRPC, TCP/UDP, streaming APIs, SSE, scaling, and shared event distribution in a Node.js environment.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f7fbff"/>
+      <stop offset="100%" stop-color="#eef6ff"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f6f9fc"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#19324d" flood-opacity="0.14"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 z" fill="#2f5c8a"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="760" fill="url(#bg)"/>
+  <text x="60" y="70" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="700" fill="#17324d">Node.js Advanced Networking</text>
+  <text x="60" y="106" font-family="Segoe UI, Arial, sans-serif" font-size="18" fill="#47627d">Real-time protocols, streaming APIs, raw sockets, internal RPC, scaling, and production-safe connection handling</text>
+
+  <rect x="60" y="145" rx="24" ry="24" width="200" height="120" fill="url(#panel)" stroke="#8cb3d9" stroke-width="2" filter="url(#shadow)"/>
+  <text x="160" y="192" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">Clients</text>
+  <text x="160" y="224" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Web / Mobile / Services</text>
+
+  <rect x="320" y="125" rx="24" ry="24" width="220" height="150" fill="url(#panel)" stroke="#79a66a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="430" y="170" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">WebSockets / SSE</text>
+  <text x="430" y="200" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Real-time updates</text>
+  <text x="430" y="228" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Persistent or one-way streams</text>
+
+  <rect x="610" y="125" rx="24" ry="24" width="220" height="150" fill="url(#panel)" stroke="#d8a24a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="720" y="170" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">gRPC / HTTP APIs</text>
+  <text x="720" y="200" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Typed internal RPC and REST</text>
+  <text x="720" y="228" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Unary and streaming calls</text>
+
+  <rect x="900" y="125" rx="24" ry="24" width="220" height="150" fill="url(#panel)" stroke="#9f7cd6" stroke-width="2" filter="url(#shadow)"/>
+  <text x="1010" y="170" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">TCP / UDP</text>
+  <text x="1010" y="200" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Low-level protocol control</text>
+  <text x="1010" y="228" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Reliable or low-latency transport</text>
+
+  <rect x="120" y="430" rx="28" ry="28" width="270" height="190" fill="url(#panel)" stroke="#79a66a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="255" y="478" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">Streaming Layer</text>
+  <text x="255" y="510" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">HTTP chunking, file streams</text>
+  <text x="255" y="538" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Backpressure-aware delivery</text>
+
+  <rect x="470" y="430" rx="28" ry="28" width="280" height="190" fill="url(#panel)" stroke="#d8a24a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="610" y="478" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">Scaling and Fan-Out</text>
+  <text x="610" y="510" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Sticky routing, Redis, brokers</text>
+  <text x="610" y="538" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Shared state outside instances</text>
+
+  <rect x="830" y="430" rx="28" ry="28" width="290" height="190" fill="url(#panel)" stroke="#8cb3d9" stroke-width="2" filter="url(#shadow)"/>
+  <text x="975" y="478" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">Production Concerns</text>
+  <text x="975" y="510" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Auth, TLS, timeouts, cleanup</text>
+  <text x="975" y="538" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Retries, metrics, graceful shutdown</text>
+
+  <path d="M260 205 H320" stroke="#2f5c8a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M540 205 H610" stroke="#2f5c8a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M830 205 H900" stroke="#2f5c8a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M430 275 V350 H255 V430" stroke="#2f5c8a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M720 275 V350 H610 V430" stroke="#2f5c8a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M1010 275 V350 H975 V430" stroke="#2f5c8a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+
+  <rect x="60" y="660" rx="18" ry="18" width="1080" height="62" fill="#17324d" opacity="0.92"/>
+  <text x="90" y="700" font-family="Segoe UI, Arial, sans-serif" font-size="18" fill="#ffffff">Flow: choose the right protocol for the workload → authenticate and stream safely → scale across instances → monitor connection and backpressure health</text>
+</svg>

@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Node.js Testing Architecture</title>
+  <desc id="desc">Diagram showing unit, integration, API, and end-to-end testing layers around a Node.js application and its dependencies.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f7fbff"/>
+      <stop offset="100%" stop-color="#eef6fb"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f7fafc"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#19324d" flood-opacity="0.14"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 z" fill="#2f5c8a"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="760" fill="url(#bg)"/>
+  <text x="60" y="70" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="700" fill="#17324d">Node.js Testing Strategy</text>
+  <text x="60" y="106" font-family="Segoe UI, Arial, sans-serif" font-size="18" fill="#47627d">Unit, integration, API, and end-to-end testing with mocks, test databases, and reliable CI feedback</text>
+
+  <rect x="80" y="140" rx="24" ry="24" width="260" height="120" fill="url(#panel)" stroke="#8cb3d9" stroke-width="2" filter="url(#shadow)"/>
+  <text x="210" y="187" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">Unit Tests</text>
+  <text x="210" y="218" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Pure logic, validators, services</text>
+
+  <rect x="380" y="140" rx="24" ry="24" width="260" height="120" fill="url(#panel)" stroke="#79a66a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="510" y="187" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">Integration Tests</text>
+  <text x="510" y="218" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Routes, services, repositories, DB</text>
+
+  <rect x="680" y="140" rx="24" ry="24" width="210" height="120" fill="url(#panel)" stroke="#d8a24a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="785" y="187" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">API Tests</text>
+  <text x="785" y="218" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Supertest + real endpoints</text>
+
+  <rect x="930" y="140" rx="24" ry="24" width="190" height="120" fill="url(#panel)" stroke="#9f7cd6" stroke-width="2" filter="url(#shadow)"/>
+  <text x="1025" y="187" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">E2E Flow</text>
+  <text x="1025" y="218" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Critical user journeys</text>
+
+  <rect x="130" y="420" rx="28" ry="28" width="250" height="190" fill="url(#panel)" stroke="#79a66a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="255" y="468" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">Mocks and Spies</text>
+  <text x="255" y="500" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Jest mocks / Sinon stubs</text>
+  <text x="255" y="528" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Isolate DB, APIs, queues</text>
+
+  <rect x="470" y="420" rx="28" ry="28" width="270" height="190" fill="url(#panel)" stroke="#d8a24a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="605" y="468" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">Test Environment</text>
+  <text x="605" y="500" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Dedicated test DB, hooks, seed data</text>
+  <text x="605" y="528" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Reset state between cases</text>
+
+  <rect x="830" y="420" rx="28" ry="28" width="280" height="190" fill="url(#panel)" stroke="#8cb3d9" stroke-width="2" filter="url(#shadow)"/>
+  <text x="970" y="468" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">CI Quality Gate</text>
+  <text x="970" y="500" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Fast feedback, readable failures</text>
+  <text x="970" y="528" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Coverage, auth paths, error paths</text>
+
+  <path d="M340 200 H380" stroke="#2f5c8a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M640 200 H680" stroke="#2f5c8a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M890 200 H930" stroke="#2f5c8a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M210 260 V350 H255 V420" stroke="#2f5c8a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M510 260 V350 H605 V420" stroke="#2f5c8a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M1025 260 V350 H970 V420" stroke="#2f5c8a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+
+  <rect x="60" y="660" rx="18" ry="18" width="1080" height="62" fill="#17324d" opacity="0.92"/>
+  <text x="90" y="700" font-family="Segoe UI, Arial, sans-serif" font-size="18" fill="#ffffff">Flow: isolate logic with unit tests → verify wiring with integration/API tests → protect releases with deterministic CI and targeted full-flow coverage</text>
+</svg>

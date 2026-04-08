@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="520" viewBox="0 0 1100 520" role="img" aria-label="Node.js runtime architecture">
+<defs>
+<style>
+.bg { fill: #f7fafc; }
+.title { font: 700 30px Segoe UI, Arial, sans-serif; fill: #2d5d8a; }
+.subtitle { font: 600 16px Segoe UI, Arial, sans-serif; fill: #4a5568; }
+.box { fill: #ffffff; stroke: #2d5d8a; stroke-width: 2.5; rx: 18; ry: 18; }
+.boxAlt { fill: #edf6ff; stroke: #2d5d8a; stroke-width: 2.5; rx: 18; ry: 18; }
+.text { font: 700 18px Segoe UI, Arial, sans-serif; fill: #2d5d8a; }
+.small { font: 600 14px Segoe UI, Arial, sans-serif; fill: #4a5568; }
+.line { stroke: #2d5d8a; stroke-width: 3; fill: none; }
+</style>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0,0 L0,6 L9,3 z" fill="#2d5d8a" />
+</marker>
+</defs>
+<rect class="bg" width="1100" height="520" />
+<text x="40" y="52" class="title">Node.js Runtime Architecture</text>
+<text x="40" y="82" class="subtitle">How V8, Node APIs, C++ bindings, libuv, the thread pool, and the operating system work together</text>
+
+<rect x="50" y="120" width="240" height="110" class="boxAlt" />
+<text x="170" y="160" text-anchor="middle" class="text">Application Code</text>
+<text x="170" y="188" text-anchor="middle" class="small">Express routes, scripts, jobs, workers</text>
+
+<rect x="330" y="120" width="210" height="110" class="box" />
+<text x="435" y="160" text-anchor="middle" class="text">V8 Engine</text>
+<text x="435" y="188" text-anchor="middle" class="small">Executes JavaScript, manages heap</text>
+
+<rect x="580" y="120" width="220" height="110" class="box" />
+<text x="690" y="160" text-anchor="middle" class="text">Node APIs</text>
+<text x="690" y="188" text-anchor="middle" class="small">fs, http, crypto, timers, net</text>
+
+<rect x="840" y="120" width="210" height="110" class="box" />
+<text x="945" y="160" text-anchor="middle" class="text">C++ Bindings</text>
+<text x="945" y="188" text-anchor="middle" class="small">Bridge JS calls to native internals</text>
+
+<rect x="260" y="300" width="220" height="120" class="boxAlt" />
+<text x="370" y="342" text-anchor="middle" class="text">Event Loop</text>
+<text x="370" y="368" text-anchor="middle" class="small">Timers, poll, check, close</text>
+<text x="370" y="390" text-anchor="middle" class="small">Runs callbacks on the main thread</text>
+
+<rect x="520" y="300" width="220" height="120" class="boxAlt" />
+<text x="630" y="342" text-anchor="middle" class="text">libuv</text>
+<text x="630" y="368" text-anchor="middle" class="small">Cross-platform async I/O engine</text>
+<text x="630" y="390" text-anchor="middle" class="small">Coordinates loop and background work</text>
+
+<rect x="780" y="300" width="230" height="120" class="boxAlt" />
+<text x="895" y="342" text-anchor="middle" class="text">Thread Pool</text>
+<text x="895" y="368" text-anchor="middle" class="small">Default 4 threads</text>
+<text x="895" y="390" text-anchor="middle" class="small">fs, crypto, some DNS, compression</text>
+
+<rect x="60" y="300" width="160" height="120" class="box" />
+<text x="140" y="342" text-anchor="middle" class="text">Microtasks</text>
+<text x="140" y="368" text-anchor="middle" class="small">nextTick</text>
+<text x="140" y="390" text-anchor="middle" class="small">Promises</text>
+
+<rect x="420" y="450" width="280" height="50" class="box" />
+<text x="560" y="482" text-anchor="middle" class="text">Operating System</text>
+
+<path class="line" marker-end="url(#arrow)" d="M290 175 H330" />
+<path class="line" marker-end="url(#arrow)" d="M540 175 H580" />
+<path class="line" marker-end="url(#arrow)" d="M800 175 H840" />
+<path class="line" marker-end="url(#arrow)" d="M435 230 V285" />
+<path class="line" marker-end="url(#arrow)" d="M945 230 V285 H740" />
+<path class="line" marker-end="url(#arrow)" d="M630 230 V300" />
+<path class="line" marker-end="url(#arrow)" d="M220 360 H260" />
+<path class="line" marker-end="url(#arrow)" d="M480 360 H520" />
+<path class="line" marker-end="url(#arrow)" d="M740 360 H780" />
+<path class="line" marker-end="url(#arrow)" d="M630 420 V450" />
+<path class="line" marker-end="url(#arrow)" d="M895 420 V450 H700" />
+</svg>

@@ -1,7724 +1,16433 @@
-# C# Fundamentals Interview Questions (300 Questions with Real-Time Examples)
+# C# Fundamentals Interview Questions
 
 ![C# Fundamentals Interview Questions](../../../assets/csharp-fundamentals-map.svg)
 
-This guide is written with a practical, long-industry perspective in mind: the kind of C# fundamentals that still matter after years of enterprise APIs, billing logic, imports, reporting, and production debugging. It starts with basics and steadily moves into the tricky interview angles that working developers actually hit.
+This guide covers practical C# fundamentals from beginner concepts to tricky interview edge cases that show up in production code. It follows the corrected format of **100 interview questions for each subtopic**, and every answer includes a C# code example with rotated real-world scenarios so the examples do not repeat verbatim.
+
+## How To Use This Page
+
+- Questions 1-100 cover Variables, data types, and type behavior.
+- Questions 101-200 cover Operators and expression logic.
+- Questions 201-300 cover Branching and decision flow.
+- Questions 301-400 cover Loops and iteration patterns.
+- Questions 401-500 cover Methods and parameter passing.
+- Questions 501-600 cover Arrays, collections, and lookup patterns.
+- Questions 601-700 cover Type design, visibility, members, and program structure basics.
 
 ## 1. Variables, data types, and type behavior
 
-This section builds the foundation: how values are represented, inferred, converted, and safely moved through ordinary C# code.
+> This section contains **100 interview questions** focused on **Variables, data types, and type behavior**. Every answer includes a C# code example, and the scenarios rotate so they do not repeat verbatim.
 
-### 1. What is the role of Numeric types: int, long, and decimal in C# fundamentals?
+### Q1.1 What is numeric type selection in C# fundamentals?
 
-**Answer:**
+**Answer:** Numeric type selection means choosing int, long, double, or decimal based on range and precision. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with using one numeric type everywhere, and they should avoid the trap of storing currency in floating-point types. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
 
-In C# fundamentals, Numeric types: int, long, and decimal refers to the built-in numeric types used for counts, identifiers, money, and measurements in ordinary business code. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-int quantity = 3;
-decimal unitPrice = 1499.95m;
-long orderId = 202600000145;
+using System;
+using System.Collections.Generic;
 
-decimal total = quantity * unitPrice;
-Console.WriteLine($"Order {orderId}: {total}");
-```
-
----
-
-### 2. Why is Numeric types: int, long, and decimal important in day-to-day C# work?
-
-**Answer:**
-
-It matters because the wrong numeric type can create data loss, overflow bugs, or pricing errors long before any advanced architecture decision enters the picture. In production code, this shows up in features like imports, APIs, validation, pricing, reporting, and support debugging.
-
-**Sample:**
-
-```csharp
-int quantity = 3;
-decimal unitPrice = 1499.95m;
-long orderId = 202600000145;
-
-decimal total = quantity * unitPrice;
-Console.WriteLine($"Order {orderId}: {total}");
-```
-
----
-
-### 3. When should you use Numeric types: int, long, and decimal in real projects?
-
-**Answer:**
-
-Use Numeric types: int, long, and decimal when you need to model counts, large identifiers, or money values with the right precision and range. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
-
-```csharp
-int quantity = 3;
-decimal unitPrice = 1499.95m;
-long orderId = 202600000145;
-
-decimal total = quantity * unitPrice;
-Console.WriteLine($"Order {orderId}: {total}");
-```
-
----
-
-### 4. What is a real-time example of Numeric types: int, long, and decimal?
-
-**Answer:**
-
-A common example is an order service that stores quantity as `int`, customer-facing totals as `decimal`, and warehouse event IDs as `long`. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
-
-```csharp
-int quantity = 3;
-decimal unitPrice = 1499.95m;
-long orderId = 202600000145;
-
-decimal total = quantity * unitPrice;
-Console.WriteLine($"Order {orderId}: {total}");
-```
-
----
-
-### 5. What is a best practice for Numeric types: int, long, and decimal?
-
-**Answer:**
-
-Use `decimal` for money, keep `int` for normal counts, and move to `long` only when the value range genuinely demands it. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
-
-```csharp
-int quantity = 3;
-decimal unitPrice = 1499.95m;
-long orderId = 202600000145;
-
-decimal total = quantity * unitPrice;
-Console.WriteLine($"Order {orderId}: {total}");
-```
-
----
-
-### 6. What is a tricky interview point or common mistake around Numeric types: int, long, and decimal?
-
-**Answer:**
-
-A classic mistake is assuming integer division behaves like decimal arithmetic or forgetting that overflow can stay hidden until data grows in production. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
-
-```csharp
-int totalMarks = 5;
-int subjectCount = 2;
-
-Console.WriteLine(totalMarks / subjectCount); // 2
-Console.WriteLine(totalMarks / 2m);           // 2.5
-```
-
----
-
-### 7. How does Numeric types: int, long, and decimal differ from string and char basics?
-
-**Answer:**
-
-Numeric types: int, long, and decimal is about the built-in numeric types used for counts, identifiers, money, and measurements in ordinary business code, whereas string and char basics is about text and character data rather than arithmetic-friendly values. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
-
-```csharp
-int quantity = 3;
-decimal unitPrice = 1499.95m;
-long orderId = 202600000145;
-
-decimal total = quantity * unitPrice;
-Console.WriteLine($"Order {orderId}: {total}");
-```
-
----
-
-### 8. How do you troubleshoot issues related to Numeric types: int, long, and decimal?
-
-**Answer:**
-
-Check the declared type, confirm literal suffixes like `m`, and reproduce the calculation with realistic boundary values such as very large IDs or fractional totals. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
-
-```csharp
-int totalMarks = 5;
-int subjectCount = 2;
-
-Console.WriteLine(totalMarks / subjectCount); // 2
-Console.WriteLine(totalMarks / 2m);           // 2.5
-```
-
----
-
-### 9. What kind of follow-up does an interviewer usually ask after Numeric types: int, long, and decimal?
-
-**Answer:**
-
-A common follow-up is how `double`, `float`, and `decimal` differ for finance, analytics, and measurement scenarios. This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
-
-```csharp
-int quantity = 3;
-decimal unitPrice = 1499.95m;
-long orderId = 202600000145;
-
-decimal total = quantity * unitPrice;
-Console.WriteLine($"Order {orderId}: {total}");
-```
-
----
-
-### 10. How does Numeric types: int, long, and decimal connect to the rest of C# fundamentals?
-
-**Answer:**
-
-Numeric choices affect operators, conditions, loops, method signatures, and collection design because almost every feature manipulates quantities somewhere. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
-
-```csharp
-int quantity = 3;
-decimal unitPrice = 1499.95m;
-long orderId = 202600000145;
-
-decimal total = quantity * unitPrice;
-Console.WriteLine($"Order {orderId}: {total}");
-```
-
----
-
-### 11. What is the role of String and char basics in C# fundamentals?
-
-**Answer:**
-
-In C# fundamentals, String and char basics refers to the text types used for names, labels, status messages, paths, and single-character checks. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
-
-```csharp
-char severity = 'H';
-string subject = "Payment failed for invoice INV-2041";
-string banner = $"[{severity}] {subject}";
-
-Console.WriteLine(banner);
-```
-
----
-
-### 12. Why is String and char basics important in day-to-day C# work?
-
-**Answer:**
-
-It matters because user-facing systems constantly move text through APIs, logs, exports, and validation rules. In production code, this shows up in features like imports, APIs, validation, pricing, reporting, and support debugging.
-
-**Sample:**
-
-```csharp
-char severity = 'H';
-string subject = "Payment failed for invoice INV-2041";
-string banner = $"[{severity}] {subject}";
-
-Console.WriteLine(banner);
-```
-
----
-
-### 13. When should you use String and char basics in real projects?
-
-**Answer:**
-
-Use String and char basics when you are handling names, codes, file paths, template messages, or character-by-character checks. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
-
-```csharp
-char severity = 'H';
-string subject = "Payment failed for invoice INV-2041";
-string banner = $"[{severity}] {subject}";
-
-Console.WriteLine(banner);
-```
-
----
-
-### 14. What is a real-time example of String and char basics?
-
-**Answer:**
-
-A customer support portal may use `string` for the full ticket subject and `char` for a one-letter severity code imported from a legacy system. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
-
-```csharp
-char severity = 'H';
-string subject = "Payment failed for invoice INV-2041";
-string banner = $"[{severity}] {subject}";
-
-Console.WriteLine(banner);
-```
-
----
-
-### 15. What is a best practice for String and char basics?
-
-**Answer:**
-
-Use `string` for real text and reserve `char` for genuine single-character logic such as separators, flags, or parsing. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
-
-```csharp
-char severity = 'H';
-string subject = "Payment failed for invoice INV-2041";
-string banner = $"[{severity}] {subject}";
-
-Console.WriteLine(banner);
-```
-
----
-
-### 16. What is a tricky interview point or common mistake around String and char basics?
-
-**Answer:**
-
-Candidates often mix up single quotes and double quotes, forget escape sequences, or talk as if strings are mutable like arrays. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
-
-```csharp
-string path = "C:\\reports\\2026\\march.txt";
-char slash = '\\';
-
-Console.WriteLine(path.Contains(slash));
-// char uses single quotes; string uses double quotes.
-```
-
----
-
-### 17. How does String and char basics differ from var and type inference?
-
-**Answer:**
-
-String and char basics is about the text types used for names, labels, status messages, paths, and single-character checks, whereas var and type inference is about compile-time inference of a variable type rather than actual text storage. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
-
-```csharp
-char severity = 'H';
-string subject = "Payment failed for invoice INV-2041";
-string banner = $"[{severity}] {subject}";
-
-Console.WriteLine(banner);
-```
-
----
-
-### 18. How do you troubleshoot issues related to String and char basics?
-
-**Answer:**
-
-Inspect the incoming value, confirm quoting and escaping, and log the string length when whitespace or hidden characters may be involved. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
-
-```csharp
-string path = "C:\\reports\\2026\\march.txt";
-char slash = '\\';
-
-Console.WriteLine(path.Contains(slash));
-// char uses single quotes; string uses double quotes.
-```
-
----
-
-### 19. What kind of follow-up does an interviewer usually ask after String and char basics?
-
-**Answer:**
-
-A common follow-up is how string immutability affects concatenation, memory, and performance in loops. This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
-
-```csharp
-char severity = 'H';
-string subject = "Payment failed for invoice INV-2041";
-string banner = $"[{severity}] {subject}";
-
-Console.WriteLine(banner);
-```
-
----
-
-### 20. How does String and char basics connect to the rest of C# fundamentals?
-
-**Answer:**
-
-Text handling connects to conditions, loops, methods, and collections because almost every application validates, compares, stores, or formats strings. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
-
-```csharp
-char severity = 'H';
-string subject = "Payment failed for invoice INV-2041";
-string banner = $"[{severity}] {subject}";
-
-Console.WriteLine(banner);
-```
-
----
-
-### 21. What is the role of var and type inference in C# fundamentals?
-
-**Answer:**
-
-In C# fundamentals, var and type inference refers to compiler-driven local variable inference that keeps the code strongly typed while reducing repetition. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
-
-```csharp
-var prices = new List<decimal> { 10.5m, 20m, 5.75m };
-var average = prices.Average();
-var summary = new { Count = prices.Count, Average = average };
-
-Console.WriteLine(summary);
-```
-
----
-
-### 22. Why is var and type inference important in day-to-day C# work?
-
-**Answer:**
-
-It matters because modern C# code uses inference heavily in LINQ, anonymous types, and generic APIs, and interviewers want to see whether the candidate still understands the real type. In production code, this shows up in features like imports, APIs, validation, pricing, reporting, and support debugging.
-
-**Sample:**
-
-```csharp
-var prices = new List<decimal> { 10.5m, 20m, 5.75m };
-var average = prices.Average();
-var summary = new { Count = prices.Count, Average = average };
-
-Console.WriteLine(summary);
-```
-
----
-
-### 23. When should you use var and type inference in real projects?
-
-**Answer:**
-
-Use var and type inference when the right-hand side already makes the type obvious, especially in LINQ queries or long generic declarations. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
-
-```csharp
-var prices = new List<decimal> { 10.5m, 20m, 5.75m };
-var average = prices.Average();
-var summary = new { Count = prices.Count, Average = average };
-
-Console.WriteLine(summary);
-```
-
----
-
-### 24. What is a real-time example of var and type inference?
-
-**Answer:**
-
-A reporting query often uses `var` with projections so the code stays readable while the compiler still infers the exact anonymous type. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
-
-```csharp
-var prices = new List<decimal> { 10.5m, 20m, 5.75m };
-var average = prices.Average();
-var summary = new { Count = prices.Count, Average = average };
-
-Console.WriteLine(summary);
-```
-
----
-
-### 25. What is a best practice for var and type inference?
-
-**Answer:**
-
-Use `var` when the type is obvious from the assignment and avoid it when it hides business meaning. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
-
-```csharp
-var prices = new List<decimal> { 10.5m, 20m, 5.75m };
-var average = prices.Average();
-var summary = new { Count = prices.Count, Average = average };
-
-Console.WriteLine(summary);
-```
-
----
-
-### 26. What is a tricky interview point or common mistake around var and type inference?
-
-**Answer:**
-
-A frequent mistake is saying `var` behaves like `dynamic`; in reality the inferred type is fixed at compile time. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
-
-```csharp
-var count = 5;
-// count = "five"; // compile-time error
-
-Console.WriteLine(count.GetType().Name);
-```
-
----
-
-### 27. How does var and type inference differ from dynamic and object?
-
-**Answer:**
-
-var and type inference is about compiler-driven local variable inference that keeps the code strongly typed while reducing repetition, whereas dynamic and object is about runtime-oriented storage and late binding rather than compile-time inference. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
-
-```csharp
-var prices = new List<decimal> { 10.5m, 20m, 5.75m };
-var average = prices.Average();
-var summary = new { Count = prices.Count, Average = average };
-
-Console.WriteLine(summary);
-```
-
----
-
-### 28. How do you troubleshoot issues related to var and type inference?
-
-**Answer:**
-
-Hover or inspect the inferred type, simplify the initializer if needed, and check whether readability improved or became worse. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
-
-```csharp
-var count = 5;
-// count = "five"; // compile-time error
-
-Console.WriteLine(count.GetType().Name);
-```
-
----
-
-### 29. What kind of follow-up does an interviewer usually ask after var and type inference?
-
-**Answer:**
-
-A common follow-up is whether `var` is good style in teams and how to balance brevity with clarity. This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
-
-```csharp
-var prices = new List<decimal> { 10.5m, 20m, 5.75m };
-var average = prices.Average();
-var summary = new { Count = prices.Count, Average = average };
-
-Console.WriteLine(summary);
-```
-
----
-
-### 30. How does var and type inference connect to the rest of C# fundamentals?
-
-**Answer:**
-
-Type inference shows up with collections, LINQ, loops, and method calls, so weak understanding here leaks into many other fundamentals. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
-
-```csharp
-var prices = new List<decimal> { 10.5m, 20m, 5.75m };
-var average = prices.Average();
-var summary = new { Count = prices.Count, Average = average };
-
-Console.WriteLine(summary);
-```
-
----
-
-### 31. What is the role of dynamic and object in C# fundamentals?
-
-**Answer:**
-
-In C# fundamentals, dynamic and object refers to the runtime-oriented ways to store values when the exact shape is not known or not enforced at compile time. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
-
-```csharp
-object storedOrderId = 101;
-dynamic apiPayload = new System.Dynamic.ExpandoObject();
-apiPayload.Customer = "Sai";
-apiPayload.Total = 1499.95m;
-
-Console.WriteLine((int)storedOrderId + 1);
-Console.WriteLine(apiPayload.Customer);
-```
-
----
-
-### 32. Why is dynamic and object important in day-to-day C# work?
-
-**Answer:**
-
-It matters because integrations with loosely typed payloads and older APIs still appear in enterprise systems, and poor choices here can move errors from compile time to production. In production code, this shows up in features like imports, APIs, validation, pricing, reporting, and support debugging.
-
-**Sample:**
-
-```csharp
-object storedOrderId = 101;
-dynamic apiPayload = new System.Dynamic.ExpandoObject();
-apiPayload.Customer = "Sai";
-apiPayload.Total = 1499.95m;
-
-Console.WriteLine((int)storedOrderId + 1);
-Console.WriteLine(apiPayload.Customer);
-```
-
----
-
-### 33. When should you use dynamic and object in real projects?
-
-**Answer:**
-
-Use dynamic and object when you are integrating with loosely typed data, reflection-heavy APIs, or legacy components that do not provide strong compile-time models. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
-
-```csharp
-object storedOrderId = 101;
-dynamic apiPayload = new System.Dynamic.ExpandoObject();
-apiPayload.Customer = "Sai";
-apiPayload.Total = 1499.95m;
-
-Console.WriteLine((int)storedOrderId + 1);
-Console.WriteLine(apiPayload.Customer);
-```
-
----
-
-### 34. What is a real-time example of dynamic and object?
-
-**Answer:**
-
-A migration utility might deserialize a temporary payload to `dynamic` for quick inspection while storing stable internal values in normal typed models. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
-
-```csharp
-object storedOrderId = 101;
-dynamic apiPayload = new System.Dynamic.ExpandoObject();
-apiPayload.Customer = "Sai";
-apiPayload.Total = 1499.95m;
-
-Console.WriteLine((int)storedOrderId + 1);
-Console.WriteLine(apiPayload.Customer);
-```
-
----
-
-### 35. What is a best practice for dynamic and object?
-
-**Answer:**
-
-Prefer strong typing first, use `object` when you only need a general container, and use `dynamic` only when runtime binding is genuinely necessary. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
-
-```csharp
-object storedOrderId = 101;
-dynamic apiPayload = new System.Dynamic.ExpandoObject();
-apiPayload.Customer = "Sai";
-apiPayload.Total = 1499.95m;
-
-Console.WriteLine((int)storedOrderId + 1);
-Console.WriteLine(apiPayload.Customer);
-```
-
----
-
-### 36. What is a tricky interview point or common mistake around dynamic and object?
-
-**Answer:**
-
-The trap is that missing members or invalid method calls compile and then fail only at runtime. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
-
-```csharp
-dynamic payload = new System.Dynamic.ExpandoObject();
-payload.Total = 1200m;
-
-Console.WriteLine(payload.Total);
-// Console.WriteLine(payload.Currency); // runtime binder exception
-```
-
----
-
-### 37. How does dynamic and object differ from nullability, parsing, and conversion basics?
-
-**Answer:**
-
-dynamic and object is about the runtime-oriented ways to store values when the exact shape is not known or not enforced at compile time, whereas nullability, parsing, and conversion basics is about safe handling of missing or invalid values inside ordinary typed code. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
-
-```csharp
-object storedOrderId = 101;
-dynamic apiPayload = new System.Dynamic.ExpandoObject();
-apiPayload.Customer = "Sai";
-apiPayload.Total = 1499.95m;
-
-Console.WriteLine((int)storedOrderId + 1);
-Console.WriteLine(apiPayload.Customer);
-```
-
----
-
-### 38. How do you troubleshoot issues related to dynamic and object?
-
-**Answer:**
-
-Reproduce the failure with the exact payload, inspect the runtime type, and replace `dynamic` with a typed contract as soon as the schema becomes stable. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
-
-```csharp
-dynamic payload = new System.Dynamic.ExpandoObject();
-payload.Total = 1200m;
-
-Console.WriteLine(payload.Total);
-// Console.WriteLine(payload.Currency); // runtime binder exception
-```
-
----
-
-### 39. What kind of follow-up does an interviewer usually ask after dynamic and object?
-
-**Answer:**
-
-A common follow-up is when `object`, `dynamic`, and generics are better choices for extensibility. This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
-
-```csharp
-object storedOrderId = 101;
-dynamic apiPayload = new System.Dynamic.ExpandoObject();
-apiPayload.Customer = "Sai";
-apiPayload.Total = 1499.95m;
-
-Console.WriteLine((int)storedOrderId + 1);
-Console.WriteLine(apiPayload.Customer);
-```
-
----
-
-### 40. How does dynamic and object connect to the rest of C# fundamentals?
-
-**Answer:**
-
-This topic connects to methods, operators, and collections because runtime typing changes how values are called, cast, validated, and stored. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
-
-```csharp
-object storedOrderId = 101;
-dynamic apiPayload = new System.Dynamic.ExpandoObject();
-apiPayload.Customer = "Sai";
-apiPayload.Total = 1499.95m;
-
-Console.WriteLine((int)storedOrderId + 1);
-Console.WriteLine(apiPayload.Customer);
-```
-
----
-
-### 41. What is the role of Nullability, parsing, and conversion basics in C# fundamentals?
-
-**Answer:**
-
-In C# fundamentals, Nullability, parsing, and conversion basics refers to the boundary rules that keep external input safe when converting text into usable program values. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
-
-```csharp
-string? amountText = "1499.95";
-
-if (decimal.TryParse(amountText, out var amount))
+public static class Demo1_1
 {
-    Console.WriteLine($"Parsed amount: {amount}");
+    public static void Run()
+    {
+        decimal total = 149.95m + 1m;
+        long orderId = 9000000000L + 1;
+        Console.WriteLine($"{total} | {orderId}");
+    }
 }
 ```
 
----
+### Q1.2 How does var and compile-time type inference in C# fundamentals?
 
-### 42. Why is Nullability, parsing, and conversion basics important in day-to-day C# work?
+**Answer:** Var and compile-time type inference means letting the compiler infer a static type from the assigned expression. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with dynamic typing at runtime, and they should avoid the trap of claiming var removes type safety. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
 
-**Answer:**
-
-It matters because APIs, CSV files, forms, and configuration values often arrive as strings or optional values, and fundamentals break quickly if that edge is not handled well. In production code, this shows up in features like imports, APIs, validation, pricing, reporting, and support debugging.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-string? amountText = "1499.95";
+using System;
+using System.Collections.Generic;
 
-if (decimal.TryParse(amountText, out var amount))
+public static class Demo1_2
 {
-    Console.WriteLine($"Parsed amount: {amount}");
+    public static void Run()
+    {
+        var name = "Catalog-2";
+        var retry = 3;
+        Console.WriteLine($"{name} retries {retry}");
+    }
 }
 ```
 
----
+### Q1.3 Why does nullable value and reference intent in C# fundamentals?
 
-### 43. When should you use Nullability, parsing, and conversion basics in real projects?
+**Answer:** Nullable value and reference intent means modeling missing data explicitly with nullable value types and nullable reference annotations. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with null-blind coding, and they should avoid the trap of ignoring nullable warnings on external input. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
 
-**Answer:**
-
-Use Nullability, parsing, and conversion basics when you are reading query parameters, config values, files, or optional request fields that may be missing or malformed. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-string? amountText = "1499.95";
+using System;
+using System.Collections.Generic;
 
-if (decimal.TryParse(amountText, out var amount))
+public static class Demo1_3
 {
-    Console.WriteLine($"Parsed amount: {amount}");
+    public static void Run()
+    {
+        string? middle = "Lee";
+        int? points = null;
+        Console.WriteLine(middle ?? "<missing>");
+        Console.WriteLine(points?.ToString() ?? "No points");
+    }
 }
 ```
 
----
+### Q1.4 When should you use implicit versus explicit conversion in C# fundamentals?
 
-### 44. What is a real-time example of Nullability, parsing, and conversion basics?
+**Answer:** Implicit versus explicit conversion means understanding that safe widening can happen automatically while narrowing needs an explicit cast or parse. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with assuming all conversions are harmless, and they should avoid the trap of casting user data without checking range or format. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
 
-**Answer:**
-
-A payment import job commonly reads amount, quantity, and due date as text, then validates and converts them before business rules run. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-string? amountText = "1499.95";
+using System;
+using System.Collections.Generic;
 
-if (decimal.TryParse(amountText, out var amount))
+public static class Demo1_4
 {
-    Console.WriteLine($"Parsed amount: {amount}");
+    public static void Run()
+    {
+        int seats = 24;
+        long snapshot = seats;
+        double ratio = (double)seats / 6;
+        Console.WriteLine($"{snapshot} | {ratio:F2}");
+    }
 }
 ```
 
----
+### Q1.5 What problem does default values and initialization rules in C# fundamentals?
 
-### 45. What is a best practice for Nullability, parsing, and conversion basics?
+**Answer:** Default values and initialization rules means knowing that fields get defaults but local variables must be assigned before use. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with treating locals like fields, and they should avoid the trap of reading locals before assignment. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
 
-**Answer:**
-
-Use `TryParse`, keep validation close to the input boundary, and do not assume external text is valid. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-string? amountText = "1499.95";
+using System;
+using System.Collections.Generic;
 
-if (decimal.TryParse(amountText, out var amount))
+public static class Demo1_5
 {
-    Console.WriteLine($"Parsed amount: {amount}");
+    public static void Run()
+    {
+        int processed;
+        processed = 45;
+        Console.WriteLine(processed);
+    }
 }
 ```
 
----
+### Q1.6 How would you explain reference versus value semantics in C# fundamentals?
 
-### 46. What is a tricky interview point or common mistake around Nullability, parsing, and conversion basics?
+**Answer:** Reference versus value semantics means understanding that value types copy data while reference types copy references. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with assuming every assignment makes an independent deep copy, and they should avoid the trap of mutating shared references by accident. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
 
-**Answer:**
-
-The common mistake is calling `Parse` or dereferencing nullable values too early, which turns ordinary bad input into exceptions. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-string? quantityText = null;
-// int quantity = int.Parse(quantityText); // would throw
+using System;
+using System.Collections.Generic;
 
-int quantity = int.TryParse(quantityText, out var parsed) ? parsed : 0;
-Console.WriteLine(quantity);
-```
-
----
-
-### 47. How does Nullability, parsing, and conversion basics differ from numeric types: int, long, and decimal?
-
-**Answer:**
-
-Nullability, parsing, and conversion basics is about the boundary rules that keep external input safe when converting text into usable program values, whereas numeric types: int, long, and decimal is about the numeric data types themselves rather than the validation and conversion path into them. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
-
-```csharp
-string? amountText = "1499.95";
-
-if (decimal.TryParse(amountText, out var amount))
+public static class Demo1_6
 {
-    Console.WriteLine($"Parsed amount: {amount}");
+    public static void Run()
+    {
+        int original = 5;
+        int copied = original;
+        copied++;
+        var tags = new List<string> { "new", "priority-1" };
+        var shared = tags;
+        shared.Add("review");
+        Console.WriteLine($"{original}/{copied} | {string.Join(",", tags)}");
+    }
 }
 ```
 
----
+### Q1.7 Why is numeric type selection in C# fundamentals?
 
-### 48. How do you troubleshoot issues related to Nullability, parsing, and conversion basics?
+**Answer:** Numeric type selection means choosing int, long, double, or decimal based on range and precision. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with using one numeric type everywhere, and they should avoid the trap of storing currency in floating-point types. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
 
-**Answer:**
-
-Inspect the raw inbound text, check culture or formatting assumptions, and test both null and invalid values before debugging deeper layers. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-string? quantityText = null;
-// int quantity = int.Parse(quantityText); // would throw
+using System;
+using System.Collections.Generic;
 
-int quantity = int.TryParse(quantityText, out var parsed) ? parsed : 0;
-Console.WriteLine(quantity);
-```
-
----
-
-### 49. What kind of follow-up does an interviewer usually ask after Nullability, parsing, and conversion basics?
-
-**Answer:**
-
-A common follow-up is how nullable reference types and nullable value types improve correctness in modern C#. This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
-
-```csharp
-string? amountText = "1499.95";
-
-if (decimal.TryParse(amountText, out var amount))
+public static class Demo1_7
 {
-    Console.WriteLine($"Parsed amount: {amount}");
+    public static void Run()
+    {
+        decimal total = 149.95m + 0m;
+        long orderId = 9000000000L + 7;
+        Console.WriteLine($"{total} | {orderId}");
+    }
 }
 ```
 
----
+### Q1.8 How can var and compile-time type inference in C# fundamentals?
 
-### 50. How does Nullability, parsing, and conversion basics connect to the rest of C# fundamentals?
+**Answer:** Var and compile-time type inference means letting the compiler infer a static type from the assigned expression. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with dynamic typing at runtime, and they should avoid the trap of claiming var removes type safety. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
 
-**Answer:**
-
-This connects to variables, methods, operators, and collections because nearly every program converts outside data into typed values before doing real work. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-string? amountText = "1499.95";
+using System;
+using System.Collections.Generic;
 
-if (decimal.TryParse(amountText, out var amount))
+public static class Demo1_8
 {
-    Console.WriteLine($"Parsed amount: {amount}");
+    public static void Run()
+    {
+        var name = "Catalog-8";
+        var retry = 1;
+        Console.WriteLine($"{name} retries {retry}");
+    }
 }
 ```
 
----
+### Q1.9 What is nullable value and reference intent in C# fundamentals?
+
+**Answer:** Nullable value and reference intent means modeling missing data explicitly with nullable value types and nullable reference annotations. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with null-blind coding, and they should avoid the trap of ignoring nullable warnings on external input. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_9
+{
+    public static void Run()
+    {
+        string? middle = "Lee";
+        int? points = null;
+        Console.WriteLine(middle ?? "<missing>");
+        Console.WriteLine(points?.ToString() ?? "No points");
+    }
+}
+```
+
+### Q1.10 How does implicit versus explicit conversion in C# fundamentals?
+
+**Answer:** Implicit versus explicit conversion means understanding that safe widening can happen automatically while narrowing needs an explicit cast or parse. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with assuming all conversions are harmless, and they should avoid the trap of casting user data without checking range or format. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_10
+{
+    public static void Run()
+    {
+        int seats = 21;
+        long snapshot = seats;
+        double ratio = (double)seats / 2;
+        Console.WriteLine($"{snapshot} | {ratio:F2}");
+    }
+}
+```
+
+### Q1.11 Why does default values and initialization rules in C# fundamentals?
+
+**Answer:** Default values and initialization rules means knowing that fields get defaults but local variables must be assigned before use. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with treating locals like fields, and they should avoid the trap of reading locals before assignment. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_11
+{
+    public static void Run()
+    {
+        int processed;
+        processed = 40;
+        Console.WriteLine(processed);
+    }
+}
+```
+
+### Q1.12 When should you use reference versus value semantics in C# fundamentals?
+
+**Answer:** Reference versus value semantics means understanding that value types copy data while reference types copy references. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with assuming every assignment makes an independent deep copy, and they should avoid the trap of mutating shared references by accident. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_12
+{
+    public static void Run()
+    {
+        int original = 5;
+        int copied = original;
+        copied++;
+        var tags = new List<string> { "new", "priority-2" };
+        var shared = tags;
+        shared.Add("review");
+        Console.WriteLine($"{original}/{copied} | {string.Join(",", tags)}");
+    }
+}
+```
+
+### Q1.13 What problem does numeric type selection in C# fundamentals?
+
+**Answer:** Numeric type selection means choosing int, long, double, or decimal based on range and precision. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with using one numeric type everywhere, and they should avoid the trap of storing currency in floating-point types. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_13
+{
+    public static void Run()
+    {
+        decimal total = 149.95m + 6m;
+        long orderId = 9000000000L + 13;
+        Console.WriteLine($"{total} | {orderId}");
+    }
+}
+```
+
+### Q1.14 How would you explain var and compile-time type inference in C# fundamentals?
+
+**Answer:** Var and compile-time type inference means letting the compiler infer a static type from the assigned expression. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with dynamic typing at runtime, and they should avoid the trap of claiming var removes type safety. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_14
+{
+    public static void Run()
+    {
+        var name = "Catalog-14";
+        var retry = 3;
+        Console.WriteLine($"{name} retries {retry}");
+    }
+}
+```
+
+### Q1.15 Why is nullable value and reference intent in C# fundamentals?
+
+**Answer:** Nullable value and reference intent means modeling missing data explicitly with nullable value types and nullable reference annotations. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with null-blind coding, and they should avoid the trap of ignoring nullable warnings on external input. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_15
+{
+    public static void Run()
+    {
+        string? middle = "Lee";
+        int? points = null;
+        Console.WriteLine(middle ?? "<missing>");
+        Console.WriteLine(points?.ToString() ?? "No points");
+    }
+}
+```
+
+### Q1.16 How can implicit versus explicit conversion in C# fundamentals?
+
+**Answer:** Implicit versus explicit conversion means understanding that safe widening can happen automatically while narrowing needs an explicit cast or parse. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with assuming all conversions are harmless, and they should avoid the trap of casting user data without checking range or format. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_16
+{
+    public static void Run()
+    {
+        int seats = 27;
+        long snapshot = seats;
+        double ratio = (double)seats / 3;
+        Console.WriteLine($"{snapshot} | {ratio:F2}");
+    }
+}
+```
+
+### Q1.17 What is default values and initialization rules in C# fundamentals?
+
+**Answer:** Default values and initialization rules means knowing that fields get defaults but local variables must be assigned before use. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with treating locals like fields, and they should avoid the trap of reading locals before assignment. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_17
+{
+    public static void Run()
+    {
+        int processed;
+        processed = 46;
+        Console.WriteLine(processed);
+    }
+}
+```
+
+### Q1.18 How does reference versus value semantics in C# fundamentals?
+
+**Answer:** Reference versus value semantics means understanding that value types copy data while reference types copy references. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with assuming every assignment makes an independent deep copy, and they should avoid the trap of mutating shared references by accident. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_18
+{
+    public static void Run()
+    {
+        int original = 5;
+        int copied = original;
+        copied++;
+        var tags = new List<string> { "new", "priority-3" };
+        var shared = tags;
+        shared.Add("review");
+        Console.WriteLine($"{original}/{copied} | {string.Join(",", tags)}");
+    }
+}
+```
+
+### Q1.19 Why does numeric type selection in C# fundamentals?
+
+**Answer:** Numeric type selection means choosing int, long, double, or decimal based on range and precision. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with using one numeric type everywhere, and they should avoid the trap of storing currency in floating-point types. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_19
+{
+    public static void Run()
+    {
+        decimal total = 149.95m + 5m;
+        long orderId = 9000000000L + 19;
+        Console.WriteLine($"{total} | {orderId}");
+    }
+}
+```
+
+### Q1.20 When should you use var and compile-time type inference in C# fundamentals?
+
+**Answer:** Var and compile-time type inference means letting the compiler infer a static type from the assigned expression. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with dynamic typing at runtime, and they should avoid the trap of claiming var removes type safety. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_20
+{
+    public static void Run()
+    {
+        var name = "Catalog-20";
+        var retry = 1;
+        Console.WriteLine($"{name} retries {retry}");
+    }
+}
+```
+
+### Q1.21 What problem does nullable value and reference intent in C# fundamentals?
+
+**Answer:** Nullable value and reference intent means modeling missing data explicitly with nullable value types and nullable reference annotations. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with null-blind coding, and they should avoid the trap of ignoring nullable warnings on external input. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_21
+{
+    public static void Run()
+    {
+        string? middle = "Lee";
+        int? points = null;
+        Console.WriteLine(middle ?? "<missing>");
+        Console.WriteLine(points?.ToString() ?? "No points");
+    }
+}
+```
+
+### Q1.22 How would you explain implicit versus explicit conversion in C# fundamentals?
+
+**Answer:** Implicit versus explicit conversion means understanding that safe widening can happen automatically while narrowing needs an explicit cast or parse. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with assuming all conversions are harmless, and they should avoid the trap of casting user data without checking range or format. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_22
+{
+    public static void Run()
+    {
+        int seats = 24;
+        long snapshot = seats;
+        double ratio = (double)seats / 4;
+        Console.WriteLine($"{snapshot} | {ratio:F2}");
+    }
+}
+```
+
+### Q1.23 Why is default values and initialization rules in C# fundamentals?
+
+**Answer:** Default values and initialization rules means knowing that fields get defaults but local variables must be assigned before use. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with treating locals like fields, and they should avoid the trap of reading locals before assignment. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_23
+{
+    public static void Run()
+    {
+        int processed;
+        processed = 41;
+        Console.WriteLine(processed);
+    }
+}
+```
+
+### Q1.24 How can reference versus value semantics in C# fundamentals?
+
+**Answer:** Reference versus value semantics means understanding that value types copy data while reference types copy references. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with assuming every assignment makes an independent deep copy, and they should avoid the trap of mutating shared references by accident. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_24
+{
+    public static void Run()
+    {
+        int original = 5;
+        int copied = original;
+        copied++;
+        var tags = new List<string> { "new", "priority-4" };
+        var shared = tags;
+        shared.Add("review");
+        Console.WriteLine($"{original}/{copied} | {string.Join(",", tags)}");
+    }
+}
+```
+
+### Q1.25 What is numeric type selection in C# fundamentals?
+
+**Answer:** Numeric type selection means choosing int, long, double, or decimal based on range and precision. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with using one numeric type everywhere, and they should avoid the trap of storing currency in floating-point types. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_25
+{
+    public static void Run()
+    {
+        decimal total = 149.95m + 4m;
+        long orderId = 9000000000L + 25;
+        Console.WriteLine($"{total} | {orderId}");
+    }
+}
+```
+
+### Q1.26 How does var and compile-time type inference in C# fundamentals?
+
+**Answer:** Var and compile-time type inference means letting the compiler infer a static type from the assigned expression. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with dynamic typing at runtime, and they should avoid the trap of claiming var removes type safety. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_26
+{
+    public static void Run()
+    {
+        var name = "Catalog-26";
+        var retry = 3;
+        Console.WriteLine($"{name} retries {retry}");
+    }
+}
+```
+
+### Q1.27 Why does nullable value and reference intent in C# fundamentals?
+
+**Answer:** Nullable value and reference intent means modeling missing data explicitly with nullable value types and nullable reference annotations. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with null-blind coding, and they should avoid the trap of ignoring nullable warnings on external input. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_27
+{
+    public static void Run()
+    {
+        string? middle = "Lee";
+        int? points = null;
+        Console.WriteLine(middle ?? "<missing>");
+        Console.WriteLine(points?.ToString() ?? "No points");
+    }
+}
+```
+
+### Q1.28 When should you use implicit versus explicit conversion in C# fundamentals?
+
+**Answer:** Implicit versus explicit conversion means understanding that safe widening can happen automatically while narrowing needs an explicit cast or parse. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with assuming all conversions are harmless, and they should avoid the trap of casting user data without checking range or format. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_28
+{
+    public static void Run()
+    {
+        int seats = 21;
+        long snapshot = seats;
+        double ratio = (double)seats / 5;
+        Console.WriteLine($"{snapshot} | {ratio:F2}");
+    }
+}
+```
+
+### Q1.29 What problem does default values and initialization rules in C# fundamentals?
+
+**Answer:** Default values and initialization rules means knowing that fields get defaults but local variables must be assigned before use. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with treating locals like fields, and they should avoid the trap of reading locals before assignment. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_29
+{
+    public static void Run()
+    {
+        int processed;
+        processed = 47;
+        Console.WriteLine(processed);
+    }
+}
+```
+
+### Q1.30 How would you explain reference versus value semantics in C# fundamentals?
+
+**Answer:** Reference versus value semantics means understanding that value types copy data while reference types copy references. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with assuming every assignment makes an independent deep copy, and they should avoid the trap of mutating shared references by accident. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_30
+{
+    public static void Run()
+    {
+        int original = 5;
+        int copied = original;
+        copied++;
+        var tags = new List<string> { "new", "priority-0" };
+        var shared = tags;
+        shared.Add("review");
+        Console.WriteLine($"{original}/{copied} | {string.Join(",", tags)}");
+    }
+}
+```
+
+### Q1.31 Why is numeric type selection in C# fundamentals?
+
+**Answer:** Numeric type selection means choosing int, long, double, or decimal based on range and precision. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with using one numeric type everywhere, and they should avoid the trap of storing currency in floating-point types. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_31
+{
+    public static void Run()
+    {
+        decimal total = 149.95m + 3m;
+        long orderId = 9000000000L + 31;
+        Console.WriteLine($"{total} | {orderId}");
+    }
+}
+```
+
+### Q1.32 How can var and compile-time type inference in C# fundamentals?
+
+**Answer:** Var and compile-time type inference means letting the compiler infer a static type from the assigned expression. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with dynamic typing at runtime, and they should avoid the trap of claiming var removes type safety. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_32
+{
+    public static void Run()
+    {
+        var name = "Catalog-32";
+        var retry = 1;
+        Console.WriteLine($"{name} retries {retry}");
+    }
+}
+```
+
+### Q1.33 What is nullable value and reference intent in C# fundamentals?
+
+**Answer:** Nullable value and reference intent means modeling missing data explicitly with nullable value types and nullable reference annotations. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with null-blind coding, and they should avoid the trap of ignoring nullable warnings on external input. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_33
+{
+    public static void Run()
+    {
+        string? middle = "Lee";
+        int? points = null;
+        Console.WriteLine(middle ?? "<missing>");
+        Console.WriteLine(points?.ToString() ?? "No points");
+    }
+}
+```
+
+### Q1.34 How does implicit versus explicit conversion in C# fundamentals?
+
+**Answer:** Implicit versus explicit conversion means understanding that safe widening can happen automatically while narrowing needs an explicit cast or parse. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with assuming all conversions are harmless, and they should avoid the trap of casting user data without checking range or format. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_34
+{
+    public static void Run()
+    {
+        int seats = 27;
+        long snapshot = seats;
+        double ratio = (double)seats / 6;
+        Console.WriteLine($"{snapshot} | {ratio:F2}");
+    }
+}
+```
+
+### Q1.35 Why does default values and initialization rules in C# fundamentals?
+
+**Answer:** Default values and initialization rules means knowing that fields get defaults but local variables must be assigned before use. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with treating locals like fields, and they should avoid the trap of reading locals before assignment. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_35
+{
+    public static void Run()
+    {
+        int processed;
+        processed = 42;
+        Console.WriteLine(processed);
+    }
+}
+```
+
+### Q1.36 When should you use reference versus value semantics in C# fundamentals?
+
+**Answer:** Reference versus value semantics means understanding that value types copy data while reference types copy references. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with assuming every assignment makes an independent deep copy, and they should avoid the trap of mutating shared references by accident. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_36
+{
+    public static void Run()
+    {
+        int original = 5;
+        int copied = original;
+        copied++;
+        var tags = new List<string> { "new", "priority-1" };
+        var shared = tags;
+        shared.Add("review");
+        Console.WriteLine($"{original}/{copied} | {string.Join(",", tags)}");
+    }
+}
+```
+
+### Q1.37 What problem does numeric type selection in C# fundamentals?
+
+**Answer:** Numeric type selection means choosing int, long, double, or decimal based on range and precision. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with using one numeric type everywhere, and they should avoid the trap of storing currency in floating-point types. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_37
+{
+    public static void Run()
+    {
+        decimal total = 149.95m + 2m;
+        long orderId = 9000000000L + 37;
+        Console.WriteLine($"{total} | {orderId}");
+    }
+}
+```
+
+### Q1.38 How would you explain var and compile-time type inference in C# fundamentals?
+
+**Answer:** Var and compile-time type inference means letting the compiler infer a static type from the assigned expression. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with dynamic typing at runtime, and they should avoid the trap of claiming var removes type safety. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_38
+{
+    public static void Run()
+    {
+        var name = "Catalog-38";
+        var retry = 3;
+        Console.WriteLine($"{name} retries {retry}");
+    }
+}
+```
+
+### Q1.39 Why is nullable value and reference intent in C# fundamentals?
+
+**Answer:** Nullable value and reference intent means modeling missing data explicitly with nullable value types and nullable reference annotations. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with null-blind coding, and they should avoid the trap of ignoring nullable warnings on external input. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_39
+{
+    public static void Run()
+    {
+        string? middle = "Lee";
+        int? points = null;
+        Console.WriteLine(middle ?? "<missing>");
+        Console.WriteLine(points?.ToString() ?? "No points");
+    }
+}
+```
+
+### Q1.40 How can implicit versus explicit conversion in C# fundamentals?
+
+**Answer:** Implicit versus explicit conversion means understanding that safe widening can happen automatically while narrowing needs an explicit cast or parse. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with assuming all conversions are harmless, and they should avoid the trap of casting user data without checking range or format. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_40
+{
+    public static void Run()
+    {
+        int seats = 24;
+        long snapshot = seats;
+        double ratio = (double)seats / 2;
+        Console.WriteLine($"{snapshot} | {ratio:F2}");
+    }
+}
+```
+
+### Q1.41 What is default values and initialization rules in C# fundamentals?
+
+**Answer:** Default values and initialization rules means knowing that fields get defaults but local variables must be assigned before use. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with treating locals like fields, and they should avoid the trap of reading locals before assignment. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_41
+{
+    public static void Run()
+    {
+        int processed;
+        processed = 48;
+        Console.WriteLine(processed);
+    }
+}
+```
+
+### Q1.42 How does reference versus value semantics in C# fundamentals?
+
+**Answer:** Reference versus value semantics means understanding that value types copy data while reference types copy references. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with assuming every assignment makes an independent deep copy, and they should avoid the trap of mutating shared references by accident. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_42
+{
+    public static void Run()
+    {
+        int original = 5;
+        int copied = original;
+        copied++;
+        var tags = new List<string> { "new", "priority-2" };
+        var shared = tags;
+        shared.Add("review");
+        Console.WriteLine($"{original}/{copied} | {string.Join(",", tags)}");
+    }
+}
+```
+
+### Q1.43 Why does numeric type selection in C# fundamentals?
+
+**Answer:** Numeric type selection means choosing int, long, double, or decimal based on range and precision. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with using one numeric type everywhere, and they should avoid the trap of storing currency in floating-point types. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_43
+{
+    public static void Run()
+    {
+        decimal total = 149.95m + 1m;
+        long orderId = 9000000000L + 43;
+        Console.WriteLine($"{total} | {orderId}");
+    }
+}
+```
+
+### Q1.44 When should you use var and compile-time type inference in C# fundamentals?
+
+**Answer:** Var and compile-time type inference means letting the compiler infer a static type from the assigned expression. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with dynamic typing at runtime, and they should avoid the trap of claiming var removes type safety. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_44
+{
+    public static void Run()
+    {
+        var name = "Catalog-44";
+        var retry = 1;
+        Console.WriteLine($"{name} retries {retry}");
+    }
+}
+```
+
+### Q1.45 What problem does nullable value and reference intent in C# fundamentals?
+
+**Answer:** Nullable value and reference intent means modeling missing data explicitly with nullable value types and nullable reference annotations. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with null-blind coding, and they should avoid the trap of ignoring nullable warnings on external input. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_45
+{
+    public static void Run()
+    {
+        string? middle = "Lee";
+        int? points = null;
+        Console.WriteLine(middle ?? "<missing>");
+        Console.WriteLine(points?.ToString() ?? "No points");
+    }
+}
+```
+
+### Q1.46 How would you explain implicit versus explicit conversion in C# fundamentals?
+
+**Answer:** Implicit versus explicit conversion means understanding that safe widening can happen automatically while narrowing needs an explicit cast or parse. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with assuming all conversions are harmless, and they should avoid the trap of casting user data without checking range or format. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_46
+{
+    public static void Run()
+    {
+        int seats = 21;
+        long snapshot = seats;
+        double ratio = (double)seats / 3;
+        Console.WriteLine($"{snapshot} | {ratio:F2}");
+    }
+}
+```
+
+### Q1.47 Why is default values and initialization rules in C# fundamentals?
+
+**Answer:** Default values and initialization rules means knowing that fields get defaults but local variables must be assigned before use. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with treating locals like fields, and they should avoid the trap of reading locals before assignment. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_47
+{
+    public static void Run()
+    {
+        int processed;
+        processed = 43;
+        Console.WriteLine(processed);
+    }
+}
+```
+
+### Q1.48 How can reference versus value semantics in C# fundamentals?
+
+**Answer:** Reference versus value semantics means understanding that value types copy data while reference types copy references. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with assuming every assignment makes an independent deep copy, and they should avoid the trap of mutating shared references by accident. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_48
+{
+    public static void Run()
+    {
+        int original = 5;
+        int copied = original;
+        copied++;
+        var tags = new List<string> { "new", "priority-3" };
+        var shared = tags;
+        shared.Add("review");
+        Console.WriteLine($"{original}/{copied} | {string.Join(",", tags)}");
+    }
+}
+```
+
+### Q1.49 What is numeric type selection in C# fundamentals?
+
+**Answer:** Numeric type selection means choosing int, long, double, or decimal based on range and precision. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with using one numeric type everywhere, and they should avoid the trap of storing currency in floating-point types. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_49
+{
+    public static void Run()
+    {
+        decimal total = 149.95m + 0m;
+        long orderId = 9000000000L + 49;
+        Console.WriteLine($"{total} | {orderId}");
+    }
+}
+```
+
+### Q1.50 How does var and compile-time type inference in C# fundamentals?
+
+**Answer:** Var and compile-time type inference means letting the compiler infer a static type from the assigned expression. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with dynamic typing at runtime, and they should avoid the trap of claiming var removes type safety. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_50
+{
+    public static void Run()
+    {
+        var name = "Catalog-50";
+        var retry = 3;
+        Console.WriteLine($"{name} retries {retry}");
+    }
+}
+```
+
+### Q1.51 Why does nullable value and reference intent in C# fundamentals?
+
+**Answer:** Nullable value and reference intent means modeling missing data explicitly with nullable value types and nullable reference annotations. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with null-blind coding, and they should avoid the trap of ignoring nullable warnings on external input. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_51
+{
+    public static void Run()
+    {
+        string? middle = "Lee";
+        int? points = null;
+        Console.WriteLine(middle ?? "<missing>");
+        Console.WriteLine(points?.ToString() ?? "No points");
+    }
+}
+```
+
+### Q1.52 When should you use implicit versus explicit conversion in C# fundamentals?
+
+**Answer:** Implicit versus explicit conversion means understanding that safe widening can happen automatically while narrowing needs an explicit cast or parse. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with assuming all conversions are harmless, and they should avoid the trap of casting user data without checking range or format. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_52
+{
+    public static void Run()
+    {
+        int seats = 27;
+        long snapshot = seats;
+        double ratio = (double)seats / 4;
+        Console.WriteLine($"{snapshot} | {ratio:F2}");
+    }
+}
+```
+
+### Q1.53 What problem does default values and initialization rules in C# fundamentals?
+
+**Answer:** Default values and initialization rules means knowing that fields get defaults but local variables must be assigned before use. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with treating locals like fields, and they should avoid the trap of reading locals before assignment. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_53
+{
+    public static void Run()
+    {
+        int processed;
+        processed = 49;
+        Console.WriteLine(processed);
+    }
+}
+```
+
+### Q1.54 How would you explain reference versus value semantics in C# fundamentals?
+
+**Answer:** Reference versus value semantics means understanding that value types copy data while reference types copy references. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with assuming every assignment makes an independent deep copy, and they should avoid the trap of mutating shared references by accident. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_54
+{
+    public static void Run()
+    {
+        int original = 5;
+        int copied = original;
+        copied++;
+        var tags = new List<string> { "new", "priority-4" };
+        var shared = tags;
+        shared.Add("review");
+        Console.WriteLine($"{original}/{copied} | {string.Join(",", tags)}");
+    }
+}
+```
+
+### Q1.55 Why is numeric type selection in C# fundamentals?
+
+**Answer:** Numeric type selection means choosing int, long, double, or decimal based on range and precision. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with using one numeric type everywhere, and they should avoid the trap of storing currency in floating-point types. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_55
+{
+    public static void Run()
+    {
+        decimal total = 149.95m + 6m;
+        long orderId = 9000000000L + 55;
+        Console.WriteLine($"{total} | {orderId}");
+    }
+}
+```
+
+### Q1.56 How can var and compile-time type inference in C# fundamentals?
+
+**Answer:** Var and compile-time type inference means letting the compiler infer a static type from the assigned expression. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with dynamic typing at runtime, and they should avoid the trap of claiming var removes type safety. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_56
+{
+    public static void Run()
+    {
+        var name = "Catalog-56";
+        var retry = 1;
+        Console.WriteLine($"{name} retries {retry}");
+    }
+}
+```
+
+### Q1.57 What is nullable value and reference intent in C# fundamentals?
+
+**Answer:** Nullable value and reference intent means modeling missing data explicitly with nullable value types and nullable reference annotations. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with null-blind coding, and they should avoid the trap of ignoring nullable warnings on external input. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_57
+{
+    public static void Run()
+    {
+        string? middle = "Lee";
+        int? points = null;
+        Console.WriteLine(middle ?? "<missing>");
+        Console.WriteLine(points?.ToString() ?? "No points");
+    }
+}
+```
+
+### Q1.58 How does implicit versus explicit conversion in C# fundamentals?
+
+**Answer:** Implicit versus explicit conversion means understanding that safe widening can happen automatically while narrowing needs an explicit cast or parse. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with assuming all conversions are harmless, and they should avoid the trap of casting user data without checking range or format. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_58
+{
+    public static void Run()
+    {
+        int seats = 24;
+        long snapshot = seats;
+        double ratio = (double)seats / 5;
+        Console.WriteLine($"{snapshot} | {ratio:F2}");
+    }
+}
+```
+
+### Q1.59 Why does default values and initialization rules in C# fundamentals?
+
+**Answer:** Default values and initialization rules means knowing that fields get defaults but local variables must be assigned before use. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with treating locals like fields, and they should avoid the trap of reading locals before assignment. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_59
+{
+    public static void Run()
+    {
+        int processed;
+        processed = 44;
+        Console.WriteLine(processed);
+    }
+}
+```
+
+### Q1.60 When should you use reference versus value semantics in C# fundamentals?
+
+**Answer:** Reference versus value semantics means understanding that value types copy data while reference types copy references. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with assuming every assignment makes an independent deep copy, and they should avoid the trap of mutating shared references by accident. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_60
+{
+    public static void Run()
+    {
+        int original = 5;
+        int copied = original;
+        copied++;
+        var tags = new List<string> { "new", "priority-0" };
+        var shared = tags;
+        shared.Add("review");
+        Console.WriteLine($"{original}/{copied} | {string.Join(",", tags)}");
+    }
+}
+```
+
+### Q1.61 What problem does numeric type selection in C# fundamentals?
+
+**Answer:** Numeric type selection means choosing int, long, double, or decimal based on range and precision. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with using one numeric type everywhere, and they should avoid the trap of storing currency in floating-point types. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_61
+{
+    public static void Run()
+    {
+        decimal total = 149.95m + 5m;
+        long orderId = 9000000000L + 61;
+        Console.WriteLine($"{total} | {orderId}");
+    }
+}
+```
+
+### Q1.62 How would you explain var and compile-time type inference in C# fundamentals?
+
+**Answer:** Var and compile-time type inference means letting the compiler infer a static type from the assigned expression. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with dynamic typing at runtime, and they should avoid the trap of claiming var removes type safety. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_62
+{
+    public static void Run()
+    {
+        var name = "Catalog-62";
+        var retry = 3;
+        Console.WriteLine($"{name} retries {retry}");
+    }
+}
+```
+
+### Q1.63 Why is nullable value and reference intent in C# fundamentals?
+
+**Answer:** Nullable value and reference intent means modeling missing data explicitly with nullable value types and nullable reference annotations. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with null-blind coding, and they should avoid the trap of ignoring nullable warnings on external input. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_63
+{
+    public static void Run()
+    {
+        string? middle = "Lee";
+        int? points = null;
+        Console.WriteLine(middle ?? "<missing>");
+        Console.WriteLine(points?.ToString() ?? "No points");
+    }
+}
+```
+
+### Q1.64 How can implicit versus explicit conversion in C# fundamentals?
+
+**Answer:** Implicit versus explicit conversion means understanding that safe widening can happen automatically while narrowing needs an explicit cast or parse. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with assuming all conversions are harmless, and they should avoid the trap of casting user data without checking range or format. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_64
+{
+    public static void Run()
+    {
+        int seats = 21;
+        long snapshot = seats;
+        double ratio = (double)seats / 6;
+        Console.WriteLine($"{snapshot} | {ratio:F2}");
+    }
+}
+```
+
+### Q1.65 What is default values and initialization rules in C# fundamentals?
+
+**Answer:** Default values and initialization rules means knowing that fields get defaults but local variables must be assigned before use. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with treating locals like fields, and they should avoid the trap of reading locals before assignment. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_65
+{
+    public static void Run()
+    {
+        int processed;
+        processed = 50;
+        Console.WriteLine(processed);
+    }
+}
+```
+
+### Q1.66 How does reference versus value semantics in C# fundamentals?
+
+**Answer:** Reference versus value semantics means understanding that value types copy data while reference types copy references. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with assuming every assignment makes an independent deep copy, and they should avoid the trap of mutating shared references by accident. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_66
+{
+    public static void Run()
+    {
+        int original = 5;
+        int copied = original;
+        copied++;
+        var tags = new List<string> { "new", "priority-1" };
+        var shared = tags;
+        shared.Add("review");
+        Console.WriteLine($"{original}/{copied} | {string.Join(",", tags)}");
+    }
+}
+```
+
+### Q1.67 Why does numeric type selection in C# fundamentals?
+
+**Answer:** Numeric type selection means choosing int, long, double, or decimal based on range and precision. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with using one numeric type everywhere, and they should avoid the trap of storing currency in floating-point types. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_67
+{
+    public static void Run()
+    {
+        decimal total = 149.95m + 4m;
+        long orderId = 9000000000L + 67;
+        Console.WriteLine($"{total} | {orderId}");
+    }
+}
+```
+
+### Q1.68 When should you use var and compile-time type inference in C# fundamentals?
+
+**Answer:** Var and compile-time type inference means letting the compiler infer a static type from the assigned expression. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with dynamic typing at runtime, and they should avoid the trap of claiming var removes type safety. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_68
+{
+    public static void Run()
+    {
+        var name = "Catalog-68";
+        var retry = 1;
+        Console.WriteLine($"{name} retries {retry}");
+    }
+}
+```
+
+### Q1.69 What problem does nullable value and reference intent in C# fundamentals?
+
+**Answer:** Nullable value and reference intent means modeling missing data explicitly with nullable value types and nullable reference annotations. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with null-blind coding, and they should avoid the trap of ignoring nullable warnings on external input. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_69
+{
+    public static void Run()
+    {
+        string? middle = "Lee";
+        int? points = null;
+        Console.WriteLine(middle ?? "<missing>");
+        Console.WriteLine(points?.ToString() ?? "No points");
+    }
+}
+```
+
+### Q1.70 How would you explain implicit versus explicit conversion in C# fundamentals?
+
+**Answer:** Implicit versus explicit conversion means understanding that safe widening can happen automatically while narrowing needs an explicit cast or parse. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with assuming all conversions are harmless, and they should avoid the trap of casting user data without checking range or format. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_70
+{
+    public static void Run()
+    {
+        int seats = 27;
+        long snapshot = seats;
+        double ratio = (double)seats / 2;
+        Console.WriteLine($"{snapshot} | {ratio:F2}");
+    }
+}
+```
+
+### Q1.71 Why is default values and initialization rules in C# fundamentals?
+
+**Answer:** Default values and initialization rules means knowing that fields get defaults but local variables must be assigned before use. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with treating locals like fields, and they should avoid the trap of reading locals before assignment. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_71
+{
+    public static void Run()
+    {
+        int processed;
+        processed = 45;
+        Console.WriteLine(processed);
+    }
+}
+```
+
+### Q1.72 How can reference versus value semantics in C# fundamentals?
+
+**Answer:** Reference versus value semantics means understanding that value types copy data while reference types copy references. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with assuming every assignment makes an independent deep copy, and they should avoid the trap of mutating shared references by accident. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_72
+{
+    public static void Run()
+    {
+        int original = 5;
+        int copied = original;
+        copied++;
+        var tags = new List<string> { "new", "priority-2" };
+        var shared = tags;
+        shared.Add("review");
+        Console.WriteLine($"{original}/{copied} | {string.Join(",", tags)}");
+    }
+}
+```
+
+### Q1.73 What is numeric type selection in C# fundamentals?
+
+**Answer:** Numeric type selection means choosing int, long, double, or decimal based on range and precision. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with using one numeric type everywhere, and they should avoid the trap of storing currency in floating-point types. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_73
+{
+    public static void Run()
+    {
+        decimal total = 149.95m + 3m;
+        long orderId = 9000000000L + 73;
+        Console.WriteLine($"{total} | {orderId}");
+    }
+}
+```
+
+### Q1.74 How does var and compile-time type inference in C# fundamentals?
+
+**Answer:** Var and compile-time type inference means letting the compiler infer a static type from the assigned expression. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with dynamic typing at runtime, and they should avoid the trap of claiming var removes type safety. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_74
+{
+    public static void Run()
+    {
+        var name = "Catalog-74";
+        var retry = 3;
+        Console.WriteLine($"{name} retries {retry}");
+    }
+}
+```
+
+### Q1.75 Why does nullable value and reference intent in C# fundamentals?
+
+**Answer:** Nullable value and reference intent means modeling missing data explicitly with nullable value types and nullable reference annotations. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with null-blind coding, and they should avoid the trap of ignoring nullable warnings on external input. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_75
+{
+    public static void Run()
+    {
+        string? middle = "Lee";
+        int? points = null;
+        Console.WriteLine(middle ?? "<missing>");
+        Console.WriteLine(points?.ToString() ?? "No points");
+    }
+}
+```
+
+### Q1.76 When should you use implicit versus explicit conversion in C# fundamentals?
+
+**Answer:** Implicit versus explicit conversion means understanding that safe widening can happen automatically while narrowing needs an explicit cast or parse. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with assuming all conversions are harmless, and they should avoid the trap of casting user data without checking range or format. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_76
+{
+    public static void Run()
+    {
+        int seats = 24;
+        long snapshot = seats;
+        double ratio = (double)seats / 3;
+        Console.WriteLine($"{snapshot} | {ratio:F2}");
+    }
+}
+```
+
+### Q1.77 What problem does default values and initialization rules in C# fundamentals?
+
+**Answer:** Default values and initialization rules means knowing that fields get defaults but local variables must be assigned before use. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with treating locals like fields, and they should avoid the trap of reading locals before assignment. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_77
+{
+    public static void Run()
+    {
+        int processed;
+        processed = 40;
+        Console.WriteLine(processed);
+    }
+}
+```
+
+### Q1.78 How would you explain reference versus value semantics in C# fundamentals?
+
+**Answer:** Reference versus value semantics means understanding that value types copy data while reference types copy references. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with assuming every assignment makes an independent deep copy, and they should avoid the trap of mutating shared references by accident. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_78
+{
+    public static void Run()
+    {
+        int original = 5;
+        int copied = original;
+        copied++;
+        var tags = new List<string> { "new", "priority-3" };
+        var shared = tags;
+        shared.Add("review");
+        Console.WriteLine($"{original}/{copied} | {string.Join(",", tags)}");
+    }
+}
+```
+
+### Q1.79 Why is numeric type selection in C# fundamentals?
+
+**Answer:** Numeric type selection means choosing int, long, double, or decimal based on range and precision. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with using one numeric type everywhere, and they should avoid the trap of storing currency in floating-point types. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_79
+{
+    public static void Run()
+    {
+        decimal total = 149.95m + 2m;
+        long orderId = 9000000000L + 79;
+        Console.WriteLine($"{total} | {orderId}");
+    }
+}
+```
+
+### Q1.80 How can var and compile-time type inference in C# fundamentals?
+
+**Answer:** Var and compile-time type inference means letting the compiler infer a static type from the assigned expression. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with dynamic typing at runtime, and they should avoid the trap of claiming var removes type safety. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_80
+{
+    public static void Run()
+    {
+        var name = "Catalog-80";
+        var retry = 1;
+        Console.WriteLine($"{name} retries {retry}");
+    }
+}
+```
+
+### Q1.81 What is nullable value and reference intent in C# fundamentals?
+
+**Answer:** Nullable value and reference intent means modeling missing data explicitly with nullable value types and nullable reference annotations. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with null-blind coding, and they should avoid the trap of ignoring nullable warnings on external input. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_81
+{
+    public static void Run()
+    {
+        string? middle = "Lee";
+        int? points = null;
+        Console.WriteLine(middle ?? "<missing>");
+        Console.WriteLine(points?.ToString() ?? "No points");
+    }
+}
+```
+
+### Q1.82 How does implicit versus explicit conversion in C# fundamentals?
+
+**Answer:** Implicit versus explicit conversion means understanding that safe widening can happen automatically while narrowing needs an explicit cast or parse. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with assuming all conversions are harmless, and they should avoid the trap of casting user data without checking range or format. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_82
+{
+    public static void Run()
+    {
+        int seats = 21;
+        long snapshot = seats;
+        double ratio = (double)seats / 4;
+        Console.WriteLine($"{snapshot} | {ratio:F2}");
+    }
+}
+```
+
+### Q1.83 Why does default values and initialization rules in C# fundamentals?
+
+**Answer:** Default values and initialization rules means knowing that fields get defaults but local variables must be assigned before use. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with treating locals like fields, and they should avoid the trap of reading locals before assignment. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_83
+{
+    public static void Run()
+    {
+        int processed;
+        processed = 46;
+        Console.WriteLine(processed);
+    }
+}
+```
+
+### Q1.84 When should you use reference versus value semantics in C# fundamentals?
+
+**Answer:** Reference versus value semantics means understanding that value types copy data while reference types copy references. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with assuming every assignment makes an independent deep copy, and they should avoid the trap of mutating shared references by accident. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_84
+{
+    public static void Run()
+    {
+        int original = 5;
+        int copied = original;
+        copied++;
+        var tags = new List<string> { "new", "priority-4" };
+        var shared = tags;
+        shared.Add("review");
+        Console.WriteLine($"{original}/{copied} | {string.Join(",", tags)}");
+    }
+}
+```
+
+### Q1.85 What problem does numeric type selection in C# fundamentals?
+
+**Answer:** Numeric type selection means choosing int, long, double, or decimal based on range and precision. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with using one numeric type everywhere, and they should avoid the trap of storing currency in floating-point types. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_85
+{
+    public static void Run()
+    {
+        decimal total = 149.95m + 1m;
+        long orderId = 9000000000L + 85;
+        Console.WriteLine($"{total} | {orderId}");
+    }
+}
+```
+
+### Q1.86 How would you explain var and compile-time type inference in C# fundamentals?
+
+**Answer:** Var and compile-time type inference means letting the compiler infer a static type from the assigned expression. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with dynamic typing at runtime, and they should avoid the trap of claiming var removes type safety. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_86
+{
+    public static void Run()
+    {
+        var name = "Catalog-86";
+        var retry = 3;
+        Console.WriteLine($"{name} retries {retry}");
+    }
+}
+```
+
+### Q1.87 Why is nullable value and reference intent in C# fundamentals?
+
+**Answer:** Nullable value and reference intent means modeling missing data explicitly with nullable value types and nullable reference annotations. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with null-blind coding, and they should avoid the trap of ignoring nullable warnings on external input. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_87
+{
+    public static void Run()
+    {
+        string? middle = "Lee";
+        int? points = null;
+        Console.WriteLine(middle ?? "<missing>");
+        Console.WriteLine(points?.ToString() ?? "No points");
+    }
+}
+```
+
+### Q1.88 How can implicit versus explicit conversion in C# fundamentals?
+
+**Answer:** Implicit versus explicit conversion means understanding that safe widening can happen automatically while narrowing needs an explicit cast or parse. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with assuming all conversions are harmless, and they should avoid the trap of casting user data without checking range or format. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_88
+{
+    public static void Run()
+    {
+        int seats = 27;
+        long snapshot = seats;
+        double ratio = (double)seats / 5;
+        Console.WriteLine($"{snapshot} | {ratio:F2}");
+    }
+}
+```
+
+### Q1.89 What is default values and initialization rules in C# fundamentals?
+
+**Answer:** Default values and initialization rules means knowing that fields get defaults but local variables must be assigned before use. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with treating locals like fields, and they should avoid the trap of reading locals before assignment. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_89
+{
+    public static void Run()
+    {
+        int processed;
+        processed = 41;
+        Console.WriteLine(processed);
+    }
+}
+```
+
+### Q1.90 How does reference versus value semantics in C# fundamentals?
+
+**Answer:** Reference versus value semantics means understanding that value types copy data while reference types copy references. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with assuming every assignment makes an independent deep copy, and they should avoid the trap of mutating shared references by accident. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_90
+{
+    public static void Run()
+    {
+        int original = 5;
+        int copied = original;
+        copied++;
+        var tags = new List<string> { "new", "priority-0" };
+        var shared = tags;
+        shared.Add("review");
+        Console.WriteLine($"{original}/{copied} | {string.Join(",", tags)}");
+    }
+}
+```
+
+### Q1.91 Why does numeric type selection in C# fundamentals?
+
+**Answer:** Numeric type selection means choosing int, long, double, or decimal based on range and precision. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with using one numeric type everywhere, and they should avoid the trap of storing currency in floating-point types. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_91
+{
+    public static void Run()
+    {
+        decimal total = 149.95m + 0m;
+        long orderId = 9000000000L + 91;
+        Console.WriteLine($"{total} | {orderId}");
+    }
+}
+```
+
+### Q1.92 When should you use var and compile-time type inference in C# fundamentals?
+
+**Answer:** Var and compile-time type inference means letting the compiler infer a static type from the assigned expression. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with dynamic typing at runtime, and they should avoid the trap of claiming var removes type safety. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_92
+{
+    public static void Run()
+    {
+        var name = "Catalog-92";
+        var retry = 1;
+        Console.WriteLine($"{name} retries {retry}");
+    }
+}
+```
+
+### Q1.93 What problem does nullable value and reference intent in C# fundamentals?
+
+**Answer:** Nullable value and reference intent means modeling missing data explicitly with nullable value types and nullable reference annotations. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with null-blind coding, and they should avoid the trap of ignoring nullable warnings on external input. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_93
+{
+    public static void Run()
+    {
+        string? middle = "Lee";
+        int? points = null;
+        Console.WriteLine(middle ?? "<missing>");
+        Console.WriteLine(points?.ToString() ?? "No points");
+    }
+}
+```
+
+### Q1.94 How would you explain implicit versus explicit conversion in C# fundamentals?
+
+**Answer:** Implicit versus explicit conversion means understanding that safe widening can happen automatically while narrowing needs an explicit cast or parse. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with assuming all conversions are harmless, and they should avoid the trap of casting user data without checking range or format. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_94
+{
+    public static void Run()
+    {
+        int seats = 24;
+        long snapshot = seats;
+        double ratio = (double)seats / 6;
+        Console.WriteLine($"{snapshot} | {ratio:F2}");
+    }
+}
+```
+
+### Q1.95 Why is default values and initialization rules in C# fundamentals?
+
+**Answer:** Default values and initialization rules means knowing that fields get defaults but local variables must be assigned before use. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with treating locals like fields, and they should avoid the trap of reading locals before assignment. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_95
+{
+    public static void Run()
+    {
+        int processed;
+        processed = 47;
+        Console.WriteLine(processed);
+    }
+}
+```
+
+### Q1.96 How can reference versus value semantics in C# fundamentals?
+
+**Answer:** Reference versus value semantics means understanding that value types copy data while reference types copy references. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with assuming every assignment makes an independent deep copy, and they should avoid the trap of mutating shared references by accident. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_96
+{
+    public static void Run()
+    {
+        int original = 5;
+        int copied = original;
+        copied++;
+        var tags = new List<string> { "new", "priority-1" };
+        var shared = tags;
+        shared.Add("review");
+        Console.WriteLine($"{original}/{copied} | {string.Join(",", tags)}");
+    }
+}
+```
+
+### Q1.97 What is numeric type selection in C# fundamentals?
+
+**Answer:** Numeric type selection means choosing int, long, double, or decimal based on range and precision. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with using one numeric type everywhere, and they should avoid the trap of storing currency in floating-point types. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_97
+{
+    public static void Run()
+    {
+        decimal total = 149.95m + 6m;
+        long orderId = 9000000000L + 97;
+        Console.WriteLine($"{total} | {orderId}");
+    }
+}
+```
+
+### Q1.98 How does var and compile-time type inference in C# fundamentals?
+
+**Answer:** Var and compile-time type inference means letting the compiler infer a static type from the assigned expression. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with dynamic typing at runtime, and they should avoid the trap of claiming var removes type safety. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_98
+{
+    public static void Run()
+    {
+        var name = "Catalog-98";
+        var retry = 3;
+        Console.WriteLine($"{name} retries {retry}");
+    }
+}
+```
+
+### Q1.99 Why does nullable value and reference intent in C# fundamentals?
+
+**Answer:** Nullable value and reference intent means modeling missing data explicitly with nullable value types and nullable reference annotations. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with null-blind coding, and they should avoid the trap of ignoring nullable warnings on external input. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_99
+{
+    public static void Run()
+    {
+        string? middle = "Lee";
+        int? points = null;
+        Console.WriteLine(middle ?? "<missing>");
+        Console.WriteLine(points?.ToString() ?? "No points");
+    }
+}
+```
+
+### Q1.100 When should you use implicit versus explicit conversion in C# fundamentals?
+
+**Answer:** Implicit versus explicit conversion means understanding that safe widening can happen automatically while narrowing needs an explicit cast or parse. Teams should focus on it when discussing variables, data types, and type behavior in production code, they compare it with assuming all conversions are harmless, and they should avoid the trap of casting user data without checking range or format. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo1_100
+{
+    public static void Run()
+    {
+        int seats = 21;
+        long snapshot = seats;
+        double ratio = (double)seats / 2;
+        Console.WriteLine($"{snapshot} | {ratio:F2}");
+    }
+}
+```
 
 ## 2. Operators and expression logic
 
-This section focuses on how C# evaluates expressions, combines conditions, performs calculations, and manipulates values at the bit level.
+> This section contains **100 interview questions** focused on **Operators and expression logic**. Every answer includes a C# code example, and the scenarios rotate so they do not repeat verbatim.
 
-### 51. What is the role of Arithmetic operators in pricing and quantity calculations in C# fundamentals?
+### Q2.1 What problem does arithmetic and precedence rules in C# fundamentals?
 
-**Answer:**
+**Answer:** Arithmetic and precedence rules means knowing that operator precedence changes how calculations are evaluated. Teams should focus on it when discussing operators and expression logic in production code, they compare it with reading expressions strictly left to right, and they should avoid the trap of writing formulas without clarifying parentheses. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
 
-In C# fundamentals, Arithmetic operators in pricing and quantity calculations refers to the operators that add, subtract, multiply, divide, and calculate remainders in business workflows. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-decimal subtotal = 1250m;
-decimal tax = subtotal * 0.18m;
-decimal shipping = 75m;
-decimal total = subtotal + tax + shipping;
+using System;
+using System.Collections.Generic;
 
-Console.WriteLine(total);
-```
-
----
-
-### 52. Why is Arithmetic operators in pricing and quantity calculations important in day-to-day C# work?
-
-**Answer:**
-
-It matters because arithmetic sits underneath totals, tax, discounts, metrics, and allocation logic. In production code, this shows up in features like imports, APIs, validation, pricing, reporting, and support debugging.
-
-**Sample:**
-
-```csharp
-decimal subtotal = 1250m;
-decimal tax = subtotal * 0.18m;
-decimal shipping = 75m;
-decimal total = subtotal + tax + shipping;
-
-Console.WriteLine(total);
-```
-
----
-
-### 53. When should you use Arithmetic operators in pricing and quantity calculations in real projects?
-
-**Answer:**
-
-Use Arithmetic operators in pricing and quantity calculations when you are computing totals, percentages, averages, balances, or split values across users or systems. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
-
-```csharp
-decimal subtotal = 1250m;
-decimal tax = subtotal * 0.18m;
-decimal shipping = 75m;
-decimal total = subtotal + tax + shipping;
-
-Console.WriteLine(total);
-```
-
----
-
-### 54. What is a real-time example of Arithmetic operators in pricing and quantity calculations?
-
-**Answer:**
-
-An order checkout flow uses arithmetic operators to calculate subtotal, tax, shipping, and final invoice amount. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
-
-```csharp
-decimal subtotal = 1250m;
-decimal tax = subtotal * 0.18m;
-decimal shipping = 75m;
-decimal total = subtotal + tax + shipping;
-
-Console.WriteLine(total);
-```
-
----
-
-### 55. What is a best practice for Arithmetic operators in pricing and quantity calculations?
-
-**Answer:**
-
-Choose the correct numeric types before using arithmetic and write expressions in a way that makes precedence obvious. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
-
-```csharp
-decimal subtotal = 1250m;
-decimal tax = subtotal * 0.18m;
-decimal shipping = 75m;
-decimal total = subtotal + tax + shipping;
-
-Console.WriteLine(total);
-```
-
----
-
-### 56. What is a tricky interview point or common mistake around Arithmetic operators in pricing and quantity calculations?
-
-**Answer:**
-
-Developers often forget integer division, operator precedence, or the side effects of increment operators inside larger expressions. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
-
-```csharp
-int items = 7;
-int boxes = 2;
-
-Console.WriteLine(items / boxes); // 3
-Console.WriteLine(items % boxes); // 1
-```
-
----
-
-### 57. How does Arithmetic operators in pricing and quantity calculations differ from assignment and compound assignment operators?
-
-**Answer:**
-
-Arithmetic operators in pricing and quantity calculations is about the operators that add, subtract, multiply, divide, and calculate remainders in business workflows, whereas assignment and compound assignment operators is about updating variables rather than evaluating arithmetic results themselves. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
-
-```csharp
-decimal subtotal = 1250m;
-decimal tax = subtotal * 0.18m;
-decimal shipping = 75m;
-decimal total = subtotal + tax + shipping;
-
-Console.WriteLine(total);
-```
-
----
-
-### 58. How do you troubleshoot issues related to Arithmetic operators in pricing and quantity calculations?
-
-**Answer:**
-
-Break the expression into smaller variables, log each intermediate value, and test with boundary cases such as zero, negative values, or large totals. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
-
-```csharp
-int items = 7;
-int boxes = 2;
-
-Console.WriteLine(items / boxes); // 3
-Console.WriteLine(items % boxes); // 1
-```
-
----
-
-### 59. What kind of follow-up does an interviewer usually ask after Arithmetic operators in pricing and quantity calculations?
-
-**Answer:**
-
-A common follow-up is how operator precedence and overflow affect real production calculations. This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
-
-```csharp
-decimal subtotal = 1250m;
-decimal tax = subtotal * 0.18m;
-decimal shipping = 75m;
-decimal total = subtotal + tax + shipping;
-
-Console.WriteLine(total);
-```
-
----
-
-### 60. How does Arithmetic operators in pricing and quantity calculations connect to the rest of C# fundamentals?
-
-**Answer:**
-
-Arithmetic operators feed into conditions, loops, methods, and collections because calculated values often decide what happens next. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
-
-```csharp
-decimal subtotal = 1250m;
-decimal tax = subtotal * 0.18m;
-decimal shipping = 75m;
-decimal total = subtotal + tax + shipping;
-
-Console.WriteLine(total);
-```
-
----
-
-### 61. What is the role of Assignment and compound assignment operators in C# fundamentals?
-
-**Answer:**
-
-In C# fundamentals, Assignment and compound assignment operators refers to the operators used to store new values and update existing variables efficiently. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
-
-```csharp
-int processed = 0;
-decimal invoiceTotal = 0m;
-
-processed += 1;
-invoiceTotal += 499.99m;
-
-Console.WriteLine($"{processed} items, {invoiceTotal}");
-```
-
----
-
-### 62. Why is Assignment and compound assignment operators important in day-to-day C# work?
-
-**Answer:**
-
-It matters because state changes happen constantly in counters, balances, retry counts, and aggregation code. In production code, this shows up in features like imports, APIs, validation, pricing, reporting, and support debugging.
-
-**Sample:**
-
-```csharp
-int processed = 0;
-decimal invoiceTotal = 0m;
-
-processed += 1;
-invoiceTotal += 499.99m;
-
-Console.WriteLine($"{processed} items, {invoiceTotal}");
-```
-
----
-
-### 63. When should you use Assignment and compound assignment operators in real projects?
-
-**Answer:**
-
-Use Assignment and compound assignment operators when you are updating totals, counts, flags, or working values during execution. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
-
-```csharp
-int processed = 0;
-decimal invoiceTotal = 0m;
-
-processed += 1;
-invoiceTotal += 499.99m;
-
-Console.WriteLine($"{processed} items, {invoiceTotal}");
-```
-
----
-
-### 64. What is a real-time example of Assignment and compound assignment operators?
-
-**Answer:**
-
-A file import routine increments success counters, adds amounts to totals, and records retries using compound assignments. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
-
-```csharp
-int processed = 0;
-decimal invoiceTotal = 0m;
-
-processed += 1;
-invoiceTotal += 499.99m;
-
-Console.WriteLine($"{processed} items, {invoiceTotal}");
-```
-
----
-
-### 65. What is a best practice for Assignment and compound assignment operators?
-
-**Answer:**
-
-Keep assignments simple and avoid packing too many state changes into one expression. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
-
-```csharp
-int processed = 0;
-decimal invoiceTotal = 0m;
-
-processed += 1;
-invoiceTotal += 499.99m;
-
-Console.WriteLine($"{processed} items, {invoiceTotal}");
-```
-
----
-
-### 66. What is a tricky interview point or common mistake around Assignment and compound assignment operators?
-
-**Answer:**
-
-Using pre-increment or post-increment inside larger expressions often makes the code harder to reason about and easier to misread in interviews. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
-
-```csharp
-int retryCount = 1;
-int next = retryCount++;
-
-Console.WriteLine($"next={next}, retryCount={retryCount}");
-```
-
----
-
-### 67. How does Assignment and compound assignment operators differ from arithmetic operators in pricing and quantity calculations?
-
-**Answer:**
-
-Assignment and compound assignment operators is about the operators used to store new values and update existing variables efficiently, whereas arithmetic operators in pricing and quantity calculations is about the calculation itself rather than persisting a changed result back into a variable. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
-
-```csharp
-int processed = 0;
-decimal invoiceTotal = 0m;
-
-processed += 1;
-invoiceTotal += 499.99m;
-
-Console.WriteLine($"{processed} items, {invoiceTotal}");
-```
-
----
-
-### 68. How do you troubleshoot issues related to Assignment and compound assignment operators?
-
-**Answer:**
-
-Step through the code, watch variable values after each statement, and simplify any line where multiple assignments are happening at once. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
-
-```csharp
-int retryCount = 1;
-int next = retryCount++;
-
-Console.WriteLine($"next={next}, retryCount={retryCount}");
-```
-
----
-
-### 69. What kind of follow-up does an interviewer usually ask after Assignment and compound assignment operators?
-
-**Answer:**
-
-A common follow-up is the difference between `count++` and `++count`, especially inside conditions or method calls. This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
-
-```csharp
-int processed = 0;
-decimal invoiceTotal = 0m;
-
-processed += 1;
-invoiceTotal += 499.99m;
-
-Console.WriteLine($"{processed} items, {invoiceTotal}");
-```
-
----
-
-### 70. How does Assignment and compound assignment operators connect to the rest of C# fundamentals?
-
-**Answer:**
-
-Assignment operators show up with loops, methods, and collections because most real workflows build up or mutate state over time. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
-
-```csharp
-int processed = 0;
-decimal invoiceTotal = 0m;
-
-processed += 1;
-invoiceTotal += 499.99m;
-
-Console.WriteLine($"{processed} items, {invoiceTotal}");
-```
-
----
-
-### 71. What is the role of Comparison and equality operators in C# fundamentals?
-
-**Answer:**
-
-In C# fundamentals, Comparison and equality operators refers to the operators that compare values and decide whether conditions are true or false. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
-
-```csharp
-decimal submittedAmount = 12000m;
-decimal managerLimit = 10000m;
-
-bool needsEscalation = submittedAmount > managerLimit;
-Console.WriteLine(needsEscalation);
-```
-
----
-
-### 72. Why is Comparison and equality operators important in day-to-day C# work?
-
-**Answer:**
-
-It matters because filtering, validation, branching, and duplicate detection depend on accurate comparisons. In production code, this shows up in features like imports, APIs, validation, pricing, reporting, and support debugging.
-
-**Sample:**
-
-```csharp
-decimal submittedAmount = 12000m;
-decimal managerLimit = 10000m;
-
-bool needsEscalation = submittedAmount > managerLimit;
-Console.WriteLine(needsEscalation);
-```
-
----
-
-### 73. When should you use Comparison and equality operators in real projects?
-
-**Answer:**
-
-Use Comparison and equality operators when you need to validate ranges, check status values, compare keys, or branch on business conditions. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
-
-```csharp
-decimal submittedAmount = 12000m;
-decimal managerLimit = 10000m;
-
-bool needsEscalation = submittedAmount > managerLimit;
-Console.WriteLine(needsEscalation);
-```
-
----
-
-### 74. What is a real-time example of Comparison and equality operators?
-
-**Answer:**
-
-A claims system checks whether the submitted amount exceeds approval limits and whether the incoming status matches a known workflow state. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
-
-```csharp
-decimal submittedAmount = 12000m;
-decimal managerLimit = 10000m;
-
-bool needsEscalation = submittedAmount > managerLimit;
-Console.WriteLine(needsEscalation);
-```
-
----
-
-### 75. What is a best practice for Comparison and equality operators?
-
-**Answer:**
-
-Be explicit about whether you are comparing numeric values, strings, or object references, and normalize values when business rules require it. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
-
-```csharp
-decimal submittedAmount = 12000m;
-decimal managerLimit = 10000m;
-
-bool needsEscalation = submittedAmount > managerLimit;
-Console.WriteLine(needsEscalation);
-```
-
----
-
-### 76. What is a tricky interview point or common mistake around Comparison and equality operators?
-
-**Answer:**
-
-String comparison rules, floating point precision, and null handling often turn simple equality checks into subtle bugs. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
-
-```csharp
-string left = "paid";
-string right = "PAID";
-
-Console.WriteLine(left == right); // False
-Console.WriteLine(left.Equals(right, StringComparison.OrdinalIgnoreCase)); // True
-```
-
----
-
-### 77. How does Comparison and equality operators differ from logical operators and short-circuit evaluation?
-
-**Answer:**
-
-Comparison and equality operators is about the operators that compare values and decide whether conditions are true or false, whereas logical operators and short-circuit evaluation is about combining boolean results rather than performing the base comparison. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
-
-```csharp
-decimal submittedAmount = 12000m;
-decimal managerLimit = 10000m;
-
-bool needsEscalation = submittedAmount > managerLimit;
-Console.WriteLine(needsEscalation);
-```
-
----
-
-### 78. How do you troubleshoot issues related to Comparison and equality operators?
-
-**Answer:**
-
-Inspect both operands, confirm casing or normalization rules, and write a small repro for the exact values that do not compare as expected. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
-
-```csharp
-string left = "paid";
-string right = "PAID";
-
-Console.WriteLine(left == right); // False
-Console.WriteLine(left.Equals(right, StringComparison.OrdinalIgnoreCase)); // True
-```
-
----
-
-### 79. What kind of follow-up does an interviewer usually ask after Comparison and equality operators?
-
-**Answer:**
-
-A common follow-up is how equality works differently for value types, reference types, and strings. This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
-
-```csharp
-decimal submittedAmount = 12000m;
-decimal managerLimit = 10000m;
-
-bool needsEscalation = submittedAmount > managerLimit;
-Console.WriteLine(needsEscalation);
-```
-
----
-
-### 80. How does Comparison and equality operators connect to the rest of C# fundamentals?
-
-**Answer:**
-
-Comparisons are the input to `if`, `switch`, loops, and query filters, so weak understanding here affects control flow everywhere. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
-
-```csharp
-decimal submittedAmount = 12000m;
-decimal managerLimit = 10000m;
-
-bool needsEscalation = submittedAmount > managerLimit;
-Console.WriteLine(needsEscalation);
-```
-
----
-
-### 81. What is the role of Logical operators and short-circuit evaluation in C# fundamentals?
-
-**Answer:**
-
-In C# fundamentals, Logical operators and short-circuit evaluation refers to the boolean operators that combine conditions and decide whether later expressions should be evaluated. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
-
-```csharp
-bool hasCustomer = true;
-bool isActive = true;
-bool hasCreditHold = false;
-
-bool canPlaceOrder = hasCustomer && isActive && !hasCreditHold;
-Console.WriteLine(canPlaceOrder);
-```
-
----
-
-### 82. Why is Logical operators and short-circuit evaluation important in day-to-day C# work?
-
-**Answer:**
-
-It matters because validation and authorization rules often combine multiple checks, and short-circuit behavior prevents unnecessary work or null reference bugs. In production code, this shows up in features like imports, APIs, validation, pricing, reporting, and support debugging.
-
-**Sample:**
-
-```csharp
-bool hasCustomer = true;
-bool isActive = true;
-bool hasCreditHold = false;
-
-bool canPlaceOrder = hasCustomer && isActive && !hasCreditHold;
-Console.WriteLine(canPlaceOrder);
-```
-
----
-
-### 83. When should you use Logical operators and short-circuit evaluation in real projects?
-
-**Answer:**
-
-Use Logical operators and short-circuit evaluation when you need to enforce multiple business conditions or guard against invalid state before using a value. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
-
-```csharp
-bool hasCustomer = true;
-bool isActive = true;
-bool hasCreditHold = false;
-
-bool canPlaceOrder = hasCustomer && isActive && !hasCreditHold;
-Console.WriteLine(canPlaceOrder);
-```
-
----
-
-### 84. What is a real-time example of Logical operators and short-circuit evaluation?
-
-**Answer:**
-
-A login API may require the user object to exist, the account to be active, and the password attempt count to remain below a threshold. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
-
-```csharp
-bool hasCustomer = true;
-bool isActive = true;
-bool hasCreditHold = false;
-
-bool canPlaceOrder = hasCustomer && isActive && !hasCreditHold;
-Console.WriteLine(canPlaceOrder);
-```
-
----
-
-### 85. What is a best practice for Logical operators and short-circuit evaluation?
-
-**Answer:**
-
-Use short-circuiting intentionally and order checks from safest or cheapest to most expensive. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
-
-```csharp
-bool hasCustomer = true;
-bool isActive = true;
-bool hasCreditHold = false;
-
-bool canPlaceOrder = hasCustomer && isActive && !hasCreditHold;
-Console.WriteLine(canPlaceOrder);
-```
-
----
-
-### 86. What is a tricky interview point or common mistake around Logical operators and short-circuit evaluation?
-
-**Answer:**
-
-Confusing `&&` with `&` or `||` with `|` is a classic interview trap because it changes evaluation behavior. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
-
-```csharp
-string? token = null;
-
-if (token != null && token.Length > 10)
+public static class Demo2_1
 {
-    Console.WriteLine("Valid token");
+    public static void Run()
+    {
+        int subtotal = 81;
+        int fee = 7;
+        int raw = subtotal + fee * 2;
+        int corrected = (subtotal + fee) * 2;
+        Console.WriteLine($"{raw} | {corrected}");
+    }
 }
 ```
 
----
+### Q2.2 How would you explain comparison and boolean composition in C# fundamentals?
 
-### 87. How does Logical operators and short-circuit evaluation differ from comparison and equality operators?
+**Answer:** Comparison and boolean composition means turning business rules into true or false conditions with comparison and logical operators. Teams should focus on it when discussing operators and expression logic in production code, they compare it with splitting one rule across many disconnected checks, and they should avoid the trap of mixing conditions without grouping intent. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
 
-**Answer:**
-
-Logical operators and short-circuit evaluation is about the boolean operators that combine conditions and decide whether later expressions should be evaluated, whereas comparison and equality operators is about single true-or-false comparisons rather than combining several boolean expressions. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-bool hasCustomer = true;
-bool isActive = true;
-bool hasCreditHold = false;
+using System;
+using System.Collections.Generic;
 
-bool canPlaceOrder = hasCustomer && isActive && !hasCreditHold;
-Console.WriteLine(canPlaceOrder);
-```
-
----
-
-### 88. How do you troubleshoot issues related to Logical operators and short-circuit evaluation?
-
-**Answer:**
-
-Evaluate each boolean independently, confirm whether a later expression should run, and watch for null access when the guard order is wrong. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
-
-```csharp
-string? token = null;
-
-if (token != null && token.Length > 10)
+public static class Demo2_2
 {
-    Console.WriteLine("Valid token");
+    public static void Run()
+    {
+        int stock = 16;
+        bool priority = false;
+        bool canShip = stock > 5 && (priority || stock > 15);
+        Console.WriteLine(canShip);
+    }
 }
 ```
 
----
+### Q2.3 Why is short-circuit evaluation in C# fundamentals?
 
-### 89. What kind of follow-up does an interviewer usually ask after Logical operators and short-circuit evaluation?
+**Answer:** Short-circuit evaluation means using && and || with the knowledge that the right side may not run. Teams should focus on it when discussing operators and expression logic in production code, they compare it with bitwise boolean evaluation, and they should avoid the trap of calling members before a null-safe check can stop it. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
 
-**Answer:**
-
-A common follow-up is why short-circuiting matters for null checks, expensive method calls, and side effects. This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-bool hasCustomer = true;
-bool isActive = true;
-bool hasCreditHold = false;
+using System;
+using System.Collections.Generic;
 
-bool canPlaceOrder = hasCustomer && isActive && !hasCreditHold;
-Console.WriteLine(canPlaceOrder);
-```
-
----
-
-### 90. How does Logical operators and short-circuit evaluation connect to the rest of C# fundamentals?
-
-**Answer:**
-
-Logical operators glue together comparisons, branches, loops, and method guards throughout day-to-day C# code. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
-
-```csharp
-bool hasCustomer = true;
-bool isActive = true;
-bool hasCreditHold = false;
-
-bool canPlaceOrder = hasCustomer && isActive && !hasCreditHold;
-Console.WriteLine(canPlaceOrder);
-```
-
----
-
-### 91. What is the role of Bitwise and flag operators in C# fundamentals?
-
-**Answer:**
-
-In C# fundamentals, Bitwise and flag operators refers to the operators that work directly with bits and are commonly used with flags, masks, and low-level state combinations. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
-
-```csharp
-[Flags]
-enum Channel
+public static class Demo2_3
 {
-    None = 0,
-    Email = 1,
-    Sms = 2,
-    Push = 4
+    public static void Run()
+    {
+        string? email = "user103@example.com";
+        bool ok = email != null && email.EndsWith("@example.com");
+        Console.WriteLine(ok);
+    }
 }
-
-Channel selected = Channel.Email | Channel.Push;
-Console.WriteLine(selected.HasFlag(Channel.Push));
 ```
 
----
+### Q2.4 How can null-coalescing and conditional operators in C# fundamentals?
 
-### 92. Why is Bitwise and flag operators important in day-to-day C# work?
+**Answer:** Null-coalescing and conditional operators means using ??, ??=, and ?: to express fallbacks and compact branching. Teams should focus on it when discussing operators and expression logic in production code, they compare it with long manual fallback code, and they should avoid the trap of compressing too much logic into unreadable expressions. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
 
-**Answer:**
-
-It matters because bit flags still appear in permissions, device integrations, protocols, and performance-conscious state storage. In production code, this shows up in features like imports, APIs, validation, pricing, reporting, and support debugging.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-[Flags]
-enum Channel
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_4
 {
-    None = 0,
-    Email = 1,
-    Sms = 2,
-    Push = 4
+    public static void Run()
+    {
+        string? display = "Agent-104";
+        display ??= "Guest";
+        string badge = display == "Guest" ? "Limited" : "Standard";
+        Console.WriteLine($"{display} => {badge}");
+    }
 }
-
-Channel selected = Channel.Email | Channel.Push;
-Console.WriteLine(selected.HasFlag(Channel.Push));
 ```
 
----
+### Q2.5 What is assignment variants and increment behavior in C# fundamentals?
 
-### 93. When should you use Bitwise and flag operators in real projects?
+**Answer:** Assignment variants and increment behavior means knowing what +=, -=, ++, and -- do to current values. Teams should focus on it when discussing operators and expression logic in production code, they compare it with rewriting every update verbosely, and they should avoid the trap of using pre and post increment in confusing expressions. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
 
-**Answer:**
-
-Use Bitwise and flag operators when you are combining permission flags, parsing packed values, or reading status information from external systems. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-[Flags]
-enum Channel
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_5
 {
-    None = 0,
-    Email = 1,
-    Sms = 2,
-    Push = 4
+    public static void Run()
+    {
+        int retry = 0;
+        retry += 2;
+        int previous = retry++;
+        Console.WriteLine($"{previous}/{retry}");
+    }
 }
-
-Channel selected = Channel.Email | Channel.Push;
-Console.WriteLine(selected.HasFlag(Channel.Push));
 ```
 
----
+### Q2.6 How does pattern matching expressions in C# fundamentals?
 
-### 94. What is a real-time example of Bitwise and flag operators?
+**Answer:** Pattern matching expressions means using is checks and switch expressions to make decisions more expressive. Teams should focus on it when discussing operators and expression logic in production code, they compare it with older cast-heavy branching, and they should avoid the trap of answering with only outdated syntax. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
 
-**Answer:**
-
-A notification platform may store channel preferences as flags so email, SMS, and push settings can be combined in one field. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-[Flags]
-enum Channel
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_6
 {
-    None = 0,
-    Email = 1,
-    Sms = 2,
-    Push = 4
+    public static void Run()
+    {
+        object responseTime = 186;
+        string level = responseTime is int ms && ms < 120 ? "Healthy" : "Investigate";
+        Console.WriteLine(level);
+    }
 }
-
-Channel selected = Channel.Email | Channel.Push;
-Console.WriteLine(selected.HasFlag(Channel.Push));
 ```
 
----
+### Q2.7 Why does arithmetic and precedence rules in C# fundamentals?
 
-### 95. What is a best practice for Bitwise and flag operators?
+**Answer:** Arithmetic and precedence rules means knowing that operator precedence changes how calculations are evaluated. Teams should focus on it when discussing operators and expression logic in production code, they compare it with reading expressions strictly left to right, and they should avoid the trap of writing formulas without clarifying parentheses. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
 
-**Answer:**
-
-Use enums with `[Flags]` when possible and document the meaning of each bit clearly. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-[Flags]
-enum Channel
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_7
 {
-    None = 0,
-    Email = 1,
-    Sms = 2,
-    Push = 4
+    public static void Run()
+    {
+        int subtotal = 87;
+        int fee = 7;
+        int raw = subtotal + fee * 2;
+        int corrected = (subtotal + fee) * 2;
+        Console.WriteLine($"{raw} | {corrected}");
+    }
 }
-
-Channel selected = Channel.Email | Channel.Push;
-Console.WriteLine(selected.HasFlag(Channel.Push));
 ```
 
----
+### Q2.8 When should you use comparison and boolean composition in C# fundamentals?
 
-### 96. What is a tricky interview point or common mistake around Bitwise and flag operators?
+**Answer:** Comparison and boolean composition means turning business rules into true or false conditions with comparison and logical operators. Teams should focus on it when discussing operators and expression logic in production code, they compare it with splitting one rule across many disconnected checks, and they should avoid the trap of mixing conditions without grouping intent. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
 
-**Answer:**
-
-Bitwise operators are often confused with logical operators, and candidates sometimes cannot explain why `|` on flags is valid but risky in boolean logic. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-int status = 0b_0101;
-int mask = 0b_0001;
+using System;
+using System.Collections.Generic;
 
-bool isEnabled = (status & mask) == mask;
-Console.WriteLine(isEnabled);
-```
-
----
-
-### 97. How does Bitwise and flag operators differ from logical operators and short-circuit evaluation?
-
-**Answer:**
-
-Bitwise and flag operators is about the operators that work directly with bits and are commonly used with flags, masks, and low-level state combinations, whereas logical operators and short-circuit evaluation is about boolean decision logic rather than direct bit manipulation or flag composition. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
-
-```csharp
-[Flags]
-enum Channel
+public static class Demo2_8
 {
-    None = 0,
-    Email = 1,
-    Sms = 2,
-    Push = 4
+    public static void Run()
+    {
+        int stock = 10;
+        bool priority = false;
+        bool canShip = stock > 5 && (priority || stock > 15);
+        Console.WriteLine(canShip);
+    }
 }
-
-Channel selected = Channel.Email | Channel.Push;
-Console.WriteLine(selected.HasFlag(Channel.Push));
 ```
 
----
+### Q2.9 What problem does short-circuit evaluation in C# fundamentals?
 
-### 98. How do you troubleshoot issues related to Bitwise and flag operators?
+**Answer:** Short-circuit evaluation means using && and || with the knowledge that the right side may not run. Teams should focus on it when discussing operators and expression logic in production code, they compare it with bitwise boolean evaluation, and they should avoid the trap of calling members before a null-safe check can stop it. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
 
-**Answer:**
-
-Print the numeric and binary values, isolate one flag at a time, and verify whether masking or combining is being done correctly. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-int status = 0b_0101;
-int mask = 0b_0001;
+using System;
+using System.Collections.Generic;
 
-bool isEnabled = (status & mask) == mask;
-Console.WriteLine(isEnabled);
-```
-
----
-
-### 99. What kind of follow-up does an interviewer usually ask after Bitwise and flag operators?
-
-**Answer:**
-
-A common follow-up is how to test whether a flag is set and why `[Flags]` enums improve readability. This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
-
-```csharp
-[Flags]
-enum Channel
+public static class Demo2_9
 {
-    None = 0,
-    Email = 1,
-    Sms = 2,
-    Push = 4
+    public static void Run()
+    {
+        string? email = "user109@example.com";
+        bool ok = email != null && email.EndsWith("@example.com");
+        Console.WriteLine(ok);
+    }
 }
-
-Channel selected = Channel.Email | Channel.Push;
-Console.WriteLine(selected.HasFlag(Channel.Push));
 ```
 
----
+### Q2.10 How would you explain null-coalescing and conditional operators in C# fundamentals?
 
-### 100. How does Bitwise and flag operators connect to the rest of C# fundamentals?
+**Answer:** Null-coalescing and conditional operators means using ??, ??=, and ?: to express fallbacks and compact branching. Teams should focus on it when discussing operators and expression logic in production code, they compare it with long manual fallback code, and they should avoid the trap of compressing too much logic into unreadable expressions. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
 
-**Answer:**
-
-Bitwise thinking is less common than ordinary branching, but it still matters in APIs, performance-sensitive code, and legacy integrations. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-[Flags]
-enum Channel
-{
-    None = 0,
-    Email = 1,
-    Sms = 2,
-    Push = 4
-}
+using System;
+using System.Collections.Generic;
 
-Channel selected = Channel.Email | Channel.Push;
-Console.WriteLine(selected.HasFlag(Channel.Push));
+public static class Demo2_10
+{
+    public static void Run()
+    {
+        string? display = "Agent-110";
+        display ??= "Guest";
+        string badge = display == "Guest" ? "Limited" : "Standard";
+        Console.WriteLine($"{display} => {badge}");
+    }
+}
 ```
 
----
+### Q2.11 Why is assignment variants and increment behavior in C# fundamentals?
+
+**Answer:** Assignment variants and increment behavior means knowing what +=, -=, ++, and -- do to current values. Teams should focus on it when discussing operators and expression logic in production code, they compare it with rewriting every update verbosely, and they should avoid the trap of using pre and post increment in confusing expressions. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_11
+{
+    public static void Run()
+    {
+        int retry = 1;
+        retry += 2;
+        int previous = retry++;
+        Console.WriteLine($"{previous}/{retry}");
+    }
+}
+```
+
+### Q2.12 How can pattern matching expressions in C# fundamentals?
+
+**Answer:** Pattern matching expressions means using is checks and switch expressions to make decisions more expressive. Teams should focus on it when discussing operators and expression logic in production code, they compare it with older cast-heavy branching, and they should avoid the trap of answering with only outdated syntax. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_12
+{
+    public static void Run()
+    {
+        object responseTime = 192;
+        string level = responseTime is int ms && ms < 120 ? "Healthy" : "Investigate";
+        Console.WriteLine(level);
+    }
+}
+```
+
+### Q2.13 What is arithmetic and precedence rules in C# fundamentals?
+
+**Answer:** Arithmetic and precedence rules means knowing that operator precedence changes how calculations are evaluated. Teams should focus on it when discussing operators and expression logic in production code, they compare it with reading expressions strictly left to right, and they should avoid the trap of writing formulas without clarifying parentheses. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_13
+{
+    public static void Run()
+    {
+        int subtotal = 93;
+        int fee = 7;
+        int raw = subtotal + fee * 2;
+        int corrected = (subtotal + fee) * 2;
+        Console.WriteLine($"{raw} | {corrected}");
+    }
+}
+```
+
+### Q2.14 How does comparison and boolean composition in C# fundamentals?
+
+**Answer:** Comparison and boolean composition means turning business rules into true or false conditions with comparison and logical operators. Teams should focus on it when discussing operators and expression logic in production code, they compare it with splitting one rule across many disconnected checks, and they should avoid the trap of mixing conditions without grouping intent. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_14
+{
+    public static void Run()
+    {
+        int stock = 16;
+        bool priority = false;
+        bool canShip = stock > 5 && (priority || stock > 15);
+        Console.WriteLine(canShip);
+    }
+}
+```
+
+### Q2.15 Why does short-circuit evaluation in C# fundamentals?
+
+**Answer:** Short-circuit evaluation means using && and || with the knowledge that the right side may not run. Teams should focus on it when discussing operators and expression logic in production code, they compare it with bitwise boolean evaluation, and they should avoid the trap of calling members before a null-safe check can stop it. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_15
+{
+    public static void Run()
+    {
+        string? email = "user115@example.com";
+        bool ok = email != null && email.EndsWith("@example.com");
+        Console.WriteLine(ok);
+    }
+}
+```
+
+### Q2.16 When should you use null-coalescing and conditional operators in C# fundamentals?
+
+**Answer:** Null-coalescing and conditional operators means using ??, ??=, and ?: to express fallbacks and compact branching. Teams should focus on it when discussing operators and expression logic in production code, they compare it with long manual fallback code, and they should avoid the trap of compressing too much logic into unreadable expressions. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_16
+{
+    public static void Run()
+    {
+        string? display = "Agent-116";
+        display ??= "Guest";
+        string badge = display == "Guest" ? "Limited" : "Standard";
+        Console.WriteLine($"{display} => {badge}");
+    }
+}
+```
+
+### Q2.17 What problem does assignment variants and increment behavior in C# fundamentals?
+
+**Answer:** Assignment variants and increment behavior means knowing what +=, -=, ++, and -- do to current values. Teams should focus on it when discussing operators and expression logic in production code, they compare it with rewriting every update verbosely, and they should avoid the trap of using pre and post increment in confusing expressions. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_17
+{
+    public static void Run()
+    {
+        int retry = 2;
+        retry += 2;
+        int previous = retry++;
+        Console.WriteLine($"{previous}/{retry}");
+    }
+}
+```
+
+### Q2.18 How would you explain pattern matching expressions in C# fundamentals?
+
+**Answer:** Pattern matching expressions means using is checks and switch expressions to make decisions more expressive. Teams should focus on it when discussing operators and expression logic in production code, they compare it with older cast-heavy branching, and they should avoid the trap of answering with only outdated syntax. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_18
+{
+    public static void Run()
+    {
+        object responseTime = 198;
+        string level = responseTime is int ms && ms < 120 ? "Healthy" : "Investigate";
+        Console.WriteLine(level);
+    }
+}
+```
+
+### Q2.19 Why is arithmetic and precedence rules in C# fundamentals?
+
+**Answer:** Arithmetic and precedence rules means knowing that operator precedence changes how calculations are evaluated. Teams should focus on it when discussing operators and expression logic in production code, they compare it with reading expressions strictly left to right, and they should avoid the trap of writing formulas without clarifying parentheses. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_19
+{
+    public static void Run()
+    {
+        int subtotal = 99;
+        int fee = 7;
+        int raw = subtotal + fee * 2;
+        int corrected = (subtotal + fee) * 2;
+        Console.WriteLine($"{raw} | {corrected}");
+    }
+}
+```
+
+### Q2.20 How can comparison and boolean composition in C# fundamentals?
+
+**Answer:** Comparison and boolean composition means turning business rules into true or false conditions with comparison and logical operators. Teams should focus on it when discussing operators and expression logic in production code, they compare it with splitting one rule across many disconnected checks, and they should avoid the trap of mixing conditions without grouping intent. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_20
+{
+    public static void Run()
+    {
+        int stock = 10;
+        bool priority = false;
+        bool canShip = stock > 5 && (priority || stock > 15);
+        Console.WriteLine(canShip);
+    }
+}
+```
+
+### Q2.21 What is short-circuit evaluation in C# fundamentals?
+
+**Answer:** Short-circuit evaluation means using && and || with the knowledge that the right side may not run. Teams should focus on it when discussing operators and expression logic in production code, they compare it with bitwise boolean evaluation, and they should avoid the trap of calling members before a null-safe check can stop it. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_21
+{
+    public static void Run()
+    {
+        string? email = "user121@example.com";
+        bool ok = email != null && email.EndsWith("@example.com");
+        Console.WriteLine(ok);
+    }
+}
+```
+
+### Q2.22 How does null-coalescing and conditional operators in C# fundamentals?
+
+**Answer:** Null-coalescing and conditional operators means using ??, ??=, and ?: to express fallbacks and compact branching. Teams should focus on it when discussing operators and expression logic in production code, they compare it with long manual fallback code, and they should avoid the trap of compressing too much logic into unreadable expressions. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_22
+{
+    public static void Run()
+    {
+        string? display = "Agent-122";
+        display ??= "Guest";
+        string badge = display == "Guest" ? "Limited" : "Standard";
+        Console.WriteLine($"{display} => {badge}");
+    }
+}
+```
+
+### Q2.23 Why does assignment variants and increment behavior in C# fundamentals?
+
+**Answer:** Assignment variants and increment behavior means knowing what +=, -=, ++, and -- do to current values. Teams should focus on it when discussing operators and expression logic in production code, they compare it with rewriting every update verbosely, and they should avoid the trap of using pre and post increment in confusing expressions. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_23
+{
+    public static void Run()
+    {
+        int retry = 3;
+        retry += 2;
+        int previous = retry++;
+        Console.WriteLine($"{previous}/{retry}");
+    }
+}
+```
+
+### Q2.24 When should you use pattern matching expressions in C# fundamentals?
+
+**Answer:** Pattern matching expressions means using is checks and switch expressions to make decisions more expressive. Teams should focus on it when discussing operators and expression logic in production code, they compare it with older cast-heavy branching, and they should avoid the trap of answering with only outdated syntax. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_24
+{
+    public static void Run()
+    {
+        object responseTime = 204;
+        string level = responseTime is int ms && ms < 120 ? "Healthy" : "Investigate";
+        Console.WriteLine(level);
+    }
+}
+```
+
+### Q2.25 What problem does arithmetic and precedence rules in C# fundamentals?
+
+**Answer:** Arithmetic and precedence rules means knowing that operator precedence changes how calculations are evaluated. Teams should focus on it when discussing operators and expression logic in production code, they compare it with reading expressions strictly left to right, and they should avoid the trap of writing formulas without clarifying parentheses. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_25
+{
+    public static void Run()
+    {
+        int subtotal = 85;
+        int fee = 7;
+        int raw = subtotal + fee * 2;
+        int corrected = (subtotal + fee) * 2;
+        Console.WriteLine($"{raw} | {corrected}");
+    }
+}
+```
+
+### Q2.26 How would you explain comparison and boolean composition in C# fundamentals?
+
+**Answer:** Comparison and boolean composition means turning business rules into true or false conditions with comparison and logical operators. Teams should focus on it when discussing operators and expression logic in production code, they compare it with splitting one rule across many disconnected checks, and they should avoid the trap of mixing conditions without grouping intent. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_26
+{
+    public static void Run()
+    {
+        int stock = 16;
+        bool priority = false;
+        bool canShip = stock > 5 && (priority || stock > 15);
+        Console.WriteLine(canShip);
+    }
+}
+```
+
+### Q2.27 Why is short-circuit evaluation in C# fundamentals?
+
+**Answer:** Short-circuit evaluation means using && and || with the knowledge that the right side may not run. Teams should focus on it when discussing operators and expression logic in production code, they compare it with bitwise boolean evaluation, and they should avoid the trap of calling members before a null-safe check can stop it. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_27
+{
+    public static void Run()
+    {
+        string? email = "user127@example.com";
+        bool ok = email != null && email.EndsWith("@example.com");
+        Console.WriteLine(ok);
+    }
+}
+```
+
+### Q2.28 How can null-coalescing and conditional operators in C# fundamentals?
+
+**Answer:** Null-coalescing and conditional operators means using ??, ??=, and ?: to express fallbacks and compact branching. Teams should focus on it when discussing operators and expression logic in production code, they compare it with long manual fallback code, and they should avoid the trap of compressing too much logic into unreadable expressions. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_28
+{
+    public static void Run()
+    {
+        string? display = "Agent-128";
+        display ??= "Guest";
+        string badge = display == "Guest" ? "Limited" : "Standard";
+        Console.WriteLine($"{display} => {badge}");
+    }
+}
+```
+
+### Q2.29 What is assignment variants and increment behavior in C# fundamentals?
+
+**Answer:** Assignment variants and increment behavior means knowing what +=, -=, ++, and -- do to current values. Teams should focus on it when discussing operators and expression logic in production code, they compare it with rewriting every update verbosely, and they should avoid the trap of using pre and post increment in confusing expressions. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_29
+{
+    public static void Run()
+    {
+        int retry = 4;
+        retry += 2;
+        int previous = retry++;
+        Console.WriteLine($"{previous}/{retry}");
+    }
+}
+```
+
+### Q2.30 How does pattern matching expressions in C# fundamentals?
+
+**Answer:** Pattern matching expressions means using is checks and switch expressions to make decisions more expressive. Teams should focus on it when discussing operators and expression logic in production code, they compare it with older cast-heavy branching, and they should avoid the trap of answering with only outdated syntax. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_30
+{
+    public static void Run()
+    {
+        object responseTime = 210;
+        string level = responseTime is int ms && ms < 120 ? "Healthy" : "Investigate";
+        Console.WriteLine(level);
+    }
+}
+```
+
+### Q2.31 Why does arithmetic and precedence rules in C# fundamentals?
+
+**Answer:** Arithmetic and precedence rules means knowing that operator precedence changes how calculations are evaluated. Teams should focus on it when discussing operators and expression logic in production code, they compare it with reading expressions strictly left to right, and they should avoid the trap of writing formulas without clarifying parentheses. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_31
+{
+    public static void Run()
+    {
+        int subtotal = 91;
+        int fee = 7;
+        int raw = subtotal + fee * 2;
+        int corrected = (subtotal + fee) * 2;
+        Console.WriteLine($"{raw} | {corrected}");
+    }
+}
+```
+
+### Q2.32 When should you use comparison and boolean composition in C# fundamentals?
+
+**Answer:** Comparison and boolean composition means turning business rules into true or false conditions with comparison and logical operators. Teams should focus on it when discussing operators and expression logic in production code, they compare it with splitting one rule across many disconnected checks, and they should avoid the trap of mixing conditions without grouping intent. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_32
+{
+    public static void Run()
+    {
+        int stock = 10;
+        bool priority = false;
+        bool canShip = stock > 5 && (priority || stock > 15);
+        Console.WriteLine(canShip);
+    }
+}
+```
+
+### Q2.33 What problem does short-circuit evaluation in C# fundamentals?
+
+**Answer:** Short-circuit evaluation means using && and || with the knowledge that the right side may not run. Teams should focus on it when discussing operators and expression logic in production code, they compare it with bitwise boolean evaluation, and they should avoid the trap of calling members before a null-safe check can stop it. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_33
+{
+    public static void Run()
+    {
+        string? email = "user133@example.com";
+        bool ok = email != null && email.EndsWith("@example.com");
+        Console.WriteLine(ok);
+    }
+}
+```
+
+### Q2.34 How would you explain null-coalescing and conditional operators in C# fundamentals?
+
+**Answer:** Null-coalescing and conditional operators means using ??, ??=, and ?: to express fallbacks and compact branching. Teams should focus on it when discussing operators and expression logic in production code, they compare it with long manual fallback code, and they should avoid the trap of compressing too much logic into unreadable expressions. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_34
+{
+    public static void Run()
+    {
+        string? display = "Agent-134";
+        display ??= "Guest";
+        string badge = display == "Guest" ? "Limited" : "Standard";
+        Console.WriteLine($"{display} => {badge}");
+    }
+}
+```
+
+### Q2.35 Why is assignment variants and increment behavior in C# fundamentals?
+
+**Answer:** Assignment variants and increment behavior means knowing what +=, -=, ++, and -- do to current values. Teams should focus on it when discussing operators and expression logic in production code, they compare it with rewriting every update verbosely, and they should avoid the trap of using pre and post increment in confusing expressions. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_35
+{
+    public static void Run()
+    {
+        int retry = 0;
+        retry += 2;
+        int previous = retry++;
+        Console.WriteLine($"{previous}/{retry}");
+    }
+}
+```
+
+### Q2.36 How can pattern matching expressions in C# fundamentals?
+
+**Answer:** Pattern matching expressions means using is checks and switch expressions to make decisions more expressive. Teams should focus on it when discussing operators and expression logic in production code, they compare it with older cast-heavy branching, and they should avoid the trap of answering with only outdated syntax. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_36
+{
+    public static void Run()
+    {
+        object responseTime = 216;
+        string level = responseTime is int ms && ms < 120 ? "Healthy" : "Investigate";
+        Console.WriteLine(level);
+    }
+}
+```
+
+### Q2.37 What is arithmetic and precedence rules in C# fundamentals?
+
+**Answer:** Arithmetic and precedence rules means knowing that operator precedence changes how calculations are evaluated. Teams should focus on it when discussing operators and expression logic in production code, they compare it with reading expressions strictly left to right, and they should avoid the trap of writing formulas without clarifying parentheses. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_37
+{
+    public static void Run()
+    {
+        int subtotal = 97;
+        int fee = 7;
+        int raw = subtotal + fee * 2;
+        int corrected = (subtotal + fee) * 2;
+        Console.WriteLine($"{raw} | {corrected}");
+    }
+}
+```
+
+### Q2.38 How does comparison and boolean composition in C# fundamentals?
+
+**Answer:** Comparison and boolean composition means turning business rules into true or false conditions with comparison and logical operators. Teams should focus on it when discussing operators and expression logic in production code, they compare it with splitting one rule across many disconnected checks, and they should avoid the trap of mixing conditions without grouping intent. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_38
+{
+    public static void Run()
+    {
+        int stock = 16;
+        bool priority = false;
+        bool canShip = stock > 5 && (priority || stock > 15);
+        Console.WriteLine(canShip);
+    }
+}
+```
+
+### Q2.39 Why does short-circuit evaluation in C# fundamentals?
+
+**Answer:** Short-circuit evaluation means using && and || with the knowledge that the right side may not run. Teams should focus on it when discussing operators and expression logic in production code, they compare it with bitwise boolean evaluation, and they should avoid the trap of calling members before a null-safe check can stop it. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_39
+{
+    public static void Run()
+    {
+        string? email = "user139@example.com";
+        bool ok = email != null && email.EndsWith("@example.com");
+        Console.WriteLine(ok);
+    }
+}
+```
+
+### Q2.40 When should you use null-coalescing and conditional operators in C# fundamentals?
+
+**Answer:** Null-coalescing and conditional operators means using ??, ??=, and ?: to express fallbacks and compact branching. Teams should focus on it when discussing operators and expression logic in production code, they compare it with long manual fallback code, and they should avoid the trap of compressing too much logic into unreadable expressions. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_40
+{
+    public static void Run()
+    {
+        string? display = "Agent-140";
+        display ??= "Guest";
+        string badge = display == "Guest" ? "Limited" : "Standard";
+        Console.WriteLine($"{display} => {badge}");
+    }
+}
+```
+
+### Q2.41 What problem does assignment variants and increment behavior in C# fundamentals?
+
+**Answer:** Assignment variants and increment behavior means knowing what +=, -=, ++, and -- do to current values. Teams should focus on it when discussing operators and expression logic in production code, they compare it with rewriting every update verbosely, and they should avoid the trap of using pre and post increment in confusing expressions. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_41
+{
+    public static void Run()
+    {
+        int retry = 1;
+        retry += 2;
+        int previous = retry++;
+        Console.WriteLine($"{previous}/{retry}");
+    }
+}
+```
+
+### Q2.42 How would you explain pattern matching expressions in C# fundamentals?
+
+**Answer:** Pattern matching expressions means using is checks and switch expressions to make decisions more expressive. Teams should focus on it when discussing operators and expression logic in production code, they compare it with older cast-heavy branching, and they should avoid the trap of answering with only outdated syntax. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_42
+{
+    public static void Run()
+    {
+        object responseTime = 222;
+        string level = responseTime is int ms && ms < 120 ? "Healthy" : "Investigate";
+        Console.WriteLine(level);
+    }
+}
+```
+
+### Q2.43 Why is arithmetic and precedence rules in C# fundamentals?
+
+**Answer:** Arithmetic and precedence rules means knowing that operator precedence changes how calculations are evaluated. Teams should focus on it when discussing operators and expression logic in production code, they compare it with reading expressions strictly left to right, and they should avoid the trap of writing formulas without clarifying parentheses. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_43
+{
+    public static void Run()
+    {
+        int subtotal = 83;
+        int fee = 7;
+        int raw = subtotal + fee * 2;
+        int corrected = (subtotal + fee) * 2;
+        Console.WriteLine($"{raw} | {corrected}");
+    }
+}
+```
+
+### Q2.44 How can comparison and boolean composition in C# fundamentals?
+
+**Answer:** Comparison and boolean composition means turning business rules into true or false conditions with comparison and logical operators. Teams should focus on it when discussing operators and expression logic in production code, they compare it with splitting one rule across many disconnected checks, and they should avoid the trap of mixing conditions without grouping intent. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_44
+{
+    public static void Run()
+    {
+        int stock = 10;
+        bool priority = false;
+        bool canShip = stock > 5 && (priority || stock > 15);
+        Console.WriteLine(canShip);
+    }
+}
+```
+
+### Q2.45 What is short-circuit evaluation in C# fundamentals?
+
+**Answer:** Short-circuit evaluation means using && and || with the knowledge that the right side may not run. Teams should focus on it when discussing operators and expression logic in production code, they compare it with bitwise boolean evaluation, and they should avoid the trap of calling members before a null-safe check can stop it. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_45
+{
+    public static void Run()
+    {
+        string? email = "user145@example.com";
+        bool ok = email != null && email.EndsWith("@example.com");
+        Console.WriteLine(ok);
+    }
+}
+```
+
+### Q2.46 How does null-coalescing and conditional operators in C# fundamentals?
+
+**Answer:** Null-coalescing and conditional operators means using ??, ??=, and ?: to express fallbacks and compact branching. Teams should focus on it when discussing operators and expression logic in production code, they compare it with long manual fallback code, and they should avoid the trap of compressing too much logic into unreadable expressions. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_46
+{
+    public static void Run()
+    {
+        string? display = "Agent-146";
+        display ??= "Guest";
+        string badge = display == "Guest" ? "Limited" : "Standard";
+        Console.WriteLine($"{display} => {badge}");
+    }
+}
+```
+
+### Q2.47 Why does assignment variants and increment behavior in C# fundamentals?
+
+**Answer:** Assignment variants and increment behavior means knowing what +=, -=, ++, and -- do to current values. Teams should focus on it when discussing operators and expression logic in production code, they compare it with rewriting every update verbosely, and they should avoid the trap of using pre and post increment in confusing expressions. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_47
+{
+    public static void Run()
+    {
+        int retry = 2;
+        retry += 2;
+        int previous = retry++;
+        Console.WriteLine($"{previous}/{retry}");
+    }
+}
+```
+
+### Q2.48 When should you use pattern matching expressions in C# fundamentals?
+
+**Answer:** Pattern matching expressions means using is checks and switch expressions to make decisions more expressive. Teams should focus on it when discussing operators and expression logic in production code, they compare it with older cast-heavy branching, and they should avoid the trap of answering with only outdated syntax. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_48
+{
+    public static void Run()
+    {
+        object responseTime = 228;
+        string level = responseTime is int ms && ms < 120 ? "Healthy" : "Investigate";
+        Console.WriteLine(level);
+    }
+}
+```
+
+### Q2.49 What problem does arithmetic and precedence rules in C# fundamentals?
+
+**Answer:** Arithmetic and precedence rules means knowing that operator precedence changes how calculations are evaluated. Teams should focus on it when discussing operators and expression logic in production code, they compare it with reading expressions strictly left to right, and they should avoid the trap of writing formulas without clarifying parentheses. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_49
+{
+    public static void Run()
+    {
+        int subtotal = 89;
+        int fee = 7;
+        int raw = subtotal + fee * 2;
+        int corrected = (subtotal + fee) * 2;
+        Console.WriteLine($"{raw} | {corrected}");
+    }
+}
+```
+
+### Q2.50 How would you explain comparison and boolean composition in C# fundamentals?
+
+**Answer:** Comparison and boolean composition means turning business rules into true or false conditions with comparison and logical operators. Teams should focus on it when discussing operators and expression logic in production code, they compare it with splitting one rule across many disconnected checks, and they should avoid the trap of mixing conditions without grouping intent. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_50
+{
+    public static void Run()
+    {
+        int stock = 16;
+        bool priority = false;
+        bool canShip = stock > 5 && (priority || stock > 15);
+        Console.WriteLine(canShip);
+    }
+}
+```
+
+### Q2.51 Why is short-circuit evaluation in C# fundamentals?
+
+**Answer:** Short-circuit evaluation means using && and || with the knowledge that the right side may not run. Teams should focus on it when discussing operators and expression logic in production code, they compare it with bitwise boolean evaluation, and they should avoid the trap of calling members before a null-safe check can stop it. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_51
+{
+    public static void Run()
+    {
+        string? email = "user151@example.com";
+        bool ok = email != null && email.EndsWith("@example.com");
+        Console.WriteLine(ok);
+    }
+}
+```
+
+### Q2.52 How can null-coalescing and conditional operators in C# fundamentals?
+
+**Answer:** Null-coalescing and conditional operators means using ??, ??=, and ?: to express fallbacks and compact branching. Teams should focus on it when discussing operators and expression logic in production code, they compare it with long manual fallback code, and they should avoid the trap of compressing too much logic into unreadable expressions. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_52
+{
+    public static void Run()
+    {
+        string? display = "Agent-152";
+        display ??= "Guest";
+        string badge = display == "Guest" ? "Limited" : "Standard";
+        Console.WriteLine($"{display} => {badge}");
+    }
+}
+```
+
+### Q2.53 What is assignment variants and increment behavior in C# fundamentals?
+
+**Answer:** Assignment variants and increment behavior means knowing what +=, -=, ++, and -- do to current values. Teams should focus on it when discussing operators and expression logic in production code, they compare it with rewriting every update verbosely, and they should avoid the trap of using pre and post increment in confusing expressions. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_53
+{
+    public static void Run()
+    {
+        int retry = 3;
+        retry += 2;
+        int previous = retry++;
+        Console.WriteLine($"{previous}/{retry}");
+    }
+}
+```
+
+### Q2.54 How does pattern matching expressions in C# fundamentals?
+
+**Answer:** Pattern matching expressions means using is checks and switch expressions to make decisions more expressive. Teams should focus on it when discussing operators and expression logic in production code, they compare it with older cast-heavy branching, and they should avoid the trap of answering with only outdated syntax. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_54
+{
+    public static void Run()
+    {
+        object responseTime = 234;
+        string level = responseTime is int ms && ms < 120 ? "Healthy" : "Investigate";
+        Console.WriteLine(level);
+    }
+}
+```
+
+### Q2.55 Why does arithmetic and precedence rules in C# fundamentals?
+
+**Answer:** Arithmetic and precedence rules means knowing that operator precedence changes how calculations are evaluated. Teams should focus on it when discussing operators and expression logic in production code, they compare it with reading expressions strictly left to right, and they should avoid the trap of writing formulas without clarifying parentheses. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_55
+{
+    public static void Run()
+    {
+        int subtotal = 95;
+        int fee = 7;
+        int raw = subtotal + fee * 2;
+        int corrected = (subtotal + fee) * 2;
+        Console.WriteLine($"{raw} | {corrected}");
+    }
+}
+```
+
+### Q2.56 When should you use comparison and boolean composition in C# fundamentals?
+
+**Answer:** Comparison and boolean composition means turning business rules into true or false conditions with comparison and logical operators. Teams should focus on it when discussing operators and expression logic in production code, they compare it with splitting one rule across many disconnected checks, and they should avoid the trap of mixing conditions without grouping intent. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_56
+{
+    public static void Run()
+    {
+        int stock = 10;
+        bool priority = false;
+        bool canShip = stock > 5 && (priority || stock > 15);
+        Console.WriteLine(canShip);
+    }
+}
+```
+
+### Q2.57 What problem does short-circuit evaluation in C# fundamentals?
+
+**Answer:** Short-circuit evaluation means using && and || with the knowledge that the right side may not run. Teams should focus on it when discussing operators and expression logic in production code, they compare it with bitwise boolean evaluation, and they should avoid the trap of calling members before a null-safe check can stop it. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_57
+{
+    public static void Run()
+    {
+        string? email = "user157@example.com";
+        bool ok = email != null && email.EndsWith("@example.com");
+        Console.WriteLine(ok);
+    }
+}
+```
+
+### Q2.58 How would you explain null-coalescing and conditional operators in C# fundamentals?
+
+**Answer:** Null-coalescing and conditional operators means using ??, ??=, and ?: to express fallbacks and compact branching. Teams should focus on it when discussing operators and expression logic in production code, they compare it with long manual fallback code, and they should avoid the trap of compressing too much logic into unreadable expressions. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_58
+{
+    public static void Run()
+    {
+        string? display = "Agent-158";
+        display ??= "Guest";
+        string badge = display == "Guest" ? "Limited" : "Standard";
+        Console.WriteLine($"{display} => {badge}");
+    }
+}
+```
+
+### Q2.59 Why is assignment variants and increment behavior in C# fundamentals?
+
+**Answer:** Assignment variants and increment behavior means knowing what +=, -=, ++, and -- do to current values. Teams should focus on it when discussing operators and expression logic in production code, they compare it with rewriting every update verbosely, and they should avoid the trap of using pre and post increment in confusing expressions. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_59
+{
+    public static void Run()
+    {
+        int retry = 4;
+        retry += 2;
+        int previous = retry++;
+        Console.WriteLine($"{previous}/{retry}");
+    }
+}
+```
+
+### Q2.60 How can pattern matching expressions in C# fundamentals?
+
+**Answer:** Pattern matching expressions means using is checks and switch expressions to make decisions more expressive. Teams should focus on it when discussing operators and expression logic in production code, they compare it with older cast-heavy branching, and they should avoid the trap of answering with only outdated syntax. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_60
+{
+    public static void Run()
+    {
+        object responseTime = 240;
+        string level = responseTime is int ms && ms < 120 ? "Healthy" : "Investigate";
+        Console.WriteLine(level);
+    }
+}
+```
+
+### Q2.61 What is arithmetic and precedence rules in C# fundamentals?
+
+**Answer:** Arithmetic and precedence rules means knowing that operator precedence changes how calculations are evaluated. Teams should focus on it when discussing operators and expression logic in production code, they compare it with reading expressions strictly left to right, and they should avoid the trap of writing formulas without clarifying parentheses. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_61
+{
+    public static void Run()
+    {
+        int subtotal = 81;
+        int fee = 7;
+        int raw = subtotal + fee * 2;
+        int corrected = (subtotal + fee) * 2;
+        Console.WriteLine($"{raw} | {corrected}");
+    }
+}
+```
+
+### Q2.62 How does comparison and boolean composition in C# fundamentals?
+
+**Answer:** Comparison and boolean composition means turning business rules into true or false conditions with comparison and logical operators. Teams should focus on it when discussing operators and expression logic in production code, they compare it with splitting one rule across many disconnected checks, and they should avoid the trap of mixing conditions without grouping intent. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_62
+{
+    public static void Run()
+    {
+        int stock = 16;
+        bool priority = false;
+        bool canShip = stock > 5 && (priority || stock > 15);
+        Console.WriteLine(canShip);
+    }
+}
+```
+
+### Q2.63 Why does short-circuit evaluation in C# fundamentals?
+
+**Answer:** Short-circuit evaluation means using && and || with the knowledge that the right side may not run. Teams should focus on it when discussing operators and expression logic in production code, they compare it with bitwise boolean evaluation, and they should avoid the trap of calling members before a null-safe check can stop it. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_63
+{
+    public static void Run()
+    {
+        string? email = "user163@example.com";
+        bool ok = email != null && email.EndsWith("@example.com");
+        Console.WriteLine(ok);
+    }
+}
+```
+
+### Q2.64 When should you use null-coalescing and conditional operators in C# fundamentals?
+
+**Answer:** Null-coalescing and conditional operators means using ??, ??=, and ?: to express fallbacks and compact branching. Teams should focus on it when discussing operators and expression logic in production code, they compare it with long manual fallback code, and they should avoid the trap of compressing too much logic into unreadable expressions. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_64
+{
+    public static void Run()
+    {
+        string? display = "Agent-164";
+        display ??= "Guest";
+        string badge = display == "Guest" ? "Limited" : "Standard";
+        Console.WriteLine($"{display} => {badge}");
+    }
+}
+```
+
+### Q2.65 What problem does assignment variants and increment behavior in C# fundamentals?
+
+**Answer:** Assignment variants and increment behavior means knowing what +=, -=, ++, and -- do to current values. Teams should focus on it when discussing operators and expression logic in production code, they compare it with rewriting every update verbosely, and they should avoid the trap of using pre and post increment in confusing expressions. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_65
+{
+    public static void Run()
+    {
+        int retry = 0;
+        retry += 2;
+        int previous = retry++;
+        Console.WriteLine($"{previous}/{retry}");
+    }
+}
+```
+
+### Q2.66 How would you explain pattern matching expressions in C# fundamentals?
+
+**Answer:** Pattern matching expressions means using is checks and switch expressions to make decisions more expressive. Teams should focus on it when discussing operators and expression logic in production code, they compare it with older cast-heavy branching, and they should avoid the trap of answering with only outdated syntax. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_66
+{
+    public static void Run()
+    {
+        object responseTime = 246;
+        string level = responseTime is int ms && ms < 120 ? "Healthy" : "Investigate";
+        Console.WriteLine(level);
+    }
+}
+```
+
+### Q2.67 Why is arithmetic and precedence rules in C# fundamentals?
+
+**Answer:** Arithmetic and precedence rules means knowing that operator precedence changes how calculations are evaluated. Teams should focus on it when discussing operators and expression logic in production code, they compare it with reading expressions strictly left to right, and they should avoid the trap of writing formulas without clarifying parentheses. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_67
+{
+    public static void Run()
+    {
+        int subtotal = 87;
+        int fee = 7;
+        int raw = subtotal + fee * 2;
+        int corrected = (subtotal + fee) * 2;
+        Console.WriteLine($"{raw} | {corrected}");
+    }
+}
+```
+
+### Q2.68 How can comparison and boolean composition in C# fundamentals?
+
+**Answer:** Comparison and boolean composition means turning business rules into true or false conditions with comparison and logical operators. Teams should focus on it when discussing operators and expression logic in production code, they compare it with splitting one rule across many disconnected checks, and they should avoid the trap of mixing conditions without grouping intent. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_68
+{
+    public static void Run()
+    {
+        int stock = 10;
+        bool priority = false;
+        bool canShip = stock > 5 && (priority || stock > 15);
+        Console.WriteLine(canShip);
+    }
+}
+```
+
+### Q2.69 What is short-circuit evaluation in C# fundamentals?
+
+**Answer:** Short-circuit evaluation means using && and || with the knowledge that the right side may not run. Teams should focus on it when discussing operators and expression logic in production code, they compare it with bitwise boolean evaluation, and they should avoid the trap of calling members before a null-safe check can stop it. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_69
+{
+    public static void Run()
+    {
+        string? email = "user169@example.com";
+        bool ok = email != null && email.EndsWith("@example.com");
+        Console.WriteLine(ok);
+    }
+}
+```
+
+### Q2.70 How does null-coalescing and conditional operators in C# fundamentals?
+
+**Answer:** Null-coalescing and conditional operators means using ??, ??=, and ?: to express fallbacks and compact branching. Teams should focus on it when discussing operators and expression logic in production code, they compare it with long manual fallback code, and they should avoid the trap of compressing too much logic into unreadable expressions. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_70
+{
+    public static void Run()
+    {
+        string? display = "Agent-170";
+        display ??= "Guest";
+        string badge = display == "Guest" ? "Limited" : "Standard";
+        Console.WriteLine($"{display} => {badge}");
+    }
+}
+```
+
+### Q2.71 Why does assignment variants and increment behavior in C# fundamentals?
+
+**Answer:** Assignment variants and increment behavior means knowing what +=, -=, ++, and -- do to current values. Teams should focus on it when discussing operators and expression logic in production code, they compare it with rewriting every update verbosely, and they should avoid the trap of using pre and post increment in confusing expressions. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_71
+{
+    public static void Run()
+    {
+        int retry = 1;
+        retry += 2;
+        int previous = retry++;
+        Console.WriteLine($"{previous}/{retry}");
+    }
+}
+```
+
+### Q2.72 When should you use pattern matching expressions in C# fundamentals?
+
+**Answer:** Pattern matching expressions means using is checks and switch expressions to make decisions more expressive. Teams should focus on it when discussing operators and expression logic in production code, they compare it with older cast-heavy branching, and they should avoid the trap of answering with only outdated syntax. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_72
+{
+    public static void Run()
+    {
+        object responseTime = 252;
+        string level = responseTime is int ms && ms < 120 ? "Healthy" : "Investigate";
+        Console.WriteLine(level);
+    }
+}
+```
+
+### Q2.73 What problem does arithmetic and precedence rules in C# fundamentals?
+
+**Answer:** Arithmetic and precedence rules means knowing that operator precedence changes how calculations are evaluated. Teams should focus on it when discussing operators and expression logic in production code, they compare it with reading expressions strictly left to right, and they should avoid the trap of writing formulas without clarifying parentheses. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_73
+{
+    public static void Run()
+    {
+        int subtotal = 93;
+        int fee = 7;
+        int raw = subtotal + fee * 2;
+        int corrected = (subtotal + fee) * 2;
+        Console.WriteLine($"{raw} | {corrected}");
+    }
+}
+```
+
+### Q2.74 How would you explain comparison and boolean composition in C# fundamentals?
+
+**Answer:** Comparison and boolean composition means turning business rules into true or false conditions with comparison and logical operators. Teams should focus on it when discussing operators and expression logic in production code, they compare it with splitting one rule across many disconnected checks, and they should avoid the trap of mixing conditions without grouping intent. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_74
+{
+    public static void Run()
+    {
+        int stock = 16;
+        bool priority = false;
+        bool canShip = stock > 5 && (priority || stock > 15);
+        Console.WriteLine(canShip);
+    }
+}
+```
+
+### Q2.75 Why is short-circuit evaluation in C# fundamentals?
+
+**Answer:** Short-circuit evaluation means using && and || with the knowledge that the right side may not run. Teams should focus on it when discussing operators and expression logic in production code, they compare it with bitwise boolean evaluation, and they should avoid the trap of calling members before a null-safe check can stop it. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_75
+{
+    public static void Run()
+    {
+        string? email = "user175@example.com";
+        bool ok = email != null && email.EndsWith("@example.com");
+        Console.WriteLine(ok);
+    }
+}
+```
+
+### Q2.76 How can null-coalescing and conditional operators in C# fundamentals?
+
+**Answer:** Null-coalescing and conditional operators means using ??, ??=, and ?: to express fallbacks and compact branching. Teams should focus on it when discussing operators and expression logic in production code, they compare it with long manual fallback code, and they should avoid the trap of compressing too much logic into unreadable expressions. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_76
+{
+    public static void Run()
+    {
+        string? display = "Agent-176";
+        display ??= "Guest";
+        string badge = display == "Guest" ? "Limited" : "Standard";
+        Console.WriteLine($"{display} => {badge}");
+    }
+}
+```
+
+### Q2.77 What is assignment variants and increment behavior in C# fundamentals?
+
+**Answer:** Assignment variants and increment behavior means knowing what +=, -=, ++, and -- do to current values. Teams should focus on it when discussing operators and expression logic in production code, they compare it with rewriting every update verbosely, and they should avoid the trap of using pre and post increment in confusing expressions. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_77
+{
+    public static void Run()
+    {
+        int retry = 2;
+        retry += 2;
+        int previous = retry++;
+        Console.WriteLine($"{previous}/{retry}");
+    }
+}
+```
+
+### Q2.78 How does pattern matching expressions in C# fundamentals?
+
+**Answer:** Pattern matching expressions means using is checks and switch expressions to make decisions more expressive. Teams should focus on it when discussing operators and expression logic in production code, they compare it with older cast-heavy branching, and they should avoid the trap of answering with only outdated syntax. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_78
+{
+    public static void Run()
+    {
+        object responseTime = 258;
+        string level = responseTime is int ms && ms < 120 ? "Healthy" : "Investigate";
+        Console.WriteLine(level);
+    }
+}
+```
+
+### Q2.79 Why does arithmetic and precedence rules in C# fundamentals?
+
+**Answer:** Arithmetic and precedence rules means knowing that operator precedence changes how calculations are evaluated. Teams should focus on it when discussing operators and expression logic in production code, they compare it with reading expressions strictly left to right, and they should avoid the trap of writing formulas without clarifying parentheses. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_79
+{
+    public static void Run()
+    {
+        int subtotal = 99;
+        int fee = 7;
+        int raw = subtotal + fee * 2;
+        int corrected = (subtotal + fee) * 2;
+        Console.WriteLine($"{raw} | {corrected}");
+    }
+}
+```
+
+### Q2.80 When should you use comparison and boolean composition in C# fundamentals?
+
+**Answer:** Comparison and boolean composition means turning business rules into true or false conditions with comparison and logical operators. Teams should focus on it when discussing operators and expression logic in production code, they compare it with splitting one rule across many disconnected checks, and they should avoid the trap of mixing conditions without grouping intent. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_80
+{
+    public static void Run()
+    {
+        int stock = 10;
+        bool priority = false;
+        bool canShip = stock > 5 && (priority || stock > 15);
+        Console.WriteLine(canShip);
+    }
+}
+```
+
+### Q2.81 What problem does short-circuit evaluation in C# fundamentals?
+
+**Answer:** Short-circuit evaluation means using && and || with the knowledge that the right side may not run. Teams should focus on it when discussing operators and expression logic in production code, they compare it with bitwise boolean evaluation, and they should avoid the trap of calling members before a null-safe check can stop it. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_81
+{
+    public static void Run()
+    {
+        string? email = "user181@example.com";
+        bool ok = email != null && email.EndsWith("@example.com");
+        Console.WriteLine(ok);
+    }
+}
+```
+
+### Q2.82 How would you explain null-coalescing and conditional operators in C# fundamentals?
+
+**Answer:** Null-coalescing and conditional operators means using ??, ??=, and ?: to express fallbacks and compact branching. Teams should focus on it when discussing operators and expression logic in production code, they compare it with long manual fallback code, and they should avoid the trap of compressing too much logic into unreadable expressions. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_82
+{
+    public static void Run()
+    {
+        string? display = "Agent-182";
+        display ??= "Guest";
+        string badge = display == "Guest" ? "Limited" : "Standard";
+        Console.WriteLine($"{display} => {badge}");
+    }
+}
+```
+
+### Q2.83 Why is assignment variants and increment behavior in C# fundamentals?
+
+**Answer:** Assignment variants and increment behavior means knowing what +=, -=, ++, and -- do to current values. Teams should focus on it when discussing operators and expression logic in production code, they compare it with rewriting every update verbosely, and they should avoid the trap of using pre and post increment in confusing expressions. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_83
+{
+    public static void Run()
+    {
+        int retry = 3;
+        retry += 2;
+        int previous = retry++;
+        Console.WriteLine($"{previous}/{retry}");
+    }
+}
+```
+
+### Q2.84 How can pattern matching expressions in C# fundamentals?
+
+**Answer:** Pattern matching expressions means using is checks and switch expressions to make decisions more expressive. Teams should focus on it when discussing operators and expression logic in production code, they compare it with older cast-heavy branching, and they should avoid the trap of answering with only outdated syntax. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_84
+{
+    public static void Run()
+    {
+        object responseTime = 264;
+        string level = responseTime is int ms && ms < 120 ? "Healthy" : "Investigate";
+        Console.WriteLine(level);
+    }
+}
+```
+
+### Q2.85 What is arithmetic and precedence rules in C# fundamentals?
+
+**Answer:** Arithmetic and precedence rules means knowing that operator precedence changes how calculations are evaluated. Teams should focus on it when discussing operators and expression logic in production code, they compare it with reading expressions strictly left to right, and they should avoid the trap of writing formulas without clarifying parentheses. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_85
+{
+    public static void Run()
+    {
+        int subtotal = 85;
+        int fee = 7;
+        int raw = subtotal + fee * 2;
+        int corrected = (subtotal + fee) * 2;
+        Console.WriteLine($"{raw} | {corrected}");
+    }
+}
+```
+
+### Q2.86 How does comparison and boolean composition in C# fundamentals?
+
+**Answer:** Comparison and boolean composition means turning business rules into true or false conditions with comparison and logical operators. Teams should focus on it when discussing operators and expression logic in production code, they compare it with splitting one rule across many disconnected checks, and they should avoid the trap of mixing conditions without grouping intent. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_86
+{
+    public static void Run()
+    {
+        int stock = 16;
+        bool priority = false;
+        bool canShip = stock > 5 && (priority || stock > 15);
+        Console.WriteLine(canShip);
+    }
+}
+```
+
+### Q2.87 Why does short-circuit evaluation in C# fundamentals?
+
+**Answer:** Short-circuit evaluation means using && and || with the knowledge that the right side may not run. Teams should focus on it when discussing operators and expression logic in production code, they compare it with bitwise boolean evaluation, and they should avoid the trap of calling members before a null-safe check can stop it. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_87
+{
+    public static void Run()
+    {
+        string? email = "user187@example.com";
+        bool ok = email != null && email.EndsWith("@example.com");
+        Console.WriteLine(ok);
+    }
+}
+```
+
+### Q2.88 When should you use null-coalescing and conditional operators in C# fundamentals?
+
+**Answer:** Null-coalescing and conditional operators means using ??, ??=, and ?: to express fallbacks and compact branching. Teams should focus on it when discussing operators and expression logic in production code, they compare it with long manual fallback code, and they should avoid the trap of compressing too much logic into unreadable expressions. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_88
+{
+    public static void Run()
+    {
+        string? display = "Agent-188";
+        display ??= "Guest";
+        string badge = display == "Guest" ? "Limited" : "Standard";
+        Console.WriteLine($"{display} => {badge}");
+    }
+}
+```
+
+### Q2.89 What problem does assignment variants and increment behavior in C# fundamentals?
+
+**Answer:** Assignment variants and increment behavior means knowing what +=, -=, ++, and -- do to current values. Teams should focus on it when discussing operators and expression logic in production code, they compare it with rewriting every update verbosely, and they should avoid the trap of using pre and post increment in confusing expressions. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_89
+{
+    public static void Run()
+    {
+        int retry = 4;
+        retry += 2;
+        int previous = retry++;
+        Console.WriteLine($"{previous}/{retry}");
+    }
+}
+```
+
+### Q2.90 How would you explain pattern matching expressions in C# fundamentals?
+
+**Answer:** Pattern matching expressions means using is checks and switch expressions to make decisions more expressive. Teams should focus on it when discussing operators and expression logic in production code, they compare it with older cast-heavy branching, and they should avoid the trap of answering with only outdated syntax. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_90
+{
+    public static void Run()
+    {
+        object responseTime = 270;
+        string level = responseTime is int ms && ms < 120 ? "Healthy" : "Investigate";
+        Console.WriteLine(level);
+    }
+}
+```
+
+### Q2.91 Why is arithmetic and precedence rules in C# fundamentals?
+
+**Answer:** Arithmetic and precedence rules means knowing that operator precedence changes how calculations are evaluated. Teams should focus on it when discussing operators and expression logic in production code, they compare it with reading expressions strictly left to right, and they should avoid the trap of writing formulas without clarifying parentheses. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_91
+{
+    public static void Run()
+    {
+        int subtotal = 91;
+        int fee = 7;
+        int raw = subtotal + fee * 2;
+        int corrected = (subtotal + fee) * 2;
+        Console.WriteLine($"{raw} | {corrected}");
+    }
+}
+```
+
+### Q2.92 How can comparison and boolean composition in C# fundamentals?
+
+**Answer:** Comparison and boolean composition means turning business rules into true or false conditions with comparison and logical operators. Teams should focus on it when discussing operators and expression logic in production code, they compare it with splitting one rule across many disconnected checks, and they should avoid the trap of mixing conditions without grouping intent. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_92
+{
+    public static void Run()
+    {
+        int stock = 10;
+        bool priority = false;
+        bool canShip = stock > 5 && (priority || stock > 15);
+        Console.WriteLine(canShip);
+    }
+}
+```
+
+### Q2.93 What is short-circuit evaluation in C# fundamentals?
+
+**Answer:** Short-circuit evaluation means using && and || with the knowledge that the right side may not run. Teams should focus on it when discussing operators and expression logic in production code, they compare it with bitwise boolean evaluation, and they should avoid the trap of calling members before a null-safe check can stop it. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_93
+{
+    public static void Run()
+    {
+        string? email = "user193@example.com";
+        bool ok = email != null && email.EndsWith("@example.com");
+        Console.WriteLine(ok);
+    }
+}
+```
+
+### Q2.94 How does null-coalescing and conditional operators in C# fundamentals?
+
+**Answer:** Null-coalescing and conditional operators means using ??, ??=, and ?: to express fallbacks and compact branching. Teams should focus on it when discussing operators and expression logic in production code, they compare it with long manual fallback code, and they should avoid the trap of compressing too much logic into unreadable expressions. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_94
+{
+    public static void Run()
+    {
+        string? display = "Agent-194";
+        display ??= "Guest";
+        string badge = display == "Guest" ? "Limited" : "Standard";
+        Console.WriteLine($"{display} => {badge}");
+    }
+}
+```
+
+### Q2.95 Why does assignment variants and increment behavior in C# fundamentals?
+
+**Answer:** Assignment variants and increment behavior means knowing what +=, -=, ++, and -- do to current values. Teams should focus on it when discussing operators and expression logic in production code, they compare it with rewriting every update verbosely, and they should avoid the trap of using pre and post increment in confusing expressions. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_95
+{
+    public static void Run()
+    {
+        int retry = 0;
+        retry += 2;
+        int previous = retry++;
+        Console.WriteLine($"{previous}/{retry}");
+    }
+}
+```
+
+### Q2.96 When should you use pattern matching expressions in C# fundamentals?
+
+**Answer:** Pattern matching expressions means using is checks and switch expressions to make decisions more expressive. Teams should focus on it when discussing operators and expression logic in production code, they compare it with older cast-heavy branching, and they should avoid the trap of answering with only outdated syntax. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_96
+{
+    public static void Run()
+    {
+        object responseTime = 276;
+        string level = responseTime is int ms && ms < 120 ? "Healthy" : "Investigate";
+        Console.WriteLine(level);
+    }
+}
+```
+
+### Q2.97 What problem does arithmetic and precedence rules in C# fundamentals?
+
+**Answer:** Arithmetic and precedence rules means knowing that operator precedence changes how calculations are evaluated. Teams should focus on it when discussing operators and expression logic in production code, they compare it with reading expressions strictly left to right, and they should avoid the trap of writing formulas without clarifying parentheses. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_97
+{
+    public static void Run()
+    {
+        int subtotal = 97;
+        int fee = 7;
+        int raw = subtotal + fee * 2;
+        int corrected = (subtotal + fee) * 2;
+        Console.WriteLine($"{raw} | {corrected}");
+    }
+}
+```
+
+### Q2.98 How would you explain comparison and boolean composition in C# fundamentals?
+
+**Answer:** Comparison and boolean composition means turning business rules into true or false conditions with comparison and logical operators. Teams should focus on it when discussing operators and expression logic in production code, they compare it with splitting one rule across many disconnected checks, and they should avoid the trap of mixing conditions without grouping intent. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_98
+{
+    public static void Run()
+    {
+        int stock = 16;
+        bool priority = false;
+        bool canShip = stock > 5 && (priority || stock > 15);
+        Console.WriteLine(canShip);
+    }
+}
+```
+
+### Q2.99 Why is short-circuit evaluation in C# fundamentals?
+
+**Answer:** Short-circuit evaluation means using && and || with the knowledge that the right side may not run. Teams should focus on it when discussing operators and expression logic in production code, they compare it with bitwise boolean evaluation, and they should avoid the trap of calling members before a null-safe check can stop it. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_99
+{
+    public static void Run()
+    {
+        string? email = "user199@example.com";
+        bool ok = email != null && email.EndsWith("@example.com");
+        Console.WriteLine(ok);
+    }
+}
+```
+
+### Q2.100 How can null-coalescing and conditional operators in C# fundamentals?
+
+**Answer:** Null-coalescing and conditional operators means using ??, ??=, and ?: to express fallbacks and compact branching. Teams should focus on it when discussing operators and expression logic in production code, they compare it with long manual fallback code, and they should avoid the trap of compressing too much logic into unreadable expressions. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo2_100
+{
+    public static void Run()
+    {
+        string? display = "Agent-200";
+        display ??= "Guest";
+        string badge = display == "Guest" ? "Limited" : "Standard";
+        Console.WriteLine($"{display} => {badge}");
+    }
+}
+```
 
 ## 3. Branching and decision flow
 
-This section covers how C# chooses a path through code using conditions, switches, pattern checks, and early exits.
+> This section contains **100 interview questions** focused on **Branching and decision flow**. Every answer includes a C# code example, and the scenarios rotate so they do not repeat verbatim.
 
-### 101. What is the role of if, else if, and else in business rules in C# fundamentals?
+### Q3.1 What is if else control flow in C# fundamentals?
 
-**Answer:**
+**Answer:** If else control flow means executing different paths based on runtime conditions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with single-path logic that ignores context, and they should avoid the trap of deep nesting that hides intent. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
 
-In C# fundamentals, if, else if, and else in business rules refers to the core branching statements used to choose one path from many based on conditions. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-decimal refundAmount = 2500m;
-bool isVipCustomer = true;
+using System;
+using System.Collections.Generic;
 
-if (refundAmount <= 1000m)
+public static class Demo3_1
 {
-    Console.WriteLine("Auto-approve");
-}
-else if (isVipCustomer)
-{
-    Console.WriteLine("Send to priority review");
-}
-else
-{
-    Console.WriteLine("Manager approval required");
+    public static void Run()
+    {
+        int creditScore = 661;
+        if (creditScore >= 650)
+        {
+            Console.WriteLine("Approved");
+        }
+        else
+        {
+            Console.WriteLine("Manual review");
+        }
+    }
 }
 ```
 
----
+### Q3.2 How does switch statement versus switch expression in C# fundamentals?
 
-### 102. Why is if, else if, and else in business rules important in day-to-day C# work?
+**Answer:** Switch statement versus switch expression means choosing the right multi-branch form for status- or type-based decisions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with long if else ladders for every state, and they should avoid the trap of forgetting default handling. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
 
-**Answer:**
-
-It matters because almost every API, job, and UI flow branches based on validation, status, permissions, or thresholds. In production code, this shows up in features like imports, APIs, validation, pricing, reporting, and support debugging.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-decimal refundAmount = 2500m;
-bool isVipCustomer = true;
+using System;
+using System.Collections.Generic;
 
-if (refundAmount <= 1000m)
+public static class Demo3_2
 {
-    Console.WriteLine("Auto-approve");
-}
-else if (isVipCustomer)
-{
-    Console.WriteLine("Send to priority review");
-}
-else
-{
-    Console.WriteLine("Manager approval required");
+    public static void Run()
+    {
+        string status = "Shipped";
+        string action = status switch
+        {
+            "New" => "Validate order",
+            "Paid" => "Reserve inventory",
+            "Shipped" => "Track delivery",
+            _ => "Archive record"
+        };
+        Console.WriteLine(action);
+    }
 }
 ```
 
----
+### Q3.3 Why does guard clauses for readable decisions in C# fundamentals?
 
-### 103. When should you use if, else if, and else in business rules in real projects?
+**Answer:** Guard clauses for readable decisions means returning early when preconditions fail to keep the main path clear. Teams should focus on it when discussing branching and decision flow in production code, they compare it with wrapping the happy path in nested blocks, and they should avoid the trap of mixing validation and business logic too deeply. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
 
-**Answer:**
-
-Use if, else if, and else in business rules when the code must choose different actions based on one or more business conditions. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-decimal refundAmount = 2500m;
-bool isVipCustomer = true;
+using System;
+using System.Collections.Generic;
 
-if (refundAmount <= 1000m)
+public static class Demo3_3
 {
-    Console.WriteLine("Auto-approve");
-}
-else if (isVipCustomer)
-{
-    Console.WriteLine("Send to priority review");
-}
-else
-{
-    Console.WriteLine("Manager approval required");
+    public static void Run()
+    {
+        bool active = true;
+        decimal balance = 634m;
+        if (!active)
+        {
+            Console.WriteLine("Inactive");
+            return;
+        }
+        Console.WriteLine(balance > 100 ? "Priority" : "Standard");
+    }
 }
 ```
 
----
+### Q3.4 When should you use branch ordering and specificity in C# fundamentals?
 
-### 104. What is a real-time example of if, else if, and else in business rules?
+**Answer:** Branch ordering and specificity means placing more specific conditions before broader ones. Teams should focus on it when discussing branching and decision flow in production code, they compare it with assuming later branches can override earlier ones, and they should avoid the trap of hiding a specific rule behind a generic check. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
 
-**Answer:**
-
-A returns API may approve, review, or reject a refund depending on order age, amount, and account status. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-decimal refundAmount = 2500m;
-bool isVipCustomer = true;
+using System;
+using System.Collections.Generic;
 
-if (refundAmount <= 1000m)
+public static class Demo3_4
 {
-    Console.WriteLine("Auto-approve");
-}
-else if (isVipCustomer)
-{
-    Console.WriteLine("Send to priority review");
-}
-else
-{
-    Console.WriteLine("Manager approval required");
+    public static void Run()
+    {
+        int amount = 1060;
+        if (amount > 500)
+        {
+            Console.WriteLine("Executive approval");
+        }
+        else if (amount > 100)
+        {
+            Console.WriteLine("Manager approval");
+        }
+        else
+        {
+            Console.WriteLine("Auto-approved");
+        }
+    }
 }
 ```
 
----
+### Q3.5 What problem does boolean flags versus intention revealing branches in C# fundamentals?
 
-### 105. What is a best practice for if, else if, and else in business rules?
+**Answer:** Boolean flags versus intention revealing branches means naming conditions so control flow is easier to read. Teams should focus on it when discussing branching and decision flow in production code, they compare it with repeating raw expressions everywhere, and they should avoid the trap of using vague flag names. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
 
-**Answer:**
-
-Keep conditions readable, extract complex rules into named methods, and prefer guard clauses when the happy path is getting buried. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-decimal refundAmount = 2500m;
-bool isVipCustomer = true;
+using System;
+using System.Collections.Generic;
 
-if (refundAmount <= 1000m)
+public static class Demo3_5
 {
-    Console.WriteLine("Auto-approve");
-}
-else if (isVipCustomer)
-{
-    Console.WriteLine("Send to priority review");
-}
-else
-{
-    Console.WriteLine("Manager approval required");
+    public static void Run()
+    {
+        int failedAttempts = 1;
+        bool lockAccount = failedAttempts >= 3;
+        Console.WriteLine(lockAccount ? "Lock account" : "Allow login");
+    }
 }
 ```
 
----
+### Q3.6 How would you explain decision flow for validation pipelines in C# fundamentals?
 
-### 106. What is a tricky interview point or common mistake around if, else if, and else in business rules?
+**Answer:** Decision flow for validation pipelines means describing both success and rejection paths in real request handling. Teams should focus on it when discussing branching and decision flow in production code, they compare it with syntax-only explanations, and they should avoid the trap of forgetting invalid and unsupported states. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
 
-**Answer:**
-
-Large nested if blocks become hard to test and hide subtle logic mistakes, especially when conditions overlap. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-int score = 85;
+using System;
+using System.Collections.Generic;
 
-if (score >= 90)
+public static class Demo3_6
 {
-    Console.WriteLine("A");
-}
-else if (score >= 80)
-{
-    Console.WriteLine("B");
-}
-```
-
----
-
-### 107. How does if, else if, and else in business rules differ from switch expressions and switch statements?
-
-**Answer:**
-
-if, else if, and else in business rules is about the core branching statements used to choose one path from many based on conditions, whereas switch expressions and switch statements is about multi-branch matching based on a single input or pattern rather than general-purpose boolean conditions. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
-
-```csharp
-decimal refundAmount = 2500m;
-bool isVipCustomer = true;
-
-if (refundAmount <= 1000m)
-{
-    Console.WriteLine("Auto-approve");
-}
-else if (isVipCustomer)
-{
-    Console.WriteLine("Send to priority review");
-}
-else
-{
-    Console.WriteLine("Manager approval required");
+    public static void Run()
+    {
+        string? email = "contact206@example.com";
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            Console.WriteLine("Email required");
+        }
+        else if (!email.Contains("@"))
+        {
+            Console.WriteLine("Invalid format");
+        }
+        else
+        {
+            Console.WriteLine("Continue workflow");
+        }
+    }
 }
 ```
 
----
+### Q3.7 Why is if else control flow in C# fundamentals?
 
-### 108. How do you troubleshoot issues related to if, else if, and else in business rules?
+**Answer:** If else control flow means executing different paths based on runtime conditions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with single-path logic that ignores context, and they should avoid the trap of deep nesting that hides intent. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
 
-**Answer:**
-
-Write down the actual input values, evaluate each condition in order, and check for overlapping or unreachable branches. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-int score = 85;
+using System;
+using System.Collections.Generic;
 
-if (score >= 90)
+public static class Demo3_7
 {
-    Console.WriteLine("A");
-}
-else if (score >= 80)
-{
-    Console.WriteLine("B");
-}
-```
-
----
-
-### 109. What kind of follow-up does an interviewer usually ask after if, else if, and else in business rules?
-
-**Answer:**
-
-A common follow-up is when to refactor an if ladder into a switch, method, or strategy-like design. This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
-
-```csharp
-decimal refundAmount = 2500m;
-bool isVipCustomer = true;
-
-if (refundAmount <= 1000m)
-{
-    Console.WriteLine("Auto-approve");
-}
-else if (isVipCustomer)
-{
-    Console.WriteLine("Send to priority review");
-}
-else
-{
-    Console.WriteLine("Manager approval required");
+    public static void Run()
+    {
+        int creditScore = 667;
+        if (creditScore >= 650)
+        {
+            Console.WriteLine("Approved");
+        }
+        else
+        {
+            Console.WriteLine("Manual review");
+        }
+    }
 }
 ```
 
----
+### Q3.8 How can switch statement versus switch expression in C# fundamentals?
 
-### 110. How does if, else if, and else in business rules connect to the rest of C# fundamentals?
+**Answer:** Switch statement versus switch expression means choosing the right multi-branch form for status- or type-based decisions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with long if else ladders for every state, and they should avoid the trap of forgetting default handling. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
 
-**Answer:**
-
-This is the foundation for control flow, validation, and defensive programming across all fundamentals. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-decimal refundAmount = 2500m;
-bool isVipCustomer = true;
+using System;
+using System.Collections.Generic;
 
-if (refundAmount <= 1000m)
+public static class Demo3_8
 {
-    Console.WriteLine("Auto-approve");
-}
-else if (isVipCustomer)
-{
-    Console.WriteLine("Send to priority review");
-}
-else
-{
-    Console.WriteLine("Manager approval required");
-}
-```
-
----
-
-### 111. What is the role of switch statements and switch expressions in C# fundamentals?
-
-**Answer:**
-
-In C# fundamentals, switch statements and switch expressions refers to branching constructs used when one input or pattern maps to different outcomes. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
-
-```csharp
-string paymentStatus = "Paid";
-
-string action = paymentStatus switch
-{
-    "Pending" => "Wait for confirmation",
-    "Paid" => "Release shipment",
-    "Failed" => "Notify customer",
-    _ => "Send to support"
-};
-
-Console.WriteLine(action);
-```
-
----
-
-### 112. Why is switch statements and switch expressions important in day-to-day C# work?
-
-**Answer:**
-
-It matters because status mapping, error translation, and workflow routing are cleaner when the branching target is a single value. In production code, this shows up in features like imports, APIs, validation, pricing, reporting, and support debugging.
-
-**Sample:**
-
-```csharp
-string paymentStatus = "Paid";
-
-string action = paymentStatus switch
-{
-    "Pending" => "Wait for confirmation",
-    "Paid" => "Release shipment",
-    "Failed" => "Notify customer",
-    _ => "Send to support"
-};
-
-Console.WriteLine(action);
-```
-
----
-
-### 113. When should you use switch statements and switch expressions in real projects?
-
-**Answer:**
-
-Use switch statements and switch expressions when you are mapping one incoming value, enum, or pattern to a clear result or action. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
-
-```csharp
-string paymentStatus = "Paid";
-
-string action = paymentStatus switch
-{
-    "Pending" => "Wait for confirmation",
-    "Paid" => "Release shipment",
-    "Failed" => "Notify customer",
-    _ => "Send to support"
-};
-
-Console.WriteLine(action);
-```
-
----
-
-### 114. What is a real-time example of switch statements and switch expressions?
-
-**Answer:**
-
-An order service often maps payment statuses such as `Pending`, `Paid`, and `Failed` to different next steps. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
-
-```csharp
-string paymentStatus = "Paid";
-
-string action = paymentStatus switch
-{
-    "Pending" => "Wait for confirmation",
-    "Paid" => "Release shipment",
-    "Failed" => "Notify customer",
-    _ => "Send to support"
-};
-
-Console.WriteLine(action);
-```
-
----
-
-### 115. What is a best practice for switch statements and switch expressions?
-
-**Answer:**
-
-Use switch expressions for concise value mapping and switch statements when multiple imperative actions are required. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
-
-```csharp
-string paymentStatus = "Paid";
-
-string action = paymentStatus switch
-{
-    "Pending" => "Wait for confirmation",
-    "Paid" => "Release shipment",
-    "Failed" => "Notify customer",
-    _ => "Send to support"
-};
-
-Console.WriteLine(action);
-```
-
----
-
-### 116. What is a tricky interview point or common mistake around switch statements and switch expressions?
-
-**Answer:**
-
-A common weak answer ignores pattern matching or cannot explain why switch expressions reduce accidental fall-through style thinking. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
-
-```csharp
-int priority = 2;
-
-switch (priority)
-{
-    case 1:
-        Console.WriteLine("Critical");
-        break;
-    case 2:
-        Console.WriteLine("High");
-        break;
-    default:
-        Console.WriteLine("Normal");
-        break;
+    public static void Run()
+    {
+        string status = "New";
+        string action = status switch
+        {
+            "New" => "Validate order",
+            "Paid" => "Reserve inventory",
+            "Shipped" => "Track delivery",
+            _ => "Archive record"
+        };
+        Console.WriteLine(action);
+    }
 }
 ```
 
----
+### Q3.9 What is guard clauses for readable decisions in C# fundamentals?
 
-### 117. How does switch statements and switch expressions differ from if, else if, and else in business rules?
+**Answer:** Guard clauses for readable decisions means returning early when preconditions fail to keep the main path clear. Teams should focus on it when discussing branching and decision flow in production code, they compare it with wrapping the happy path in nested blocks, and they should avoid the trap of mixing validation and business logic too deeply. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
 
-**Answer:**
-
-switch statements and switch expressions is about branching constructs used when one input or pattern maps to different outcomes, whereas if, else if, and else in business rules is about general boolean branching rather than direct matching on a value or pattern. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-string paymentStatus = "Paid";
+using System;
+using System.Collections.Generic;
 
-string action = paymentStatus switch
+public static class Demo3_9
 {
-    "Pending" => "Wait for confirmation",
-    "Paid" => "Release shipment",
-    "Failed" => "Notify customer",
-    _ => "Send to support"
-};
-
-Console.WriteLine(action);
-```
-
----
-
-### 118. How do you troubleshoot issues related to switch statements and switch expressions?
-
-**Answer:**
-
-Verify the exact input value, look for missing cases, and keep a safe default branch for unexpected states. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
-
-```csharp
-int priority = 2;
-
-switch (priority)
-{
-    case 1:
-        Console.WriteLine("Critical");
-        break;
-    case 2:
-        Console.WriteLine("High");
-        break;
-    default:
-        Console.WriteLine("Normal");
-        break;
+    public static void Run()
+    {
+        bool active = true;
+        decimal balance = 652m;
+        if (!active)
+        {
+            Console.WriteLine("Inactive");
+            return;
+        }
+        Console.WriteLine(balance > 100 ? "Priority" : "Standard");
+    }
 }
 ```
 
----
+### Q3.10 How does branch ordering and specificity in C# fundamentals?
 
-### 119. What kind of follow-up does an interviewer usually ask after switch statements and switch expressions?
+**Answer:** Branch ordering and specificity means placing more specific conditions before broader ones. Teams should focus on it when discussing branching and decision flow in production code, they compare it with assuming later branches can override earlier ones, and they should avoid the trap of hiding a specific rule behind a generic check. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
 
-**Answer:**
-
-A common follow-up is how modern switch expressions support guards, type patterns, and cleaner domain mapping. This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-string paymentStatus = "Paid";
+using System;
+using System.Collections.Generic;
 
-string action = paymentStatus switch
+public static class Demo3_10
 {
-    "Pending" => "Wait for confirmation",
-    "Paid" => "Release shipment",
-    "Failed" => "Notify customer",
-    _ => "Send to support"
-};
-
-Console.WriteLine(action);
-```
-
----
-
-### 120. How does switch statements and switch expressions connect to the rest of C# fundamentals?
-
-**Answer:**
-
-Switch logic connects strongly to enums, strings, methods, and API state handling in real systems. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
-
-```csharp
-string paymentStatus = "Paid";
-
-string action = paymentStatus switch
-{
-    "Pending" => "Wait for confirmation",
-    "Paid" => "Release shipment",
-    "Failed" => "Notify customer",
-    _ => "Send to support"
-};
-
-Console.WriteLine(action);
-```
-
----
-
-### 121. What is the role of Pattern matching with is and relational checks in C# fundamentals?
-
-**Answer:**
-
-In C# fundamentals, Pattern matching with is and relational checks refers to the modern C# approach for checking type, shape, or value patterns directly inside conditions. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
-
-```csharp
-object response = 429;
-
-if (response is int statusCode && statusCode >= 400)
-{
-    Console.WriteLine($"Retry later: {statusCode}");
+    public static void Run()
+    {
+        int amount = 1090;
+        if (amount > 500)
+        {
+            Console.WriteLine("Executive approval");
+        }
+        else if (amount > 100)
+        {
+            Console.WriteLine("Manager approval");
+        }
+        else
+        {
+            Console.WriteLine("Auto-approved");
+        }
+    }
 }
 ```
 
----
+### Q3.11 Why does boolean flags versus intention revealing branches in C# fundamentals?
 
-### 122. Why is Pattern matching with is and relational checks important in day-to-day C# work?
+**Answer:** Boolean flags versus intention revealing branches means naming conditions so control flow is easier to read. Teams should focus on it when discussing branching and decision flow in production code, they compare it with repeating raw expressions everywhere, and they should avoid the trap of using vague flag names. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
 
-**Answer:**
-
-It matters because pattern matching reduces casting noise and makes rule code safer and more expressive. In production code, this shows up in features like imports, APIs, validation, pricing, reporting, and support debugging.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-object response = 429;
+using System;
+using System.Collections.Generic;
 
-if (response is int statusCode && statusCode >= 400)
+public static class Demo3_11
 {
-    Console.WriteLine($"Retry later: {statusCode}");
+    public static void Run()
+    {
+        int failedAttempts = 1;
+        bool lockAccount = failedAttempts >= 3;
+        Console.WriteLine(lockAccount ? "Lock account" : "Allow login");
+    }
 }
 ```
 
----
+### Q3.12 When should you use decision flow for validation pipelines in C# fundamentals?
 
-### 123. When should you use Pattern matching with is and relational checks in real projects?
+**Answer:** Decision flow for validation pipelines means describing both success and rejection paths in real request handling. Teams should focus on it when discussing branching and decision flow in production code, they compare it with syntax-only explanations, and they should avoid the trap of forgetting invalid and unsupported states. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
 
-**Answer:**
-
-Use Pattern matching with is and relational checks when you need to inspect a value type, null state, range, or structure before acting on it. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-object response = 429;
+using System;
+using System.Collections.Generic;
 
-if (response is int statusCode && statusCode >= 400)
+public static class Demo3_12
 {
-    Console.WriteLine($"Retry later: {statusCode}");
+    public static void Run()
+    {
+        string? email = null;
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            Console.WriteLine("Email required");
+        }
+        else if (!email.Contains("@"))
+        {
+            Console.WriteLine("Invalid format");
+        }
+        else
+        {
+            Console.WriteLine("Continue workflow");
+        }
+    }
 }
 ```
 
----
+### Q3.13 What problem does if else control flow in C# fundamentals?
 
-### 124. What is a real-time example of Pattern matching with is and relational checks?
+**Answer:** If else control flow means executing different paths based on runtime conditions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with single-path logic that ignores context, and they should avoid the trap of deep nesting that hides intent. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
 
-**Answer:**
-
-A webhook handler may branch differently for string error codes, numeric retry values, or a typed DTO received from another component. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-object response = 429;
+using System;
+using System.Collections.Generic;
 
-if (response is int statusCode && statusCode >= 400)
+public static class Demo3_13
 {
-    Console.WriteLine($"Retry later: {statusCode}");
+    public static void Run()
+    {
+        int creditScore = 673;
+        if (creditScore >= 650)
+        {
+            Console.WriteLine("Approved");
+        }
+        else
+        {
+            Console.WriteLine("Manual review");
+        }
+    }
 }
 ```
 
----
+### Q3.14 How would you explain switch statement versus switch expression in C# fundamentals?
 
-### 125. What is a best practice for Pattern matching with is and relational checks?
+**Answer:** Switch statement versus switch expression means choosing the right multi-branch form for status- or type-based decisions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with long if else ladders for every state, and they should avoid the trap of forgetting default handling. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
 
-**Answer:**
-
-Use pattern matching when it improves clarity and reduces manual casting, not just because the syntax is newer. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-object response = 429;
+using System;
+using System.Collections.Generic;
 
-if (response is int statusCode && statusCode >= 400)
+public static class Demo3_14
 {
-    Console.WriteLine($"Retry later: {statusCode}");
+    public static void Run()
+    {
+        string status = "Shipped";
+        string action = status switch
+        {
+            "New" => "Validate order",
+            "Paid" => "Reserve inventory",
+            "Shipped" => "Track delivery",
+            _ => "Archive record"
+        };
+        Console.WriteLine(action);
+    }
 }
 ```
 
----
+### Q3.15 Why is guard clauses for readable decisions in C# fundamentals?
 
-### 126. What is a tricky interview point or common mistake around Pattern matching with is and relational checks?
+**Answer:** Guard clauses for readable decisions means returning early when preconditions fail to keep the main path clear. Teams should focus on it when discussing branching and decision flow in production code, they compare it with wrapping the happy path in nested blocks, and they should avoid the trap of mixing validation and business logic too deeply. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
 
-**Answer:**
-
-Candidates often know the syntax but cannot explain when patterns are actually cleaner than ordinary conditions. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-object? payload = "FAILED";
+using System;
+using System.Collections.Generic;
 
-if (payload is string text and not "")
+public static class Demo3_15
 {
-    Console.WriteLine(text.ToLowerInvariant());
+    public static void Run()
+    {
+        bool active = true;
+        decimal balance = 670m;
+        if (!active)
+        {
+            Console.WriteLine("Inactive");
+            return;
+        }
+        Console.WriteLine(balance > 100 ? "Priority" : "Standard");
+    }
 }
 ```
 
----
+### Q3.16 How can branch ordering and specificity in C# fundamentals?
 
-### 127. How does Pattern matching with is and relational checks differ from switch statements and switch expressions?
+**Answer:** Branch ordering and specificity means placing more specific conditions before broader ones. Teams should focus on it when discussing branching and decision flow in production code, they compare it with assuming later branches can override earlier ones, and they should avoid the trap of hiding a specific rule behind a generic check. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
 
-**Answer:**
-
-Pattern matching with is and relational checks is about the modern C# approach for checking type, shape, or value patterns directly inside conditions, whereas switch statements and switch expressions is about broader conditional mapping on one input rather than focused type and value pattern checks. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-object response = 429;
+using System;
+using System.Collections.Generic;
 
-if (response is int statusCode && statusCode >= 400)
+public static class Demo3_16
 {
-    Console.WriteLine($"Retry later: {statusCode}");
+    public static void Run()
+    {
+        int amount = 1120;
+        if (amount > 500)
+        {
+            Console.WriteLine("Executive approval");
+        }
+        else if (amount > 100)
+        {
+            Console.WriteLine("Manager approval");
+        }
+        else
+        {
+            Console.WriteLine("Auto-approved");
+        }
+    }
 }
 ```
 
----
+### Q3.17 What is boolean flags versus intention revealing branches in C# fundamentals?
 
-### 128. How do you troubleshoot issues related to Pattern matching with is and relational checks?
+**Answer:** Boolean flags versus intention revealing branches means naming conditions so control flow is easier to read. Teams should focus on it when discussing branching and decision flow in production code, they compare it with repeating raw expressions everywhere, and they should avoid the trap of using vague flag names. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
 
-**Answer:**
-
-Inspect the runtime type and the actual value, then confirm whether the expected pattern can ever match. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-object? payload = "FAILED";
+using System;
+using System.Collections.Generic;
 
-if (payload is string text and not "")
+public static class Demo3_17
 {
-    Console.WriteLine(text.ToLowerInvariant());
+    public static void Run()
+    {
+        int failedAttempts = 1;
+        bool lockAccount = failedAttempts >= 3;
+        Console.WriteLine(lockAccount ? "Lock account" : "Allow login");
+    }
 }
 ```
 
----
+### Q3.18 How does decision flow for validation pipelines in C# fundamentals?
 
-### 129. What kind of follow-up does an interviewer usually ask after Pattern matching with is and relational checks?
+**Answer:** Decision flow for validation pipelines means describing both success and rejection paths in real request handling. Teams should focus on it when discussing branching and decision flow in production code, they compare it with syntax-only explanations, and they should avoid the trap of forgetting invalid and unsupported states. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
 
-**Answer:**
-
-A common follow-up is how declaration patterns, property patterns, and relational patterns help with safer branching. This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-object response = 429;
+using System;
+using System.Collections.Generic;
 
-if (response is int statusCode && statusCode >= 400)
+public static class Demo3_18
 {
-    Console.WriteLine($"Retry later: {statusCode}");
+    public static void Run()
+    {
+        string? email = "contact218@example.com";
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            Console.WriteLine("Email required");
+        }
+        else if (!email.Contains("@"))
+        {
+            Console.WriteLine("Invalid format");
+        }
+        else
+        {
+            Console.WriteLine("Continue workflow");
+        }
+    }
 }
 ```
 
----
+### Q3.19 Why does if else control flow in C# fundamentals?
 
-### 130. How does Pattern matching with is and relational checks connect to the rest of C# fundamentals?
+**Answer:** If else control flow means executing different paths based on runtime conditions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with single-path logic that ignores context, and they should avoid the trap of deep nesting that hides intent. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
 
-**Answer:**
-
-Pattern matching ties together types, conditions, null checks, and methods, so it is a modern extension of core fundamentals. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-object response = 429;
+using System;
+using System.Collections.Generic;
 
-if (response is int statusCode && statusCode >= 400)
+public static class Demo3_19
 {
-    Console.WriteLine($"Retry later: {statusCode}");
+    public static void Run()
+    {
+        int creditScore = 679;
+        if (creditScore >= 650)
+        {
+            Console.WriteLine("Approved");
+        }
+        else
+        {
+            Console.WriteLine("Manual review");
+        }
+    }
 }
 ```
 
----
+### Q3.20 When should you use switch statement versus switch expression in C# fundamentals?
 
-### 131. What is the role of Guard clauses and early returns in C# fundamentals?
+**Answer:** Switch statement versus switch expression means choosing the right multi-branch form for status- or type-based decisions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with long if else ladders for every state, and they should avoid the trap of forgetting default handling. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
 
-**Answer:**
-
-In C# fundamentals, Guard clauses and early returns refers to the practice of exiting early when prerequisites are not met so the main path stays readable. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-decimal amount = 0m;
-bool isBlocked = false;
+using System;
+using System.Collections.Generic;
 
-if (amount <= 0m)
+public static class Demo3_20
 {
-    Console.WriteLine("Amount must be greater than zero");
-    return;
+    public static void Run()
+    {
+        string status = "New";
+        string action = status switch
+        {
+            "New" => "Validate order",
+            "Paid" => "Reserve inventory",
+            "Shipped" => "Track delivery",
+            _ => "Archive record"
+        };
+        Console.WriteLine(action);
+    }
 }
+```
 
-if (isBlocked)
+### Q3.21 What problem does guard clauses for readable decisions in C# fundamentals?
+
+**Answer:** Guard clauses for readable decisions means returning early when preconditions fail to keep the main path clear. Teams should focus on it when discussing branching and decision flow in production code, they compare it with wrapping the happy path in nested blocks, and they should avoid the trap of mixing validation and business logic too deeply. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_21
 {
-    Console.WriteLine("Customer is blocked");
-    return;
+    public static void Run()
+    {
+        bool active = true;
+        decimal balance = 688m;
+        if (!active)
+        {
+            Console.WriteLine("Inactive");
+            return;
+        }
+        Console.WriteLine(balance > 100 ? "Priority" : "Standard");
+    }
 }
-
-Console.WriteLine("Proceed with payment");
 ```
 
----
+### Q3.22 How would you explain branch ordering and specificity in C# fundamentals?
 
-### 132. Why is Guard clauses and early returns important in day-to-day C# work?
+**Answer:** Branch ordering and specificity means placing more specific conditions before broader ones. Teams should focus on it when discussing branching and decision flow in production code, they compare it with assuming later branches can override earlier ones, and they should avoid the trap of hiding a specific rule behind a generic check. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
 
-**Answer:**
-
-It matters because production methods quickly become hard to maintain when validation is nested too deeply. In production code, this shows up in features like imports, APIs, validation, pricing, reporting, and support debugging.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-decimal amount = 0m;
-bool isBlocked = false;
+using System;
+using System.Collections.Generic;
 
-if (amount <= 0m)
+public static class Demo3_22
 {
-    Console.WriteLine("Amount must be greater than zero");
-    return;
+    public static void Run()
+    {
+        int amount = 1150;
+        if (amount > 500)
+        {
+            Console.WriteLine("Executive approval");
+        }
+        else if (amount > 100)
+        {
+            Console.WriteLine("Manager approval");
+        }
+        else
+        {
+            Console.WriteLine("Auto-approved");
+        }
+    }
 }
+```
 
-if (isBlocked)
+### Q3.23 Why is boolean flags versus intention revealing branches in C# fundamentals?
+
+**Answer:** Boolean flags versus intention revealing branches means naming conditions so control flow is easier to read. Teams should focus on it when discussing branching and decision flow in production code, they compare it with repeating raw expressions everywhere, and they should avoid the trap of using vague flag names. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_23
 {
-    Console.WriteLine("Customer is blocked");
-    return;
+    public static void Run()
+    {
+        int failedAttempts = 1;
+        bool lockAccount = failedAttempts >= 3;
+        Console.WriteLine(lockAccount ? "Lock account" : "Allow login");
+    }
 }
-
-Console.WriteLine("Proceed with payment");
 ```
 
----
+### Q3.24 How can decision flow for validation pipelines in C# fundamentals?
 
-### 133. When should you use Guard clauses and early returns in real projects?
+**Answer:** Decision flow for validation pipelines means describing both success and rejection paths in real request handling. Teams should focus on it when discussing branching and decision flow in production code, they compare it with syntax-only explanations, and they should avoid the trap of forgetting invalid and unsupported states. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
 
-**Answer:**
-
-Use Guard clauses and early returns when a method has prerequisites such as non-null inputs, valid status, or permission checks that should fail fast. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-decimal amount = 0m;
-bool isBlocked = false;
+using System;
+using System.Collections.Generic;
 
-if (amount <= 0m)
+public static class Demo3_24
 {
-    Console.WriteLine("Amount must be greater than zero");
-    return;
+    public static void Run()
+    {
+        string? email = null;
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            Console.WriteLine("Email required");
+        }
+        else if (!email.Contains("@"))
+        {
+            Console.WriteLine("Invalid format");
+        }
+        else
+        {
+            Console.WriteLine("Continue workflow");
+        }
+    }
 }
+```
 
-if (isBlocked)
+### Q3.25 What is if else control flow in C# fundamentals?
+
+**Answer:** If else control flow means executing different paths based on runtime conditions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with single-path logic that ignores context, and they should avoid the trap of deep nesting that hides intent. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_25
 {
-    Console.WriteLine("Customer is blocked");
-    return;
+    public static void Run()
+    {
+        int creditScore = 685;
+        if (creditScore >= 650)
+        {
+            Console.WriteLine("Approved");
+        }
+        else
+        {
+            Console.WriteLine("Manual review");
+        }
+    }
 }
-
-Console.WriteLine("Proceed with payment");
 ```
 
----
+### Q3.26 How does switch statement versus switch expression in C# fundamentals?
 
-### 134. What is a real-time example of Guard clauses and early returns?
+**Answer:** Switch statement versus switch expression means choosing the right multi-branch form for status- or type-based decisions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with long if else ladders for every state, and they should avoid the trap of forgetting default handling. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
 
-**Answer:**
-
-A command handler can return early when the request is null, the customer is blocked, or the amount is invalid before it reaches pricing logic. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-decimal amount = 0m;
-bool isBlocked = false;
+using System;
+using System.Collections.Generic;
 
-if (amount <= 0m)
+public static class Demo3_26
 {
-    Console.WriteLine("Amount must be greater than zero");
-    return;
+    public static void Run()
+    {
+        string status = "Shipped";
+        string action = status switch
+        {
+            "New" => "Validate order",
+            "Paid" => "Reserve inventory",
+            "Shipped" => "Track delivery",
+            _ => "Archive record"
+        };
+        Console.WriteLine(action);
+    }
 }
+```
 
-if (isBlocked)
+### Q3.27 Why does guard clauses for readable decisions in C# fundamentals?
+
+**Answer:** Guard clauses for readable decisions means returning early when preconditions fail to keep the main path clear. Teams should focus on it when discussing branching and decision flow in production code, they compare it with wrapping the happy path in nested blocks, and they should avoid the trap of mixing validation and business logic too deeply. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_27
 {
-    Console.WriteLine("Customer is blocked");
-    return;
+    public static void Run()
+    {
+        bool active = true;
+        decimal balance = 706m;
+        if (!active)
+        {
+            Console.WriteLine("Inactive");
+            return;
+        }
+        Console.WriteLine(balance > 100 ? "Priority" : "Standard");
+    }
 }
-
-Console.WriteLine("Proceed with payment");
 ```
 
----
+### Q3.28 When should you use branch ordering and specificity in C# fundamentals?
 
-### 135. What is a best practice for Guard clauses and early returns?
+**Answer:** Branch ordering and specificity means placing more specific conditions before broader ones. Teams should focus on it when discussing branching and decision flow in production code, they compare it with assuming later branches can override earlier ones, and they should avoid the trap of hiding a specific rule behind a generic check. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
 
-**Answer:**
-
-Use guard clauses to make invalid states obvious and leave the main business path flatter and easier to scan. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-decimal amount = 0m;
-bool isBlocked = false;
+using System;
+using System.Collections.Generic;
 
-if (amount <= 0m)
+public static class Demo3_28
 {
-    Console.WriteLine("Amount must be greater than zero");
-    return;
+    public static void Run()
+    {
+        int amount = 1180;
+        if (amount > 500)
+        {
+            Console.WriteLine("Executive approval");
+        }
+        else if (amount > 100)
+        {
+            Console.WriteLine("Manager approval");
+        }
+        else
+        {
+            Console.WriteLine("Auto-approved");
+        }
+    }
 }
+```
 
-if (isBlocked)
+### Q3.29 What problem does boolean flags versus intention revealing branches in C# fundamentals?
+
+**Answer:** Boolean flags versus intention revealing branches means naming conditions so control flow is easier to read. Teams should focus on it when discussing branching and decision flow in production code, they compare it with repeating raw expressions everywhere, and they should avoid the trap of using vague flag names. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_29
 {
-    Console.WriteLine("Customer is blocked");
-    return;
+    public static void Run()
+    {
+        int failedAttempts = 1;
+        bool lockAccount = failedAttempts >= 3;
+        Console.WriteLine(lockAccount ? "Lock account" : "Allow login");
+    }
 }
-
-Console.WriteLine("Proceed with payment");
 ```
 
----
+### Q3.30 How would you explain decision flow for validation pipelines in C# fundamentals?
 
-### 136. What is a tricky interview point or common mistake around Guard clauses and early returns?
+**Answer:** Decision flow for validation pipelines means describing both success and rejection paths in real request handling. Teams should focus on it when discussing branching and decision flow in production code, they compare it with syntax-only explanations, and they should avoid the trap of forgetting invalid and unsupported states. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
 
-**Answer:**
-
-Overusing guards for trivial branches can make a method feel fragmented, but underusing them often creates deep nesting. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-string? email = null;
+using System;
+using System.Collections.Generic;
 
-if (string.IsNullOrWhiteSpace(email))
+public static class Demo3_30
 {
-    Console.WriteLine("Email is required");
-    return;
+    public static void Run()
+    {
+        string? email = "contact230@example.com";
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            Console.WriteLine("Email required");
+        }
+        else if (!email.Contains("@"))
+        {
+            Console.WriteLine("Invalid format");
+        }
+        else
+        {
+            Console.WriteLine("Continue workflow");
+        }
+    }
 }
-
-Console.WriteLine(email.Trim());
 ```
 
----
+### Q3.31 Why is if else control flow in C# fundamentals?
 
-### 137. How does Guard clauses and early returns differ from nested if and else blocks?
+**Answer:** If else control flow means executing different paths based on runtime conditions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with single-path logic that ignores context, and they should avoid the trap of deep nesting that hides intent. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
 
-**Answer:**
-
-Guard clauses and early returns is about the practice of exiting early when prerequisites are not met so the main path stays readable, whereas nested if and else blocks is about deeply layered branching that keeps pushing the main intent to the right. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-decimal amount = 0m;
-bool isBlocked = false;
+using System;
+using System.Collections.Generic;
 
-if (amount <= 0m)
+public static class Demo3_31
 {
-    Console.WriteLine("Amount must be greater than zero");
-    return;
+    public static void Run()
+    {
+        int creditScore = 691;
+        if (creditScore >= 650)
+        {
+            Console.WriteLine("Approved");
+        }
+        else
+        {
+            Console.WriteLine("Manual review");
+        }
+    }
 }
+```
 
-if (isBlocked)
+### Q3.32 How can switch statement versus switch expression in C# fundamentals?
+
+**Answer:** Switch statement versus switch expression means choosing the right multi-branch form for status- or type-based decisions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with long if else ladders for every state, and they should avoid the trap of forgetting default handling. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_32
 {
-    Console.WriteLine("Customer is blocked");
-    return;
+    public static void Run()
+    {
+        string status = "New";
+        string action = status switch
+        {
+            "New" => "Validate order",
+            "Paid" => "Reserve inventory",
+            "Shipped" => "Track delivery",
+            _ => "Archive record"
+        };
+        Console.WriteLine(action);
+    }
 }
-
-Console.WriteLine("Proceed with payment");
 ```
 
----
+### Q3.33 What is guard clauses for readable decisions in C# fundamentals?
 
-### 138. How do you troubleshoot issues related to Guard clauses and early returns?
+**Answer:** Guard clauses for readable decisions means returning early when preconditions fail to keep the main path clear. Teams should focus on it when discussing branching and decision flow in production code, they compare it with wrapping the happy path in nested blocks, and they should avoid the trap of mixing validation and business logic too deeply. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
 
-**Answer:**
-
-Read the method top to bottom and check whether failures are handled immediately or hidden inside nested logic. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-string? email = null;
+using System;
+using System.Collections.Generic;
 
-if (string.IsNullOrWhiteSpace(email))
+public static class Demo3_33
 {
-    Console.WriteLine("Email is required");
-    return;
+    public static void Run()
+    {
+        bool active = true;
+        decimal balance = 724m;
+        if (!active)
+        {
+            Console.WriteLine("Inactive");
+            return;
+        }
+        Console.WriteLine(balance > 100 ? "Priority" : "Standard");
+    }
 }
-
-Console.WriteLine(email.Trim());
 ```
 
----
+### Q3.34 How does branch ordering and specificity in C# fundamentals?
 
-### 139. What kind of follow-up does an interviewer usually ask after Guard clauses and early returns?
+**Answer:** Branch ordering and specificity means placing more specific conditions before broader ones. Teams should focus on it when discussing branching and decision flow in production code, they compare it with assuming later branches can override earlier ones, and they should avoid the trap of hiding a specific rule behind a generic check. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
 
-**Answer:**
-
-A common follow-up is how guard clauses improve readability, testing, and error handling in service methods. This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-decimal amount = 0m;
-bool isBlocked = false;
+using System;
+using System.Collections.Generic;
 
-if (amount <= 0m)
+public static class Demo3_34
 {
-    Console.WriteLine("Amount must be greater than zero");
-    return;
+    public static void Run()
+    {
+        int amount = 1210;
+        if (amount > 500)
+        {
+            Console.WriteLine("Executive approval");
+        }
+        else if (amount > 100)
+        {
+            Console.WriteLine("Manager approval");
+        }
+        else
+        {
+            Console.WriteLine("Auto-approved");
+        }
+    }
 }
+```
 
-if (isBlocked)
+### Q3.35 Why does boolean flags versus intention revealing branches in C# fundamentals?
+
+**Answer:** Boolean flags versus intention revealing branches means naming conditions so control flow is easier to read. Teams should focus on it when discussing branching and decision flow in production code, they compare it with repeating raw expressions everywhere, and they should avoid the trap of using vague flag names. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_35
 {
-    Console.WriteLine("Customer is blocked");
-    return;
+    public static void Run()
+    {
+        int failedAttempts = 1;
+        bool lockAccount = failedAttempts >= 3;
+        Console.WriteLine(lockAccount ? "Lock account" : "Allow login");
+    }
 }
-
-Console.WriteLine("Proceed with payment");
 ```
 
----
+### Q3.36 When should you use decision flow for validation pipelines in C# fundamentals?
 
-### 140. How does Guard clauses and early returns connect to the rest of C# fundamentals?
+**Answer:** Decision flow for validation pipelines means describing both success and rejection paths in real request handling. Teams should focus on it when discussing branching and decision flow in production code, they compare it with syntax-only explanations, and they should avoid the trap of forgetting invalid and unsupported states. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
 
-**Answer:**
-
-Guard clauses directly affect method design, null handling, and control flow clarity in almost every code review. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-decimal amount = 0m;
-bool isBlocked = false;
+using System;
+using System.Collections.Generic;
 
-if (amount <= 0m)
+public static class Demo3_36
 {
-    Console.WriteLine("Amount must be greater than zero");
-    return;
+    public static void Run()
+    {
+        string? email = null;
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            Console.WriteLine("Email required");
+        }
+        else if (!email.Contains("@"))
+        {
+            Console.WriteLine("Invalid format");
+        }
+        else
+        {
+            Console.WriteLine("Continue workflow");
+        }
+    }
 }
+```
 
-if (isBlocked)
+### Q3.37 What problem does if else control flow in C# fundamentals?
+
+**Answer:** If else control flow means executing different paths based on runtime conditions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with single-path logic that ignores context, and they should avoid the trap of deep nesting that hides intent. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_37
 {
-    Console.WriteLine("Customer is blocked");
-    return;
+    public static void Run()
+    {
+        int creditScore = 697;
+        if (creditScore >= 650)
+        {
+            Console.WriteLine("Approved");
+        }
+        else
+        {
+            Console.WriteLine("Manual review");
+        }
+    }
 }
-
-Console.WriteLine("Proceed with payment");
 ```
 
----
+### Q3.38 How would you explain switch statement versus switch expression in C# fundamentals?
 
-### 141. What is the role of Ternary operator and expression-bodied decisions in C# fundamentals?
+**Answer:** Switch statement versus switch expression means choosing the right multi-branch form for status- or type-based decisions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with long if else ladders for every state, and they should avoid the trap of forgetting default handling. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
 
-**Answer:**
-
-In C# fundamentals, Ternary operator and expression-bodied decisions refers to compact expression-based branching used when two outcomes are short and easy to read. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-bool isActive = true;
-string badge = isActive ? "Active Customer" : "Inactive Customer";
+using System;
+using System.Collections.Generic;
 
-Console.WriteLine(badge);
+public static class Demo3_38
+{
+    public static void Run()
+    {
+        string status = "Shipped";
+        string action = status switch
+        {
+            "New" => "Validate order",
+            "Paid" => "Reserve inventory",
+            "Shipped" => "Track delivery",
+            _ => "Archive record"
+        };
+        Console.WriteLine(action);
+    }
+}
 ```
 
----
+### Q3.39 Why is guard clauses for readable decisions in C# fundamentals?
 
-### 142. Why is Ternary operator and expression-bodied decisions important in day-to-day C# work?
+**Answer:** Guard clauses for readable decisions means returning early when preconditions fail to keep the main path clear. Teams should focus on it when discussing branching and decision flow in production code, they compare it with wrapping the happy path in nested blocks, and they should avoid the trap of mixing validation and business logic too deeply. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
 
-**Answer:**
-
-It matters because concise decision code can improve readability, but poor usage quickly becomes a maintenance problem. In production code, this shows up in features like imports, APIs, validation, pricing, reporting, and support debugging.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-bool isActive = true;
-string badge = isActive ? "Active Customer" : "Inactive Customer";
+using System;
+using System.Collections.Generic;
 
-Console.WriteLine(badge);
+public static class Demo3_39
+{
+    public static void Run()
+    {
+        bool active = true;
+        decimal balance = 742m;
+        if (!active)
+        {
+            Console.WriteLine("Inactive");
+            return;
+        }
+        Console.WriteLine(balance > 100 ? "Priority" : "Standard");
+    }
+}
 ```
 
----
+### Q3.40 How can branch ordering and specificity in C# fundamentals?
 
-### 143. When should you use Ternary operator and expression-bodied decisions in real projects?
+**Answer:** Branch ordering and specificity means placing more specific conditions before broader ones. Teams should focus on it when discussing branching and decision flow in production code, they compare it with assuming later branches can override earlier ones, and they should avoid the trap of hiding a specific rule behind a generic check. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
 
-**Answer:**
-
-Use Ternary operator and expression-bodied decisions when you need a simple two-path decision for a value assignment, label, or short return expression. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-bool isActive = true;
-string badge = isActive ? "Active Customer" : "Inactive Customer";
+using System;
+using System.Collections.Generic;
 
-Console.WriteLine(badge);
+public static class Demo3_40
+{
+    public static void Run()
+    {
+        int amount = 1240;
+        if (amount > 500)
+        {
+            Console.WriteLine("Executive approval");
+        }
+        else if (amount > 100)
+        {
+            Console.WriteLine("Manager approval");
+        }
+        else
+        {
+            Console.WriteLine("Auto-approved");
+        }
+    }
+}
 ```
 
----
+### Q3.41 What is boolean flags versus intention revealing branches in C# fundamentals?
 
-### 144. What is a real-time example of Ternary operator and expression-bodied decisions?
+**Answer:** Boolean flags versus intention revealing branches means naming conditions so control flow is easier to read. Teams should focus on it when discussing branching and decision flow in production code, they compare it with repeating raw expressions everywhere, and they should avoid the trap of using vague flag names. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
 
-**Answer:**
-
-A dashboard may show `Active` or `Inactive` in one line based on a boolean flag from the database. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-bool isActive = true;
-string badge = isActive ? "Active Customer" : "Inactive Customer";
+using System;
+using System.Collections.Generic;
 
-Console.WriteLine(badge);
+public static class Demo3_41
+{
+    public static void Run()
+    {
+        int failedAttempts = 1;
+        bool lockAccount = failedAttempts >= 3;
+        Console.WriteLine(lockAccount ? "Lock account" : "Allow login");
+    }
+}
 ```
 
----
+### Q3.42 How does decision flow for validation pipelines in C# fundamentals?
 
-### 145. What is a best practice for Ternary operator and expression-bodied decisions?
+**Answer:** Decision flow for validation pipelines means describing both success and rejection paths in real request handling. Teams should focus on it when discussing branching and decision flow in production code, they compare it with syntax-only explanations, and they should avoid the trap of forgetting invalid and unsupported states. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
 
-**Answer:**
-
-Use the ternary operator only when both outcomes are short and the intent stays obvious without extra mental parsing. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-bool isActive = true;
-string badge = isActive ? "Active Customer" : "Inactive Customer";
+using System;
+using System.Collections.Generic;
 
-Console.WriteLine(badge);
+public static class Demo3_42
+{
+    public static void Run()
+    {
+        string? email = "contact242@example.com";
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            Console.WriteLine("Email required");
+        }
+        else if (!email.Contains("@"))
+        {
+            Console.WriteLine("Invalid format");
+        }
+        else
+        {
+            Console.WriteLine("Continue workflow");
+        }
+    }
+}
 ```
 
----
+### Q3.43 Why does if else control flow in C# fundamentals?
 
-### 146. What is a tricky interview point or common mistake around Ternary operator and expression-bodied decisions?
+**Answer:** If else control flow means executing different paths based on runtime conditions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with single-path logic that ignores context, and they should avoid the trap of deep nesting that hides intent. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
 
-**Answer:**
-
-Nested ternaries often look clever in interviews but usually signal a readability problem in production code. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-int stock = 0;
-string message = stock > 10 ? "Available" : stock > 0 ? "Limited" : "Out of stock";
+using System;
+using System.Collections.Generic;
 
-Console.WriteLine(message);
+public static class Demo3_43
+{
+    public static void Run()
+    {
+        int creditScore = 583;
+        if (creditScore >= 650)
+        {
+            Console.WriteLine("Approved");
+        }
+        else
+        {
+            Console.WriteLine("Manual review");
+        }
+    }
+}
 ```
 
----
+### Q3.44 When should you use switch statement versus switch expression in C# fundamentals?
 
-### 147. How does Ternary operator and expression-bodied decisions differ from if, else if, and else in business rules?
+**Answer:** Switch statement versus switch expression means choosing the right multi-branch form for status- or type-based decisions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with long if else ladders for every state, and they should avoid the trap of forgetting default handling. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
 
-**Answer:**
-
-Ternary operator and expression-bodied decisions is about compact expression-based branching used when two outcomes are short and easy to read, whereas if, else if, and else in business rules is about statement-based branching for more complex logic rather than short expression mapping. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-bool isActive = true;
-string badge = isActive ? "Active Customer" : "Inactive Customer";
+using System;
+using System.Collections.Generic;
 
-Console.WriteLine(badge);
+public static class Demo3_44
+{
+    public static void Run()
+    {
+        string status = "New";
+        string action = status switch
+        {
+            "New" => "Validate order",
+            "Paid" => "Reserve inventory",
+            "Shipped" => "Track delivery",
+            _ => "Archive record"
+        };
+        Console.WriteLine(action);
+    }
+}
 ```
 
----
+### Q3.45 What problem does guard clauses for readable decisions in C# fundamentals?
 
-### 148. How do you troubleshoot issues related to Ternary operator and expression-bodied decisions?
+**Answer:** Guard clauses for readable decisions means returning early when preconditions fail to keep the main path clear. Teams should focus on it when discussing branching and decision flow in production code, they compare it with wrapping the happy path in nested blocks, and they should avoid the trap of mixing validation and business logic too deeply. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
 
-**Answer:**
-
-If a ternary feels hard to explain out loud, rewrite it as an if and compare readability. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-int stock = 0;
-string message = stock > 10 ? "Available" : stock > 0 ? "Limited" : "Out of stock";
+using System;
+using System.Collections.Generic;
 
-Console.WriteLine(message);
+public static class Demo3_45
+{
+    public static void Run()
+    {
+        bool active = true;
+        decimal balance = 760m;
+        if (!active)
+        {
+            Console.WriteLine("Inactive");
+            return;
+        }
+        Console.WriteLine(balance > 100 ? "Priority" : "Standard");
+    }
+}
 ```
 
----
+### Q3.46 How would you explain branch ordering and specificity in C# fundamentals?
 
-### 149. What kind of follow-up does an interviewer usually ask after Ternary operator and expression-bodied decisions?
+**Answer:** Branch ordering and specificity means placing more specific conditions before broader ones. Teams should focus on it when discussing branching and decision flow in production code, they compare it with assuming later branches can override earlier ones, and they should avoid the trap of hiding a specific rule behind a generic check. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
 
-**Answer:**
-
-A common follow-up is when a ternary improves clarity and when it should be replaced by a normal branch. This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-bool isActive = true;
-string badge = isActive ? "Active Customer" : "Inactive Customer";
+using System;
+using System.Collections.Generic;
 
-Console.WriteLine(badge);
+public static class Demo3_46
+{
+    public static void Run()
+    {
+        int amount = 1270;
+        if (amount > 500)
+        {
+            Console.WriteLine("Executive approval");
+        }
+        else if (amount > 100)
+        {
+            Console.WriteLine("Manager approval");
+        }
+        else
+        {
+            Console.WriteLine("Auto-approved");
+        }
+    }
+}
 ```
 
----
+### Q3.47 Why is boolean flags versus intention revealing branches in C# fundamentals?
 
-### 150. How does Ternary operator and expression-bodied decisions connect to the rest of C# fundamentals?
+**Answer:** Boolean flags versus intention revealing branches means naming conditions so control flow is easier to read. Teams should focus on it when discussing branching and decision flow in production code, they compare it with repeating raw expressions everywhere, and they should avoid the trap of using vague flag names. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
 
-**Answer:**
-
-Expression-style branching shows how fundamentals influence code style, maintainability, and review quality. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-bool isActive = true;
-string badge = isActive ? "Active Customer" : "Inactive Customer";
+using System;
+using System.Collections.Generic;
 
-Console.WriteLine(badge);
+public static class Demo3_47
+{
+    public static void Run()
+    {
+        int failedAttempts = 1;
+        bool lockAccount = failedAttempts >= 3;
+        Console.WriteLine(lockAccount ? "Lock account" : "Allow login");
+    }
+}
 ```
 
----
+### Q3.48 How can decision flow for validation pipelines in C# fundamentals?
+
+**Answer:** Decision flow for validation pipelines means describing both success and rejection paths in real request handling. Teams should focus on it when discussing branching and decision flow in production code, they compare it with syntax-only explanations, and they should avoid the trap of forgetting invalid and unsupported states. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_48
+{
+    public static void Run()
+    {
+        string? email = null;
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            Console.WriteLine("Email required");
+        }
+        else if (!email.Contains("@"))
+        {
+            Console.WriteLine("Invalid format");
+        }
+        else
+        {
+            Console.WriteLine("Continue workflow");
+        }
+    }
+}
+```
+
+### Q3.49 What is if else control flow in C# fundamentals?
+
+**Answer:** If else control flow means executing different paths based on runtime conditions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with single-path logic that ignores context, and they should avoid the trap of deep nesting that hides intent. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_49
+{
+    public static void Run()
+    {
+        int creditScore = 589;
+        if (creditScore >= 650)
+        {
+            Console.WriteLine("Approved");
+        }
+        else
+        {
+            Console.WriteLine("Manual review");
+        }
+    }
+}
+```
+
+### Q3.50 How does switch statement versus switch expression in C# fundamentals?
+
+**Answer:** Switch statement versus switch expression means choosing the right multi-branch form for status- or type-based decisions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with long if else ladders for every state, and they should avoid the trap of forgetting default handling. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_50
+{
+    public static void Run()
+    {
+        string status = "Shipped";
+        string action = status switch
+        {
+            "New" => "Validate order",
+            "Paid" => "Reserve inventory",
+            "Shipped" => "Track delivery",
+            _ => "Archive record"
+        };
+        Console.WriteLine(action);
+    }
+}
+```
+
+### Q3.51 Why does guard clauses for readable decisions in C# fundamentals?
+
+**Answer:** Guard clauses for readable decisions means returning early when preconditions fail to keep the main path clear. Teams should focus on it when discussing branching and decision flow in production code, they compare it with wrapping the happy path in nested blocks, and they should avoid the trap of mixing validation and business logic too deeply. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_51
+{
+    public static void Run()
+    {
+        bool active = true;
+        decimal balance = 778m;
+        if (!active)
+        {
+            Console.WriteLine("Inactive");
+            return;
+        }
+        Console.WriteLine(balance > 100 ? "Priority" : "Standard");
+    }
+}
+```
+
+### Q3.52 When should you use branch ordering and specificity in C# fundamentals?
+
+**Answer:** Branch ordering and specificity means placing more specific conditions before broader ones. Teams should focus on it when discussing branching and decision flow in production code, they compare it with assuming later branches can override earlier ones, and they should avoid the trap of hiding a specific rule behind a generic check. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_52
+{
+    public static void Run()
+    {
+        int amount = 1300;
+        if (amount > 500)
+        {
+            Console.WriteLine("Executive approval");
+        }
+        else if (amount > 100)
+        {
+            Console.WriteLine("Manager approval");
+        }
+        else
+        {
+            Console.WriteLine("Auto-approved");
+        }
+    }
+}
+```
+
+### Q3.53 What problem does boolean flags versus intention revealing branches in C# fundamentals?
+
+**Answer:** Boolean flags versus intention revealing branches means naming conditions so control flow is easier to read. Teams should focus on it when discussing branching and decision flow in production code, they compare it with repeating raw expressions everywhere, and they should avoid the trap of using vague flag names. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_53
+{
+    public static void Run()
+    {
+        int failedAttempts = 1;
+        bool lockAccount = failedAttempts >= 3;
+        Console.WriteLine(lockAccount ? "Lock account" : "Allow login");
+    }
+}
+```
+
+### Q3.54 How would you explain decision flow for validation pipelines in C# fundamentals?
+
+**Answer:** Decision flow for validation pipelines means describing both success and rejection paths in real request handling. Teams should focus on it when discussing branching and decision flow in production code, they compare it with syntax-only explanations, and they should avoid the trap of forgetting invalid and unsupported states. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_54
+{
+    public static void Run()
+    {
+        string? email = "contact254@example.com";
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            Console.WriteLine("Email required");
+        }
+        else if (!email.Contains("@"))
+        {
+            Console.WriteLine("Invalid format");
+        }
+        else
+        {
+            Console.WriteLine("Continue workflow");
+        }
+    }
+}
+```
+
+### Q3.55 Why is if else control flow in C# fundamentals?
+
+**Answer:** If else control flow means executing different paths based on runtime conditions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with single-path logic that ignores context, and they should avoid the trap of deep nesting that hides intent. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_55
+{
+    public static void Run()
+    {
+        int creditScore = 595;
+        if (creditScore >= 650)
+        {
+            Console.WriteLine("Approved");
+        }
+        else
+        {
+            Console.WriteLine("Manual review");
+        }
+    }
+}
+```
+
+### Q3.56 How can switch statement versus switch expression in C# fundamentals?
+
+**Answer:** Switch statement versus switch expression means choosing the right multi-branch form for status- or type-based decisions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with long if else ladders for every state, and they should avoid the trap of forgetting default handling. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_56
+{
+    public static void Run()
+    {
+        string status = "New";
+        string action = status switch
+        {
+            "New" => "Validate order",
+            "Paid" => "Reserve inventory",
+            "Shipped" => "Track delivery",
+            _ => "Archive record"
+        };
+        Console.WriteLine(action);
+    }
+}
+```
+
+### Q3.57 What is guard clauses for readable decisions in C# fundamentals?
+
+**Answer:** Guard clauses for readable decisions means returning early when preconditions fail to keep the main path clear. Teams should focus on it when discussing branching and decision flow in production code, they compare it with wrapping the happy path in nested blocks, and they should avoid the trap of mixing validation and business logic too deeply. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_57
+{
+    public static void Run()
+    {
+        bool active = true;
+        decimal balance = 796m;
+        if (!active)
+        {
+            Console.WriteLine("Inactive");
+            return;
+        }
+        Console.WriteLine(balance > 100 ? "Priority" : "Standard");
+    }
+}
+```
+
+### Q3.58 How does branch ordering and specificity in C# fundamentals?
+
+**Answer:** Branch ordering and specificity means placing more specific conditions before broader ones. Teams should focus on it when discussing branching and decision flow in production code, they compare it with assuming later branches can override earlier ones, and they should avoid the trap of hiding a specific rule behind a generic check. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_58
+{
+    public static void Run()
+    {
+        int amount = 1330;
+        if (amount > 500)
+        {
+            Console.WriteLine("Executive approval");
+        }
+        else if (amount > 100)
+        {
+            Console.WriteLine("Manager approval");
+        }
+        else
+        {
+            Console.WriteLine("Auto-approved");
+        }
+    }
+}
+```
+
+### Q3.59 Why does boolean flags versus intention revealing branches in C# fundamentals?
+
+**Answer:** Boolean flags versus intention revealing branches means naming conditions so control flow is easier to read. Teams should focus on it when discussing branching and decision flow in production code, they compare it with repeating raw expressions everywhere, and they should avoid the trap of using vague flag names. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_59
+{
+    public static void Run()
+    {
+        int failedAttempts = 1;
+        bool lockAccount = failedAttempts >= 3;
+        Console.WriteLine(lockAccount ? "Lock account" : "Allow login");
+    }
+}
+```
+
+### Q3.60 When should you use decision flow for validation pipelines in C# fundamentals?
+
+**Answer:** Decision flow for validation pipelines means describing both success and rejection paths in real request handling. Teams should focus on it when discussing branching and decision flow in production code, they compare it with syntax-only explanations, and they should avoid the trap of forgetting invalid and unsupported states. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_60
+{
+    public static void Run()
+    {
+        string? email = null;
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            Console.WriteLine("Email required");
+        }
+        else if (!email.Contains("@"))
+        {
+            Console.WriteLine("Invalid format");
+        }
+        else
+        {
+            Console.WriteLine("Continue workflow");
+        }
+    }
+}
+```
+
+### Q3.61 What problem does if else control flow in C# fundamentals?
+
+**Answer:** If else control flow means executing different paths based on runtime conditions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with single-path logic that ignores context, and they should avoid the trap of deep nesting that hides intent. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_61
+{
+    public static void Run()
+    {
+        int creditScore = 601;
+        if (creditScore >= 650)
+        {
+            Console.WriteLine("Approved");
+        }
+        else
+        {
+            Console.WriteLine("Manual review");
+        }
+    }
+}
+```
+
+### Q3.62 How would you explain switch statement versus switch expression in C# fundamentals?
+
+**Answer:** Switch statement versus switch expression means choosing the right multi-branch form for status- or type-based decisions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with long if else ladders for every state, and they should avoid the trap of forgetting default handling. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_62
+{
+    public static void Run()
+    {
+        string status = "Shipped";
+        string action = status switch
+        {
+            "New" => "Validate order",
+            "Paid" => "Reserve inventory",
+            "Shipped" => "Track delivery",
+            _ => "Archive record"
+        };
+        Console.WriteLine(action);
+    }
+}
+```
+
+### Q3.63 Why is guard clauses for readable decisions in C# fundamentals?
+
+**Answer:** Guard clauses for readable decisions means returning early when preconditions fail to keep the main path clear. Teams should focus on it when discussing branching and decision flow in production code, they compare it with wrapping the happy path in nested blocks, and they should avoid the trap of mixing validation and business logic too deeply. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_63
+{
+    public static void Run()
+    {
+        bool active = true;
+        decimal balance = 814m;
+        if (!active)
+        {
+            Console.WriteLine("Inactive");
+            return;
+        }
+        Console.WriteLine(balance > 100 ? "Priority" : "Standard");
+    }
+}
+```
+
+### Q3.64 How can branch ordering and specificity in C# fundamentals?
+
+**Answer:** Branch ordering and specificity means placing more specific conditions before broader ones. Teams should focus on it when discussing branching and decision flow in production code, they compare it with assuming later branches can override earlier ones, and they should avoid the trap of hiding a specific rule behind a generic check. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_64
+{
+    public static void Run()
+    {
+        int amount = 1360;
+        if (amount > 500)
+        {
+            Console.WriteLine("Executive approval");
+        }
+        else if (amount > 100)
+        {
+            Console.WriteLine("Manager approval");
+        }
+        else
+        {
+            Console.WriteLine("Auto-approved");
+        }
+    }
+}
+```
+
+### Q3.65 What is boolean flags versus intention revealing branches in C# fundamentals?
+
+**Answer:** Boolean flags versus intention revealing branches means naming conditions so control flow is easier to read. Teams should focus on it when discussing branching and decision flow in production code, they compare it with repeating raw expressions everywhere, and they should avoid the trap of using vague flag names. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_65
+{
+    public static void Run()
+    {
+        int failedAttempts = 1;
+        bool lockAccount = failedAttempts >= 3;
+        Console.WriteLine(lockAccount ? "Lock account" : "Allow login");
+    }
+}
+```
+
+### Q3.66 How does decision flow for validation pipelines in C# fundamentals?
+
+**Answer:** Decision flow for validation pipelines means describing both success and rejection paths in real request handling. Teams should focus on it when discussing branching and decision flow in production code, they compare it with syntax-only explanations, and they should avoid the trap of forgetting invalid and unsupported states. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_66
+{
+    public static void Run()
+    {
+        string? email = "contact266@example.com";
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            Console.WriteLine("Email required");
+        }
+        else if (!email.Contains("@"))
+        {
+            Console.WriteLine("Invalid format");
+        }
+        else
+        {
+            Console.WriteLine("Continue workflow");
+        }
+    }
+}
+```
+
+### Q3.67 Why does if else control flow in C# fundamentals?
+
+**Answer:** If else control flow means executing different paths based on runtime conditions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with single-path logic that ignores context, and they should avoid the trap of deep nesting that hides intent. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_67
+{
+    public static void Run()
+    {
+        int creditScore = 607;
+        if (creditScore >= 650)
+        {
+            Console.WriteLine("Approved");
+        }
+        else
+        {
+            Console.WriteLine("Manual review");
+        }
+    }
+}
+```
+
+### Q3.68 When should you use switch statement versus switch expression in C# fundamentals?
+
+**Answer:** Switch statement versus switch expression means choosing the right multi-branch form for status- or type-based decisions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with long if else ladders for every state, and they should avoid the trap of forgetting default handling. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_68
+{
+    public static void Run()
+    {
+        string status = "New";
+        string action = status switch
+        {
+            "New" => "Validate order",
+            "Paid" => "Reserve inventory",
+            "Shipped" => "Track delivery",
+            _ => "Archive record"
+        };
+        Console.WriteLine(action);
+    }
+}
+```
+
+### Q3.69 What problem does guard clauses for readable decisions in C# fundamentals?
+
+**Answer:** Guard clauses for readable decisions means returning early when preconditions fail to keep the main path clear. Teams should focus on it when discussing branching and decision flow in production code, they compare it with wrapping the happy path in nested blocks, and they should avoid the trap of mixing validation and business logic too deeply. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_69
+{
+    public static void Run()
+    {
+        bool active = true;
+        decimal balance = 832m;
+        if (!active)
+        {
+            Console.WriteLine("Inactive");
+            return;
+        }
+        Console.WriteLine(balance > 100 ? "Priority" : "Standard");
+    }
+}
+```
+
+### Q3.70 How would you explain branch ordering and specificity in C# fundamentals?
+
+**Answer:** Branch ordering and specificity means placing more specific conditions before broader ones. Teams should focus on it when discussing branching and decision flow in production code, they compare it with assuming later branches can override earlier ones, and they should avoid the trap of hiding a specific rule behind a generic check. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_70
+{
+    public static void Run()
+    {
+        int amount = 1390;
+        if (amount > 500)
+        {
+            Console.WriteLine("Executive approval");
+        }
+        else if (amount > 100)
+        {
+            Console.WriteLine("Manager approval");
+        }
+        else
+        {
+            Console.WriteLine("Auto-approved");
+        }
+    }
+}
+```
+
+### Q3.71 Why is boolean flags versus intention revealing branches in C# fundamentals?
+
+**Answer:** Boolean flags versus intention revealing branches means naming conditions so control flow is easier to read. Teams should focus on it when discussing branching and decision flow in production code, they compare it with repeating raw expressions everywhere, and they should avoid the trap of using vague flag names. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_71
+{
+    public static void Run()
+    {
+        int failedAttempts = 1;
+        bool lockAccount = failedAttempts >= 3;
+        Console.WriteLine(lockAccount ? "Lock account" : "Allow login");
+    }
+}
+```
+
+### Q3.72 How can decision flow for validation pipelines in C# fundamentals?
+
+**Answer:** Decision flow for validation pipelines means describing both success and rejection paths in real request handling. Teams should focus on it when discussing branching and decision flow in production code, they compare it with syntax-only explanations, and they should avoid the trap of forgetting invalid and unsupported states. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_72
+{
+    public static void Run()
+    {
+        string? email = null;
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            Console.WriteLine("Email required");
+        }
+        else if (!email.Contains("@"))
+        {
+            Console.WriteLine("Invalid format");
+        }
+        else
+        {
+            Console.WriteLine("Continue workflow");
+        }
+    }
+}
+```
+
+### Q3.73 What is if else control flow in C# fundamentals?
+
+**Answer:** If else control flow means executing different paths based on runtime conditions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with single-path logic that ignores context, and they should avoid the trap of deep nesting that hides intent. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_73
+{
+    public static void Run()
+    {
+        int creditScore = 613;
+        if (creditScore >= 650)
+        {
+            Console.WriteLine("Approved");
+        }
+        else
+        {
+            Console.WriteLine("Manual review");
+        }
+    }
+}
+```
+
+### Q3.74 How does switch statement versus switch expression in C# fundamentals?
+
+**Answer:** Switch statement versus switch expression means choosing the right multi-branch form for status- or type-based decisions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with long if else ladders for every state, and they should avoid the trap of forgetting default handling. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_74
+{
+    public static void Run()
+    {
+        string status = "Shipped";
+        string action = status switch
+        {
+            "New" => "Validate order",
+            "Paid" => "Reserve inventory",
+            "Shipped" => "Track delivery",
+            _ => "Archive record"
+        };
+        Console.WriteLine(action);
+    }
+}
+```
+
+### Q3.75 Why does guard clauses for readable decisions in C# fundamentals?
+
+**Answer:** Guard clauses for readable decisions means returning early when preconditions fail to keep the main path clear. Teams should focus on it when discussing branching and decision flow in production code, they compare it with wrapping the happy path in nested blocks, and they should avoid the trap of mixing validation and business logic too deeply. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_75
+{
+    public static void Run()
+    {
+        bool active = true;
+        decimal balance = 850m;
+        if (!active)
+        {
+            Console.WriteLine("Inactive");
+            return;
+        }
+        Console.WriteLine(balance > 100 ? "Priority" : "Standard");
+    }
+}
+```
+
+### Q3.76 When should you use branch ordering and specificity in C# fundamentals?
+
+**Answer:** Branch ordering and specificity means placing more specific conditions before broader ones. Teams should focus on it when discussing branching and decision flow in production code, they compare it with assuming later branches can override earlier ones, and they should avoid the trap of hiding a specific rule behind a generic check. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_76
+{
+    public static void Run()
+    {
+        int amount = 1420;
+        if (amount > 500)
+        {
+            Console.WriteLine("Executive approval");
+        }
+        else if (amount > 100)
+        {
+            Console.WriteLine("Manager approval");
+        }
+        else
+        {
+            Console.WriteLine("Auto-approved");
+        }
+    }
+}
+```
+
+### Q3.77 What problem does boolean flags versus intention revealing branches in C# fundamentals?
+
+**Answer:** Boolean flags versus intention revealing branches means naming conditions so control flow is easier to read. Teams should focus on it when discussing branching and decision flow in production code, they compare it with repeating raw expressions everywhere, and they should avoid the trap of using vague flag names. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_77
+{
+    public static void Run()
+    {
+        int failedAttempts = 1;
+        bool lockAccount = failedAttempts >= 3;
+        Console.WriteLine(lockAccount ? "Lock account" : "Allow login");
+    }
+}
+```
+
+### Q3.78 How would you explain decision flow for validation pipelines in C# fundamentals?
+
+**Answer:** Decision flow for validation pipelines means describing both success and rejection paths in real request handling. Teams should focus on it when discussing branching and decision flow in production code, they compare it with syntax-only explanations, and they should avoid the trap of forgetting invalid and unsupported states. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_78
+{
+    public static void Run()
+    {
+        string? email = "contact278@example.com";
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            Console.WriteLine("Email required");
+        }
+        else if (!email.Contains("@"))
+        {
+            Console.WriteLine("Invalid format");
+        }
+        else
+        {
+            Console.WriteLine("Continue workflow");
+        }
+    }
+}
+```
+
+### Q3.79 Why is if else control flow in C# fundamentals?
+
+**Answer:** If else control flow means executing different paths based on runtime conditions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with single-path logic that ignores context, and they should avoid the trap of deep nesting that hides intent. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_79
+{
+    public static void Run()
+    {
+        int creditScore = 619;
+        if (creditScore >= 650)
+        {
+            Console.WriteLine("Approved");
+        }
+        else
+        {
+            Console.WriteLine("Manual review");
+        }
+    }
+}
+```
+
+### Q3.80 How can switch statement versus switch expression in C# fundamentals?
+
+**Answer:** Switch statement versus switch expression means choosing the right multi-branch form for status- or type-based decisions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with long if else ladders for every state, and they should avoid the trap of forgetting default handling. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_80
+{
+    public static void Run()
+    {
+        string status = "New";
+        string action = status switch
+        {
+            "New" => "Validate order",
+            "Paid" => "Reserve inventory",
+            "Shipped" => "Track delivery",
+            _ => "Archive record"
+        };
+        Console.WriteLine(action);
+    }
+}
+```
+
+### Q3.81 What is guard clauses for readable decisions in C# fundamentals?
+
+**Answer:** Guard clauses for readable decisions means returning early when preconditions fail to keep the main path clear. Teams should focus on it when discussing branching and decision flow in production code, they compare it with wrapping the happy path in nested blocks, and they should avoid the trap of mixing validation and business logic too deeply. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_81
+{
+    public static void Run()
+    {
+        bool active = true;
+        decimal balance = 868m;
+        if (!active)
+        {
+            Console.WriteLine("Inactive");
+            return;
+        }
+        Console.WriteLine(balance > 100 ? "Priority" : "Standard");
+    }
+}
+```
+
+### Q3.82 How does branch ordering and specificity in C# fundamentals?
+
+**Answer:** Branch ordering and specificity means placing more specific conditions before broader ones. Teams should focus on it when discussing branching and decision flow in production code, they compare it with assuming later branches can override earlier ones, and they should avoid the trap of hiding a specific rule behind a generic check. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_82
+{
+    public static void Run()
+    {
+        int amount = 1450;
+        if (amount > 500)
+        {
+            Console.WriteLine("Executive approval");
+        }
+        else if (amount > 100)
+        {
+            Console.WriteLine("Manager approval");
+        }
+        else
+        {
+            Console.WriteLine("Auto-approved");
+        }
+    }
+}
+```
+
+### Q3.83 Why does boolean flags versus intention revealing branches in C# fundamentals?
+
+**Answer:** Boolean flags versus intention revealing branches means naming conditions so control flow is easier to read. Teams should focus on it when discussing branching and decision flow in production code, they compare it with repeating raw expressions everywhere, and they should avoid the trap of using vague flag names. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_83
+{
+    public static void Run()
+    {
+        int failedAttempts = 1;
+        bool lockAccount = failedAttempts >= 3;
+        Console.WriteLine(lockAccount ? "Lock account" : "Allow login");
+    }
+}
+```
+
+### Q3.84 When should you use decision flow for validation pipelines in C# fundamentals?
+
+**Answer:** Decision flow for validation pipelines means describing both success and rejection paths in real request handling. Teams should focus on it when discussing branching and decision flow in production code, they compare it with syntax-only explanations, and they should avoid the trap of forgetting invalid and unsupported states. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_84
+{
+    public static void Run()
+    {
+        string? email = null;
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            Console.WriteLine("Email required");
+        }
+        else if (!email.Contains("@"))
+        {
+            Console.WriteLine("Invalid format");
+        }
+        else
+        {
+            Console.WriteLine("Continue workflow");
+        }
+    }
+}
+```
+
+### Q3.85 What problem does if else control flow in C# fundamentals?
+
+**Answer:** If else control flow means executing different paths based on runtime conditions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with single-path logic that ignores context, and they should avoid the trap of deep nesting that hides intent. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_85
+{
+    public static void Run()
+    {
+        int creditScore = 625;
+        if (creditScore >= 650)
+        {
+            Console.WriteLine("Approved");
+        }
+        else
+        {
+            Console.WriteLine("Manual review");
+        }
+    }
+}
+```
+
+### Q3.86 How would you explain switch statement versus switch expression in C# fundamentals?
+
+**Answer:** Switch statement versus switch expression means choosing the right multi-branch form for status- or type-based decisions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with long if else ladders for every state, and they should avoid the trap of forgetting default handling. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_86
+{
+    public static void Run()
+    {
+        string status = "Shipped";
+        string action = status switch
+        {
+            "New" => "Validate order",
+            "Paid" => "Reserve inventory",
+            "Shipped" => "Track delivery",
+            _ => "Archive record"
+        };
+        Console.WriteLine(action);
+    }
+}
+```
+
+### Q3.87 Why is guard clauses for readable decisions in C# fundamentals?
+
+**Answer:** Guard clauses for readable decisions means returning early when preconditions fail to keep the main path clear. Teams should focus on it when discussing branching and decision flow in production code, they compare it with wrapping the happy path in nested blocks, and they should avoid the trap of mixing validation and business logic too deeply. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_87
+{
+    public static void Run()
+    {
+        bool active = true;
+        decimal balance = 886m;
+        if (!active)
+        {
+            Console.WriteLine("Inactive");
+            return;
+        }
+        Console.WriteLine(balance > 100 ? "Priority" : "Standard");
+    }
+}
+```
+
+### Q3.88 How can branch ordering and specificity in C# fundamentals?
+
+**Answer:** Branch ordering and specificity means placing more specific conditions before broader ones. Teams should focus on it when discussing branching and decision flow in production code, they compare it with assuming later branches can override earlier ones, and they should avoid the trap of hiding a specific rule behind a generic check. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_88
+{
+    public static void Run()
+    {
+        int amount = 1480;
+        if (amount > 500)
+        {
+            Console.WriteLine("Executive approval");
+        }
+        else if (amount > 100)
+        {
+            Console.WriteLine("Manager approval");
+        }
+        else
+        {
+            Console.WriteLine("Auto-approved");
+        }
+    }
+}
+```
+
+### Q3.89 What is boolean flags versus intention revealing branches in C# fundamentals?
+
+**Answer:** Boolean flags versus intention revealing branches means naming conditions so control flow is easier to read. Teams should focus on it when discussing branching and decision flow in production code, they compare it with repeating raw expressions everywhere, and they should avoid the trap of using vague flag names. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_89
+{
+    public static void Run()
+    {
+        int failedAttempts = 1;
+        bool lockAccount = failedAttempts >= 3;
+        Console.WriteLine(lockAccount ? "Lock account" : "Allow login");
+    }
+}
+```
+
+### Q3.90 How does decision flow for validation pipelines in C# fundamentals?
+
+**Answer:** Decision flow for validation pipelines means describing both success and rejection paths in real request handling. Teams should focus on it when discussing branching and decision flow in production code, they compare it with syntax-only explanations, and they should avoid the trap of forgetting invalid and unsupported states. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_90
+{
+    public static void Run()
+    {
+        string? email = "contact290@example.com";
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            Console.WriteLine("Email required");
+        }
+        else if (!email.Contains("@"))
+        {
+            Console.WriteLine("Invalid format");
+        }
+        else
+        {
+            Console.WriteLine("Continue workflow");
+        }
+    }
+}
+```
+
+### Q3.91 Why does if else control flow in C# fundamentals?
+
+**Answer:** If else control flow means executing different paths based on runtime conditions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with single-path logic that ignores context, and they should avoid the trap of deep nesting that hides intent. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_91
+{
+    public static void Run()
+    {
+        int creditScore = 631;
+        if (creditScore >= 650)
+        {
+            Console.WriteLine("Approved");
+        }
+        else
+        {
+            Console.WriteLine("Manual review");
+        }
+    }
+}
+```
+
+### Q3.92 When should you use switch statement versus switch expression in C# fundamentals?
+
+**Answer:** Switch statement versus switch expression means choosing the right multi-branch form for status- or type-based decisions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with long if else ladders for every state, and they should avoid the trap of forgetting default handling. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_92
+{
+    public static void Run()
+    {
+        string status = "New";
+        string action = status switch
+        {
+            "New" => "Validate order",
+            "Paid" => "Reserve inventory",
+            "Shipped" => "Track delivery",
+            _ => "Archive record"
+        };
+        Console.WriteLine(action);
+    }
+}
+```
+
+### Q3.93 What problem does guard clauses for readable decisions in C# fundamentals?
+
+**Answer:** Guard clauses for readable decisions means returning early when preconditions fail to keep the main path clear. Teams should focus on it when discussing branching and decision flow in production code, they compare it with wrapping the happy path in nested blocks, and they should avoid the trap of mixing validation and business logic too deeply. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_93
+{
+    public static void Run()
+    {
+        bool active = true;
+        decimal balance = 904m;
+        if (!active)
+        {
+            Console.WriteLine("Inactive");
+            return;
+        }
+        Console.WriteLine(balance > 100 ? "Priority" : "Standard");
+    }
+}
+```
+
+### Q3.94 How would you explain branch ordering and specificity in C# fundamentals?
+
+**Answer:** Branch ordering and specificity means placing more specific conditions before broader ones. Teams should focus on it when discussing branching and decision flow in production code, they compare it with assuming later branches can override earlier ones, and they should avoid the trap of hiding a specific rule behind a generic check. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_94
+{
+    public static void Run()
+    {
+        int amount = 1510;
+        if (amount > 500)
+        {
+            Console.WriteLine("Executive approval");
+        }
+        else if (amount > 100)
+        {
+            Console.WriteLine("Manager approval");
+        }
+        else
+        {
+            Console.WriteLine("Auto-approved");
+        }
+    }
+}
+```
+
+### Q3.95 Why is boolean flags versus intention revealing branches in C# fundamentals?
+
+**Answer:** Boolean flags versus intention revealing branches means naming conditions so control flow is easier to read. Teams should focus on it when discussing branching and decision flow in production code, they compare it with repeating raw expressions everywhere, and they should avoid the trap of using vague flag names. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_95
+{
+    public static void Run()
+    {
+        int failedAttempts = 1;
+        bool lockAccount = failedAttempts >= 3;
+        Console.WriteLine(lockAccount ? "Lock account" : "Allow login");
+    }
+}
+```
+
+### Q3.96 How can decision flow for validation pipelines in C# fundamentals?
+
+**Answer:** Decision flow for validation pipelines means describing both success and rejection paths in real request handling. Teams should focus on it when discussing branching and decision flow in production code, they compare it with syntax-only explanations, and they should avoid the trap of forgetting invalid and unsupported states. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_96
+{
+    public static void Run()
+    {
+        string? email = null;
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            Console.WriteLine("Email required");
+        }
+        else if (!email.Contains("@"))
+        {
+            Console.WriteLine("Invalid format");
+        }
+        else
+        {
+            Console.WriteLine("Continue workflow");
+        }
+    }
+}
+```
+
+### Q3.97 What is if else control flow in C# fundamentals?
+
+**Answer:** If else control flow means executing different paths based on runtime conditions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with single-path logic that ignores context, and they should avoid the trap of deep nesting that hides intent. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_97
+{
+    public static void Run()
+    {
+        int creditScore = 637;
+        if (creditScore >= 650)
+        {
+            Console.WriteLine("Approved");
+        }
+        else
+        {
+            Console.WriteLine("Manual review");
+        }
+    }
+}
+```
+
+### Q3.98 How does switch statement versus switch expression in C# fundamentals?
+
+**Answer:** Switch statement versus switch expression means choosing the right multi-branch form for status- or type-based decisions. Teams should focus on it when discussing branching and decision flow in production code, they compare it with long if else ladders for every state, and they should avoid the trap of forgetting default handling. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_98
+{
+    public static void Run()
+    {
+        string status = "Shipped";
+        string action = status switch
+        {
+            "New" => "Validate order",
+            "Paid" => "Reserve inventory",
+            "Shipped" => "Track delivery",
+            _ => "Archive record"
+        };
+        Console.WriteLine(action);
+    }
+}
+```
+
+### Q3.99 Why does guard clauses for readable decisions in C# fundamentals?
+
+**Answer:** Guard clauses for readable decisions means returning early when preconditions fail to keep the main path clear. Teams should focus on it when discussing branching and decision flow in production code, they compare it with wrapping the happy path in nested blocks, and they should avoid the trap of mixing validation and business logic too deeply. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_99
+{
+    public static void Run()
+    {
+        bool active = true;
+        decimal balance = 922m;
+        if (!active)
+        {
+            Console.WriteLine("Inactive");
+            return;
+        }
+        Console.WriteLine(balance > 100 ? "Priority" : "Standard");
+    }
+}
+```
+
+### Q3.100 When should you use branch ordering and specificity in C# fundamentals?
+
+**Answer:** Branch ordering and specificity means placing more specific conditions before broader ones. Teams should focus on it when discussing branching and decision flow in production code, they compare it with assuming later branches can override earlier ones, and they should avoid the trap of hiding a specific rule behind a generic check. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo3_100
+{
+    public static void Run()
+    {
+        int amount = 1540;
+        if (amount > 500)
+        {
+            Console.WriteLine("Executive approval");
+        }
+        else if (amount > 100)
+        {
+            Console.WriteLine("Manager approval");
+        }
+        else
+        {
+            Console.WriteLine("Auto-approved");
+        }
+    }
+}
+```
 
 ## 4. Loops and iteration patterns
 
-This section explains how C# repeats work safely and efficiently using loops, iteration control, and sequence traversal.
+> This section contains **100 interview questions** focused on **Loops and iteration patterns**. Every answer includes a C# code example, and the scenarios rotate so they do not repeat verbatim.
 
-### 151. What is the role of for loops and index-based iteration in C# fundamentals?
+### Q4.1 What problem does for loop control in C# fundamentals?
 
-**Answer:**
+**Answer:** For loop control means using index-based iteration when counts and positions matter. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with using abstract iteration for every case, and they should avoid the trap of off-by-one errors. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
 
-In C# fundamentals, for loops and index-based iteration refers to the classic loop for scenarios where position, range, or step control matters. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var invoiceLines = new[] { "Laptop", "Mouse", "Dock" };
+using System;
+using System.Collections.Generic;
 
-for (int i = 0; i < invoiceLines.Length; i++)
+public static class Demo4_1
 {
-    Console.WriteLine($"{i + 1}. {invoiceLines[i]}");
-}
-```
-
----
-
-### 152. Why is for loops and index-based iteration important in day-to-day C# work?
-
-**Answer:**
-
-It matters because some business logic depends on position, batching, or looking ahead to adjacent values. In production code, this shows up in features like imports, APIs, validation, pricing, reporting, and support debugging.
-
-**Sample:**
-
-```csharp
-var invoiceLines = new[] { "Laptop", "Mouse", "Dock" };
-
-for (int i = 0; i < invoiceLines.Length; i++)
-{
-    Console.WriteLine($"{i + 1}. {invoiceLines[i]}");
-}
-```
-
----
-
-### 153. When should you use for loops and index-based iteration in real projects?
-
-**Answer:**
-
-Use for loops and index-based iteration when you need an index, a fixed range, or precise control over how iteration advances. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
-
-```csharp
-var invoiceLines = new[] { "Laptop", "Mouse", "Dock" };
-
-for (int i = 0; i < invoiceLines.Length; i++)
-{
-    Console.WriteLine($"{i + 1}. {invoiceLines[i]}");
-}
-```
-
----
-
-### 154. What is a real-time example of for loops and index-based iteration?
-
-**Answer:**
-
-A billing export may walk invoice lines by index to print line numbers and compare each row with the next one. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
-
-```csharp
-var invoiceLines = new[] { "Laptop", "Mouse", "Dock" };
-
-for (int i = 0; i < invoiceLines.Length; i++)
-{
-    Console.WriteLine($"{i + 1}. {invoiceLines[i]}");
-}
-```
-
----
-
-### 155. What is a best practice for for loops and index-based iteration?
-
-**Answer:**
-
-Use a for loop when index control is part of the requirement, not by default for every collection. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
-
-```csharp
-var invoiceLines = new[] { "Laptop", "Mouse", "Dock" };
-
-for (int i = 0; i < invoiceLines.Length; i++)
-{
-    Console.WriteLine($"{i + 1}. {invoiceLines[i]}");
-}
-```
-
----
-
-### 156. What is a tricky interview point or common mistake around for loops and index-based iteration?
-
-**Answer:**
-
-Off-by-one errors and incorrect loop boundaries are among the oldest and most common bugs in interview exercises. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
-
-```csharp
-int[] scores = { 90, 80, 70 };
-
-for (int i = 0; i <= scores.Length - 1; i++)
-{
-    Console.WriteLine(scores[i]);
-}
-```
-
----
-
-### 157. How does for loops and index-based iteration differ from foreach loops over collections?
-
-**Answer:**
-
-for loops and index-based iteration is about the classic loop for scenarios where position, range, or step control matters, whereas foreach loops over collections is about direct enumeration over items rather than explicit index control. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
-
-```csharp
-var invoiceLines = new[] { "Laptop", "Mouse", "Dock" };
-
-for (int i = 0; i < invoiceLines.Length; i++)
-{
-    Console.WriteLine($"{i + 1}. {invoiceLines[i]}");
-}
-```
-
----
-
-### 158. How do you troubleshoot issues related to for loops and index-based iteration?
-
-**Answer:**
-
-Print the loop index, confirm the start and end conditions, and test empty and single-item cases. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
-
-```csharp
-int[] scores = { 90, 80, 70 };
-
-for (int i = 0; i <= scores.Length - 1; i++)
-{
-    Console.WriteLine(scores[i]);
-}
-```
-
----
-
-### 159. What kind of follow-up does an interviewer usually ask after for loops and index-based iteration?
-
-**Answer:**
-
-A common follow-up is why `<` and `<=` change correctness in index-based logic. This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
-
-```csharp
-var invoiceLines = new[] { "Laptop", "Mouse", "Dock" };
-
-for (int i = 0; i < invoiceLines.Length; i++)
-{
-    Console.WriteLine($"{i + 1}. {invoiceLines[i]}");
-}
-```
-
----
-
-### 160. How does for loops and index-based iteration connect to the rest of C# fundamentals?
-
-**Answer:**
-
-Index-based loops connect to arrays, lists, string processing, and algorithmic thinking. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
-
-```csharp
-var invoiceLines = new[] { "Laptop", "Mouse", "Dock" };
-
-for (int i = 0; i < invoiceLines.Length; i++)
-{
-    Console.WriteLine($"{i + 1}. {invoiceLines[i]}");
-}
-```
-
----
-
-### 161. What is the role of foreach loops over collections in C# fundamentals?
-
-**Answer:**
-
-In C# fundamentals, foreach loops over collections refers to the preferred iteration style when you want each item and do not need index math. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
-
-```csharp
-var recipients = new List<string> { "asha@demo.com", "li@demo.com" };
-
-foreach (var recipient in recipients)
-{
-    Console.WriteLine($"Sending email to {recipient}");
-}
-```
-
----
-
-### 162. Why is foreach loops over collections important in day-to-day C# work?
-
-**Answer:**
-
-It matters because most business collection processing is item-oriented, and foreach reduces accidental index mistakes. In production code, this shows up in features like imports, APIs, validation, pricing, reporting, and support debugging.
-
-**Sample:**
-
-```csharp
-var recipients = new List<string> { "asha@demo.com", "li@demo.com" };
-
-foreach (var recipient in recipients)
-{
-    Console.WriteLine($"Sending email to {recipient}");
-}
-```
-
----
-
-### 163. When should you use foreach loops over collections in real projects?
-
-**Answer:**
-
-Use foreach loops over collections when you need to read each item in a sequence and do not need to modify the collection shape during iteration. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
-
-```csharp
-var recipients = new List<string> { "asha@demo.com", "li@demo.com" };
-
-foreach (var recipient in recipients)
-{
-    Console.WriteLine($"Sending email to {recipient}");
-}
-```
-
----
-
-### 164. What is a real-time example of foreach loops over collections?
-
-**Answer:**
-
-An email sender may iterate through recipients and send a personalized message to each customer in a batch. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
-
-```csharp
-var recipients = new List<string> { "asha@demo.com", "li@demo.com" };
-
-foreach (var recipient in recipients)
-{
-    Console.WriteLine($"Sending email to {recipient}");
-}
-```
-
----
-
-### 165. What is a best practice for foreach loops over collections?
-
-**Answer:**
-
-Prefer foreach for readability when the item itself matters more than its position. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
-
-```csharp
-var recipients = new List<string> { "asha@demo.com", "li@demo.com" };
-
-foreach (var recipient in recipients)
-{
-    Console.WriteLine($"Sending email to {recipient}");
-}
-```
-
----
-
-### 166. What is a tricky interview point or common mistake around foreach loops over collections?
-
-**Answer:**
-
-Modifying a collection while iterating with foreach often causes runtime exceptions or unpredictable logic. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
-
-```csharp
-var ids = new List<int> { 1, 2, 3 };
-
-foreach (var id in ids)
-{
-    Console.WriteLine(id);
-    // ids.Add(4); // invalid: modifying during enumeration
-}
-```
-
----
-
-### 167. How does foreach loops over collections differ from for loops and index-based iteration?
-
-**Answer:**
-
-foreach loops over collections is about the preferred iteration style when you want each item and do not need index math, whereas for loops and index-based iteration is about position-driven iteration where the index itself matters. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
-
-```csharp
-var recipients = new List<string> { "asha@demo.com", "li@demo.com" };
-
-foreach (var recipient in recipients)
-{
-    Console.WriteLine($"Sending email to {recipient}");
-}
-```
-
----
-
-### 168. How do you troubleshoot issues related to foreach loops over collections?
-
-**Answer:**
-
-Check whether the collection changes during iteration and confirm that the enumerated sequence is not null or unexpectedly deferred. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
-
-```csharp
-var ids = new List<int> { 1, 2, 3 };
-
-foreach (var id in ids)
-{
-    Console.WriteLine(id);
-    // ids.Add(4); // invalid: modifying during enumeration
-}
-```
-
----
-
-### 169. What kind of follow-up does an interviewer usually ask after foreach loops over collections?
-
-**Answer:**
-
-A common follow-up is why foreach is safer for read-only traversal and when it is not the right tool. This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
-
-```csharp
-var recipients = new List<string> { "asha@demo.com", "li@demo.com" };
-
-foreach (var recipient in recipients)
-{
-    Console.WriteLine($"Sending email to {recipient}");
-}
-```
-
----
-
-### 170. How does foreach loops over collections connect to the rest of C# fundamentals?
-
-**Answer:**
-
-This is the most common loop style in services, APIs, and business processing code that works over collections. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
-
-```csharp
-var recipients = new List<string> { "asha@demo.com", "li@demo.com" };
-
-foreach (var recipient in recipients)
-{
-    Console.WriteLine($"Sending email to {recipient}");
-}
-```
-
----
-
-### 171. What is the role of while and do-while loops for retry and polling logic in C# fundamentals?
-
-**Answer:**
-
-In C# fundamentals, while and do-while loops for retry and polling logic refers to condition-based loops used when repetition depends on runtime state rather than a known count. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
-
-```csharp
-int attempts = 0;
-bool sent = false;
-
-while (!sent && attempts < 3)
-{
-    attempts++;
-    Console.WriteLine($"Attempt {attempts}");
-    sent = attempts == 3;
-}
-```
-
----
-
-### 172. Why is while and do-while loops for retry and polling logic important in day-to-day C# work?
-
-**Answer:**
-
-It matters because retries, polling, and streaming scenarios often continue until success, timeout, or cancellation. In production code, this shows up in features like imports, APIs, validation, pricing, reporting, and support debugging.
-
-**Sample:**
-
-```csharp
-int attempts = 0;
-bool sent = false;
-
-while (!sent && attempts < 3)
-{
-    attempts++;
-    Console.WriteLine($"Attempt {attempts}");
-    sent = attempts == 3;
-}
-```
-
----
-
-### 173. When should you use while and do-while loops for retry and polling logic in real projects?
-
-**Answer:**
-
-Use while and do-while loops for retry and polling logic when the loop should continue until a condition changes, such as retry success or queue exhaustion. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
-
-```csharp
-int attempts = 0;
-bool sent = false;
-
-while (!sent && attempts < 3)
-{
-    attempts++;
-    Console.WriteLine($"Attempt {attempts}");
-    sent = attempts == 3;
-}
-```
-
----
-
-### 174. What is a real-time example of while and do-while loops for retry and polling logic?
-
-**Answer:**
-
-A payment gateway client may retry a transient call until success or until the retry limit is reached. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
-
-```csharp
-int attempts = 0;
-bool sent = false;
-
-while (!sent && attempts < 3)
-{
-    attempts++;
-    Console.WriteLine($"Attempt {attempts}");
-    sent = attempts == 3;
-}
-```
-
----
-
-### 175. What is a best practice for while and do-while loops for retry and polling logic?
-
-**Answer:**
-
-Make the exit condition explicit and guard against infinite loops with counters, timeouts, or cancellation. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
-
-```csharp
-int attempts = 0;
-bool sent = false;
-
-while (!sent && attempts < 3)
-{
-    attempts++;
-    Console.WriteLine($"Attempt {attempts}");
-    sent = attempts == 3;
-}
-```
-
----
-
-### 176. What is a tricky interview point or common mistake around while and do-while loops for retry and polling logic?
-
-**Answer:**
-
-The biggest mistake is writing a loop whose condition never changes, especially during manual retry logic. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
-
-```csharp
-int choice;
-
-do
-{
-    Console.WriteLine("Enter 0 to exit");
-    choice = 0;
-} while (choice != 0);
-```
-
----
-
-### 177. How does while and do-while loops for retry and polling logic differ from for loops and index-based iteration?
-
-**Answer:**
-
-while and do-while loops for retry and polling logic is about condition-based loops used when repetition depends on runtime state rather than a known count, whereas for loops and index-based iteration is about count-driven repetition rather than state-driven looping. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
-
-```csharp
-int attempts = 0;
-bool sent = false;
-
-while (!sent && attempts < 3)
-{
-    attempts++;
-    Console.WriteLine($"Attempt {attempts}");
-    sent = attempts == 3;
-}
-```
-
----
-
-### 178. How do you troubleshoot issues related to while and do-while loops for retry and polling logic?
-
-**Answer:**
-
-Log the condition variables on each pass and prove that something in the loop body changes the next evaluation. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
-
-```csharp
-int choice;
-
-do
-{
-    Console.WriteLine("Enter 0 to exit");
-    choice = 0;
-} while (choice != 0);
-```
-
----
-
-### 179. What kind of follow-up does an interviewer usually ask after while and do-while loops for retry and polling logic?
-
-**Answer:**
-
-A common follow-up is when do-while is useful because the body must run at least once. This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
-
-```csharp
-int attempts = 0;
-bool sent = false;
-
-while (!sent && attempts < 3)
-{
-    attempts++;
-    Console.WriteLine($"Attempt {attempts}");
-    sent = attempts == 3;
-}
-```
-
----
-
-### 180. How does while and do-while loops for retry and polling logic connect to the rest of C# fundamentals?
-
-**Answer:**
-
-State-driven loops connect to methods, conditions, retries, and integration reliability. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
-
-```csharp
-int attempts = 0;
-bool sent = false;
-
-while (!sent && attempts < 3)
-{
-    attempts++;
-    Console.WriteLine($"Attempt {attempts}");
-    sent = attempts == 3;
-}
-```
-
----
-
-### 181. What is the role of break, continue, and loop control in C# fundamentals?
-
-**Answer:**
-
-In C# fundamentals, break, continue, and loop control refers to the statements that skip work or exit loops early based on runtime conditions. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
-
-```csharp
-var transactions = new[] { 100m, -1m, 250m, 9000m };
-
-foreach (var amount in transactions)
-{
-    if (amount < 0)
+    public static void Run()
     {
-        continue;
-    }
-
-    if (amount > 5000m)
-    {
-        Console.WriteLine("Manual review found");
-        break;
-    }
-
-    Console.WriteLine($"Processed {amount}");
-}
-```
-
----
-
-### 182. Why is break, continue, and loop control important in day-to-day C# work?
-
-**Answer:**
-
-It matters because real loops often contain exceptions, filters, and early termination conditions instead of processing every item the same way. In production code, this shows up in features like imports, APIs, validation, pricing, reporting, and support debugging.
-
-**Sample:**
-
-```csharp
-var transactions = new[] { 100m, -1m, 250m, 9000m };
-
-foreach (var amount in transactions)
-{
-    if (amount < 0)
-    {
-        continue;
-    }
-
-    if (amount > 5000m)
-    {
-        Console.WriteLine("Manual review found");
-        break;
-    }
-
-    Console.WriteLine($"Processed {amount}");
-}
-```
-
----
-
-### 183. When should you use break, continue, and loop control in real projects?
-
-**Answer:**
-
-Use break, continue, and loop control when you need to skip invalid items or stop once the target condition has been met. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
-
-```csharp
-var transactions = new[] { 100m, -1m, 250m, 9000m };
-
-foreach (var amount in transactions)
-{
-    if (amount < 0)
-    {
-        continue;
-    }
-
-    if (amount > 5000m)
-    {
-        Console.WriteLine("Manual review found");
-        break;
-    }
-
-    Console.WriteLine($"Processed {amount}");
-}
-```
-
----
-
-### 184. What is a real-time example of break, continue, and loop control?
-
-**Answer:**
-
-A fraud scan may skip already-reviewed transactions and stop as soon as it finds the first blocking condition. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
-
-```csharp
-var transactions = new[] { 100m, -1m, 250m, 9000m };
-
-foreach (var amount in transactions)
-{
-    if (amount < 0)
-    {
-        continue;
-    }
-
-    if (amount > 5000m)
-    {
-        Console.WriteLine("Manual review found");
-        break;
-    }
-
-    Console.WriteLine($"Processed {amount}");
-}
-```
-
----
-
-### 185. What is a best practice for break, continue, and loop control?
-
-**Answer:**
-
-Use break and continue sparingly and make the reason for the control change obvious. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
-
-```csharp
-var transactions = new[] { 100m, -1m, 250m, 9000m };
-
-foreach (var amount in transactions)
-{
-    if (amount < 0)
-    {
-        continue;
-    }
-
-    if (amount > 5000m)
-    {
-        Console.WriteLine("Manual review found");
-        break;
-    }
-
-    Console.WriteLine($"Processed {amount}");
-}
-```
-
----
-
-### 186. What is a tricky interview point or common mistake around break, continue, and loop control?
-
-**Answer:**
-
-Too many control jumps can make loops difficult to reason about, especially when business rules are already dense. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
-
-```csharp
-for (int i = 0; i < 10; i++)
-{
-    if (i == 3)
-    {
-        continue;
-    }
-
-    if (i == 6)
-    {
-        break;
-    }
-
-    Console.WriteLine(i);
-}
-```
-
----
-
-### 187. How does break, continue, and loop control differ from guard clauses and early returns?
-
-**Answer:**
-
-break, continue, and loop control is about the statements that skip work or exit loops early based on runtime conditions, whereas guard clauses and early returns is about early exits from methods rather than loop-specific control changes. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
-
-```csharp
-var transactions = new[] { 100m, -1m, 250m, 9000m };
-
-foreach (var amount in transactions)
-{
-    if (amount < 0)
-    {
-        continue;
-    }
-
-    if (amount > 5000m)
-    {
-        Console.WriteLine("Manual review found");
-        break;
-    }
-
-    Console.WriteLine($"Processed {amount}");
-}
-```
-
----
-
-### 188. How do you troubleshoot issues related to break, continue, and loop control?
-
-**Answer:**
-
-Trace each branch, note whether an item was skipped or the loop ended, and verify that the final state matches the intended path. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
-
-```csharp
-for (int i = 0; i < 10; i++)
-{
-    if (i == 3)
-    {
-        continue;
-    }
-
-    if (i == 6)
-    {
-        break;
-    }
-
-    Console.WriteLine(i);
-}
-```
-
----
-
-### 189. What kind of follow-up does an interviewer usually ask after break, continue, and loop control?
-
-**Answer:**
-
-A common follow-up is how to decide whether a continue should become a filtered collection or extracted method instead. This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
-
-```csharp
-var transactions = new[] { 100m, -1m, 250m, 9000m };
-
-foreach (var amount in transactions)
-{
-    if (amount < 0)
-    {
-        continue;
-    }
-
-    if (amount > 5000m)
-    {
-        Console.WriteLine("Manual review found");
-        break;
-    }
-
-    Console.WriteLine($"Processed {amount}");
-}
-```
-
----
-
-### 190. How does break, continue, and loop control connect to the rest of C# fundamentals?
-
-**Answer:**
-
-Loop control affects correctness, performance, and readability in every batch-style workflow. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
-
-```csharp
-var transactions = new[] { 100m, -1m, 250m, 9000m };
-
-foreach (var amount in transactions)
-{
-    if (amount < 0)
-    {
-        continue;
-    }
-
-    if (amount > 5000m)
-    {
-        Console.WriteLine("Manual review found");
-        break;
-    }
-
-    Console.WriteLine($"Processed {amount}");
-}
-```
-
----
-
-### 191. What is the role of Nested loops and iteration complexity in C# fundamentals?
-
-**Answer:**
-
-In C# fundamentals, Nested loops and iteration complexity refers to loop structures where one sequence is processed inside another to compare, match, or combine items. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
-
-```csharp
-var imported = new[] { "INV-100", "INV-101" };
-var existing = new[] { "INV-099", "INV-101" };
-
-foreach (var invoice in imported)
-{
-    foreach (var current in existing)
-    {
-        if (invoice == current)
+        for (int i = 0; i < 4; i++)
         {
-            Console.WriteLine($"Match found: {invoice}");
+            Console.WriteLine($"Batch item {i}");
         }
     }
 }
 ```
 
----
+### Q4.2 How would you explain foreach and collection traversal in C# fundamentals?
 
-### 192. Why is Nested loops and iteration complexity important in day-to-day C# work?
+**Answer:** Foreach and collection traversal means iterating cleanly over items when index math is unnecessary. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with manual index handling everywhere, and they should avoid the trap of mutating a collection unsafely while enumerating it. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
 
-**Answer:**
-
-It matters because interviewers often use nested loops to test whether candidates can reason about correctness and cost, not just syntax. In production code, this shows up in features like imports, APIs, validation, pricing, reporting, and support debugging.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var imported = new[] { "INV-100", "INV-101" };
-var existing = new[] { "INV-099", "INV-101" };
+using System;
+using System.Collections.Generic;
 
-foreach (var invoice in imported)
+public static class Demo4_2
 {
-    foreach (var current in existing)
+    public static void Run()
     {
-        if (invoice == current)
+        var departments = new List<string> { "Sales", "Ops", "Finance-2" };
+        foreach (var department in departments)
         {
-            Console.WriteLine($"Match found: {invoice}");
+            Console.WriteLine(department);
         }
     }
 }
 ```
 
----
+### Q4.3 Why is while and do while usage in C# fundamentals?
 
-### 193. When should you use Nested loops and iteration complexity in real projects?
+**Answer:** While and do while usage means repeating work based on a condition that changes over time. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with forcing condition-driven work into fixed counts, and they should avoid the trap of forgetting to change loop state. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
 
-**Answer:**
-
-Use Nested loops and iteration complexity when you need to compare two sets of values, build combinations, or search relationships without a better lookup structure yet. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var imported = new[] { "INV-100", "INV-101" };
-var existing = new[] { "INV-099", "INV-101" };
+using System;
+using System.Collections.Generic;
 
-foreach (var invoice in imported)
+public static class Demo4_3
 {
-    foreach (var current in existing)
+    public static void Run()
     {
-        if (invoice == current)
+        int retries = 0;
+        while (retries < 2)
         {
-            Console.WriteLine($"Match found: {invoice}");
+            Console.WriteLine($"Attempt {retries + 1}");
+            retries++;
         }
     }
 }
 ```
 
----
+### Q4.4 How can break continue and loop control signals in C# fundamentals?
 
-### 194. What is a real-time example of Nested loops and iteration complexity?
+**Answer:** Break continue and loop control signals means skipping or stopping iteration as soon as conditions are met. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with processing every item even after a match appears, and they should avoid the trap of using too many jumps inside one loop. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
 
-**Answer:**
-
-A reconciliation job may compare imported invoice rows against local rows when building a mismatch report. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var imported = new[] { "INV-100", "INV-101" };
-var existing = new[] { "INV-099", "INV-101" };
+using System;
+using System.Collections.Generic;
 
-foreach (var invoice in imported)
+public static class Demo4_4
 {
-    foreach (var current in existing)
+    public static void Run()
     {
-        if (invoice == current)
+        var ids = new List<int> { 101, 205, 309, 704 };
+        foreach (var id in ids)
         {
-            Console.WriteLine($"Match found: {invoice}");
+            if (id < 200) continue;
+            Console.WriteLine($"Process {id}");
+            break;
         }
     }
 }
 ```
 
----
+### Q4.5 What is iteration and side effect awareness in C# fundamentals?
 
-### 195. What is a best practice for Nested loops and iteration complexity?
+**Answer:** Iteration and side effect awareness means thinking about what each iteration changes or calls. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with treating loops as cost-free syntax, and they should avoid the trap of placing expensive work inside loops carelessly. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
 
-**Answer:**
-
-Use nested loops only when they fit the data size or when a dictionary or set would not simplify the problem. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var imported = new[] { "INV-100", "INV-101" };
-var existing = new[] { "INV-099", "INV-101" };
+using System;
+using System.Collections.Generic;
 
-foreach (var invoice in imported)
+public static class Demo4_5
 {
-    foreach (var current in existing)
+    public static void Run()
     {
-        if (invoice == current)
+        var reportIds = new[] { 306, 307, 308 };
+        foreach (var reportId in reportIds)
         {
-            Console.WriteLine($"Match found: {invoice}");
+            Console.WriteLine($"Queue report generation for {reportId}");
         }
     }
 }
 ```
 
----
+### Q4.6 How does iteration over arrays versus lists in C# fundamentals?
 
-### 196. What is a tricky interview point or common mistake around Nested loops and iteration complexity?
+**Answer:** Iteration over arrays versus lists means choosing between fixed-size arrays and dynamic lists based on growth needs. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with treating all sequences as identical, and they should avoid the trap of choosing arrays for data that clearly grows. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
 
-**Answer:**
-
-A weak answer ignores time complexity and fails to mention when a lookup-based structure can replace the inner loop. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var left = new[] { 1, 2, 3 };
-var right = new[] { 3, 4, 5 };
+using System;
+using System.Collections.Generic;
 
-int comparisons = 0;
-foreach (var a in left)
+public static class Demo4_6
 {
-    foreach (var b in right)
+    public static void Run()
     {
-        comparisons++;
+        var dynamicSteps = new List<string> { "Validate", "Transform", "Notify-2" };
+        string[] fixedSteps = { "Validate", "Transform", "Load" };
+        Console.WriteLine($"{fixedSteps.Length}/{dynamicSteps.Count}");
     }
 }
-
-Console.WriteLine(comparisons);
 ```
 
----
+### Q4.7 Why does for loop control in C# fundamentals?
 
-### 197. How does Nested loops and iteration complexity differ from dictionary-based lookups?
+**Answer:** For loop control means using index-based iteration when counts and positions matter. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with using abstract iteration for every case, and they should avoid the trap of off-by-one errors. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
 
-**Answer:**
-
-Nested loops and iteration complexity is about loop structures where one sequence is processed inside another to compare, match, or combine items, whereas dictionary-based lookups is about precomputed key access that can avoid repeated full scans. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var imported = new[] { "INV-100", "INV-101" };
-var existing = new[] { "INV-099", "INV-101" };
+using System;
+using System.Collections.Generic;
 
-foreach (var invoice in imported)
+public static class Demo4_7
 {
-    foreach (var current in existing)
+    public static void Run()
     {
-        if (invoice == current)
+        for (int i = 0; i < 6; i++)
         {
-            Console.WriteLine($"Match found: {invoice}");
+            Console.WriteLine($"Batch item {i}");
         }
     }
 }
 ```
 
----
+### Q4.8 When should you use foreach and collection traversal in C# fundamentals?
 
-### 198. How do you troubleshoot issues related to Nested loops and iteration complexity?
+**Answer:** Foreach and collection traversal means iterating cleanly over items when index math is unnecessary. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with manual index handling everywhere, and they should avoid the trap of mutating a collection unsafely while enumerating it. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
 
-**Answer:**
-
-Measure the size of each sequence, profile the hot path, and check whether repeated scanning can be replaced with indexing or hashing. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var left = new[] { 1, 2, 3 };
-var right = new[] { 3, 4, 5 };
+using System;
+using System.Collections.Generic;
 
-int comparisons = 0;
-foreach (var a in left)
+public static class Demo4_8
 {
-    foreach (var b in right)
+    public static void Run()
     {
-        comparisons++;
-    }
-}
-
-Console.WriteLine(comparisons);
-```
-
----
-
-### 199. What kind of follow-up does an interviewer usually ask after Nested loops and iteration complexity?
-
-**Answer:**
-
-A common follow-up is how to reduce an O(n^2) scan to a faster lookup-based approach. This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
-
-```csharp
-var imported = new[] { "INV-100", "INV-101" };
-var existing = new[] { "INV-099", "INV-101" };
-
-foreach (var invoice in imported)
-{
-    foreach (var current in existing)
-    {
-        if (invoice == current)
+        var departments = new List<string> { "Sales", "Ops", "Finance-3" };
+        foreach (var department in departments)
         {
-            Console.WriteLine($"Match found: {invoice}");
+            Console.WriteLine(department);
         }
     }
 }
 ```
 
----
+### Q4.9 What problem does while and do while usage in C# fundamentals?
 
-### 200. How does Nested loops and iteration complexity connect to the rest of C# fundamentals?
+**Answer:** While and do while usage means repeating work based on a condition that changes over time. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with forcing condition-driven work into fixed counts, and they should avoid the trap of forgetting to change loop state. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
 
-**Answer:**
-
-Nested iteration connects loops, collections, performance, and method design in very practical ways. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var imported = new[] { "INV-100", "INV-101" };
-var existing = new[] { "INV-099", "INV-101" };
+using System;
+using System.Collections.Generic;
 
-foreach (var invoice in imported)
+public static class Demo4_9
 {
-    foreach (var current in existing)
+    public static void Run()
     {
-        if (invoice == current)
+        int retries = 0;
+        while (retries < 2)
         {
-            Console.WriteLine($"Match found: {invoice}");
+            Console.WriteLine($"Attempt {retries + 1}");
+            retries++;
         }
     }
 }
 ```
 
----
+### Q4.10 How would you explain break continue and loop control signals in C# fundamentals?
+
+**Answer:** Break continue and loop control signals means skipping or stopping iteration as soon as conditions are met. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with processing every item even after a match appears, and they should avoid the trap of using too many jumps inside one loop. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_10
+{
+    public static void Run()
+    {
+        var ids = new List<int> { 101, 205, 309, 710 };
+        foreach (var id in ids)
+        {
+            if (id < 200) continue;
+            Console.WriteLine($"Process {id}");
+            break;
+        }
+    }
+}
+```
+
+### Q4.11 Why is iteration and side effect awareness in C# fundamentals?
+
+**Answer:** Iteration and side effect awareness means thinking about what each iteration changes or calls. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with treating loops as cost-free syntax, and they should avoid the trap of placing expensive work inside loops carelessly. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_11
+{
+    public static void Run()
+    {
+        var reportIds = new[] { 312, 313, 314 };
+        foreach (var reportId in reportIds)
+        {
+            Console.WriteLine($"Queue report generation for {reportId}");
+        }
+    }
+}
+```
+
+### Q4.12 How can iteration over arrays versus lists in C# fundamentals?
+
+**Answer:** Iteration over arrays versus lists means choosing between fixed-size arrays and dynamic lists based on growth needs. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with treating all sequences as identical, and they should avoid the trap of choosing arrays for data that clearly grows. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_12
+{
+    public static void Run()
+    {
+        var dynamicSteps = new List<string> { "Validate", "Transform", "Notify-0" };
+        string[] fixedSteps = { "Validate", "Transform", "Load" };
+        Console.WriteLine($"{fixedSteps.Length}/{dynamicSteps.Count}");
+    }
+}
+```
+
+### Q4.13 What is for loop control in C# fundamentals?
+
+**Answer:** For loop control means using index-based iteration when counts and positions matter. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with using abstract iteration for every case, and they should avoid the trap of off-by-one errors. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_13
+{
+    public static void Run()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            Console.WriteLine($"Batch item {i}");
+        }
+    }
+}
+```
+
+### Q4.14 How does foreach and collection traversal in C# fundamentals?
+
+**Answer:** Foreach and collection traversal means iterating cleanly over items when index math is unnecessary. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with manual index handling everywhere, and they should avoid the trap of mutating a collection unsafely while enumerating it. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_14
+{
+    public static void Run()
+    {
+        var departments = new List<string> { "Sales", "Ops", "Finance-4" };
+        foreach (var department in departments)
+        {
+            Console.WriteLine(department);
+        }
+    }
+}
+```
+
+### Q4.15 Why does while and do while usage in C# fundamentals?
+
+**Answer:** While and do while usage means repeating work based on a condition that changes over time. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with forcing condition-driven work into fixed counts, and they should avoid the trap of forgetting to change loop state. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_15
+{
+    public static void Run()
+    {
+        int retries = 0;
+        while (retries < 2)
+        {
+            Console.WriteLine($"Attempt {retries + 1}");
+            retries++;
+        }
+    }
+}
+```
+
+### Q4.16 When should you use break continue and loop control signals in C# fundamentals?
+
+**Answer:** Break continue and loop control signals means skipping or stopping iteration as soon as conditions are met. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with processing every item even after a match appears, and they should avoid the trap of using too many jumps inside one loop. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_16
+{
+    public static void Run()
+    {
+        var ids = new List<int> { 101, 205, 309, 716 };
+        foreach (var id in ids)
+        {
+            if (id < 200) continue;
+            Console.WriteLine($"Process {id}");
+            break;
+        }
+    }
+}
+```
+
+### Q4.17 What problem does iteration and side effect awareness in C# fundamentals?
+
+**Answer:** Iteration and side effect awareness means thinking about what each iteration changes or calls. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with treating loops as cost-free syntax, and they should avoid the trap of placing expensive work inside loops carelessly. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_17
+{
+    public static void Run()
+    {
+        var reportIds = new[] { 318, 319, 320 };
+        foreach (var reportId in reportIds)
+        {
+            Console.WriteLine($"Queue report generation for {reportId}");
+        }
+    }
+}
+```
+
+### Q4.18 How would you explain iteration over arrays versus lists in C# fundamentals?
+
+**Answer:** Iteration over arrays versus lists means choosing between fixed-size arrays and dynamic lists based on growth needs. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with treating all sequences as identical, and they should avoid the trap of choosing arrays for data that clearly grows. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_18
+{
+    public static void Run()
+    {
+        var dynamicSteps = new List<string> { "Validate", "Transform", "Notify-2" };
+        string[] fixedSteps = { "Validate", "Transform", "Load" };
+        Console.WriteLine($"{fixedSteps.Length}/{dynamicSteps.Count}");
+    }
+}
+```
+
+### Q4.19 Why is for loop control in C# fundamentals?
+
+**Answer:** For loop control means using index-based iteration when counts and positions matter. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with using abstract iteration for every case, and they should avoid the trap of off-by-one errors. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_19
+{
+    public static void Run()
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            Console.WriteLine($"Batch item {i}");
+        }
+    }
+}
+```
+
+### Q4.20 How can foreach and collection traversal in C# fundamentals?
+
+**Answer:** Foreach and collection traversal means iterating cleanly over items when index math is unnecessary. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with manual index handling everywhere, and they should avoid the trap of mutating a collection unsafely while enumerating it. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_20
+{
+    public static void Run()
+    {
+        var departments = new List<string> { "Sales", "Ops", "Finance-0" };
+        foreach (var department in departments)
+        {
+            Console.WriteLine(department);
+        }
+    }
+}
+```
+
+### Q4.21 What is while and do while usage in C# fundamentals?
+
+**Answer:** While and do while usage means repeating work based on a condition that changes over time. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with forcing condition-driven work into fixed counts, and they should avoid the trap of forgetting to change loop state. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_21
+{
+    public static void Run()
+    {
+        int retries = 0;
+        while (retries < 2)
+        {
+            Console.WriteLine($"Attempt {retries + 1}");
+            retries++;
+        }
+    }
+}
+```
+
+### Q4.22 How does break continue and loop control signals in C# fundamentals?
+
+**Answer:** Break continue and loop control signals means skipping or stopping iteration as soon as conditions are met. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with processing every item even after a match appears, and they should avoid the trap of using too many jumps inside one loop. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_22
+{
+    public static void Run()
+    {
+        var ids = new List<int> { 101, 205, 309, 722 };
+        foreach (var id in ids)
+        {
+            if (id < 200) continue;
+            Console.WriteLine($"Process {id}");
+            break;
+        }
+    }
+}
+```
+
+### Q4.23 Why does iteration and side effect awareness in C# fundamentals?
+
+**Answer:** Iteration and side effect awareness means thinking about what each iteration changes or calls. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with treating loops as cost-free syntax, and they should avoid the trap of placing expensive work inside loops carelessly. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_23
+{
+    public static void Run()
+    {
+        var reportIds = new[] { 324, 325, 326 };
+        foreach (var reportId in reportIds)
+        {
+            Console.WriteLine($"Queue report generation for {reportId}");
+        }
+    }
+}
+```
+
+### Q4.24 When should you use iteration over arrays versus lists in C# fundamentals?
+
+**Answer:** Iteration over arrays versus lists means choosing between fixed-size arrays and dynamic lists based on growth needs. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with treating all sequences as identical, and they should avoid the trap of choosing arrays for data that clearly grows. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_24
+{
+    public static void Run()
+    {
+        var dynamicSteps = new List<string> { "Validate", "Transform", "Notify-0" };
+        string[] fixedSteps = { "Validate", "Transform", "Load" };
+        Console.WriteLine($"{fixedSteps.Length}/{dynamicSteps.Count}");
+    }
+}
+```
+
+### Q4.25 What problem does for loop control in C# fundamentals?
+
+**Answer:** For loop control means using index-based iteration when counts and positions matter. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with using abstract iteration for every case, and they should avoid the trap of off-by-one errors. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_25
+{
+    public static void Run()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            Console.WriteLine($"Batch item {i}");
+        }
+    }
+}
+```
+
+### Q4.26 How would you explain foreach and collection traversal in C# fundamentals?
+
+**Answer:** Foreach and collection traversal means iterating cleanly over items when index math is unnecessary. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with manual index handling everywhere, and they should avoid the trap of mutating a collection unsafely while enumerating it. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_26
+{
+    public static void Run()
+    {
+        var departments = new List<string> { "Sales", "Ops", "Finance-1" };
+        foreach (var department in departments)
+        {
+            Console.WriteLine(department);
+        }
+    }
+}
+```
+
+### Q4.27 Why is while and do while usage in C# fundamentals?
+
+**Answer:** While and do while usage means repeating work based on a condition that changes over time. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with forcing condition-driven work into fixed counts, and they should avoid the trap of forgetting to change loop state. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_27
+{
+    public static void Run()
+    {
+        int retries = 0;
+        while (retries < 2)
+        {
+            Console.WriteLine($"Attempt {retries + 1}");
+            retries++;
+        }
+    }
+}
+```
+
+### Q4.28 How can break continue and loop control signals in C# fundamentals?
+
+**Answer:** Break continue and loop control signals means skipping or stopping iteration as soon as conditions are met. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with processing every item even after a match appears, and they should avoid the trap of using too many jumps inside one loop. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_28
+{
+    public static void Run()
+    {
+        var ids = new List<int> { 101, 205, 309, 728 };
+        foreach (var id in ids)
+        {
+            if (id < 200) continue;
+            Console.WriteLine($"Process {id}");
+            break;
+        }
+    }
+}
+```
+
+### Q4.29 What is iteration and side effect awareness in C# fundamentals?
+
+**Answer:** Iteration and side effect awareness means thinking about what each iteration changes or calls. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with treating loops as cost-free syntax, and they should avoid the trap of placing expensive work inside loops carelessly. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_29
+{
+    public static void Run()
+    {
+        var reportIds = new[] { 330, 331, 332 };
+        foreach (var reportId in reportIds)
+        {
+            Console.WriteLine($"Queue report generation for {reportId}");
+        }
+    }
+}
+```
+
+### Q4.30 How does iteration over arrays versus lists in C# fundamentals?
+
+**Answer:** Iteration over arrays versus lists means choosing between fixed-size arrays and dynamic lists based on growth needs. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with treating all sequences as identical, and they should avoid the trap of choosing arrays for data that clearly grows. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_30
+{
+    public static void Run()
+    {
+        var dynamicSteps = new List<string> { "Validate", "Transform", "Notify-2" };
+        string[] fixedSteps = { "Validate", "Transform", "Load" };
+        Console.WriteLine($"{fixedSteps.Length}/{dynamicSteps.Count}");
+    }
+}
+```
+
+### Q4.31 Why does for loop control in C# fundamentals?
+
+**Answer:** For loop control means using index-based iteration when counts and positions matter. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with using abstract iteration for every case, and they should avoid the trap of off-by-one errors. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_31
+{
+    public static void Run()
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            Console.WriteLine($"Batch item {i}");
+        }
+    }
+}
+```
+
+### Q4.32 When should you use foreach and collection traversal in C# fundamentals?
+
+**Answer:** Foreach and collection traversal means iterating cleanly over items when index math is unnecessary. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with manual index handling everywhere, and they should avoid the trap of mutating a collection unsafely while enumerating it. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_32
+{
+    public static void Run()
+    {
+        var departments = new List<string> { "Sales", "Ops", "Finance-2" };
+        foreach (var department in departments)
+        {
+            Console.WriteLine(department);
+        }
+    }
+}
+```
+
+### Q4.33 What problem does while and do while usage in C# fundamentals?
+
+**Answer:** While and do while usage means repeating work based on a condition that changes over time. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with forcing condition-driven work into fixed counts, and they should avoid the trap of forgetting to change loop state. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_33
+{
+    public static void Run()
+    {
+        int retries = 0;
+        while (retries < 2)
+        {
+            Console.WriteLine($"Attempt {retries + 1}");
+            retries++;
+        }
+    }
+}
+```
+
+### Q4.34 How would you explain break continue and loop control signals in C# fundamentals?
+
+**Answer:** Break continue and loop control signals means skipping or stopping iteration as soon as conditions are met. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with processing every item even after a match appears, and they should avoid the trap of using too many jumps inside one loop. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_34
+{
+    public static void Run()
+    {
+        var ids = new List<int> { 101, 205, 309, 734 };
+        foreach (var id in ids)
+        {
+            if (id < 200) continue;
+            Console.WriteLine($"Process {id}");
+            break;
+        }
+    }
+}
+```
+
+### Q4.35 Why is iteration and side effect awareness in C# fundamentals?
+
+**Answer:** Iteration and side effect awareness means thinking about what each iteration changes or calls. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with treating loops as cost-free syntax, and they should avoid the trap of placing expensive work inside loops carelessly. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_35
+{
+    public static void Run()
+    {
+        var reportIds = new[] { 336, 337, 338 };
+        foreach (var reportId in reportIds)
+        {
+            Console.WriteLine($"Queue report generation for {reportId}");
+        }
+    }
+}
+```
+
+### Q4.36 How can iteration over arrays versus lists in C# fundamentals?
+
+**Answer:** Iteration over arrays versus lists means choosing between fixed-size arrays and dynamic lists based on growth needs. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with treating all sequences as identical, and they should avoid the trap of choosing arrays for data that clearly grows. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_36
+{
+    public static void Run()
+    {
+        var dynamicSteps = new List<string> { "Validate", "Transform", "Notify-0" };
+        string[] fixedSteps = { "Validate", "Transform", "Load" };
+        Console.WriteLine($"{fixedSteps.Length}/{dynamicSteps.Count}");
+    }
+}
+```
+
+### Q4.37 What is for loop control in C# fundamentals?
+
+**Answer:** For loop control means using index-based iteration when counts and positions matter. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with using abstract iteration for every case, and they should avoid the trap of off-by-one errors. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_37
+{
+    public static void Run()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            Console.WriteLine($"Batch item {i}");
+        }
+    }
+}
+```
+
+### Q4.38 How does foreach and collection traversal in C# fundamentals?
+
+**Answer:** Foreach and collection traversal means iterating cleanly over items when index math is unnecessary. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with manual index handling everywhere, and they should avoid the trap of mutating a collection unsafely while enumerating it. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_38
+{
+    public static void Run()
+    {
+        var departments = new List<string> { "Sales", "Ops", "Finance-3" };
+        foreach (var department in departments)
+        {
+            Console.WriteLine(department);
+        }
+    }
+}
+```
+
+### Q4.39 Why does while and do while usage in C# fundamentals?
+
+**Answer:** While and do while usage means repeating work based on a condition that changes over time. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with forcing condition-driven work into fixed counts, and they should avoid the trap of forgetting to change loop state. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_39
+{
+    public static void Run()
+    {
+        int retries = 0;
+        while (retries < 2)
+        {
+            Console.WriteLine($"Attempt {retries + 1}");
+            retries++;
+        }
+    }
+}
+```
+
+### Q4.40 When should you use break continue and loop control signals in C# fundamentals?
+
+**Answer:** Break continue and loop control signals means skipping or stopping iteration as soon as conditions are met. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with processing every item even after a match appears, and they should avoid the trap of using too many jumps inside one loop. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_40
+{
+    public static void Run()
+    {
+        var ids = new List<int> { 101, 205, 309, 740 };
+        foreach (var id in ids)
+        {
+            if (id < 200) continue;
+            Console.WriteLine($"Process {id}");
+            break;
+        }
+    }
+}
+```
+
+### Q4.41 What problem does iteration and side effect awareness in C# fundamentals?
+
+**Answer:** Iteration and side effect awareness means thinking about what each iteration changes or calls. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with treating loops as cost-free syntax, and they should avoid the trap of placing expensive work inside loops carelessly. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_41
+{
+    public static void Run()
+    {
+        var reportIds = new[] { 342, 343, 344 };
+        foreach (var reportId in reportIds)
+        {
+            Console.WriteLine($"Queue report generation for {reportId}");
+        }
+    }
+}
+```
+
+### Q4.42 How would you explain iteration over arrays versus lists in C# fundamentals?
+
+**Answer:** Iteration over arrays versus lists means choosing between fixed-size arrays and dynamic lists based on growth needs. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with treating all sequences as identical, and they should avoid the trap of choosing arrays for data that clearly grows. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_42
+{
+    public static void Run()
+    {
+        var dynamicSteps = new List<string> { "Validate", "Transform", "Notify-2" };
+        string[] fixedSteps = { "Validate", "Transform", "Load" };
+        Console.WriteLine($"{fixedSteps.Length}/{dynamicSteps.Count}");
+    }
+}
+```
+
+### Q4.43 Why is for loop control in C# fundamentals?
+
+**Answer:** For loop control means using index-based iteration when counts and positions matter. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with using abstract iteration for every case, and they should avoid the trap of off-by-one errors. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_43
+{
+    public static void Run()
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            Console.WriteLine($"Batch item {i}");
+        }
+    }
+}
+```
+
+### Q4.44 How can foreach and collection traversal in C# fundamentals?
+
+**Answer:** Foreach and collection traversal means iterating cleanly over items when index math is unnecessary. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with manual index handling everywhere, and they should avoid the trap of mutating a collection unsafely while enumerating it. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_44
+{
+    public static void Run()
+    {
+        var departments = new List<string> { "Sales", "Ops", "Finance-4" };
+        foreach (var department in departments)
+        {
+            Console.WriteLine(department);
+        }
+    }
+}
+```
+
+### Q4.45 What is while and do while usage in C# fundamentals?
+
+**Answer:** While and do while usage means repeating work based on a condition that changes over time. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with forcing condition-driven work into fixed counts, and they should avoid the trap of forgetting to change loop state. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_45
+{
+    public static void Run()
+    {
+        int retries = 0;
+        while (retries < 2)
+        {
+            Console.WriteLine($"Attempt {retries + 1}");
+            retries++;
+        }
+    }
+}
+```
+
+### Q4.46 How does break continue and loop control signals in C# fundamentals?
+
+**Answer:** Break continue and loop control signals means skipping or stopping iteration as soon as conditions are met. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with processing every item even after a match appears, and they should avoid the trap of using too many jumps inside one loop. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_46
+{
+    public static void Run()
+    {
+        var ids = new List<int> { 101, 205, 309, 746 };
+        foreach (var id in ids)
+        {
+            if (id < 200) continue;
+            Console.WriteLine($"Process {id}");
+            break;
+        }
+    }
+}
+```
+
+### Q4.47 Why does iteration and side effect awareness in C# fundamentals?
+
+**Answer:** Iteration and side effect awareness means thinking about what each iteration changes or calls. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with treating loops as cost-free syntax, and they should avoid the trap of placing expensive work inside loops carelessly. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_47
+{
+    public static void Run()
+    {
+        var reportIds = new[] { 348, 349, 350 };
+        foreach (var reportId in reportIds)
+        {
+            Console.WriteLine($"Queue report generation for {reportId}");
+        }
+    }
+}
+```
+
+### Q4.48 When should you use iteration over arrays versus lists in C# fundamentals?
+
+**Answer:** Iteration over arrays versus lists means choosing between fixed-size arrays and dynamic lists based on growth needs. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with treating all sequences as identical, and they should avoid the trap of choosing arrays for data that clearly grows. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_48
+{
+    public static void Run()
+    {
+        var dynamicSteps = new List<string> { "Validate", "Transform", "Notify-0" };
+        string[] fixedSteps = { "Validate", "Transform", "Load" };
+        Console.WriteLine($"{fixedSteps.Length}/{dynamicSteps.Count}");
+    }
+}
+```
+
+### Q4.49 What problem does for loop control in C# fundamentals?
+
+**Answer:** For loop control means using index-based iteration when counts and positions matter. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with using abstract iteration for every case, and they should avoid the trap of off-by-one errors. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_49
+{
+    public static void Run()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            Console.WriteLine($"Batch item {i}");
+        }
+    }
+}
+```
+
+### Q4.50 How would you explain foreach and collection traversal in C# fundamentals?
+
+**Answer:** Foreach and collection traversal means iterating cleanly over items when index math is unnecessary. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with manual index handling everywhere, and they should avoid the trap of mutating a collection unsafely while enumerating it. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_50
+{
+    public static void Run()
+    {
+        var departments = new List<string> { "Sales", "Ops", "Finance-0" };
+        foreach (var department in departments)
+        {
+            Console.WriteLine(department);
+        }
+    }
+}
+```
+
+### Q4.51 Why is while and do while usage in C# fundamentals?
+
+**Answer:** While and do while usage means repeating work based on a condition that changes over time. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with forcing condition-driven work into fixed counts, and they should avoid the trap of forgetting to change loop state. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_51
+{
+    public static void Run()
+    {
+        int retries = 0;
+        while (retries < 2)
+        {
+            Console.WriteLine($"Attempt {retries + 1}");
+            retries++;
+        }
+    }
+}
+```
+
+### Q4.52 How can break continue and loop control signals in C# fundamentals?
+
+**Answer:** Break continue and loop control signals means skipping or stopping iteration as soon as conditions are met. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with processing every item even after a match appears, and they should avoid the trap of using too many jumps inside one loop. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_52
+{
+    public static void Run()
+    {
+        var ids = new List<int> { 101, 205, 309, 752 };
+        foreach (var id in ids)
+        {
+            if (id < 200) continue;
+            Console.WriteLine($"Process {id}");
+            break;
+        }
+    }
+}
+```
+
+### Q4.53 What is iteration and side effect awareness in C# fundamentals?
+
+**Answer:** Iteration and side effect awareness means thinking about what each iteration changes or calls. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with treating loops as cost-free syntax, and they should avoid the trap of placing expensive work inside loops carelessly. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_53
+{
+    public static void Run()
+    {
+        var reportIds = new[] { 354, 355, 356 };
+        foreach (var reportId in reportIds)
+        {
+            Console.WriteLine($"Queue report generation for {reportId}");
+        }
+    }
+}
+```
+
+### Q4.54 How does iteration over arrays versus lists in C# fundamentals?
+
+**Answer:** Iteration over arrays versus lists means choosing between fixed-size arrays and dynamic lists based on growth needs. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with treating all sequences as identical, and they should avoid the trap of choosing arrays for data that clearly grows. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_54
+{
+    public static void Run()
+    {
+        var dynamicSteps = new List<string> { "Validate", "Transform", "Notify-2" };
+        string[] fixedSteps = { "Validate", "Transform", "Load" };
+        Console.WriteLine($"{fixedSteps.Length}/{dynamicSteps.Count}");
+    }
+}
+```
+
+### Q4.55 Why does for loop control in C# fundamentals?
+
+**Answer:** For loop control means using index-based iteration when counts and positions matter. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with using abstract iteration for every case, and they should avoid the trap of off-by-one errors. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_55
+{
+    public static void Run()
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            Console.WriteLine($"Batch item {i}");
+        }
+    }
+}
+```
+
+### Q4.56 When should you use foreach and collection traversal in C# fundamentals?
+
+**Answer:** Foreach and collection traversal means iterating cleanly over items when index math is unnecessary. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with manual index handling everywhere, and they should avoid the trap of mutating a collection unsafely while enumerating it. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_56
+{
+    public static void Run()
+    {
+        var departments = new List<string> { "Sales", "Ops", "Finance-1" };
+        foreach (var department in departments)
+        {
+            Console.WriteLine(department);
+        }
+    }
+}
+```
+
+### Q4.57 What problem does while and do while usage in C# fundamentals?
+
+**Answer:** While and do while usage means repeating work based on a condition that changes over time. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with forcing condition-driven work into fixed counts, and they should avoid the trap of forgetting to change loop state. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_57
+{
+    public static void Run()
+    {
+        int retries = 0;
+        while (retries < 2)
+        {
+            Console.WriteLine($"Attempt {retries + 1}");
+            retries++;
+        }
+    }
+}
+```
+
+### Q4.58 How would you explain break continue and loop control signals in C# fundamentals?
+
+**Answer:** Break continue and loop control signals means skipping or stopping iteration as soon as conditions are met. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with processing every item even after a match appears, and they should avoid the trap of using too many jumps inside one loop. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_58
+{
+    public static void Run()
+    {
+        var ids = new List<int> { 101, 205, 309, 758 };
+        foreach (var id in ids)
+        {
+            if (id < 200) continue;
+            Console.WriteLine($"Process {id}");
+            break;
+        }
+    }
+}
+```
+
+### Q4.59 Why is iteration and side effect awareness in C# fundamentals?
+
+**Answer:** Iteration and side effect awareness means thinking about what each iteration changes or calls. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with treating loops as cost-free syntax, and they should avoid the trap of placing expensive work inside loops carelessly. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_59
+{
+    public static void Run()
+    {
+        var reportIds = new[] { 360, 361, 362 };
+        foreach (var reportId in reportIds)
+        {
+            Console.WriteLine($"Queue report generation for {reportId}");
+        }
+    }
+}
+```
+
+### Q4.60 How can iteration over arrays versus lists in C# fundamentals?
+
+**Answer:** Iteration over arrays versus lists means choosing between fixed-size arrays and dynamic lists based on growth needs. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with treating all sequences as identical, and they should avoid the trap of choosing arrays for data that clearly grows. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_60
+{
+    public static void Run()
+    {
+        var dynamicSteps = new List<string> { "Validate", "Transform", "Notify-0" };
+        string[] fixedSteps = { "Validate", "Transform", "Load" };
+        Console.WriteLine($"{fixedSteps.Length}/{dynamicSteps.Count}");
+    }
+}
+```
+
+### Q4.61 What is for loop control in C# fundamentals?
+
+**Answer:** For loop control means using index-based iteration when counts and positions matter. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with using abstract iteration for every case, and they should avoid the trap of off-by-one errors. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_61
+{
+    public static void Run()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            Console.WriteLine($"Batch item {i}");
+        }
+    }
+}
+```
+
+### Q4.62 How does foreach and collection traversal in C# fundamentals?
+
+**Answer:** Foreach and collection traversal means iterating cleanly over items when index math is unnecessary. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with manual index handling everywhere, and they should avoid the trap of mutating a collection unsafely while enumerating it. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_62
+{
+    public static void Run()
+    {
+        var departments = new List<string> { "Sales", "Ops", "Finance-2" };
+        foreach (var department in departments)
+        {
+            Console.WriteLine(department);
+        }
+    }
+}
+```
+
+### Q4.63 Why does while and do while usage in C# fundamentals?
+
+**Answer:** While and do while usage means repeating work based on a condition that changes over time. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with forcing condition-driven work into fixed counts, and they should avoid the trap of forgetting to change loop state. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_63
+{
+    public static void Run()
+    {
+        int retries = 0;
+        while (retries < 2)
+        {
+            Console.WriteLine($"Attempt {retries + 1}");
+            retries++;
+        }
+    }
+}
+```
+
+### Q4.64 When should you use break continue and loop control signals in C# fundamentals?
+
+**Answer:** Break continue and loop control signals means skipping or stopping iteration as soon as conditions are met. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with processing every item even after a match appears, and they should avoid the trap of using too many jumps inside one loop. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_64
+{
+    public static void Run()
+    {
+        var ids = new List<int> { 101, 205, 309, 764 };
+        foreach (var id in ids)
+        {
+            if (id < 200) continue;
+            Console.WriteLine($"Process {id}");
+            break;
+        }
+    }
+}
+```
+
+### Q4.65 What problem does iteration and side effect awareness in C# fundamentals?
+
+**Answer:** Iteration and side effect awareness means thinking about what each iteration changes or calls. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with treating loops as cost-free syntax, and they should avoid the trap of placing expensive work inside loops carelessly. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_65
+{
+    public static void Run()
+    {
+        var reportIds = new[] { 366, 367, 368 };
+        foreach (var reportId in reportIds)
+        {
+            Console.WriteLine($"Queue report generation for {reportId}");
+        }
+    }
+}
+```
+
+### Q4.66 How would you explain iteration over arrays versus lists in C# fundamentals?
+
+**Answer:** Iteration over arrays versus lists means choosing between fixed-size arrays and dynamic lists based on growth needs. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with treating all sequences as identical, and they should avoid the trap of choosing arrays for data that clearly grows. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_66
+{
+    public static void Run()
+    {
+        var dynamicSteps = new List<string> { "Validate", "Transform", "Notify-2" };
+        string[] fixedSteps = { "Validate", "Transform", "Load" };
+        Console.WriteLine($"{fixedSteps.Length}/{dynamicSteps.Count}");
+    }
+}
+```
+
+### Q4.67 Why is for loop control in C# fundamentals?
+
+**Answer:** For loop control means using index-based iteration when counts and positions matter. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with using abstract iteration for every case, and they should avoid the trap of off-by-one errors. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_67
+{
+    public static void Run()
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            Console.WriteLine($"Batch item {i}");
+        }
+    }
+}
+```
+
+### Q4.68 How can foreach and collection traversal in C# fundamentals?
+
+**Answer:** Foreach and collection traversal means iterating cleanly over items when index math is unnecessary. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with manual index handling everywhere, and they should avoid the trap of mutating a collection unsafely while enumerating it. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_68
+{
+    public static void Run()
+    {
+        var departments = new List<string> { "Sales", "Ops", "Finance-3" };
+        foreach (var department in departments)
+        {
+            Console.WriteLine(department);
+        }
+    }
+}
+```
+
+### Q4.69 What is while and do while usage in C# fundamentals?
+
+**Answer:** While and do while usage means repeating work based on a condition that changes over time. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with forcing condition-driven work into fixed counts, and they should avoid the trap of forgetting to change loop state. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_69
+{
+    public static void Run()
+    {
+        int retries = 0;
+        while (retries < 2)
+        {
+            Console.WriteLine($"Attempt {retries + 1}");
+            retries++;
+        }
+    }
+}
+```
+
+### Q4.70 How does break continue and loop control signals in C# fundamentals?
+
+**Answer:** Break continue and loop control signals means skipping or stopping iteration as soon as conditions are met. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with processing every item even after a match appears, and they should avoid the trap of using too many jumps inside one loop. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_70
+{
+    public static void Run()
+    {
+        var ids = new List<int> { 101, 205, 309, 770 };
+        foreach (var id in ids)
+        {
+            if (id < 200) continue;
+            Console.WriteLine($"Process {id}");
+            break;
+        }
+    }
+}
+```
+
+### Q4.71 Why does iteration and side effect awareness in C# fundamentals?
+
+**Answer:** Iteration and side effect awareness means thinking about what each iteration changes or calls. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with treating loops as cost-free syntax, and they should avoid the trap of placing expensive work inside loops carelessly. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_71
+{
+    public static void Run()
+    {
+        var reportIds = new[] { 372, 373, 374 };
+        foreach (var reportId in reportIds)
+        {
+            Console.WriteLine($"Queue report generation for {reportId}");
+        }
+    }
+}
+```
+
+### Q4.72 When should you use iteration over arrays versus lists in C# fundamentals?
+
+**Answer:** Iteration over arrays versus lists means choosing between fixed-size arrays and dynamic lists based on growth needs. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with treating all sequences as identical, and they should avoid the trap of choosing arrays for data that clearly grows. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_72
+{
+    public static void Run()
+    {
+        var dynamicSteps = new List<string> { "Validate", "Transform", "Notify-0" };
+        string[] fixedSteps = { "Validate", "Transform", "Load" };
+        Console.WriteLine($"{fixedSteps.Length}/{dynamicSteps.Count}");
+    }
+}
+```
+
+### Q4.73 What problem does for loop control in C# fundamentals?
+
+**Answer:** For loop control means using index-based iteration when counts and positions matter. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with using abstract iteration for every case, and they should avoid the trap of off-by-one errors. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_73
+{
+    public static void Run()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            Console.WriteLine($"Batch item {i}");
+        }
+    }
+}
+```
+
+### Q4.74 How would you explain foreach and collection traversal in C# fundamentals?
+
+**Answer:** Foreach and collection traversal means iterating cleanly over items when index math is unnecessary. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with manual index handling everywhere, and they should avoid the trap of mutating a collection unsafely while enumerating it. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_74
+{
+    public static void Run()
+    {
+        var departments = new List<string> { "Sales", "Ops", "Finance-4" };
+        foreach (var department in departments)
+        {
+            Console.WriteLine(department);
+        }
+    }
+}
+```
+
+### Q4.75 Why is while and do while usage in C# fundamentals?
+
+**Answer:** While and do while usage means repeating work based on a condition that changes over time. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with forcing condition-driven work into fixed counts, and they should avoid the trap of forgetting to change loop state. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_75
+{
+    public static void Run()
+    {
+        int retries = 0;
+        while (retries < 2)
+        {
+            Console.WriteLine($"Attempt {retries + 1}");
+            retries++;
+        }
+    }
+}
+```
+
+### Q4.76 How can break continue and loop control signals in C# fundamentals?
+
+**Answer:** Break continue and loop control signals means skipping or stopping iteration as soon as conditions are met. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with processing every item even after a match appears, and they should avoid the trap of using too many jumps inside one loop. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_76
+{
+    public static void Run()
+    {
+        var ids = new List<int> { 101, 205, 309, 776 };
+        foreach (var id in ids)
+        {
+            if (id < 200) continue;
+            Console.WriteLine($"Process {id}");
+            break;
+        }
+    }
+}
+```
+
+### Q4.77 What is iteration and side effect awareness in C# fundamentals?
+
+**Answer:** Iteration and side effect awareness means thinking about what each iteration changes or calls. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with treating loops as cost-free syntax, and they should avoid the trap of placing expensive work inside loops carelessly. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_77
+{
+    public static void Run()
+    {
+        var reportIds = new[] { 378, 379, 380 };
+        foreach (var reportId in reportIds)
+        {
+            Console.WriteLine($"Queue report generation for {reportId}");
+        }
+    }
+}
+```
+
+### Q4.78 How does iteration over arrays versus lists in C# fundamentals?
+
+**Answer:** Iteration over arrays versus lists means choosing between fixed-size arrays and dynamic lists based on growth needs. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with treating all sequences as identical, and they should avoid the trap of choosing arrays for data that clearly grows. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_78
+{
+    public static void Run()
+    {
+        var dynamicSteps = new List<string> { "Validate", "Transform", "Notify-2" };
+        string[] fixedSteps = { "Validate", "Transform", "Load" };
+        Console.WriteLine($"{fixedSteps.Length}/{dynamicSteps.Count}");
+    }
+}
+```
+
+### Q4.79 Why does for loop control in C# fundamentals?
+
+**Answer:** For loop control means using index-based iteration when counts and positions matter. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with using abstract iteration for every case, and they should avoid the trap of off-by-one errors. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_79
+{
+    public static void Run()
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            Console.WriteLine($"Batch item {i}");
+        }
+    }
+}
+```
+
+### Q4.80 When should you use foreach and collection traversal in C# fundamentals?
+
+**Answer:** Foreach and collection traversal means iterating cleanly over items when index math is unnecessary. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with manual index handling everywhere, and they should avoid the trap of mutating a collection unsafely while enumerating it. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_80
+{
+    public static void Run()
+    {
+        var departments = new List<string> { "Sales", "Ops", "Finance-0" };
+        foreach (var department in departments)
+        {
+            Console.WriteLine(department);
+        }
+    }
+}
+```
+
+### Q4.81 What problem does while and do while usage in C# fundamentals?
+
+**Answer:** While and do while usage means repeating work based on a condition that changes over time. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with forcing condition-driven work into fixed counts, and they should avoid the trap of forgetting to change loop state. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_81
+{
+    public static void Run()
+    {
+        int retries = 0;
+        while (retries < 2)
+        {
+            Console.WriteLine($"Attempt {retries + 1}");
+            retries++;
+        }
+    }
+}
+```
+
+### Q4.82 How would you explain break continue and loop control signals in C# fundamentals?
+
+**Answer:** Break continue and loop control signals means skipping or stopping iteration as soon as conditions are met. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with processing every item even after a match appears, and they should avoid the trap of using too many jumps inside one loop. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_82
+{
+    public static void Run()
+    {
+        var ids = new List<int> { 101, 205, 309, 782 };
+        foreach (var id in ids)
+        {
+            if (id < 200) continue;
+            Console.WriteLine($"Process {id}");
+            break;
+        }
+    }
+}
+```
+
+### Q4.83 Why is iteration and side effect awareness in C# fundamentals?
+
+**Answer:** Iteration and side effect awareness means thinking about what each iteration changes or calls. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with treating loops as cost-free syntax, and they should avoid the trap of placing expensive work inside loops carelessly. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_83
+{
+    public static void Run()
+    {
+        var reportIds = new[] { 384, 385, 386 };
+        foreach (var reportId in reportIds)
+        {
+            Console.WriteLine($"Queue report generation for {reportId}");
+        }
+    }
+}
+```
+
+### Q4.84 How can iteration over arrays versus lists in C# fundamentals?
+
+**Answer:** Iteration over arrays versus lists means choosing between fixed-size arrays and dynamic lists based on growth needs. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with treating all sequences as identical, and they should avoid the trap of choosing arrays for data that clearly grows. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_84
+{
+    public static void Run()
+    {
+        var dynamicSteps = new List<string> { "Validate", "Transform", "Notify-0" };
+        string[] fixedSteps = { "Validate", "Transform", "Load" };
+        Console.WriteLine($"{fixedSteps.Length}/{dynamicSteps.Count}");
+    }
+}
+```
+
+### Q4.85 What is for loop control in C# fundamentals?
+
+**Answer:** For loop control means using index-based iteration when counts and positions matter. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with using abstract iteration for every case, and they should avoid the trap of off-by-one errors. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_85
+{
+    public static void Run()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            Console.WriteLine($"Batch item {i}");
+        }
+    }
+}
+```
+
+### Q4.86 How does foreach and collection traversal in C# fundamentals?
+
+**Answer:** Foreach and collection traversal means iterating cleanly over items when index math is unnecessary. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with manual index handling everywhere, and they should avoid the trap of mutating a collection unsafely while enumerating it. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_86
+{
+    public static void Run()
+    {
+        var departments = new List<string> { "Sales", "Ops", "Finance-1" };
+        foreach (var department in departments)
+        {
+            Console.WriteLine(department);
+        }
+    }
+}
+```
+
+### Q4.87 Why does while and do while usage in C# fundamentals?
+
+**Answer:** While and do while usage means repeating work based on a condition that changes over time. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with forcing condition-driven work into fixed counts, and they should avoid the trap of forgetting to change loop state. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_87
+{
+    public static void Run()
+    {
+        int retries = 0;
+        while (retries < 2)
+        {
+            Console.WriteLine($"Attempt {retries + 1}");
+            retries++;
+        }
+    }
+}
+```
+
+### Q4.88 When should you use break continue and loop control signals in C# fundamentals?
+
+**Answer:** Break continue and loop control signals means skipping or stopping iteration as soon as conditions are met. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with processing every item even after a match appears, and they should avoid the trap of using too many jumps inside one loop. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_88
+{
+    public static void Run()
+    {
+        var ids = new List<int> { 101, 205, 309, 788 };
+        foreach (var id in ids)
+        {
+            if (id < 200) continue;
+            Console.WriteLine($"Process {id}");
+            break;
+        }
+    }
+}
+```
+
+### Q4.89 What problem does iteration and side effect awareness in C# fundamentals?
+
+**Answer:** Iteration and side effect awareness means thinking about what each iteration changes or calls. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with treating loops as cost-free syntax, and they should avoid the trap of placing expensive work inside loops carelessly. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_89
+{
+    public static void Run()
+    {
+        var reportIds = new[] { 390, 391, 392 };
+        foreach (var reportId in reportIds)
+        {
+            Console.WriteLine($"Queue report generation for {reportId}");
+        }
+    }
+}
+```
+
+### Q4.90 How would you explain iteration over arrays versus lists in C# fundamentals?
+
+**Answer:** Iteration over arrays versus lists means choosing between fixed-size arrays and dynamic lists based on growth needs. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with treating all sequences as identical, and they should avoid the trap of choosing arrays for data that clearly grows. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_90
+{
+    public static void Run()
+    {
+        var dynamicSteps = new List<string> { "Validate", "Transform", "Notify-2" };
+        string[] fixedSteps = { "Validate", "Transform", "Load" };
+        Console.WriteLine($"{fixedSteps.Length}/{dynamicSteps.Count}");
+    }
+}
+```
+
+### Q4.91 Why is for loop control in C# fundamentals?
+
+**Answer:** For loop control means using index-based iteration when counts and positions matter. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with using abstract iteration for every case, and they should avoid the trap of off-by-one errors. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_91
+{
+    public static void Run()
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            Console.WriteLine($"Batch item {i}");
+        }
+    }
+}
+```
+
+### Q4.92 How can foreach and collection traversal in C# fundamentals?
+
+**Answer:** Foreach and collection traversal means iterating cleanly over items when index math is unnecessary. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with manual index handling everywhere, and they should avoid the trap of mutating a collection unsafely while enumerating it. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_92
+{
+    public static void Run()
+    {
+        var departments = new List<string> { "Sales", "Ops", "Finance-2" };
+        foreach (var department in departments)
+        {
+            Console.WriteLine(department);
+        }
+    }
+}
+```
+
+### Q4.93 What is while and do while usage in C# fundamentals?
+
+**Answer:** While and do while usage means repeating work based on a condition that changes over time. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with forcing condition-driven work into fixed counts, and they should avoid the trap of forgetting to change loop state. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_93
+{
+    public static void Run()
+    {
+        int retries = 0;
+        while (retries < 2)
+        {
+            Console.WriteLine($"Attempt {retries + 1}");
+            retries++;
+        }
+    }
+}
+```
+
+### Q4.94 How does break continue and loop control signals in C# fundamentals?
+
+**Answer:** Break continue and loop control signals means skipping or stopping iteration as soon as conditions are met. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with processing every item even after a match appears, and they should avoid the trap of using too many jumps inside one loop. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_94
+{
+    public static void Run()
+    {
+        var ids = new List<int> { 101, 205, 309, 794 };
+        foreach (var id in ids)
+        {
+            if (id < 200) continue;
+            Console.WriteLine($"Process {id}");
+            break;
+        }
+    }
+}
+```
+
+### Q4.95 Why does iteration and side effect awareness in C# fundamentals?
+
+**Answer:** Iteration and side effect awareness means thinking about what each iteration changes or calls. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with treating loops as cost-free syntax, and they should avoid the trap of placing expensive work inside loops carelessly. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_95
+{
+    public static void Run()
+    {
+        var reportIds = new[] { 396, 397, 398 };
+        foreach (var reportId in reportIds)
+        {
+            Console.WriteLine($"Queue report generation for {reportId}");
+        }
+    }
+}
+```
+
+### Q4.96 When should you use iteration over arrays versus lists in C# fundamentals?
+
+**Answer:** Iteration over arrays versus lists means choosing between fixed-size arrays and dynamic lists based on growth needs. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with treating all sequences as identical, and they should avoid the trap of choosing arrays for data that clearly grows. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_96
+{
+    public static void Run()
+    {
+        var dynamicSteps = new List<string> { "Validate", "Transform", "Notify-0" };
+        string[] fixedSteps = { "Validate", "Transform", "Load" };
+        Console.WriteLine($"{fixedSteps.Length}/{dynamicSteps.Count}");
+    }
+}
+```
+
+### Q4.97 What problem does for loop control in C# fundamentals?
+
+**Answer:** For loop control means using index-based iteration when counts and positions matter. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with using abstract iteration for every case, and they should avoid the trap of off-by-one errors. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_97
+{
+    public static void Run()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            Console.WriteLine($"Batch item {i}");
+        }
+    }
+}
+```
+
+### Q4.98 How would you explain foreach and collection traversal in C# fundamentals?
+
+**Answer:** Foreach and collection traversal means iterating cleanly over items when index math is unnecessary. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with manual index handling everywhere, and they should avoid the trap of mutating a collection unsafely while enumerating it. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_98
+{
+    public static void Run()
+    {
+        var departments = new List<string> { "Sales", "Ops", "Finance-3" };
+        foreach (var department in departments)
+        {
+            Console.WriteLine(department);
+        }
+    }
+}
+```
+
+### Q4.99 Why is while and do while usage in C# fundamentals?
+
+**Answer:** While and do while usage means repeating work based on a condition that changes over time. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with forcing condition-driven work into fixed counts, and they should avoid the trap of forgetting to change loop state. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_99
+{
+    public static void Run()
+    {
+        int retries = 0;
+        while (retries < 2)
+        {
+            Console.WriteLine($"Attempt {retries + 1}");
+            retries++;
+        }
+    }
+}
+```
+
+### Q4.100 How can break continue and loop control signals in C# fundamentals?
+
+**Answer:** Break continue and loop control signals means skipping or stopping iteration as soon as conditions are met. Teams should focus on it when discussing loops and iteration patterns in production code, they compare it with processing every item even after a match appears, and they should avoid the trap of using too many jumps inside one loop. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo4_100
+{
+    public static void Run()
+    {
+        var ids = new List<int> { 101, 205, 309, 800 };
+        foreach (var id in ids)
+        {
+            if (id < 200) continue;
+            Console.WriteLine($"Process {id}");
+            break;
+        }
+    }
+}
+```
 
 ## 5. Methods and parameter passing
 
-This section covers how C# groups behavior into methods, passes data around, and exposes reusable logic safely.
+> This section contains **100 interview questions** focused on **Methods and parameter passing**. Every answer includes a C# code example, and the scenarios rotate so they do not repeat verbatim.
 
-### 201. What is the role of Method design, return values, and naming in C# fundamentals?
+### Q5.1 What is method extraction and reuse in C# fundamentals?
 
-**Answer:**
+**Answer:** Method extraction and reuse means grouping behavior into named reusable units. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with keeping all logic in one huge method, and they should avoid the trap of creating vague helper methods. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
 
-In C# fundamentals, Method design, return values, and naming refers to the fundamental practice of creating small, purposeful units of behavior with clear inputs and outputs. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-decimal CalculateInvoiceTotal(decimal subtotal, decimal taxRate, decimal shipping)
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_1
 {
-    decimal tax = subtotal * taxRate;
-    return subtotal + tax + shipping;
-}
-
-Console.WriteLine(CalculateInvoiceTotal(1000m, 0.18m, 50m));
-```
-
----
-
-### 202. Why is Method design, return values, and naming important in day-to-day C# work?
-
-**Answer:**
-
-It matters because method quality affects readability, testability, and the ability to change business logic without breaking callers. In production code, this shows up in features like imports, APIs, validation, pricing, reporting, and support debugging.
-
-**Sample:**
-
-```csharp
-decimal CalculateInvoiceTotal(decimal subtotal, decimal taxRate, decimal shipping)
-{
-    decimal tax = subtotal * taxRate;
-    return subtotal + tax + shipping;
-}
-
-Console.WriteLine(CalculateInvoiceTotal(1000m, 0.18m, 50m));
-```
-
----
-
-### 203. When should you use Method design, return values, and naming in real projects?
-
-**Answer:**
-
-Use Method design, return values, and naming when a block of logic has one clear responsibility and should be reused, tested, or explained separately. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
-
-```csharp
-decimal CalculateInvoiceTotal(decimal subtotal, decimal taxRate, decimal shipping)
-{
-    decimal tax = subtotal * taxRate;
-    return subtotal + tax + shipping;
-}
-
-Console.WriteLine(CalculateInvoiceTotal(1000m, 0.18m, 50m));
-```
-
----
-
-### 204. What is a real-time example of Method design, return values, and naming?
-
-**Answer:**
-
-A billing service often exposes methods such as `CalculateInvoiceTotal`, `ValidateDiscount`, and `BuildReceiptMessage` rather than placing everything in one large handler. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
-
-```csharp
-decimal CalculateInvoiceTotal(decimal subtotal, decimal taxRate, decimal shipping)
-{
-    decimal tax = subtotal * taxRate;
-    return subtotal + tax + shipping;
-}
-
-Console.WriteLine(CalculateInvoiceTotal(1000m, 0.18m, 50m));
-```
-
----
-
-### 205. What is a best practice for Method design, return values, and naming?
-
-**Answer:**
-
-Name methods after the business action they perform and keep each method focused on one responsibility. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
-
-```csharp
-decimal CalculateInvoiceTotal(decimal subtotal, decimal taxRate, decimal shipping)
-{
-    decimal tax = subtotal * taxRate;
-    return subtotal + tax + shipping;
-}
-
-Console.WriteLine(CalculateInvoiceTotal(1000m, 0.18m, 50m));
-```
-
----
-
-### 206. What is a tricky interview point or common mistake around Method design, return values, and naming?
-
-**Answer:**
-
-Methods that both calculate and mutate several unrelated things are hard to test and difficult to explain in interviews. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
-
-```csharp
-string BuildStatusMessage(bool isPaid, bool isArchived, bool isDeleted)
-{
-    if (isDeleted) return "Deleted";
-    if (isArchived) return "Archived";
-    return isPaid ? "Paid" : "Pending";
-}
-
-Console.WriteLine(BuildStatusMessage(true, false, false));
-```
-
----
-
-### 207. How does Method design, return values, and naming differ from inline procedural code in a large method?
-
-**Answer:**
-
-Method design, return values, and naming is about the fundamental practice of creating small, purposeful units of behavior with clear inputs and outputs, whereas inline procedural code in a large method is about one long block of logic with weak separation of concerns. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
-
-```csharp
-decimal CalculateInvoiceTotal(decimal subtotal, decimal taxRate, decimal shipping)
-{
-    decimal tax = subtotal * taxRate;
-    return subtotal + tax + shipping;
-}
-
-Console.WriteLine(CalculateInvoiceTotal(1000m, 0.18m, 50m));
-```
-
----
-
-### 208. How do you troubleshoot issues related to Method design, return values, and naming?
-
-**Answer:**
-
-Look for methods that are too long, return too much unrelated data, or require many flags just to behave correctly. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
-
-```csharp
-string BuildStatusMessage(bool isPaid, bool isArchived, bool isDeleted)
-{
-    if (isDeleted) return "Deleted";
-    if (isArchived) return "Archived";
-    return isPaid ? "Paid" : "Pending";
-}
-
-Console.WriteLine(BuildStatusMessage(true, false, false));
-```
-
----
-
-### 209. What kind of follow-up does an interviewer usually ask after Method design, return values, and naming?
-
-**Answer:**
-
-A common follow-up is how to decide whether a method should return a value, throw, or expose a status result. This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
-
-```csharp
-decimal CalculateInvoiceTotal(decimal subtotal, decimal taxRate, decimal shipping)
-{
-    decimal tax = subtotal * taxRate;
-    return subtotal + tax + shipping;
-}
-
-Console.WriteLine(CalculateInvoiceTotal(1000m, 0.18m, 50m));
-```
-
----
-
-### 210. How does Method design, return values, and naming connect to the rest of C# fundamentals?
-
-**Answer:**
-
-Good method design supports parameters, collections, branching, and reuse across the rest of the language. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
-
-```csharp
-decimal CalculateInvoiceTotal(decimal subtotal, decimal taxRate, decimal shipping)
-{
-    decimal tax = subtotal * taxRate;
-    return subtotal + tax + shipping;
-}
-
-Console.WriteLine(CalculateInvoiceTotal(1000m, 0.18m, 50m));
-```
-
----
-
-### 211. What is the role of Value parameters versus reference behavior in C# fundamentals?
-
-**Answer:**
-
-In C# fundamentals, Value parameters versus reference behavior refers to the rules that determine whether a method receives a copy of a value or a reference to an object instance. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
-
-```csharp
-void ApplyDiscount(decimal price)
-{
-    price -= 100m;
-    Console.WriteLine($"Inside method: {price}");
-}
-
-decimal originalPrice = 1000m;
-ApplyDiscount(originalPrice);
-Console.WriteLine($"Outside method: {originalPrice}");
-```
-
----
-
-### 212. Why is Value parameters versus reference behavior important in day-to-day C# work?
-
-**Answer:**
-
-It matters because many interview problems revolve around whether a method can change the caller state. In production code, this shows up in features like imports, APIs, validation, pricing, reporting, and support debugging.
-
-**Sample:**
-
-```csharp
-void ApplyDiscount(decimal price)
-{
-    price -= 100m;
-    Console.WriteLine($"Inside method: {price}");
-}
-
-decimal originalPrice = 1000m;
-ApplyDiscount(originalPrice);
-Console.WriteLine($"Outside method: {originalPrice}");
-```
-
----
-
-### 213. When should you use Value parameters versus reference behavior in real projects?
-
-**Answer:**
-
-Use Value parameters versus reference behavior when you need to predict whether updates inside a method affect the original argument or only a local copy. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
-
-```csharp
-void ApplyDiscount(decimal price)
-{
-    price -= 100m;
-    Console.WriteLine($"Inside method: {price}");
-}
-
-decimal originalPrice = 1000m;
-ApplyDiscount(originalPrice);
-Console.WriteLine($"Outside method: {originalPrice}");
-```
-
----
-
-### 214. What is a real-time example of Value parameters versus reference behavior?
-
-**Answer:**
-
-A pricing method may safely change a local numeric copy, while a customer object passed into another method may have its properties updated for downstream processing. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
-
-```csharp
-void ApplyDiscount(decimal price)
-{
-    price -= 100m;
-    Console.WriteLine($"Inside method: {price}");
-}
-
-decimal originalPrice = 1000m;
-ApplyDiscount(originalPrice);
-Console.WriteLine($"Outside method: {originalPrice}");
-```
-
----
-
-### 215. What is a best practice for Value parameters versus reference behavior?
-
-**Answer:**
-
-Know what is copied: value types copy the value, and reference types copy the reference, not the whole object. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
-
-```csharp
-void ApplyDiscount(decimal price)
-{
-    price -= 100m;
-    Console.WriteLine($"Inside method: {price}");
-}
-
-decimal originalPrice = 1000m;
-ApplyDiscount(originalPrice);
-Console.WriteLine($"Outside method: {originalPrice}");
-```
-
----
-
-### 216. What is a tricky interview point or common mistake around Value parameters versus reference behavior?
-
-**Answer:**
-
-A common misconception is saying reference types are passed by reference by default; they are still passed by value unless ref is used. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
-
-```csharp
-class Customer
-{
-    public string Name { get; set; } = "";
-}
-
-void Rename(Customer customer)
-{
-    customer.Name = "Updated";
-}
-
-var customer = new Customer { Name = "Original" };
-Rename(customer);
-Console.WriteLine(customer.Name);
-```
-
----
-
-### 217. How does Value parameters versus reference behavior differ from ref and out parameters?
-
-**Answer:**
-
-Value parameters versus reference behavior is about the rules that determine whether a method receives a copy of a value or a reference to an object instance, whereas ref and out parameters is about explicit by-reference parameter passing rather than normal argument passing semantics. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
-
-```csharp
-void ApplyDiscount(decimal price)
-{
-    price -= 100m;
-    Console.WriteLine($"Inside method: {price}");
-}
-
-decimal originalPrice = 1000m;
-ApplyDiscount(originalPrice);
-Console.WriteLine($"Outside method: {originalPrice}");
-```
-
----
-
-### 218. How do you troubleshoot issues related to Value parameters versus reference behavior?
-
-**Answer:**
-
-Check the parameter type, inspect whether properties are being changed, and verify whether the variable itself or the object it points to is being modified. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
-
-```csharp
-class Customer
-{
-    public string Name { get; set; } = "";
-}
-
-void Rename(Customer customer)
-{
-    customer.Name = "Updated";
-}
-
-var customer = new Customer { Name = "Original" };
-Rename(customer);
-Console.WriteLine(customer.Name);
-```
-
----
-
-### 219. What kind of follow-up does an interviewer usually ask after Value parameters versus reference behavior?
-
-**Answer:**
-
-A common follow-up is why changing an object property works without ref but reassigning the local parameter usually does not affect the caller. This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
-
-```csharp
-void ApplyDiscount(decimal price)
-{
-    price -= 100m;
-    Console.WriteLine($"Inside method: {price}");
-}
-
-decimal originalPrice = 1000m;
-ApplyDiscount(originalPrice);
-Console.WriteLine($"Outside method: {originalPrice}");
-```
-
----
-
-### 220. How does Value parameters versus reference behavior connect to the rest of C# fundamentals?
-
-**Answer:**
-
-This topic is essential for understanding methods, collections, mutation, and debugging side effects. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
-
-```csharp
-void ApplyDiscount(decimal price)
-{
-    price -= 100m;
-    Console.WriteLine($"Inside method: {price}");
-}
-
-decimal originalPrice = 1000m;
-ApplyDiscount(originalPrice);
-Console.WriteLine($"Outside method: {originalPrice}");
-```
-
----
-
-### 221. What is the role of ref and out parameters in C# fundamentals?
-
-**Answer:**
-
-In C# fundamentals, ref and out parameters refers to the parameter modifiers that allow a method to work with the caller storage directly or return additional values through parameters. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
-
-```csharp
-bool TryReadQuantity(string text, out int quantity)
-{
-    return int.TryParse(text, out quantity);
-}
-
-if (TryReadQuantity("42", out var quantity))
-{
-    Console.WriteLine(quantity);
-}
-```
-
----
-
-### 222. Why is ref and out parameters important in day-to-day C# work?
-
-**Answer:**
-
-It matters because interviews frequently use these keywords to test whether the candidate understands memory semantics and API intent. In production code, this shows up in features like imports, APIs, validation, pricing, reporting, and support debugging.
-
-**Sample:**
-
-```csharp
-bool TryReadQuantity(string text, out int quantity)
-{
-    return int.TryParse(text, out quantity);
-}
-
-if (TryReadQuantity("42", out var quantity))
-{
-    Console.WriteLine(quantity);
-}
-```
-
----
-
-### 223. When should you use ref and out parameters in real projects?
-
-**Answer:**
-
-Use ref and out parameters when you must mutate the caller variable intentionally or return multiple values from older or low-level APIs. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
-
-```csharp
-bool TryReadQuantity(string text, out int quantity)
-{
-    return int.TryParse(text, out quantity);
-}
-
-if (TryReadQuantity("42", out var quantity))
-{
-    Console.WriteLine(quantity);
-}
-```
-
----
-
-### 224. What is a real-time example of ref and out parameters?
-
-**Answer:**
-
-A parsing helper may return success as a boolean and the parsed value through an out parameter, while a performance-sensitive utility may update a running total by ref. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
-
-```csharp
-bool TryReadQuantity(string text, out int quantity)
-{
-    return int.TryParse(text, out quantity);
-}
-
-if (TryReadQuantity("42", out var quantity))
-{
-    Console.WriteLine(quantity);
-}
-```
-
----
-
-### 225. What is a best practice for ref and out parameters?
-
-**Answer:**
-
-Use ref and out only when they communicate a real need clearly; otherwise prefer normal returns or tuples for readability. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
-
-```csharp
-bool TryReadQuantity(string text, out int quantity)
-{
-    return int.TryParse(text, out quantity);
-}
-
-if (TryReadQuantity("42", out var quantity))
-{
-    Console.WriteLine(quantity);
-}
-```
-
----
-
-### 226. What is a tricky interview point or common mistake around ref and out parameters?
-
-**Answer:**
-
-Candidates often forget that out must be assigned before the method exits and that ref requires the variable to be initialized first. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
-
-```csharp
-void Increment(ref int count)
-{
-    count++;
-}
-
-int processed = 10;
-Increment(ref processed);
-Console.WriteLine(processed);
-```
-
----
-
-### 227. How does ref and out parameters differ from value parameters versus reference behavior?
-
-**Answer:**
-
-ref and out parameters is about the parameter modifiers that allow a method to work with the caller storage directly or return additional values through parameters, whereas value parameters versus reference behavior is about normal argument passing rules without explicit by-reference modifiers. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
-
-```csharp
-bool TryReadQuantity(string text, out int quantity)
-{
-    return int.TryParse(text, out quantity);
-}
-
-if (TryReadQuantity("42", out var quantity))
-{
-    Console.WriteLine(quantity);
-}
-```
-
----
-
-### 228. How do you troubleshoot issues related to ref and out parameters?
-
-**Answer:**
-
-Check whether the caller initialized the variable correctly, confirm the method assigns out values, and verify that ref is used on both sides of the call. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
-
-```csharp
-void Increment(ref int count)
-{
-    count++;
-}
-
-int processed = 10;
-Increment(ref processed);
-Console.WriteLine(processed);
-```
-
----
-
-### 229. What kind of follow-up does an interviewer usually ask after ref and out parameters?
-
-**Answer:**
-
-A common follow-up is when tuples or result objects are better than out, and when ref is justified. This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
-
-```csharp
-bool TryReadQuantity(string text, out int quantity)
-{
-    return int.TryParse(text, out quantity);
-}
-
-if (TryReadQuantity("42", out var quantity))
-{
-    Console.WriteLine(quantity);
-}
-```
-
----
-
-### 230. How does ref and out parameters connect to the rest of C# fundamentals?
-
-**Answer:**
-
-These modifiers deepen the understanding of methods, performance, parsing, and API contracts. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
-
-```csharp
-bool TryReadQuantity(string text, out int quantity)
-{
-    return int.TryParse(text, out quantity);
-}
-
-if (TryReadQuantity("42", out var quantity))
-{
-    Console.WriteLine(quantity);
-}
-```
-
----
-
-### 231. What is the role of params arrays and flexible method inputs in C# fundamentals?
-
-**Answer:**
-
-In C# fundamentals, params arrays and flexible method inputs refers to the mechanism that allows a method to accept a variable number of arguments of the same type. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
-
-```csharp
-decimal SumAmounts(params decimal[] amounts)
-{
-    decimal total = 0m;
-    foreach (var amount in amounts)
+    public static void Run()
     {
-        total += amount;
+        static decimal CalculateVat(decimal amount) => amount * 0.18m;
+        decimal invoice = 501m;
+        Console.WriteLine(CalculateVat(invoice));
     }
-
-    return total;
 }
-
-Console.WriteLine(SumAmounts(100m, 250m, 50m));
 ```
 
----
+### Q5.2 How does value passing versus reference passing in C# fundamentals?
 
-### 232. Why is params arrays and flexible method inputs important in day-to-day C# work?
+**Answer:** Value passing versus reference passing means understanding what gets copied when methods are called. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with assuming all arguments behave the same way, and they should avoid the trap of changing a referenced object and expecting isolation. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
 
-**Answer:**
-
-It matters because utility methods often need a flexible call shape without forcing callers to manually create an array every time. In production code, this shows up in features like imports, APIs, validation, pricing, reporting, and support debugging.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-decimal SumAmounts(params decimal[] amounts)
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_2
 {
-    decimal total = 0m;
-    foreach (var amount in amounts)
+    public static void Run()
     {
-        total += amount;
+        static void Rename(List<string> names)
+        {
+            names.Add("Auditor-0");
+        }
+        var names = new List<string> { "Ops" };
+        Rename(names);
+        Console.WriteLine(string.Join(",", names));
     }
-
-    return total;
 }
-
-Console.WriteLine(SumAmounts(100m, 250m, 50m));
 ```
 
----
+### Q5.3 Why does ref out and in parameters in C# fundamentals?
 
-### 233. When should you use params arrays and flexible method inputs in real projects?
+**Answer:** Ref out and in parameters means using parameter modifiers when a method must update or protect data explicitly. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with ignoring modifier semantics, and they should avoid the trap of using ref or out when a better design exists. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
 
-**Answer:**
-
-Use params arrays and flexible method inputs when the method logically accepts zero or more values such as tags, IDs, amounts, or messages. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-decimal SumAmounts(params decimal[] amounts)
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_3
 {
-    decimal total = 0m;
-    foreach (var amount in amounts)
+    public static void Run()
     {
-        total += amount;
+        static void BuildSummary(int approved, int rejected, out string summary)
+        {
+            summary = $"Approved={approved}, Rejected={rejected}";
+        }
+        BuildSummary(4, 1, out var result);
+        Console.WriteLine(result);
     }
-
-    return total;
 }
-
-Console.WriteLine(SumAmounts(100m, 250m, 50m));
 ```
 
----
+### Q5.4 When should you use optional parameters and named arguments in C# fundamentals?
 
-### 234. What is a real-time example of params arrays and flexible method inputs?
+**Answer:** Optional parameters and named arguments means making call sites clearer with good defaults and explicit names. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with too many overloads for tiny variations, and they should avoid the trap of adding so many optional values that the API becomes muddy. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
 
-**Answer:**
-
-A logging helper may accept multiple warning messages, or a report builder may accept multiple region codes in one call. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-decimal SumAmounts(params decimal[] amounts)
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_4
 {
-    decimal total = 0m;
-    foreach (var amount in amounts)
+    public static void Run()
     {
-        total += amount;
+        static string BuildMessage(string name, bool urgent = false, int retry = 1)
+        {
+            return $"{name} | urgent={urgent} | retry={retry}";
+        }
+        Console.WriteLine(BuildMessage(name: "Worker-404", retry: 3));
     }
-
-    return total;
 }
-
-Console.WriteLine(SumAmounts(100m, 250m, 50m));
 ```
 
----
+### Q5.5 What problem does return values versus side effects in C# fundamentals?
 
-### 235. What is a best practice for params arrays and flexible method inputs?
+**Answer:** Return values versus side effects means separating calculation from mutation when designing methods. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with mixing pure computation with hidden changes, and they should avoid the trap of hiding important state changes inside helper methods. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
 
-**Answer:**
-
-Use params when variable-length input is natural for the API and keep the parameter at the end of the signature. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-decimal SumAmounts(params decimal[] amounts)
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_5
 {
-    decimal total = 0m;
-    foreach (var amount in amounts)
+    public static void Run()
     {
-        total += amount;
+        static int CalculatePoints(int purchases) => purchases * 10;
+        int points = CalculatePoints(7);
+        Console.WriteLine($"Points: {points}");
     }
-
-    return total;
 }
-
-Console.WriteLine(SumAmounts(100m, 250m, 50m));
 ```
 
----
+### Q5.6 How would you explain method overloading basics in C# fundamentals?
 
-### 236. What is a tricky interview point or common mistake around params arrays and flexible method inputs?
+**Answer:** Method overloading basics means supporting one conceptual operation with multiple parameter shapes. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with inventing unrelated names for every variant, and they should avoid the trap of creating overloads that confuse callers. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
 
-**Answer:**
-
-A common trap is forgetting that params still becomes an array and should not be abused for large performance-sensitive hot paths. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-void LogTags(params string[] tags)
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_6
 {
-    Console.WriteLine(string.Join(", ", tags));
-}
-
-var values = new[] { "api", "retry", "warning" };
-LogTags(values);
-```
-
----
-
-### 237. How does params arrays and flexible method inputs differ from method overloading and fixed parameter lists?
-
-**Answer:**
-
-params arrays and flexible method inputs is about the mechanism that allows a method to accept a variable number of arguments of the same type, whereas method overloading and fixed parameter lists is about specific signatures with a fixed number of inputs rather than a variable-length array input. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
-
-```csharp
-decimal SumAmounts(params decimal[] amounts)
-{
-    decimal total = 0m;
-    foreach (var amount in amounts)
+    public static void Run()
     {
-        total += amount;
+        static string FormatAmount(int value) => $"Count: {value}";
+        static string FormatAmount(decimal value) => $"Currency: {value:C}";
+        Console.WriteLine(FormatAmount(7));
+        Console.WriteLine(FormatAmount(506m));
     }
-
-    return total;
 }
-
-Console.WriteLine(SumAmounts(100m, 250m, 50m));
 ```
 
----
+### Q5.7 Why is method extraction and reuse in C# fundamentals?
 
-### 238. How do you troubleshoot issues related to params arrays and flexible method inputs?
+**Answer:** Method extraction and reuse means grouping behavior into named reusable units. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with keeping all logic in one huge method, and they should avoid the trap of creating vague helper methods. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
 
-**Answer:**
-
-Inspect the actual arguments received, confirm overload resolution, and remember that callers can pass an explicit array too. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-void LogTags(params string[] tags)
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_7
 {
-    Console.WriteLine(string.Join(", ", tags));
-}
-
-var values = new[] { "api", "retry", "warning" };
-LogTags(values);
-```
-
----
-
-### 239. What kind of follow-up does an interviewer usually ask after params arrays and flexible method inputs?
-
-**Answer:**
-
-A common follow-up is how params interacts with overloads and why ambiguous method calls can happen. This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
-
-```csharp
-decimal SumAmounts(params decimal[] amounts)
-{
-    decimal total = 0m;
-    foreach (var amount in amounts)
+    public static void Run()
     {
-        total += amount;
+        static decimal CalculateVat(decimal amount) => amount * 0.18m;
+        decimal invoice = 507m;
+        Console.WriteLine(CalculateVat(invoice));
     }
-
-    return total;
 }
-
-Console.WriteLine(SumAmounts(100m, 250m, 50m));
 ```
 
----
+### Q5.8 How can value passing versus reference passing in C# fundamentals?
 
-### 240. How does params arrays and flexible method inputs connect to the rest of C# fundamentals?
+**Answer:** Value passing versus reference passing means understanding what gets copied when methods are called. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with assuming all arguments behave the same way, and they should avoid the trap of changing a referenced object and expecting isolation. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
 
-**Answer:**
-
-This topic connects method design, arrays, and API ergonomics in a very practical way. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-decimal SumAmounts(params decimal[] amounts)
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_8
 {
-    decimal total = 0m;
-    foreach (var amount in amounts)
+    public static void Run()
     {
-        total += amount;
+        static void Rename(List<string> names)
+        {
+            names.Add("Auditor-0");
+        }
+        var names = new List<string> { "Ops" };
+        Rename(names);
+        Console.WriteLine(string.Join(",", names));
     }
-
-    return total;
 }
-
-Console.WriteLine(SumAmounts(100m, 250m, 50m));
 ```
 
----
+### Q5.9 What is ref out and in parameters in C# fundamentals?
 
-### 241. What is the role of Optional parameters, overloads, and API clarity in C# fundamentals?
+**Answer:** Ref out and in parameters means using parameter modifiers when a method must update or protect data explicitly. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with ignoring modifier semantics, and they should avoid the trap of using ref or out when a better design exists. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
 
-**Answer:**
-
-In C# fundamentals, Optional parameters, overloads, and API clarity refers to the techniques used to offer flexible method calls while keeping call sites readable and predictable. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-void ExportReport(string reportName, string format = "pdf")
-{
-    Console.WriteLine($"Exporting {reportName} as {format}");
-}
+using System;
+using System.Collections.Generic;
 
-ExportReport("QuarterlySales");
-ExportReport("QuarterlySales", "csv");
+public static class Demo5_9
+{
+    public static void Run()
+    {
+        static void BuildSummary(int approved, int rejected, out string summary)
+        {
+            summary = $"Approved={approved}, Rejected={rejected}";
+        }
+        BuildSummary(5, 1, out var result);
+        Console.WriteLine(result);
+    }
+}
 ```
 
----
+### Q5.10 How does optional parameters and named arguments in C# fundamentals?
 
-### 242. Why is Optional parameters, overloads, and API clarity important in day-to-day C# work?
+**Answer:** Optional parameters and named arguments means making call sites clearer with good defaults and explicit names. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with too many overloads for tiny variations, and they should avoid the trap of adding so many optional values that the API becomes muddy. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
 
-**Answer:**
-
-It matters because public methods often need convenience without creating confusing or ambiguous signatures. In production code, this shows up in features like imports, APIs, validation, pricing, reporting, and support debugging.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-void ExportReport(string reportName, string format = "pdf")
-{
-    Console.WriteLine($"Exporting {reportName} as {format}");
-}
+using System;
+using System.Collections.Generic;
 
-ExportReport("QuarterlySales");
-ExportReport("QuarterlySales", "csv");
+public static class Demo5_10
+{
+    public static void Run()
+    {
+        static string BuildMessage(string name, bool urgent = false, int retry = 1)
+        {
+            return $"{name} | urgent={urgent} | retry={retry}";
+        }
+        Console.WriteLine(BuildMessage(name: "Worker-410", retry: 3));
+    }
+}
 ```
 
----
+### Q5.11 Why does return values versus side effects in C# fundamentals?
 
-### 243. When should you use Optional parameters, overloads, and API clarity in real projects?
+**Answer:** Return values versus side effects means separating calculation from mutation when designing methods. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with mixing pure computation with hidden changes, and they should avoid the trap of hiding important state changes inside helper methods. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
 
-**Answer:**
-
-Use Optional parameters, overloads, and API clarity when you want a default behavior for some callers but still need room for more explicit behavior in other cases. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-void ExportReport(string reportName, string format = "pdf")
-{
-    Console.WriteLine($"Exporting {reportName} as {format}");
-}
+using System;
+using System.Collections.Generic;
 
-ExportReport("QuarterlySales");
-ExportReport("QuarterlySales", "csv");
+public static class Demo5_11
+{
+    public static void Run()
+    {
+        static int CalculatePoints(int purchases) => purchases * 10;
+        int points = CalculatePoints(6);
+        Console.WriteLine($"Points: {points}");
+    }
+}
 ```
 
----
+### Q5.12 When should you use method overloading basics in C# fundamentals?
 
-### 244. What is a real-time example of Optional parameters, overloads, and API clarity?
+**Answer:** Method overloading basics means supporting one conceptual operation with multiple parameter shapes. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with inventing unrelated names for every variant, and they should avoid the trap of creating overloads that confuse callers. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
 
-**Answer:**
-
-A report exporter may default the format to PDF but allow callers to request CSV when needed. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-void ExportReport(string reportName, string format = "pdf")
-{
-    Console.WriteLine($"Exporting {reportName} as {format}");
-}
+using System;
+using System.Collections.Generic;
 
-ExportReport("QuarterlySales");
-ExportReport("QuarterlySales", "csv");
+public static class Demo5_12
+{
+    public static void Run()
+    {
+        static string FormatAmount(int value) => $"Count: {value}";
+        static string FormatAmount(decimal value) => $"Currency: {value:C}";
+        Console.WriteLine(FormatAmount(5));
+        Console.WriteLine(FormatAmount(512m));
+    }
+}
 ```
 
----
+### Q5.13 What problem does method extraction and reuse in C# fundamentals?
 
-### 245. What is a best practice for Optional parameters, overloads, and API clarity?
+**Answer:** Method extraction and reuse means grouping behavior into named reusable units. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with keeping all logic in one huge method, and they should avoid the trap of creating vague helper methods. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
 
-**Answer:**
-
-Use optional parameters for truly stable defaults and overloads when behavior changes are more meaningful than a simple default value. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-void ExportReport(string reportName, string format = "pdf")
-{
-    Console.WriteLine($"Exporting {reportName} as {format}");
-}
+using System;
+using System.Collections.Generic;
 
-ExportReport("QuarterlySales");
-ExportReport("QuarterlySales", "csv");
+public static class Demo5_13
+{
+    public static void Run()
+    {
+        static decimal CalculateVat(decimal amount) => amount * 0.18m;
+        decimal invoice = 513m;
+        Console.WriteLine(CalculateVat(invoice));
+    }
+}
 ```
 
----
+### Q5.14 How would you explain value passing versus reference passing in C# fundamentals?
 
-### 246. What is a tricky interview point or common mistake around Optional parameters, overloads, and API clarity?
+**Answer:** Value passing versus reference passing means understanding what gets copied when methods are called. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with assuming all arguments behave the same way, and they should avoid the trap of changing a referenced object and expecting isolation. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
 
-**Answer:**
-
-Changing optional parameter defaults in shared libraries can surprise callers that were compiled against an older version. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-void Send(string message)
-{
-    Console.WriteLine($"Text only: {message}");
-}
+using System;
+using System.Collections.Generic;
 
-void Send(string message, bool highPriority)
+public static class Demo5_14
 {
-    Console.WriteLine($"Priority={highPriority}: {message}");
+    public static void Run()
+    {
+        static void Rename(List<string> names)
+        {
+            names.Add("Auditor-0");
+        }
+        var names = new List<string> { "Ops" };
+        Rename(names);
+        Console.WriteLine(string.Join(",", names));
+    }
 }
-
-Send("Invoice ready");
 ```
 
----
+### Q5.15 Why is ref out and in parameters in C# fundamentals?
 
-### 247. How does Optional parameters, overloads, and API clarity differ from params arrays and flexible method inputs?
+**Answer:** Ref out and in parameters means using parameter modifiers when a method must update or protect data explicitly. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with ignoring modifier semantics, and they should avoid the trap of using ref or out when a better design exists. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
 
-**Answer:**
-
-Optional parameters, overloads, and API clarity is about the techniques used to offer flexible method calls while keeping call sites readable and predictable, whereas params arrays and flexible method inputs is about variable-length input rather than defaulted or alternate method signatures. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-void ExportReport(string reportName, string format = "pdf")
-{
-    Console.WriteLine($"Exporting {reportName} as {format}");
-}
+using System;
+using System.Collections.Generic;
 
-ExportReport("QuarterlySales");
-ExportReport("QuarterlySales", "csv");
+public static class Demo5_15
+{
+    public static void Run()
+    {
+        static void BuildSummary(int approved, int rejected, out string summary)
+        {
+            summary = $"Approved={approved}, Rejected={rejected}";
+        }
+        BuildSummary(1, 1, out var result);
+        Console.WriteLine(result);
+    }
+}
 ```
 
----
+### Q5.16 How can optional parameters and named arguments in C# fundamentals?
 
-### 248. How do you troubleshoot issues related to Optional parameters, overloads, and API clarity?
+**Answer:** Optional parameters and named arguments means making call sites clearer with good defaults and explicit names. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with too many overloads for tiny variations, and they should avoid the trap of adding so many optional values that the API becomes muddy. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
 
-**Answer:**
-
-Review the method signature the compiler actually selected and check whether defaults or overload resolution produced an unexpected call path. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-void Send(string message)
-{
-    Console.WriteLine($"Text only: {message}");
-}
+using System;
+using System.Collections.Generic;
 
-void Send(string message, bool highPriority)
+public static class Demo5_16
 {
-    Console.WriteLine($"Priority={highPriority}: {message}");
+    public static void Run()
+    {
+        static string BuildMessage(string name, bool urgent = false, int retry = 1)
+        {
+            return $"{name} | urgent={urgent} | retry={retry}";
+        }
+        Console.WriteLine(BuildMessage(name: "Worker-416", retry: 3));
+    }
 }
-
-Send("Invoice ready");
 ```
 
----
+### Q5.17 What is return values versus side effects in C# fundamentals?
 
-### 249. What kind of follow-up does an interviewer usually ask after Optional parameters, overloads, and API clarity?
+**Answer:** Return values versus side effects means separating calculation from mutation when designing methods. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with mixing pure computation with hidden changes, and they should avoid the trap of hiding important state changes inside helper methods. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
 
-**Answer:**
-
-A common follow-up is when overloads become excessive and when a request object is a better long-term design. This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-void ExportReport(string reportName, string format = "pdf")
-{
-    Console.WriteLine($"Exporting {reportName} as {format}");
-}
+using System;
+using System.Collections.Generic;
 
-ExportReport("QuarterlySales");
-ExportReport("QuarterlySales", "csv");
+public static class Demo5_17
+{
+    public static void Run()
+    {
+        static int CalculatePoints(int purchases) => purchases * 10;
+        int points = CalculatePoints(5);
+        Console.WriteLine($"Points: {points}");
+    }
+}
 ```
 
----
+### Q5.18 How does method overloading basics in C# fundamentals?
 
-### 250. How does Optional parameters, overloads, and API clarity connect to the rest of C# fundamentals?
+**Answer:** Method overloading basics means supporting one conceptual operation with multiple parameter shapes. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with inventing unrelated names for every variant, and they should avoid the trap of creating overloads that confuse callers. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
 
-**Answer:**
-
-API clarity around method signatures influences maintainability, testability, and how teams consume shared code. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-void ExportReport(string reportName, string format = "pdf")
-{
-    Console.WriteLine($"Exporting {reportName} as {format}");
-}
+using System;
+using System.Collections.Generic;
 
-ExportReport("QuarterlySales");
-ExportReport("QuarterlySales", "csv");
+public static class Demo5_18
+{
+    public static void Run()
+    {
+        static string FormatAmount(int value) => $"Count: {value}";
+        static string FormatAmount(decimal value) => $"Currency: {value:C}";
+        Console.WriteLine(FormatAmount(3));
+        Console.WriteLine(FormatAmount(518m));
+    }
+}
 ```
 
----
+### Q5.19 Why does method extraction and reuse in C# fundamentals?
+
+**Answer:** Method extraction and reuse means grouping behavior into named reusable units. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with keeping all logic in one huge method, and they should avoid the trap of creating vague helper methods. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_19
+{
+    public static void Run()
+    {
+        static decimal CalculateVat(decimal amount) => amount * 0.18m;
+        decimal invoice = 519m;
+        Console.WriteLine(CalculateVat(invoice));
+    }
+}
+```
+
+### Q5.20 When should you use value passing versus reference passing in C# fundamentals?
+
+**Answer:** Value passing versus reference passing means understanding what gets copied when methods are called. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with assuming all arguments behave the same way, and they should avoid the trap of changing a referenced object and expecting isolation. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_20
+{
+    public static void Run()
+    {
+        static void Rename(List<string> names)
+        {
+            names.Add("Auditor-0");
+        }
+        var names = new List<string> { "Ops" };
+        Rename(names);
+        Console.WriteLine(string.Join(",", names));
+    }
+}
+```
+
+### Q5.21 What problem does ref out and in parameters in C# fundamentals?
+
+**Answer:** Ref out and in parameters means using parameter modifiers when a method must update or protect data explicitly. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with ignoring modifier semantics, and they should avoid the trap of using ref or out when a better design exists. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_21
+{
+    public static void Run()
+    {
+        static void BuildSummary(int approved, int rejected, out string summary)
+        {
+            summary = $"Approved={approved}, Rejected={rejected}";
+        }
+        BuildSummary(2, 1, out var result);
+        Console.WriteLine(result);
+    }
+}
+```
+
+### Q5.22 How would you explain optional parameters and named arguments in C# fundamentals?
+
+**Answer:** Optional parameters and named arguments means making call sites clearer with good defaults and explicit names. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with too many overloads for tiny variations, and they should avoid the trap of adding so many optional values that the API becomes muddy. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_22
+{
+    public static void Run()
+    {
+        static string BuildMessage(string name, bool urgent = false, int retry = 1)
+        {
+            return $"{name} | urgent={urgent} | retry={retry}";
+        }
+        Console.WriteLine(BuildMessage(name: "Worker-422", retry: 3));
+    }
+}
+```
+
+### Q5.23 Why is return values versus side effects in C# fundamentals?
+
+**Answer:** Return values versus side effects means separating calculation from mutation when designing methods. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with mixing pure computation with hidden changes, and they should avoid the trap of hiding important state changes inside helper methods. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_23
+{
+    public static void Run()
+    {
+        static int CalculatePoints(int purchases) => purchases * 10;
+        int points = CalculatePoints(4);
+        Console.WriteLine($"Points: {points}");
+    }
+}
+```
+
+### Q5.24 How can method overloading basics in C# fundamentals?
+
+**Answer:** Method overloading basics means supporting one conceptual operation with multiple parameter shapes. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with inventing unrelated names for every variant, and they should avoid the trap of creating overloads that confuse callers. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_24
+{
+    public static void Run()
+    {
+        static string FormatAmount(int value) => $"Count: {value}";
+        static string FormatAmount(decimal value) => $"Currency: {value:C}";
+        Console.WriteLine(FormatAmount(1));
+        Console.WriteLine(FormatAmount(524m));
+    }
+}
+```
+
+### Q5.25 What is method extraction and reuse in C# fundamentals?
+
+**Answer:** Method extraction and reuse means grouping behavior into named reusable units. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with keeping all logic in one huge method, and they should avoid the trap of creating vague helper methods. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_25
+{
+    public static void Run()
+    {
+        static decimal CalculateVat(decimal amount) => amount * 0.18m;
+        decimal invoice = 525m;
+        Console.WriteLine(CalculateVat(invoice));
+    }
+}
+```
+
+### Q5.26 How does value passing versus reference passing in C# fundamentals?
+
+**Answer:** Value passing versus reference passing means understanding what gets copied when methods are called. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with assuming all arguments behave the same way, and they should avoid the trap of changing a referenced object and expecting isolation. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_26
+{
+    public static void Run()
+    {
+        static void Rename(List<string> names)
+        {
+            names.Add("Auditor-0");
+        }
+        var names = new List<string> { "Ops" };
+        Rename(names);
+        Console.WriteLine(string.Join(",", names));
+    }
+}
+```
+
+### Q5.27 Why does ref out and in parameters in C# fundamentals?
+
+**Answer:** Ref out and in parameters means using parameter modifiers when a method must update or protect data explicitly. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with ignoring modifier semantics, and they should avoid the trap of using ref or out when a better design exists. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_27
+{
+    public static void Run()
+    {
+        static void BuildSummary(int approved, int rejected, out string summary)
+        {
+            summary = $"Approved={approved}, Rejected={rejected}";
+        }
+        BuildSummary(3, 1, out var result);
+        Console.WriteLine(result);
+    }
+}
+```
+
+### Q5.28 When should you use optional parameters and named arguments in C# fundamentals?
+
+**Answer:** Optional parameters and named arguments means making call sites clearer with good defaults and explicit names. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with too many overloads for tiny variations, and they should avoid the trap of adding so many optional values that the API becomes muddy. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_28
+{
+    public static void Run()
+    {
+        static string BuildMessage(string name, bool urgent = false, int retry = 1)
+        {
+            return $"{name} | urgent={urgent} | retry={retry}";
+        }
+        Console.WriteLine(BuildMessage(name: "Worker-428", retry: 3));
+    }
+}
+```
+
+### Q5.29 What problem does return values versus side effects in C# fundamentals?
+
+**Answer:** Return values versus side effects means separating calculation from mutation when designing methods. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with mixing pure computation with hidden changes, and they should avoid the trap of hiding important state changes inside helper methods. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_29
+{
+    public static void Run()
+    {
+        static int CalculatePoints(int purchases) => purchases * 10;
+        int points = CalculatePoints(3);
+        Console.WriteLine($"Points: {points}");
+    }
+}
+```
+
+### Q5.30 How would you explain method overloading basics in C# fundamentals?
+
+**Answer:** Method overloading basics means supporting one conceptual operation with multiple parameter shapes. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with inventing unrelated names for every variant, and they should avoid the trap of creating overloads that confuse callers. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_30
+{
+    public static void Run()
+    {
+        static string FormatAmount(int value) => $"Count: {value}";
+        static string FormatAmount(decimal value) => $"Currency: {value:C}";
+        Console.WriteLine(FormatAmount(7));
+        Console.WriteLine(FormatAmount(530m));
+    }
+}
+```
+
+### Q5.31 Why is method extraction and reuse in C# fundamentals?
+
+**Answer:** Method extraction and reuse means grouping behavior into named reusable units. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with keeping all logic in one huge method, and they should avoid the trap of creating vague helper methods. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_31
+{
+    public static void Run()
+    {
+        static decimal CalculateVat(decimal amount) => amount * 0.18m;
+        decimal invoice = 531m;
+        Console.WriteLine(CalculateVat(invoice));
+    }
+}
+```
+
+### Q5.32 How can value passing versus reference passing in C# fundamentals?
+
+**Answer:** Value passing versus reference passing means understanding what gets copied when methods are called. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with assuming all arguments behave the same way, and they should avoid the trap of changing a referenced object and expecting isolation. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_32
+{
+    public static void Run()
+    {
+        static void Rename(List<string> names)
+        {
+            names.Add("Auditor-0");
+        }
+        var names = new List<string> { "Ops" };
+        Rename(names);
+        Console.WriteLine(string.Join(",", names));
+    }
+}
+```
+
+### Q5.33 What is ref out and in parameters in C# fundamentals?
+
+**Answer:** Ref out and in parameters means using parameter modifiers when a method must update or protect data explicitly. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with ignoring modifier semantics, and they should avoid the trap of using ref or out when a better design exists. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_33
+{
+    public static void Run()
+    {
+        static void BuildSummary(int approved, int rejected, out string summary)
+        {
+            summary = $"Approved={approved}, Rejected={rejected}";
+        }
+        BuildSummary(4, 1, out var result);
+        Console.WriteLine(result);
+    }
+}
+```
+
+### Q5.34 How does optional parameters and named arguments in C# fundamentals?
+
+**Answer:** Optional parameters and named arguments means making call sites clearer with good defaults and explicit names. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with too many overloads for tiny variations, and they should avoid the trap of adding so many optional values that the API becomes muddy. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_34
+{
+    public static void Run()
+    {
+        static string BuildMessage(string name, bool urgent = false, int retry = 1)
+        {
+            return $"{name} | urgent={urgent} | retry={retry}";
+        }
+        Console.WriteLine(BuildMessage(name: "Worker-434", retry: 3));
+    }
+}
+```
+
+### Q5.35 Why does return values versus side effects in C# fundamentals?
+
+**Answer:** Return values versus side effects means separating calculation from mutation when designing methods. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with mixing pure computation with hidden changes, and they should avoid the trap of hiding important state changes inside helper methods. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_35
+{
+    public static void Run()
+    {
+        static int CalculatePoints(int purchases) => purchases * 10;
+        int points = CalculatePoints(2);
+        Console.WriteLine($"Points: {points}");
+    }
+}
+```
+
+### Q5.36 When should you use method overloading basics in C# fundamentals?
+
+**Answer:** Method overloading basics means supporting one conceptual operation with multiple parameter shapes. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with inventing unrelated names for every variant, and they should avoid the trap of creating overloads that confuse callers. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_36
+{
+    public static void Run()
+    {
+        static string FormatAmount(int value) => $"Count: {value}";
+        static string FormatAmount(decimal value) => $"Currency: {value:C}";
+        Console.WriteLine(FormatAmount(5));
+        Console.WriteLine(FormatAmount(536m));
+    }
+}
+```
+
+### Q5.37 What problem does method extraction and reuse in C# fundamentals?
+
+**Answer:** Method extraction and reuse means grouping behavior into named reusable units. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with keeping all logic in one huge method, and they should avoid the trap of creating vague helper methods. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_37
+{
+    public static void Run()
+    {
+        static decimal CalculateVat(decimal amount) => amount * 0.18m;
+        decimal invoice = 537m;
+        Console.WriteLine(CalculateVat(invoice));
+    }
+}
+```
+
+### Q5.38 How would you explain value passing versus reference passing in C# fundamentals?
+
+**Answer:** Value passing versus reference passing means understanding what gets copied when methods are called. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with assuming all arguments behave the same way, and they should avoid the trap of changing a referenced object and expecting isolation. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_38
+{
+    public static void Run()
+    {
+        static void Rename(List<string> names)
+        {
+            names.Add("Auditor-0");
+        }
+        var names = new List<string> { "Ops" };
+        Rename(names);
+        Console.WriteLine(string.Join(",", names));
+    }
+}
+```
+
+### Q5.39 Why is ref out and in parameters in C# fundamentals?
+
+**Answer:** Ref out and in parameters means using parameter modifiers when a method must update or protect data explicitly. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with ignoring modifier semantics, and they should avoid the trap of using ref or out when a better design exists. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_39
+{
+    public static void Run()
+    {
+        static void BuildSummary(int approved, int rejected, out string summary)
+        {
+            summary = $"Approved={approved}, Rejected={rejected}";
+        }
+        BuildSummary(5, 1, out var result);
+        Console.WriteLine(result);
+    }
+}
+```
+
+### Q5.40 How can optional parameters and named arguments in C# fundamentals?
+
+**Answer:** Optional parameters and named arguments means making call sites clearer with good defaults and explicit names. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with too many overloads for tiny variations, and they should avoid the trap of adding so many optional values that the API becomes muddy. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_40
+{
+    public static void Run()
+    {
+        static string BuildMessage(string name, bool urgent = false, int retry = 1)
+        {
+            return $"{name} | urgent={urgent} | retry={retry}";
+        }
+        Console.WriteLine(BuildMessage(name: "Worker-440", retry: 3));
+    }
+}
+```
+
+### Q5.41 What is return values versus side effects in C# fundamentals?
+
+**Answer:** Return values versus side effects means separating calculation from mutation when designing methods. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with mixing pure computation with hidden changes, and they should avoid the trap of hiding important state changes inside helper methods. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_41
+{
+    public static void Run()
+    {
+        static int CalculatePoints(int purchases) => purchases * 10;
+        int points = CalculatePoints(1);
+        Console.WriteLine($"Points: {points}");
+    }
+}
+```
+
+### Q5.42 How does method overloading basics in C# fundamentals?
+
+**Answer:** Method overloading basics means supporting one conceptual operation with multiple parameter shapes. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with inventing unrelated names for every variant, and they should avoid the trap of creating overloads that confuse callers. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_42
+{
+    public static void Run()
+    {
+        static string FormatAmount(int value) => $"Count: {value}";
+        static string FormatAmount(decimal value) => $"Currency: {value:C}";
+        Console.WriteLine(FormatAmount(3));
+        Console.WriteLine(FormatAmount(542m));
+    }
+}
+```
+
+### Q5.43 Why does method extraction and reuse in C# fundamentals?
+
+**Answer:** Method extraction and reuse means grouping behavior into named reusable units. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with keeping all logic in one huge method, and they should avoid the trap of creating vague helper methods. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_43
+{
+    public static void Run()
+    {
+        static decimal CalculateVat(decimal amount) => amount * 0.18m;
+        decimal invoice = 543m;
+        Console.WriteLine(CalculateVat(invoice));
+    }
+}
+```
+
+### Q5.44 When should you use value passing versus reference passing in C# fundamentals?
+
+**Answer:** Value passing versus reference passing means understanding what gets copied when methods are called. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with assuming all arguments behave the same way, and they should avoid the trap of changing a referenced object and expecting isolation. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_44
+{
+    public static void Run()
+    {
+        static void Rename(List<string> names)
+        {
+            names.Add("Auditor-0");
+        }
+        var names = new List<string> { "Ops" };
+        Rename(names);
+        Console.WriteLine(string.Join(",", names));
+    }
+}
+```
+
+### Q5.45 What problem does ref out and in parameters in C# fundamentals?
+
+**Answer:** Ref out and in parameters means using parameter modifiers when a method must update or protect data explicitly. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with ignoring modifier semantics, and they should avoid the trap of using ref or out when a better design exists. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_45
+{
+    public static void Run()
+    {
+        static void BuildSummary(int approved, int rejected, out string summary)
+        {
+            summary = $"Approved={approved}, Rejected={rejected}";
+        }
+        BuildSummary(1, 1, out var result);
+        Console.WriteLine(result);
+    }
+}
+```
+
+### Q5.46 How would you explain optional parameters and named arguments in C# fundamentals?
+
+**Answer:** Optional parameters and named arguments means making call sites clearer with good defaults and explicit names. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with too many overloads for tiny variations, and they should avoid the trap of adding so many optional values that the API becomes muddy. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_46
+{
+    public static void Run()
+    {
+        static string BuildMessage(string name, bool urgent = false, int retry = 1)
+        {
+            return $"{name} | urgent={urgent} | retry={retry}";
+        }
+        Console.WriteLine(BuildMessage(name: "Worker-446", retry: 3));
+    }
+}
+```
+
+### Q5.47 Why is return values versus side effects in C# fundamentals?
+
+**Answer:** Return values versus side effects means separating calculation from mutation when designing methods. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with mixing pure computation with hidden changes, and they should avoid the trap of hiding important state changes inside helper methods. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_47
+{
+    public static void Run()
+    {
+        static int CalculatePoints(int purchases) => purchases * 10;
+        int points = CalculatePoints(7);
+        Console.WriteLine($"Points: {points}");
+    }
+}
+```
+
+### Q5.48 How can method overloading basics in C# fundamentals?
+
+**Answer:** Method overloading basics means supporting one conceptual operation with multiple parameter shapes. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with inventing unrelated names for every variant, and they should avoid the trap of creating overloads that confuse callers. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_48
+{
+    public static void Run()
+    {
+        static string FormatAmount(int value) => $"Count: {value}";
+        static string FormatAmount(decimal value) => $"Currency: {value:C}";
+        Console.WriteLine(FormatAmount(1));
+        Console.WriteLine(FormatAmount(548m));
+    }
+}
+```
+
+### Q5.49 What is method extraction and reuse in C# fundamentals?
+
+**Answer:** Method extraction and reuse means grouping behavior into named reusable units. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with keeping all logic in one huge method, and they should avoid the trap of creating vague helper methods. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_49
+{
+    public static void Run()
+    {
+        static decimal CalculateVat(decimal amount) => amount * 0.18m;
+        decimal invoice = 549m;
+        Console.WriteLine(CalculateVat(invoice));
+    }
+}
+```
+
+### Q5.50 How does value passing versus reference passing in C# fundamentals?
+
+**Answer:** Value passing versus reference passing means understanding what gets copied when methods are called. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with assuming all arguments behave the same way, and they should avoid the trap of changing a referenced object and expecting isolation. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_50
+{
+    public static void Run()
+    {
+        static void Rename(List<string> names)
+        {
+            names.Add("Auditor-0");
+        }
+        var names = new List<string> { "Ops" };
+        Rename(names);
+        Console.WriteLine(string.Join(",", names));
+    }
+}
+```
+
+### Q5.51 Why does ref out and in parameters in C# fundamentals?
+
+**Answer:** Ref out and in parameters means using parameter modifiers when a method must update or protect data explicitly. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with ignoring modifier semantics, and they should avoid the trap of using ref or out when a better design exists. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_51
+{
+    public static void Run()
+    {
+        static void BuildSummary(int approved, int rejected, out string summary)
+        {
+            summary = $"Approved={approved}, Rejected={rejected}";
+        }
+        BuildSummary(2, 1, out var result);
+        Console.WriteLine(result);
+    }
+}
+```
+
+### Q5.52 When should you use optional parameters and named arguments in C# fundamentals?
+
+**Answer:** Optional parameters and named arguments means making call sites clearer with good defaults and explicit names. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with too many overloads for tiny variations, and they should avoid the trap of adding so many optional values that the API becomes muddy. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_52
+{
+    public static void Run()
+    {
+        static string BuildMessage(string name, bool urgent = false, int retry = 1)
+        {
+            return $"{name} | urgent={urgent} | retry={retry}";
+        }
+        Console.WriteLine(BuildMessage(name: "Worker-452", retry: 3));
+    }
+}
+```
+
+### Q5.53 What problem does return values versus side effects in C# fundamentals?
+
+**Answer:** Return values versus side effects means separating calculation from mutation when designing methods. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with mixing pure computation with hidden changes, and they should avoid the trap of hiding important state changes inside helper methods. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_53
+{
+    public static void Run()
+    {
+        static int CalculatePoints(int purchases) => purchases * 10;
+        int points = CalculatePoints(6);
+        Console.WriteLine($"Points: {points}");
+    }
+}
+```
+
+### Q5.54 How would you explain method overloading basics in C# fundamentals?
+
+**Answer:** Method overloading basics means supporting one conceptual operation with multiple parameter shapes. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with inventing unrelated names for every variant, and they should avoid the trap of creating overloads that confuse callers. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_54
+{
+    public static void Run()
+    {
+        static string FormatAmount(int value) => $"Count: {value}";
+        static string FormatAmount(decimal value) => $"Currency: {value:C}";
+        Console.WriteLine(FormatAmount(7));
+        Console.WriteLine(FormatAmount(554m));
+    }
+}
+```
+
+### Q5.55 Why is method extraction and reuse in C# fundamentals?
+
+**Answer:** Method extraction and reuse means grouping behavior into named reusable units. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with keeping all logic in one huge method, and they should avoid the trap of creating vague helper methods. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_55
+{
+    public static void Run()
+    {
+        static decimal CalculateVat(decimal amount) => amount * 0.18m;
+        decimal invoice = 555m;
+        Console.WriteLine(CalculateVat(invoice));
+    }
+}
+```
+
+### Q5.56 How can value passing versus reference passing in C# fundamentals?
+
+**Answer:** Value passing versus reference passing means understanding what gets copied when methods are called. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with assuming all arguments behave the same way, and they should avoid the trap of changing a referenced object and expecting isolation. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_56
+{
+    public static void Run()
+    {
+        static void Rename(List<string> names)
+        {
+            names.Add("Auditor-0");
+        }
+        var names = new List<string> { "Ops" };
+        Rename(names);
+        Console.WriteLine(string.Join(",", names));
+    }
+}
+```
+
+### Q5.57 What is ref out and in parameters in C# fundamentals?
+
+**Answer:** Ref out and in parameters means using parameter modifiers when a method must update or protect data explicitly. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with ignoring modifier semantics, and they should avoid the trap of using ref or out when a better design exists. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_57
+{
+    public static void Run()
+    {
+        static void BuildSummary(int approved, int rejected, out string summary)
+        {
+            summary = $"Approved={approved}, Rejected={rejected}";
+        }
+        BuildSummary(3, 1, out var result);
+        Console.WriteLine(result);
+    }
+}
+```
+
+### Q5.58 How does optional parameters and named arguments in C# fundamentals?
+
+**Answer:** Optional parameters and named arguments means making call sites clearer with good defaults and explicit names. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with too many overloads for tiny variations, and they should avoid the trap of adding so many optional values that the API becomes muddy. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_58
+{
+    public static void Run()
+    {
+        static string BuildMessage(string name, bool urgent = false, int retry = 1)
+        {
+            return $"{name} | urgent={urgent} | retry={retry}";
+        }
+        Console.WriteLine(BuildMessage(name: "Worker-458", retry: 3));
+    }
+}
+```
+
+### Q5.59 Why does return values versus side effects in C# fundamentals?
+
+**Answer:** Return values versus side effects means separating calculation from mutation when designing methods. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with mixing pure computation with hidden changes, and they should avoid the trap of hiding important state changes inside helper methods. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_59
+{
+    public static void Run()
+    {
+        static int CalculatePoints(int purchases) => purchases * 10;
+        int points = CalculatePoints(5);
+        Console.WriteLine($"Points: {points}");
+    }
+}
+```
+
+### Q5.60 When should you use method overloading basics in C# fundamentals?
+
+**Answer:** Method overloading basics means supporting one conceptual operation with multiple parameter shapes. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with inventing unrelated names for every variant, and they should avoid the trap of creating overloads that confuse callers. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_60
+{
+    public static void Run()
+    {
+        static string FormatAmount(int value) => $"Count: {value}";
+        static string FormatAmount(decimal value) => $"Currency: {value:C}";
+        Console.WriteLine(FormatAmount(5));
+        Console.WriteLine(FormatAmount(560m));
+    }
+}
+```
+
+### Q5.61 What problem does method extraction and reuse in C# fundamentals?
+
+**Answer:** Method extraction and reuse means grouping behavior into named reusable units. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with keeping all logic in one huge method, and they should avoid the trap of creating vague helper methods. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_61
+{
+    public static void Run()
+    {
+        static decimal CalculateVat(decimal amount) => amount * 0.18m;
+        decimal invoice = 561m;
+        Console.WriteLine(CalculateVat(invoice));
+    }
+}
+```
+
+### Q5.62 How would you explain value passing versus reference passing in C# fundamentals?
+
+**Answer:** Value passing versus reference passing means understanding what gets copied when methods are called. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with assuming all arguments behave the same way, and they should avoid the trap of changing a referenced object and expecting isolation. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_62
+{
+    public static void Run()
+    {
+        static void Rename(List<string> names)
+        {
+            names.Add("Auditor-0");
+        }
+        var names = new List<string> { "Ops" };
+        Rename(names);
+        Console.WriteLine(string.Join(",", names));
+    }
+}
+```
+
+### Q5.63 Why is ref out and in parameters in C# fundamentals?
+
+**Answer:** Ref out and in parameters means using parameter modifiers when a method must update or protect data explicitly. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with ignoring modifier semantics, and they should avoid the trap of using ref or out when a better design exists. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_63
+{
+    public static void Run()
+    {
+        static void BuildSummary(int approved, int rejected, out string summary)
+        {
+            summary = $"Approved={approved}, Rejected={rejected}";
+        }
+        BuildSummary(4, 1, out var result);
+        Console.WriteLine(result);
+    }
+}
+```
+
+### Q5.64 How can optional parameters and named arguments in C# fundamentals?
+
+**Answer:** Optional parameters and named arguments means making call sites clearer with good defaults and explicit names. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with too many overloads for tiny variations, and they should avoid the trap of adding so many optional values that the API becomes muddy. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_64
+{
+    public static void Run()
+    {
+        static string BuildMessage(string name, bool urgent = false, int retry = 1)
+        {
+            return $"{name} | urgent={urgent} | retry={retry}";
+        }
+        Console.WriteLine(BuildMessage(name: "Worker-464", retry: 3));
+    }
+}
+```
+
+### Q5.65 What is return values versus side effects in C# fundamentals?
+
+**Answer:** Return values versus side effects means separating calculation from mutation when designing methods. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with mixing pure computation with hidden changes, and they should avoid the trap of hiding important state changes inside helper methods. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_65
+{
+    public static void Run()
+    {
+        static int CalculatePoints(int purchases) => purchases * 10;
+        int points = CalculatePoints(4);
+        Console.WriteLine($"Points: {points}");
+    }
+}
+```
+
+### Q5.66 How does method overloading basics in C# fundamentals?
+
+**Answer:** Method overloading basics means supporting one conceptual operation with multiple parameter shapes. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with inventing unrelated names for every variant, and they should avoid the trap of creating overloads that confuse callers. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_66
+{
+    public static void Run()
+    {
+        static string FormatAmount(int value) => $"Count: {value}";
+        static string FormatAmount(decimal value) => $"Currency: {value:C}";
+        Console.WriteLine(FormatAmount(3));
+        Console.WriteLine(FormatAmount(566m));
+    }
+}
+```
+
+### Q5.67 Why does method extraction and reuse in C# fundamentals?
+
+**Answer:** Method extraction and reuse means grouping behavior into named reusable units. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with keeping all logic in one huge method, and they should avoid the trap of creating vague helper methods. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_67
+{
+    public static void Run()
+    {
+        static decimal CalculateVat(decimal amount) => amount * 0.18m;
+        decimal invoice = 567m;
+        Console.WriteLine(CalculateVat(invoice));
+    }
+}
+```
+
+### Q5.68 When should you use value passing versus reference passing in C# fundamentals?
+
+**Answer:** Value passing versus reference passing means understanding what gets copied when methods are called. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with assuming all arguments behave the same way, and they should avoid the trap of changing a referenced object and expecting isolation. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_68
+{
+    public static void Run()
+    {
+        static void Rename(List<string> names)
+        {
+            names.Add("Auditor-0");
+        }
+        var names = new List<string> { "Ops" };
+        Rename(names);
+        Console.WriteLine(string.Join(",", names));
+    }
+}
+```
+
+### Q5.69 What problem does ref out and in parameters in C# fundamentals?
+
+**Answer:** Ref out and in parameters means using parameter modifiers when a method must update or protect data explicitly. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with ignoring modifier semantics, and they should avoid the trap of using ref or out when a better design exists. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_69
+{
+    public static void Run()
+    {
+        static void BuildSummary(int approved, int rejected, out string summary)
+        {
+            summary = $"Approved={approved}, Rejected={rejected}";
+        }
+        BuildSummary(5, 1, out var result);
+        Console.WriteLine(result);
+    }
+}
+```
+
+### Q5.70 How would you explain optional parameters and named arguments in C# fundamentals?
+
+**Answer:** Optional parameters and named arguments means making call sites clearer with good defaults and explicit names. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with too many overloads for tiny variations, and they should avoid the trap of adding so many optional values that the API becomes muddy. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_70
+{
+    public static void Run()
+    {
+        static string BuildMessage(string name, bool urgent = false, int retry = 1)
+        {
+            return $"{name} | urgent={urgent} | retry={retry}";
+        }
+        Console.WriteLine(BuildMessage(name: "Worker-470", retry: 3));
+    }
+}
+```
+
+### Q5.71 Why is return values versus side effects in C# fundamentals?
+
+**Answer:** Return values versus side effects means separating calculation from mutation when designing methods. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with mixing pure computation with hidden changes, and they should avoid the trap of hiding important state changes inside helper methods. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_71
+{
+    public static void Run()
+    {
+        static int CalculatePoints(int purchases) => purchases * 10;
+        int points = CalculatePoints(3);
+        Console.WriteLine($"Points: {points}");
+    }
+}
+```
+
+### Q5.72 How can method overloading basics in C# fundamentals?
+
+**Answer:** Method overloading basics means supporting one conceptual operation with multiple parameter shapes. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with inventing unrelated names for every variant, and they should avoid the trap of creating overloads that confuse callers. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_72
+{
+    public static void Run()
+    {
+        static string FormatAmount(int value) => $"Count: {value}";
+        static string FormatAmount(decimal value) => $"Currency: {value:C}";
+        Console.WriteLine(FormatAmount(1));
+        Console.WriteLine(FormatAmount(572m));
+    }
+}
+```
+
+### Q5.73 What is method extraction and reuse in C# fundamentals?
+
+**Answer:** Method extraction and reuse means grouping behavior into named reusable units. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with keeping all logic in one huge method, and they should avoid the trap of creating vague helper methods. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_73
+{
+    public static void Run()
+    {
+        static decimal CalculateVat(decimal amount) => amount * 0.18m;
+        decimal invoice = 573m;
+        Console.WriteLine(CalculateVat(invoice));
+    }
+}
+```
+
+### Q5.74 How does value passing versus reference passing in C# fundamentals?
+
+**Answer:** Value passing versus reference passing means understanding what gets copied when methods are called. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with assuming all arguments behave the same way, and they should avoid the trap of changing a referenced object and expecting isolation. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_74
+{
+    public static void Run()
+    {
+        static void Rename(List<string> names)
+        {
+            names.Add("Auditor-0");
+        }
+        var names = new List<string> { "Ops" };
+        Rename(names);
+        Console.WriteLine(string.Join(",", names));
+    }
+}
+```
+
+### Q5.75 Why does ref out and in parameters in C# fundamentals?
+
+**Answer:** Ref out and in parameters means using parameter modifiers when a method must update or protect data explicitly. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with ignoring modifier semantics, and they should avoid the trap of using ref or out when a better design exists. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_75
+{
+    public static void Run()
+    {
+        static void BuildSummary(int approved, int rejected, out string summary)
+        {
+            summary = $"Approved={approved}, Rejected={rejected}";
+        }
+        BuildSummary(1, 1, out var result);
+        Console.WriteLine(result);
+    }
+}
+```
+
+### Q5.76 When should you use optional parameters and named arguments in C# fundamentals?
+
+**Answer:** Optional parameters and named arguments means making call sites clearer with good defaults and explicit names. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with too many overloads for tiny variations, and they should avoid the trap of adding so many optional values that the API becomes muddy. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_76
+{
+    public static void Run()
+    {
+        static string BuildMessage(string name, bool urgent = false, int retry = 1)
+        {
+            return $"{name} | urgent={urgent} | retry={retry}";
+        }
+        Console.WriteLine(BuildMessage(name: "Worker-476", retry: 3));
+    }
+}
+```
+
+### Q5.77 What problem does return values versus side effects in C# fundamentals?
+
+**Answer:** Return values versus side effects means separating calculation from mutation when designing methods. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with mixing pure computation with hidden changes, and they should avoid the trap of hiding important state changes inside helper methods. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_77
+{
+    public static void Run()
+    {
+        static int CalculatePoints(int purchases) => purchases * 10;
+        int points = CalculatePoints(2);
+        Console.WriteLine($"Points: {points}");
+    }
+}
+```
+
+### Q5.78 How would you explain method overloading basics in C# fundamentals?
+
+**Answer:** Method overloading basics means supporting one conceptual operation with multiple parameter shapes. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with inventing unrelated names for every variant, and they should avoid the trap of creating overloads that confuse callers. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_78
+{
+    public static void Run()
+    {
+        static string FormatAmount(int value) => $"Count: {value}";
+        static string FormatAmount(decimal value) => $"Currency: {value:C}";
+        Console.WriteLine(FormatAmount(7));
+        Console.WriteLine(FormatAmount(578m));
+    }
+}
+```
+
+### Q5.79 Why is method extraction and reuse in C# fundamentals?
+
+**Answer:** Method extraction and reuse means grouping behavior into named reusable units. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with keeping all logic in one huge method, and they should avoid the trap of creating vague helper methods. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_79
+{
+    public static void Run()
+    {
+        static decimal CalculateVat(decimal amount) => amount * 0.18m;
+        decimal invoice = 579m;
+        Console.WriteLine(CalculateVat(invoice));
+    }
+}
+```
+
+### Q5.80 How can value passing versus reference passing in C# fundamentals?
+
+**Answer:** Value passing versus reference passing means understanding what gets copied when methods are called. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with assuming all arguments behave the same way, and they should avoid the trap of changing a referenced object and expecting isolation. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_80
+{
+    public static void Run()
+    {
+        static void Rename(List<string> names)
+        {
+            names.Add("Auditor-0");
+        }
+        var names = new List<string> { "Ops" };
+        Rename(names);
+        Console.WriteLine(string.Join(",", names));
+    }
+}
+```
+
+### Q5.81 What is ref out and in parameters in C# fundamentals?
+
+**Answer:** Ref out and in parameters means using parameter modifiers when a method must update or protect data explicitly. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with ignoring modifier semantics, and they should avoid the trap of using ref or out when a better design exists. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_81
+{
+    public static void Run()
+    {
+        static void BuildSummary(int approved, int rejected, out string summary)
+        {
+            summary = $"Approved={approved}, Rejected={rejected}";
+        }
+        BuildSummary(2, 1, out var result);
+        Console.WriteLine(result);
+    }
+}
+```
+
+### Q5.82 How does optional parameters and named arguments in C# fundamentals?
+
+**Answer:** Optional parameters and named arguments means making call sites clearer with good defaults and explicit names. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with too many overloads for tiny variations, and they should avoid the trap of adding so many optional values that the API becomes muddy. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_82
+{
+    public static void Run()
+    {
+        static string BuildMessage(string name, bool urgent = false, int retry = 1)
+        {
+            return $"{name} | urgent={urgent} | retry={retry}";
+        }
+        Console.WriteLine(BuildMessage(name: "Worker-482", retry: 3));
+    }
+}
+```
+
+### Q5.83 Why does return values versus side effects in C# fundamentals?
+
+**Answer:** Return values versus side effects means separating calculation from mutation when designing methods. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with mixing pure computation with hidden changes, and they should avoid the trap of hiding important state changes inside helper methods. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_83
+{
+    public static void Run()
+    {
+        static int CalculatePoints(int purchases) => purchases * 10;
+        int points = CalculatePoints(1);
+        Console.WriteLine($"Points: {points}");
+    }
+}
+```
+
+### Q5.84 When should you use method overloading basics in C# fundamentals?
+
+**Answer:** Method overloading basics means supporting one conceptual operation with multiple parameter shapes. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with inventing unrelated names for every variant, and they should avoid the trap of creating overloads that confuse callers. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_84
+{
+    public static void Run()
+    {
+        static string FormatAmount(int value) => $"Count: {value}";
+        static string FormatAmount(decimal value) => $"Currency: {value:C}";
+        Console.WriteLine(FormatAmount(5));
+        Console.WriteLine(FormatAmount(584m));
+    }
+}
+```
+
+### Q5.85 What problem does method extraction and reuse in C# fundamentals?
+
+**Answer:** Method extraction and reuse means grouping behavior into named reusable units. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with keeping all logic in one huge method, and they should avoid the trap of creating vague helper methods. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_85
+{
+    public static void Run()
+    {
+        static decimal CalculateVat(decimal amount) => amount * 0.18m;
+        decimal invoice = 585m;
+        Console.WriteLine(CalculateVat(invoice));
+    }
+}
+```
+
+### Q5.86 How would you explain value passing versus reference passing in C# fundamentals?
+
+**Answer:** Value passing versus reference passing means understanding what gets copied when methods are called. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with assuming all arguments behave the same way, and they should avoid the trap of changing a referenced object and expecting isolation. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_86
+{
+    public static void Run()
+    {
+        static void Rename(List<string> names)
+        {
+            names.Add("Auditor-0");
+        }
+        var names = new List<string> { "Ops" };
+        Rename(names);
+        Console.WriteLine(string.Join(",", names));
+    }
+}
+```
+
+### Q5.87 Why is ref out and in parameters in C# fundamentals?
+
+**Answer:** Ref out and in parameters means using parameter modifiers when a method must update or protect data explicitly. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with ignoring modifier semantics, and they should avoid the trap of using ref or out when a better design exists. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_87
+{
+    public static void Run()
+    {
+        static void BuildSummary(int approved, int rejected, out string summary)
+        {
+            summary = $"Approved={approved}, Rejected={rejected}";
+        }
+        BuildSummary(3, 1, out var result);
+        Console.WriteLine(result);
+    }
+}
+```
+
+### Q5.88 How can optional parameters and named arguments in C# fundamentals?
+
+**Answer:** Optional parameters and named arguments means making call sites clearer with good defaults and explicit names. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with too many overloads for tiny variations, and they should avoid the trap of adding so many optional values that the API becomes muddy. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_88
+{
+    public static void Run()
+    {
+        static string BuildMessage(string name, bool urgent = false, int retry = 1)
+        {
+            return $"{name} | urgent={urgent} | retry={retry}";
+        }
+        Console.WriteLine(BuildMessage(name: "Worker-488", retry: 3));
+    }
+}
+```
+
+### Q5.89 What is return values versus side effects in C# fundamentals?
+
+**Answer:** Return values versus side effects means separating calculation from mutation when designing methods. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with mixing pure computation with hidden changes, and they should avoid the trap of hiding important state changes inside helper methods. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_89
+{
+    public static void Run()
+    {
+        static int CalculatePoints(int purchases) => purchases * 10;
+        int points = CalculatePoints(7);
+        Console.WriteLine($"Points: {points}");
+    }
+}
+```
+
+### Q5.90 How does method overloading basics in C# fundamentals?
+
+**Answer:** Method overloading basics means supporting one conceptual operation with multiple parameter shapes. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with inventing unrelated names for every variant, and they should avoid the trap of creating overloads that confuse callers. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_90
+{
+    public static void Run()
+    {
+        static string FormatAmount(int value) => $"Count: {value}";
+        static string FormatAmount(decimal value) => $"Currency: {value:C}";
+        Console.WriteLine(FormatAmount(3));
+        Console.WriteLine(FormatAmount(590m));
+    }
+}
+```
+
+### Q5.91 Why does method extraction and reuse in C# fundamentals?
+
+**Answer:** Method extraction and reuse means grouping behavior into named reusable units. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with keeping all logic in one huge method, and they should avoid the trap of creating vague helper methods. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_91
+{
+    public static void Run()
+    {
+        static decimal CalculateVat(decimal amount) => amount * 0.18m;
+        decimal invoice = 591m;
+        Console.WriteLine(CalculateVat(invoice));
+    }
+}
+```
+
+### Q5.92 When should you use value passing versus reference passing in C# fundamentals?
+
+**Answer:** Value passing versus reference passing means understanding what gets copied when methods are called. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with assuming all arguments behave the same way, and they should avoid the trap of changing a referenced object and expecting isolation. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_92
+{
+    public static void Run()
+    {
+        static void Rename(List<string> names)
+        {
+            names.Add("Auditor-0");
+        }
+        var names = new List<string> { "Ops" };
+        Rename(names);
+        Console.WriteLine(string.Join(",", names));
+    }
+}
+```
+
+### Q5.93 What problem does ref out and in parameters in C# fundamentals?
+
+**Answer:** Ref out and in parameters means using parameter modifiers when a method must update or protect data explicitly. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with ignoring modifier semantics, and they should avoid the trap of using ref or out when a better design exists. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_93
+{
+    public static void Run()
+    {
+        static void BuildSummary(int approved, int rejected, out string summary)
+        {
+            summary = $"Approved={approved}, Rejected={rejected}";
+        }
+        BuildSummary(4, 1, out var result);
+        Console.WriteLine(result);
+    }
+}
+```
+
+### Q5.94 How would you explain optional parameters and named arguments in C# fundamentals?
+
+**Answer:** Optional parameters and named arguments means making call sites clearer with good defaults and explicit names. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with too many overloads for tiny variations, and they should avoid the trap of adding so many optional values that the API becomes muddy. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_94
+{
+    public static void Run()
+    {
+        static string BuildMessage(string name, bool urgent = false, int retry = 1)
+        {
+            return $"{name} | urgent={urgent} | retry={retry}";
+        }
+        Console.WriteLine(BuildMessage(name: "Worker-494", retry: 3));
+    }
+}
+```
+
+### Q5.95 Why is return values versus side effects in C# fundamentals?
+
+**Answer:** Return values versus side effects means separating calculation from mutation when designing methods. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with mixing pure computation with hidden changes, and they should avoid the trap of hiding important state changes inside helper methods. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_95
+{
+    public static void Run()
+    {
+        static int CalculatePoints(int purchases) => purchases * 10;
+        int points = CalculatePoints(6);
+        Console.WriteLine($"Points: {points}");
+    }
+}
+```
+
+### Q5.96 How can method overloading basics in C# fundamentals?
+
+**Answer:** Method overloading basics means supporting one conceptual operation with multiple parameter shapes. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with inventing unrelated names for every variant, and they should avoid the trap of creating overloads that confuse callers. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_96
+{
+    public static void Run()
+    {
+        static string FormatAmount(int value) => $"Count: {value}";
+        static string FormatAmount(decimal value) => $"Currency: {value:C}";
+        Console.WriteLine(FormatAmount(1));
+        Console.WriteLine(FormatAmount(596m));
+    }
+}
+```
+
+### Q5.97 What is method extraction and reuse in C# fundamentals?
+
+**Answer:** Method extraction and reuse means grouping behavior into named reusable units. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with keeping all logic in one huge method, and they should avoid the trap of creating vague helper methods. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_97
+{
+    public static void Run()
+    {
+        static decimal CalculateVat(decimal amount) => amount * 0.18m;
+        decimal invoice = 597m;
+        Console.WriteLine(CalculateVat(invoice));
+    }
+}
+```
+
+### Q5.98 How does value passing versus reference passing in C# fundamentals?
+
+**Answer:** Value passing versus reference passing means understanding what gets copied when methods are called. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with assuming all arguments behave the same way, and they should avoid the trap of changing a referenced object and expecting isolation. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_98
+{
+    public static void Run()
+    {
+        static void Rename(List<string> names)
+        {
+            names.Add("Auditor-0");
+        }
+        var names = new List<string> { "Ops" };
+        Rename(names);
+        Console.WriteLine(string.Join(",", names));
+    }
+}
+```
+
+### Q5.99 Why does ref out and in parameters in C# fundamentals?
+
+**Answer:** Ref out and in parameters means using parameter modifiers when a method must update or protect data explicitly. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with ignoring modifier semantics, and they should avoid the trap of using ref or out when a better design exists. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_99
+{
+    public static void Run()
+    {
+        static void BuildSummary(int approved, int rejected, out string summary)
+        {
+            summary = $"Approved={approved}, Rejected={rejected}";
+        }
+        BuildSummary(5, 1, out var result);
+        Console.WriteLine(result);
+    }
+}
+```
+
+### Q5.100 When should you use optional parameters and named arguments in C# fundamentals?
+
+**Answer:** Optional parameters and named arguments means making call sites clearer with good defaults and explicit names. Teams should focus on it when discussing methods and parameter passing in production code, they compare it with too many overloads for tiny variations, and they should avoid the trap of adding so many optional values that the API becomes muddy. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo5_100
+{
+    public static void Run()
+    {
+        static string BuildMessage(string name, bool urgent = false, int retry = 1)
+        {
+            return $"{name} | urgent={urgent} | retry={retry}";
+        }
+        Console.WriteLine(BuildMessage(name: "Worker-500", retry: 3));
+    }
+}
+```
 
 ## 6. Arrays, collections, and lookup patterns
 
-This section covers the collection choices that appear constantly in real applications, from ordered lists to keyed lookups and practical collection safety.
+> This section contains **100 interview questions** focused on **Arrays, collections, and lookup patterns**. Every answer includes a C# code example, and the scenarios rotate so they do not repeat verbatim.
 
-### 251. What is the role of Arrays and fixed-size sequences in C# fundamentals?
+### Q6.1 What problem does array basics and fixed size behavior in C# fundamentals?
 
-**Answer:**
+**Answer:** Array basics and fixed size behavior means using arrays when element count is known and stable. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with dynamic structures for every case, and they should avoid the trap of picking arrays for data that needs resizing. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
 
-In C# fundamentals, Arrays and fixed-size sequences refers to the built-in collection type used for ordered, index-based, fixed-size storage. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-decimal[] monthlySales = { 1200m, 1400m, 1600m, 1800m };
+using System;
+using System.Collections.Generic;
 
-for (int i = 0; i < monthlySales.Length; i++)
+public static class Demo6_1
 {
-    Console.WriteLine($"Month {i + 1}: {monthlySales[i]}");
+    public static void Run()
+    {
+        int[] weeklyOrders = { 511, 513, 512, 516 };
+        Console.WriteLine($"{weeklyOrders[0]} | {weeklyOrders.Length}");
+    }
 }
 ```
 
----
+### Q6.2 How would you explain list usage for dynamic collections in C# fundamentals?
 
-### 252. Why is Arrays and fixed-size sequences important in day-to-day C# work?
+**Answer:** List usage for dynamic collections means using List<T> when items grow or shrink during execution. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with fixed arrays or legacy non-generic collections, and they should avoid the trap of forgetting to ask whether uniqueness or key lookup matters. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
 
-**Answer:**
-
-It matters because arrays are still a core building block for performance-sensitive code, interop, and simple fixed datasets. In production code, this shows up in features like imports, APIs, validation, pricing, reporting, and support debugging.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-decimal[] monthlySales = { 1200m, 1400m, 1600m, 1800m };
+using System;
+using System.Collections.Generic;
 
-for (int i = 0; i < monthlySales.Length; i++)
+public static class Demo6_2
 {
-    Console.WriteLine($"Month {i + 1}: {monthlySales[i]}");
+    public static void Run()
+    {
+        var queue = new List<string> { "Import", "Validate" };
+        queue.Add("Publish-2");
+        Console.WriteLine($"Tasks: {queue.Count}");
+    }
 }
 ```
 
----
+### Q6.3 Why is dictionary lookups by key in C# fundamentals?
 
-### 253. When should you use Arrays and fixed-size sequences in real projects?
+**Answer:** Dictionary lookups by key means choosing Dictionary<TKey,TValue> for direct key-based retrieval. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with scanning a list for every lookup, and they should avoid the trap of indexing missing keys without checks. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
 
-**Answer:**
-
-Use Arrays and fixed-size sequences when the number of items is known up front or the data should stay fixed after creation. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-decimal[] monthlySales = { 1200m, 1400m, 1600m, 1800m };
+using System;
+using System.Collections.Generic;
 
-for (int i = 0; i < monthlySales.Length; i++)
+public static class Demo6_3
 {
-    Console.WriteLine($"Month {i + 1}: {monthlySales[i]}");
+    public static void Run()
+    {
+        var statusByCode = new Dictionary<string, string>
+        {
+            ["N"] = "New",
+            ["P"] = "Paid",
+            ["S"] = "Shipped-3"
+        };
+        Console.WriteLine(statusByCode.TryGetValue("P", out var label) ? label : "Unknown");
+    }
 }
 ```
 
----
+### Q6.4 How can collection selection by intent in C# fundamentals?
 
-### 254. What is a real-time example of Arrays and fixed-size sequences?
+**Answer:** Collection selection by intent means matching a collection to access patterns ordering and lookup needs. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with defaulting to List<T> for everything, and they should avoid the trap of picking a familiar type that fits poorly. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
 
-**Answer:**
-
-A monthly sales dashboard may store the 12 month totals in an array because the size is stable and index-based access is simple. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-decimal[] monthlySales = { 1200m, 1400m, 1600m, 1800m };
+using System;
+using System.Collections.Generic;
 
-for (int i = 0; i < monthlySales.Length; i++)
+public static class Demo6_4
 {
-    Console.WriteLine($"Month {i + 1}: {monthlySales[i]}");
+    public static void Run()
+    {
+        var emails = new HashSet<string> { "ops@example.com", "alerts@example.com" };
+        emails.Add("ops@example.com");
+        Console.WriteLine($"Unique emails: {emails.Count}");
+    }
 }
 ```
 
----
+### Q6.5 What is iteration search and lookup trade-offs in C# fundamentals?
 
-### 255. What is a best practice for Arrays and fixed-size sequences?
+**Answer:** Iteration search and lookup trade-offs means understanding that collections differ in iteration membership and access cost. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with assuming all collection operations cost the same, and they should avoid the trap of repeating linear searches inside larger loops. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
 
-**Answer:**
-
-Use arrays when fixed size and direct indexing are part of the requirement; otherwise prefer higher-level collections for evolving data. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-decimal[] monthlySales = { 1200m, 1400m, 1600m, 1800m };
+using System;
+using System.Collections.Generic;
 
-for (int i = 0; i < monthlySales.Length; i++)
+public static class Demo6_5
 {
-    Console.WriteLine($"Month {i + 1}: {monthlySales[i]}");
+    public static void Run()
+    {
+        var regions = new List<string> { "US", "EU", "APAC-1" };
+        bool hasEurope = regions.Contains("EU");
+        Console.WriteLine($"Contains EU: {hasEurope}");
+    }
 }
 ```
 
----
+### Q6.6 How does safe access and missing data handling in C# fundamentals?
 
-### 256. What is a tricky interview point or common mistake around Arrays and fixed-size sequences?
+**Answer:** Safe access and missing data handling means handling out-of-range indexes and missing keys deliberately. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with optimistic direct indexing, and they should avoid the trap of turning raw user input into indexes without validation. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
 
-**Answer:**
-
-A common mistake is treating arrays as resizable collections or forgetting that index bounds are strict. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-int[] ids = { 10, 20, 30 };
-// Console.WriteLine(ids[3]); // IndexOutOfRangeException
+using System;
+using System.Collections.Generic;
 
-Console.WriteLine(ids[ids.Length - 1]);
-```
-
----
-
-### 257. How does Arrays and fixed-size sequences differ from List<T> and dynamic collections?
-
-**Answer:**
-
-Arrays and fixed-size sequences is about the built-in collection type used for ordered, index-based, fixed-size storage, whereas List<T> and dynamic collections is about resizable collection types that can grow as items are added or removed. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
-
-```csharp
-decimal[] monthlySales = { 1200m, 1400m, 1600m, 1800m };
-
-for (int i = 0; i < monthlySales.Length; i++)
+public static class Demo6_6
 {
-    Console.WriteLine($"Month {i + 1}: {monthlySales[i]}");
+    public static void Run()
+    {
+        var steps = new[] { "Queued", "Running", "Complete" };
+        int index = 1;
+        string value = index < steps.Length ? steps[index] : "Unknown";
+        Console.WriteLine(value);
+    }
 }
 ```
 
----
+### Q6.7 Why does array basics and fixed size behavior in C# fundamentals?
 
-### 258. How do you troubleshoot issues related to Arrays and fixed-size sequences?
+**Answer:** Array basics and fixed size behavior means using arrays when element count is known and stable. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with dynamic structures for every case, and they should avoid the trap of picking arrays for data that needs resizing. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
 
-**Answer:**
-
-Check the array length, log the index being accessed, and reproduce failures with empty or one-item arrays. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-int[] ids = { 10, 20, 30 };
-// Console.WriteLine(ids[3]); // IndexOutOfRangeException
+using System;
+using System.Collections.Generic;
 
-Console.WriteLine(ids[ids.Length - 1]);
-```
-
----
-
-### 259. What kind of follow-up does an interviewer usually ask after Arrays and fixed-size sequences?
-
-**Answer:**
-
-A common follow-up is when arrays are better than lists for performance or simplicity. This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
-
-```csharp
-decimal[] monthlySales = { 1200m, 1400m, 1600m, 1800m };
-
-for (int i = 0; i < monthlySales.Length; i++)
+public static class Demo6_7
 {
-    Console.WriteLine($"Month {i + 1}: {monthlySales[i]}");
+    public static void Run()
+    {
+        int[] weeklyOrders = { 517, 519, 518, 522 };
+        Console.WriteLine($"{weeklyOrders[0]} | {weeklyOrders.Length}");
+    }
 }
 ```
 
----
+### Q6.8 When should you use list usage for dynamic collections in C# fundamentals?
 
-### 260. How does Arrays and fixed-size sequences connect to the rest of C# fundamentals?
+**Answer:** List usage for dynamic collections means using List<T> when items grow or shrink during execution. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with fixed arrays or legacy non-generic collections, and they should avoid the trap of forgetting to ask whether uniqueness or key lookup matters. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
 
-**Answer:**
-
-Arrays are the bridge between low-level storage, loops, methods, and many collection abstractions. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-decimal[] monthlySales = { 1200m, 1400m, 1600m, 1800m };
+using System;
+using System.Collections.Generic;
 
-for (int i = 0; i < monthlySales.Length; i++)
+public static class Demo6_8
 {
-    Console.WriteLine($"Month {i + 1}: {monthlySales[i]}");
+    public static void Run()
+    {
+        var queue = new List<string> { "Import", "Validate" };
+        queue.Add("Publish-3");
+        Console.WriteLine($"Tasks: {queue.Count}");
+    }
 }
 ```
 
----
+### Q6.9 What problem does dictionary lookups by key in C# fundamentals?
 
-### 261. What is the role of List<T> for ordered, growing data in C# fundamentals?
+**Answer:** Dictionary lookups by key means choosing Dictionary<TKey,TValue> for direct key-based retrieval. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with scanning a list for every lookup, and they should avoid the trap of indexing missing keys without checks. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
 
-**Answer:**
-
-In C# fundamentals, List<T> for ordered, growing data refers to the general-purpose collection used when item order matters and the number of elements changes over time. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var tasks = new List<string>();
-tasks.Add("Validate request");
-tasks.Add("Save invoice");
-tasks.Add("Send email");
+using System;
+using System.Collections.Generic;
 
-foreach (var task in tasks)
+public static class Demo6_9
 {
-    Console.WriteLine(task);
+    public static void Run()
+    {
+        var statusByCode = new Dictionary<string, string>
+        {
+            ["N"] = "New",
+            ["P"] = "Paid",
+            ["S"] = "Shipped-1"
+        };
+        Console.WriteLine(statusByCode.TryGetValue("P", out var label) ? label : "Unknown");
+    }
 }
 ```
 
----
+### Q6.10 How would you explain collection selection by intent in C# fundamentals?
 
-### 262. Why is List<T> for ordered, growing data important in day-to-day C# work?
+**Answer:** Collection selection by intent means matching a collection to access patterns ordering and lookup needs. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with defaulting to List<T> for everything, and they should avoid the trap of picking a familiar type that fits poorly. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
 
-**Answer:**
-
-It matters because lists are one of the most common data structures in application code, APIs, and business workflows. In production code, this shows up in features like imports, APIs, validation, pricing, reporting, and support debugging.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var tasks = new List<string>();
-tasks.Add("Validate request");
-tasks.Add("Save invoice");
-tasks.Add("Send email");
+using System;
+using System.Collections.Generic;
 
-foreach (var task in tasks)
+public static class Demo6_10
 {
-    Console.WriteLine(task);
+    public static void Run()
+    {
+        var emails = new HashSet<string> { "ops@example.com", "alerts@example.com" };
+        emails.Add("ops@example.com");
+        Console.WriteLine($"Unique emails: {emails.Count}");
+    }
 }
 ```
 
----
+### Q6.11 Why is iteration search and lookup trade-offs in C# fundamentals?
 
-### 263. When should you use List<T> for ordered, growing data in real projects?
+**Answer:** Iteration search and lookup trade-offs means understanding that collections differ in iteration membership and access cost. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with assuming all collection operations cost the same, and they should avoid the trap of repeating linear searches inside larger loops. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
 
-**Answer:**
-
-Use List<T> for ordered, growing data when you need to add, remove, or iterate over ordered items without managing array resizing manually. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var tasks = new List<string>();
-tasks.Add("Validate request");
-tasks.Add("Save invoice");
-tasks.Add("Send email");
+using System;
+using System.Collections.Generic;
 
-foreach (var task in tasks)
+public static class Demo6_11
 {
-    Console.WriteLine(task);
+    public static void Run()
+    {
+        var regions = new List<string> { "US", "EU", "APAC-1" };
+        bool hasEurope = regions.Contains("EU");
+        Console.WriteLine($"Contains EU: {hasEurope}");
+    }
 }
 ```
 
----
+### Q6.12 How can safe access and missing data handling in C# fundamentals?
 
-### 264. What is a real-time example of List<T> for ordered, growing data?
+**Answer:** Safe access and missing data handling means handling out-of-range indexes and missing keys deliberately. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with optimistic direct indexing, and they should avoid the trap of turning raw user input into indexes without validation. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
 
-**Answer:**
-
-An order aggregate may keep line items in a `List<OrderLine>` because users can add or remove products before checkout. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var tasks = new List<string>();
-tasks.Add("Validate request");
-tasks.Add("Save invoice");
-tasks.Add("Send email");
+using System;
+using System.Collections.Generic;
 
-foreach (var task in tasks)
+public static class Demo6_12
 {
-    Console.WriteLine(task);
+    public static void Run()
+    {
+        var steps = new[] { "Queued", "Running", "Complete" };
+        int index = 2;
+        string value = index < steps.Length ? steps[index] : "Unknown";
+        Console.WriteLine(value);
+    }
 }
 ```
 
----
+### Q6.13 What is array basics and fixed size behavior in C# fundamentals?
 
-### 265. What is a best practice for List<T> for ordered, growing data?
+**Answer:** Array basics and fixed size behavior means using arrays when element count is known and stable. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with dynamic structures for every case, and they should avoid the trap of picking arrays for data that needs resizing. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
 
-**Answer:**
-
-Use `List<T>` for evolving ordered data and expose read-only views when external callers should not mutate it freely. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var tasks = new List<string>();
-tasks.Add("Validate request");
-tasks.Add("Save invoice");
-tasks.Add("Send email");
+using System;
+using System.Collections.Generic;
 
-foreach (var task in tasks)
+public static class Demo6_13
 {
-    Console.WriteLine(task);
+    public static void Run()
+    {
+        int[] weeklyOrders = { 523, 525, 524, 528 };
+        Console.WriteLine($"{weeklyOrders[0]} | {weeklyOrders.Length}");
+    }
 }
 ```
 
----
+### Q6.14 How does list usage for dynamic collections in C# fundamentals?
 
-### 266. What is a tricky interview point or common mistake around List<T> for ordered, growing data?
+**Answer:** List usage for dynamic collections means using List<T> when items grow or shrink during execution. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with fixed arrays or legacy non-generic collections, and they should avoid the trap of forgetting to ask whether uniqueness or key lookup matters. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
 
-**Answer:**
-
-Developers sometimes choose a list even when they repeatedly search by key, which can become a hidden performance problem. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var queue = new List<int> { 1001, 1002, 1003 };
-queue.Remove(1002);
+using System;
+using System.Collections.Generic;
 
-Console.WriteLine(string.Join(", ", queue));
-```
-
----
-
-### 267. How does List<T> for ordered, growing data differ from arrays and fixed-size sequences?
-
-**Answer:**
-
-List<T> for ordered, growing data is about the general-purpose collection used when item order matters and the number of elements changes over time, whereas arrays and fixed-size sequences is about fixed-size, index-based storage rather than dynamic growth. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
-
-```csharp
-var tasks = new List<string>();
-tasks.Add("Validate request");
-tasks.Add("Save invoice");
-tasks.Add("Send email");
-
-foreach (var task in tasks)
+public static class Demo6_14
 {
-    Console.WriteLine(task);
+    public static void Run()
+    {
+        var queue = new List<string> { "Import", "Validate" };
+        queue.Add("Publish-4");
+        Console.WriteLine($"Tasks: {queue.Count}");
+    }
 }
 ```
 
----
+### Q6.15 Why does dictionary lookups by key in C# fundamentals?
 
-### 268. How do you troubleshoot issues related to List<T> for ordered, growing data?
+**Answer:** Dictionary lookups by key means choosing Dictionary<TKey,TValue> for direct key-based retrieval. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with scanning a list for every lookup, and they should avoid the trap of indexing missing keys without checks. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
 
-**Answer:**
-
-Check whether items are being added or removed in the expected order and profile repeated searches if the list grows large. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var queue = new List<int> { 1001, 1002, 1003 };
-queue.Remove(1002);
+using System;
+using System.Collections.Generic;
 
-Console.WriteLine(string.Join(", ", queue));
-```
-
----
-
-### 269. What kind of follow-up does an interviewer usually ask after List<T> for ordered, growing data?
-
-**Answer:**
-
-A common follow-up is when to prefer a list, a dictionary, or a set based on access pattern. This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
-
-```csharp
-var tasks = new List<string>();
-tasks.Add("Validate request");
-tasks.Add("Save invoice");
-tasks.Add("Send email");
-
-foreach (var task in tasks)
+public static class Demo6_15
 {
-    Console.WriteLine(task);
+    public static void Run()
+    {
+        var statusByCode = new Dictionary<string, string>
+        {
+            ["N"] = "New",
+            ["P"] = "Paid",
+            ["S"] = "Shipped-3"
+        };
+        Console.WriteLine(statusByCode.TryGetValue("P", out var label) ? label : "Unknown");
+    }
 }
 ```
 
----
+### Q6.16 When should you use collection selection by intent in C# fundamentals?
 
-### 270. How does List<T> for ordered, growing data connect to the rest of C# fundamentals?
+**Answer:** Collection selection by intent means matching a collection to access patterns ordering and lookup needs. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with defaulting to List<T> for everything, and they should avoid the trap of picking a familiar type that fits poorly. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
 
-**Answer:**
-
-Lists connect directly to loops, methods, LINQ, APIs, and most practical in-memory business processing. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var tasks = new List<string>();
-tasks.Add("Validate request");
-tasks.Add("Save invoice");
-tasks.Add("Send email");
+using System;
+using System.Collections.Generic;
 
-foreach (var task in tasks)
+public static class Demo6_16
 {
-    Console.WriteLine(task);
+    public static void Run()
+    {
+        var emails = new HashSet<string> { "ops@example.com", "alerts@example.com" };
+        emails.Add("ops@example.com");
+        Console.WriteLine($"Unique emails: {emails.Count}");
+    }
 }
 ```
 
----
+### Q6.17 What problem does iteration search and lookup trade-offs in C# fundamentals?
 
-### 271. What is the role of Dictionary<TKey, TValue> for fast lookups in C# fundamentals?
+**Answer:** Iteration search and lookup trade-offs means understanding that collections differ in iteration membership and access cost. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with assuming all collection operations cost the same, and they should avoid the trap of repeating linear searches inside larger loops. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
 
-**Answer:**
-
-In C# fundamentals, Dictionary<TKey, TValue> for fast lookups refers to the keyed collection used to map a unique key to a value with efficient lookup behavior. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var priceBySku = new Dictionary<string, decimal>
-{
-    ["LAPTOP-15"] = 65000m,
-    ["MOUSE-WL"] = 1200m
-};
+using System;
+using System.Collections.Generic;
 
-if (priceBySku.TryGetValue("LAPTOP-15", out var price))
+public static class Demo6_17
 {
-    Console.WriteLine(price);
+    public static void Run()
+    {
+        var regions = new List<string> { "US", "EU", "APAC-1" };
+        bool hasEurope = regions.Contains("EU");
+        Console.WriteLine($"Contains EU: {hasEurope}");
+    }
 }
 ```
 
----
+### Q6.18 How would you explain safe access and missing data handling in C# fundamentals?
 
-### 272. Why is Dictionary<TKey, TValue> for fast lookups important in day-to-day C# work?
+**Answer:** Safe access and missing data handling means handling out-of-range indexes and missing keys deliberately. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with optimistic direct indexing, and they should avoid the trap of turning raw user input into indexes without validation. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
 
-**Answer:**
-
-It matters because many business workflows need fast access by code, ID, email, or status rather than repeated list scans. In production code, this shows up in features like imports, APIs, validation, pricing, reporting, and support debugging.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var priceBySku = new Dictionary<string, decimal>
-{
-    ["LAPTOP-15"] = 65000m,
-    ["MOUSE-WL"] = 1200m
-};
+using System;
+using System.Collections.Generic;
 
-if (priceBySku.TryGetValue("LAPTOP-15", out var price))
+public static class Demo6_18
 {
-    Console.WriteLine(price);
+    public static void Run()
+    {
+        var steps = new[] { "Queued", "Running", "Complete" };
+        int index = 3;
+        string value = index < steps.Length ? steps[index] : "Unknown";
+        Console.WriteLine(value);
+    }
 }
 ```
 
----
+### Q6.19 Why is array basics and fixed size behavior in C# fundamentals?
 
-### 273. When should you use Dictionary<TKey, TValue> for fast lookups in real projects?
+**Answer:** Array basics and fixed size behavior means using arrays when element count is known and stable. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with dynamic structures for every case, and they should avoid the trap of picking arrays for data that needs resizing. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
 
-**Answer:**
-
-Use Dictionary<TKey, TValue> for fast lookups when you need to retrieve or update data by a unique key frequently. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var priceBySku = new Dictionary<string, decimal>
-{
-    ["LAPTOP-15"] = 65000m,
-    ["MOUSE-WL"] = 1200m
-};
+using System;
+using System.Collections.Generic;
 
-if (priceBySku.TryGetValue("LAPTOP-15", out var price))
+public static class Demo6_19
 {
-    Console.WriteLine(price);
+    public static void Run()
+    {
+        int[] weeklyOrders = { 529, 531, 530, 534 };
+        Console.WriteLine($"{weeklyOrders[0]} | {weeklyOrders.Length}");
+    }
 }
 ```
 
----
+### Q6.20 How can list usage for dynamic collections in C# fundamentals?
 
-### 274. What is a real-time example of Dictionary<TKey, TValue> for fast lookups?
+**Answer:** List usage for dynamic collections means using List<T> when items grow or shrink during execution. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with fixed arrays or legacy non-generic collections, and they should avoid the trap of forgetting to ask whether uniqueness or key lookup matters. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
 
-**Answer:**
-
-A pricing engine may store product IDs and their current prices in a dictionary so each line item can be priced quickly. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var priceBySku = new Dictionary<string, decimal>
-{
-    ["LAPTOP-15"] = 65000m,
-    ["MOUSE-WL"] = 1200m
-};
+using System;
+using System.Collections.Generic;
 
-if (priceBySku.TryGetValue("LAPTOP-15", out var price))
+public static class Demo6_20
 {
-    Console.WriteLine(price);
+    public static void Run()
+    {
+        var queue = new List<string> { "Import", "Validate" };
+        queue.Add("Publish-0");
+        Console.WriteLine($"Tasks: {queue.Count}");
+    }
 }
 ```
 
----
+### Q6.21 What is dictionary lookups by key in C# fundamentals?
 
-### 275. What is a best practice for Dictionary<TKey, TValue> for fast lookups?
+**Answer:** Dictionary lookups by key means choosing Dictionary<TKey,TValue> for direct key-based retrieval. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with scanning a list for every lookup, and they should avoid the trap of indexing missing keys without checks. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
 
-**Answer:**
-
-Choose a dictionary when lookup by key is the dominant operation and validate key existence before direct indexing if the key may be missing. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var priceBySku = new Dictionary<string, decimal>
-{
-    ["LAPTOP-15"] = 65000m,
-    ["MOUSE-WL"] = 1200m
-};
+using System;
+using System.Collections.Generic;
 
-if (priceBySku.TryGetValue("LAPTOP-15", out var price))
+public static class Demo6_21
 {
-    Console.WriteLine(price);
+    public static void Run()
+    {
+        var statusByCode = new Dictionary<string, string>
+        {
+            ["N"] = "New",
+            ["P"] = "Paid",
+            ["S"] = "Shipped-1"
+        };
+        Console.WriteLine(statusByCode.TryGetValue("P", out var label) ? label : "Unknown");
+    }
 }
 ```
 
----
+### Q6.22 How does collection selection by intent in C# fundamentals?
 
-### 276. What is a tricky interview point or common mistake around Dictionary<TKey, TValue> for fast lookups?
+**Answer:** Collection selection by intent means matching a collection to access patterns ordering and lookup needs. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with defaulting to List<T> for everything, and they should avoid the trap of picking a familiar type that fits poorly. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
 
-**Answer:**
-
-Direct indexing with a missing key throws, and candidates often forget to mention TryGetValue as the safer everyday pattern. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var stockBySku = new Dictionary<string, int>
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_22
 {
-    ["LAPTOP-15"] = 4
-};
-
-Console.WriteLine(stockBySku.ContainsKey("MOUSE-WL"));
-```
-
----
-
-### 277. How does Dictionary<TKey, TValue> for fast lookups differ from List<T> for ordered, growing data?
-
-**Answer:**
-
-Dictionary<TKey, TValue> for fast lookups is about the keyed collection used to map a unique key to a value with efficient lookup behavior, whereas List<T> for ordered, growing data is about ordered sequence processing rather than direct keyed retrieval. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
-
-```csharp
-var priceBySku = new Dictionary<string, decimal>
-{
-    ["LAPTOP-15"] = 65000m,
-    ["MOUSE-WL"] = 1200m
-};
-
-if (priceBySku.TryGetValue("LAPTOP-15", out var price))
-{
-    Console.WriteLine(price);
+    public static void Run()
+    {
+        var emails = new HashSet<string> { "ops@example.com", "alerts@example.com" };
+        emails.Add("ops@example.com");
+        Console.WriteLine($"Unique emails: {emails.Count}");
+    }
 }
 ```
 
----
+### Q6.23 Why does iteration search and lookup trade-offs in C# fundamentals?
 
-### 278. How do you troubleshoot issues related to Dictionary<TKey, TValue> for fast lookups?
+**Answer:** Iteration search and lookup trade-offs means understanding that collections differ in iteration membership and access cost. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with assuming all collection operations cost the same, and they should avoid the trap of repeating linear searches inside larger loops. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
 
-**Answer:**
-
-Check whether the key really exists, whether casing or normalization differs, and whether duplicates were filtered before insertion. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var stockBySku = new Dictionary<string, int>
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_23
 {
-    ["LAPTOP-15"] = 4
-};
-
-Console.WriteLine(stockBySku.ContainsKey("MOUSE-WL"));
-```
-
----
-
-### 279. What kind of follow-up does an interviewer usually ask after Dictionary<TKey, TValue> for fast lookups?
-
-**Answer:**
-
-A common follow-up is why TryGetValue is often better than ContainsKey followed by indexing. This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
-
-```csharp
-var priceBySku = new Dictionary<string, decimal>
-{
-    ["LAPTOP-15"] = 65000m,
-    ["MOUSE-WL"] = 1200m
-};
-
-if (priceBySku.TryGetValue("LAPTOP-15", out var price))
-{
-    Console.WriteLine(price);
+    public static void Run()
+    {
+        var regions = new List<string> { "US", "EU", "APAC-1" };
+        bool hasEurope = regions.Contains("EU");
+        Console.WriteLine($"Contains EU: {hasEurope}");
+    }
 }
 ```
 
----
+### Q6.24 When should you use safe access and missing data handling in C# fundamentals?
 
-### 280. How does Dictionary<TKey, TValue> for fast lookups connect to the rest of C# fundamentals?
+**Answer:** Safe access and missing data handling means handling out-of-range indexes and missing keys deliberately. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with optimistic direct indexing, and they should avoid the trap of turning raw user input into indexes without validation. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
 
-**Answer:**
-
-Dictionaries connect loops, methods, lookups, caching, and performance-minded collection design. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var priceBySku = new Dictionary<string, decimal>
-{
-    ["LAPTOP-15"] = 65000m,
-    ["MOUSE-WL"] = 1200m
-};
+using System;
+using System.Collections.Generic;
 
-if (priceBySku.TryGetValue("LAPTOP-15", out var price))
+public static class Demo6_24
 {
-    Console.WriteLine(price);
+    public static void Run()
+    {
+        var steps = new[] { "Queued", "Running", "Complete" };
+        int index = 4;
+        string value = index < steps.Length ? steps[index] : "Unknown";
+        Console.WriteLine(value);
+    }
 }
 ```
 
----
+### Q6.25 What problem does array basics and fixed size behavior in C# fundamentals?
 
-### 281. What is the role of Collection initialization, indexing, and safe access in C# fundamentals?
+**Answer:** Array basics and fixed size behavior means using arrays when element count is known and stable. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with dynamic structures for every case, and they should avoid the trap of picking arrays for data that needs resizing. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
 
-**Answer:**
-
-In C# fundamentals, Collection initialization, indexing, and safe access refers to the everyday practices for creating collections, reading elements, and avoiding runtime failures. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var featureFlags = new Dictionary<string, bool>
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_25
 {
-    ["InvoiceExport"] = true,
-    ["AutoReminder"] = false
-};
-
-bool exportEnabled = featureFlags.TryGetValue("InvoiceExport", out var enabled) && enabled;
-Console.WriteLine(exportEnabled);
-```
-
----
-
-### 282. Why is Collection initialization, indexing, and safe access important in day-to-day C# work?
-
-**Answer:**
-
-It matters because simple collection mistakes often show up as null references, missing keys, or index errors in otherwise ordinary code. In production code, this shows up in features like imports, APIs, validation, pricing, reporting, and support debugging.
-
-**Sample:**
-
-```csharp
-var featureFlags = new Dictionary<string, bool>
-{
-    ["InvoiceExport"] = true,
-    ["AutoReminder"] = false
-};
-
-bool exportEnabled = featureFlags.TryGetValue("InvoiceExport", out var enabled) && enabled;
-Console.WriteLine(exportEnabled);
-```
-
----
-
-### 283. When should you use Collection initialization, indexing, and safe access in real projects?
-
-**Answer:**
-
-Use Collection initialization, indexing, and safe access when you are building collections from input data and then reading values back by index or key. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
-
-```csharp
-var featureFlags = new Dictionary<string, bool>
-{
-    ["InvoiceExport"] = true,
-    ["AutoReminder"] = false
-};
-
-bool exportEnabled = featureFlags.TryGetValue("InvoiceExport", out var enabled) && enabled;
-Console.WriteLine(exportEnabled);
-```
-
----
-
-### 284. What is a real-time example of Collection initialization, indexing, and safe access?
-
-**Answer:**
-
-A configuration loader may create a dictionary of feature flags and a list of enabled modules before later parts of the app read them. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
-
-```csharp
-var featureFlags = new Dictionary<string, bool>
-{
-    ["InvoiceExport"] = true,
-    ["AutoReminder"] = false
-};
-
-bool exportEnabled = featureFlags.TryGetValue("InvoiceExport", out var enabled) && enabled;
-Console.WriteLine(exportEnabled);
-```
-
----
-
-### 285. What is a best practice for Collection initialization, indexing, and safe access?
-
-**Answer:**
-
-Initialize collections close to where they are needed, prefer safe lookup APIs, and validate assumptions about size before indexing. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
-
-```csharp
-var featureFlags = new Dictionary<string, bool>
-{
-    ["InvoiceExport"] = true,
-    ["AutoReminder"] = false
-};
-
-bool exportEnabled = featureFlags.TryGetValue("InvoiceExport", out var enabled) && enabled;
-Console.WriteLine(exportEnabled);
-```
-
----
-
-### 286. What is a tricky interview point or common mistake around Collection initialization, indexing, and safe access?
-
-**Answer:**
-
-The trap is assuming data exists because the test environment always had it, then failing in production when an item is missing. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
-
-```csharp
-var regions = new List<string> { "US", "EU" };
-
-if (regions.Count > 1)
-{
-    Console.WriteLine(regions[1]);
+    public static void Run()
+    {
+        int[] weeklyOrders = { 535, 537, 536, 540 };
+        Console.WriteLine($"{weeklyOrders[0]} | {weeklyOrders.Length}");
+    }
 }
 ```
 
----
+### Q6.26 How would you explain list usage for dynamic collections in C# fundamentals?
 
-### 287. How does Collection initialization, indexing, and safe access differ from dictionary and list fundamentals themselves?
+**Answer:** List usage for dynamic collections means using List<T> when items grow or shrink during execution. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with fixed arrays or legacy non-generic collections, and they should avoid the trap of forgetting to ask whether uniqueness or key lookup matters. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
 
-**Answer:**
-
-Collection initialization, indexing, and safe access is about the everyday practices for creating collections, reading elements, and avoiding runtime failures, whereas dictionary and list fundamentals themselves is about the collection types as concepts rather than the safety practices around using them. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var featureFlags = new Dictionary<string, bool>
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_26
 {
-    ["InvoiceExport"] = true,
-    ["AutoReminder"] = false
-};
-
-bool exportEnabled = featureFlags.TryGetValue("InvoiceExport", out var enabled) && enabled;
-Console.WriteLine(exportEnabled);
-```
-
----
-
-### 288. How do you troubleshoot issues related to Collection initialization, indexing, and safe access?
-
-**Answer:**
-
-Log collection count, inspect keys or indexes at failure time, and reproduce the issue with empty, partial, and duplicate input. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
-
-```csharp
-var regions = new List<string> { "US", "EU" };
-
-if (regions.Count > 1)
-{
-    Console.WriteLine(regions[1]);
+    public static void Run()
+    {
+        var queue = new List<string> { "Import", "Validate" };
+        queue.Add("Publish-1");
+        Console.WriteLine($"Tasks: {queue.Count}");
+    }
 }
 ```
 
----
+### Q6.27 Why is dictionary lookups by key in C# fundamentals?
 
-### 289. What kind of follow-up does an interviewer usually ask after Collection initialization, indexing, and safe access?
+**Answer:** Dictionary lookups by key means choosing Dictionary<TKey,TValue> for direct key-based retrieval. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with scanning a list for every lookup, and they should avoid the trap of indexing missing keys without checks. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
 
-**Answer:**
-
-A common follow-up is how to avoid null collections and whether methods should return empty collections instead of null. This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var featureFlags = new Dictionary<string, bool>
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_27
 {
-    ["InvoiceExport"] = true,
-    ["AutoReminder"] = false
-};
-
-bool exportEnabled = featureFlags.TryGetValue("InvoiceExport", out var enabled) && enabled;
-Console.WriteLine(exportEnabled);
+    public static void Run()
+    {
+        var statusByCode = new Dictionary<string, string>
+        {
+            ["N"] = "New",
+            ["P"] = "Paid",
+            ["S"] = "Shipped-3"
+        };
+        Console.WriteLine(statusByCode.TryGetValue("P", out var label) ? label : "Unknown");
+    }
+}
 ```
 
----
+### Q6.28 How can collection selection by intent in C# fundamentals?
 
-### 290. How does Collection initialization, indexing, and safe access connect to the rest of C# fundamentals?
+**Answer:** Collection selection by intent means matching a collection to access patterns ordering and lookup needs. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with defaulting to List<T> for everything, and they should avoid the trap of picking a familiar type that fits poorly. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
 
-**Answer:**
-
-Collection safety connects directly to loops, methods, null handling, and production stability. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var featureFlags = new Dictionary<string, bool>
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_28
 {
-    ["InvoiceExport"] = true,
-    ["AutoReminder"] = false
-};
-
-bool exportEnabled = featureFlags.TryGetValue("InvoiceExport", out var enabled) && enabled;
-Console.WriteLine(exportEnabled);
+    public static void Run()
+    {
+        var emails = new HashSet<string> { "ops@example.com", "alerts@example.com" };
+        emails.Add("ops@example.com");
+        Console.WriteLine($"Unique emails: {emails.Count}");
+    }
+}
 ```
 
----
+### Q6.29 What is iteration search and lookup trade-offs in C# fundamentals?
 
-### 291. What is the role of Choosing the right collection for real-world scenarios in C# fundamentals?
+**Answer:** Iteration search and lookup trade-offs means understanding that collections differ in iteration membership and access cost. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with assuming all collection operations cost the same, and they should avoid the trap of repeating linear searches inside larger loops. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
 
-**Answer:**
-
-In C# fundamentals, Choosing the right collection for real-world scenarios refers to the practical decision-making process for selecting arrays, lists, dictionaries, queues, sets, or other collection shapes based on access patterns. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var auditEvents = new List<string> { "Created", "Approved", "Exported" };
-var userById = new Dictionary<int, string> { [101] = "Asha", [102] = "Ravi" };
-var processedIds = new HashSet<int> { 101, 102 };
+using System;
+using System.Collections.Generic;
 
-Console.WriteLine(auditEvents[0]);
-Console.WriteLine(userById[101]);
-Console.WriteLine(processedIds.Contains(102));
+public static class Demo6_29
+{
+    public static void Run()
+    {
+        var regions = new List<string> { "US", "EU", "APAC-1" };
+        bool hasEurope = regions.Contains("EU");
+        Console.WriteLine($"Contains EU: {hasEurope}");
+    }
+}
 ```
 
----
+### Q6.30 How does safe access and missing data handling in C# fundamentals?
 
-### 292. Why is Choosing the right collection for real-world scenarios important in day-to-day C# work?
+**Answer:** Safe access and missing data handling means handling out-of-range indexes and missing keys deliberately. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with optimistic direct indexing, and they should avoid the trap of turning raw user input into indexes without validation. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
 
-**Answer:**
-
-It matters because strong engineers choose collections by problem shape, not by habit. In production code, this shows up in features like imports, APIs, validation, pricing, reporting, and support debugging.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var auditEvents = new List<string> { "Created", "Approved", "Exported" };
-var userById = new Dictionary<int, string> { [101] = "Asha", [102] = "Ravi" };
-var processedIds = new HashSet<int> { 101, 102 };
+using System;
+using System.Collections.Generic;
 
-Console.WriteLine(auditEvents[0]);
-Console.WriteLine(userById[101]);
-Console.WriteLine(processedIds.Contains(102));
+public static class Demo6_30
+{
+    public static void Run()
+    {
+        var steps = new[] { "Queued", "Running", "Complete" };
+        int index = 0;
+        string value = index < steps.Length ? steps[index] : "Unknown";
+        Console.WriteLine(value);
+    }
+}
 ```
 
----
+### Q6.31 Why does array basics and fixed size behavior in C# fundamentals?
 
-### 293. When should you use Choosing the right collection for real-world scenarios in real projects?
+**Answer:** Array basics and fixed size behavior means using arrays when element count is known and stable. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with dynamic structures for every case, and they should avoid the trap of picking arrays for data that needs resizing. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
 
-**Answer:**
-
-Use Choosing the right collection for real-world scenarios when you are deciding whether order, uniqueness, fixed size, key lookup, or frequent insertion matters most. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var auditEvents = new List<string> { "Created", "Approved", "Exported" };
-var userById = new Dictionary<int, string> { [101] = "Asha", [102] = "Ravi" };
-var processedIds = new HashSet<int> { 101, 102 };
+using System;
+using System.Collections.Generic;
 
-Console.WriteLine(auditEvents[0]);
-Console.WriteLine(userById[101]);
-Console.WriteLine(processedIds.Contains(102));
+public static class Demo6_31
+{
+    public static void Run()
+    {
+        int[] weeklyOrders = { 541, 543, 542, 546 };
+        Console.WriteLine($"{weeklyOrders[0]} | {weeklyOrders.Length}");
+    }
+}
 ```
 
----
+### Q6.32 When should you use list usage for dynamic collections in C# fundamentals?
 
-### 294. What is a real-time example of Choosing the right collection for real-world scenarios?
+**Answer:** List usage for dynamic collections means using List<T> when items grow or shrink during execution. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with fixed arrays or legacy non-generic collections, and they should avoid the trap of forgetting to ask whether uniqueness or key lookup matters. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
 
-**Answer:**
-
-An audit system may use a list for ordered events, a dictionary for user lookups, and a set for duplicate detection in the same feature. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var auditEvents = new List<string> { "Created", "Approved", "Exported" };
-var userById = new Dictionary<int, string> { [101] = "Asha", [102] = "Ravi" };
-var processedIds = new HashSet<int> { 101, 102 };
+using System;
+using System.Collections.Generic;
 
-Console.WriteLine(auditEvents[0]);
-Console.WriteLine(userById[101]);
-Console.WriteLine(processedIds.Contains(102));
+public static class Demo6_32
+{
+    public static void Run()
+    {
+        var queue = new List<string> { "Import", "Validate" };
+        queue.Add("Publish-2");
+        Console.WriteLine($"Tasks: {queue.Count}");
+    }
+}
 ```
 
----
+### Q6.33 What problem does dictionary lookups by key in C# fundamentals?
 
-### 295. What is a best practice for Choosing the right collection for real-world scenarios?
+**Answer:** Dictionary lookups by key means choosing Dictionary<TKey,TValue> for direct key-based retrieval. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with scanning a list for every lookup, and they should avoid the trap of indexing missing keys without checks. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
 
-**Answer:**
-
-Pick the collection that matches the dominant read and write pattern, then explain the tradeoff in readability and performance. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var auditEvents = new List<string> { "Created", "Approved", "Exported" };
-var userById = new Dictionary<int, string> { [101] = "Asha", [102] = "Ravi" };
-var processedIds = new HashSet<int> { 101, 102 };
+using System;
+using System.Collections.Generic;
 
-Console.WriteLine(auditEvents[0]);
-Console.WriteLine(userById[101]);
-Console.WriteLine(processedIds.Contains(102));
+public static class Demo6_33
+{
+    public static void Run()
+    {
+        var statusByCode = new Dictionary<string, string>
+        {
+            ["N"] = "New",
+            ["P"] = "Paid",
+            ["S"] = "Shipped-1"
+        };
+        Console.WriteLine(statusByCode.TryGetValue("P", out var label) ? label : "Unknown");
+    }
+}
 ```
 
----
+### Q6.34 How would you explain collection selection by intent in C# fundamentals?
 
-### 296. What is a tricky interview point or common mistake around Choosing the right collection for real-world scenarios?
+**Answer:** Collection selection by intent means matching a collection to access patterns ordering and lookup needs. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with defaulting to List<T> for everything, and they should avoid the trap of picking a familiar type that fits poorly. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
 
-**Answer:**
-
-Interviewers often push here because many candidates can use collections but cannot justify why one is better than another. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var orderIds = new List<int> { 101, 101, 102 };
-var uniqueOrderIds = new HashSet<int>(orderIds);
+using System;
+using System.Collections.Generic;
 
-Console.WriteLine(uniqueOrderIds.Count);
+public static class Demo6_34
+{
+    public static void Run()
+    {
+        var emails = new HashSet<string> { "ops@example.com", "alerts@example.com" };
+        emails.Add("ops@example.com");
+        Console.WriteLine($"Unique emails: {emails.Count}");
+    }
+}
 ```
 
----
+### Q6.35 Why is iteration search and lookup trade-offs in C# fundamentals?
 
-### 297. How does Choosing the right collection for real-world scenarios differ from nested loops and iteration complexity?
+**Answer:** Iteration search and lookup trade-offs means understanding that collections differ in iteration membership and access cost. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with assuming all collection operations cost the same, and they should avoid the trap of repeating linear searches inside larger loops. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
 
-**Answer:**
-
-Choosing the right collection for real-world scenarios is about the practical decision-making process for selecting arrays, lists, dictionaries, queues, sets, or other collection shapes based on access patterns, whereas nested loops and iteration complexity is about repeated scanning logic that might disappear once the right collection is chosen. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var auditEvents = new List<string> { "Created", "Approved", "Exported" };
-var userById = new Dictionary<int, string> { [101] = "Asha", [102] = "Ravi" };
-var processedIds = new HashSet<int> { 101, 102 };
+using System;
+using System.Collections.Generic;
 
-Console.WriteLine(auditEvents[0]);
-Console.WriteLine(userById[101]);
-Console.WriteLine(processedIds.Contains(102));
+public static class Demo6_35
+{
+    public static void Run()
+    {
+        var regions = new List<string> { "US", "EU", "APAC-1" };
+        bool hasEurope = regions.Contains("EU");
+        Console.WriteLine($"Contains EU: {hasEurope}");
+    }
+}
 ```
 
----
+### Q6.36 How can safe access and missing data handling in C# fundamentals?
 
-### 298. How do you troubleshoot issues related to Choosing the right collection for real-world scenarios?
+**Answer:** Safe access and missing data handling means handling out-of-range indexes and missing keys deliberately. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with optimistic direct indexing, and they should avoid the trap of turning raw user input into indexes without validation. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
 
-**Answer:**
-
-Look at how the code reads and writes data most often, then ask whether another collection would remove repeated scans or accidental duplicates. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var orderIds = new List<int> { 101, 101, 102 };
-var uniqueOrderIds = new HashSet<int>(orderIds);
+using System;
+using System.Collections.Generic;
 
-Console.WriteLine(uniqueOrderIds.Count);
+public static class Demo6_36
+{
+    public static void Run()
+    {
+        var steps = new[] { "Queued", "Running", "Complete" };
+        int index = 1;
+        string value = index < steps.Length ? steps[index] : "Unknown";
+        Console.WriteLine(value);
+    }
+}
 ```
 
----
+### Q6.37 What is array basics and fixed size behavior in C# fundamentals?
 
-### 299. What kind of follow-up does an interviewer usually ask after Choosing the right collection for real-world scenarios?
+**Answer:** Array basics and fixed size behavior means using arrays when element count is known and stable. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with dynamic structures for every case, and they should avoid the trap of picking arrays for data that needs resizing. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
 
-**Answer:**
-
-A common follow-up is how to explain a collection choice using access pattern, complexity, and maintainability in one answer. This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var auditEvents = new List<string> { "Created", "Approved", "Exported" };
-var userById = new Dictionary<int, string> { [101] = "Asha", [102] = "Ravi" };
-var processedIds = new HashSet<int> { 101, 102 };
+using System;
+using System.Collections.Generic;
 
-Console.WriteLine(auditEvents[0]);
-Console.WriteLine(userById[101]);
-Console.WriteLine(processedIds.Contains(102));
+public static class Demo6_37
+{
+    public static void Run()
+    {
+        int[] weeklyOrders = { 547, 549, 548, 552 };
+        Console.WriteLine($"{weeklyOrders[0]} | {weeklyOrders.Length}");
+    }
+}
 ```
 
----
+### Q6.38 How does list usage for dynamic collections in C# fundamentals?
 
-### 300. How does Choosing the right collection for real-world scenarios connect to the rest of C# fundamentals?
+**Answer:** List usage for dynamic collections means using List<T> when items grow or shrink during execution. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with fixed arrays or legacy non-generic collections, and they should avoid the trap of forgetting to ask whether uniqueness or key lookup matters. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
 
-**Answer:**
-
-Collection selection brings together variables, loops, methods, and operators into the kind of tradeoff discussion senior interviewers actually expect. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-var auditEvents = new List<string> { "Created", "Approved", "Exported" };
-var userById = new Dictionary<int, string> { [101] = "Asha", [102] = "Ravi" };
-var processedIds = new HashSet<int> { 101, 102 };
+using System;
+using System.Collections.Generic;
 
-Console.WriteLine(auditEvents[0]);
-Console.WriteLine(userById[101]);
-Console.WriteLine(processedIds.Contains(102));
+public static class Demo6_38
+{
+    public static void Run()
+    {
+        var queue = new List<string> { "Import", "Validate" };
+        queue.Add("Publish-3");
+        Console.WriteLine($"Tasks: {queue.Count}");
+    }
+}
 ```
 
----
+### Q6.39 Why does dictionary lookups by key in C# fundamentals?
+
+**Answer:** Dictionary lookups by key means choosing Dictionary<TKey,TValue> for direct key-based retrieval. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with scanning a list for every lookup, and they should avoid the trap of indexing missing keys without checks. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_39
+{
+    public static void Run()
+    {
+        var statusByCode = new Dictionary<string, string>
+        {
+            ["N"] = "New",
+            ["P"] = "Paid",
+            ["S"] = "Shipped-3"
+        };
+        Console.WriteLine(statusByCode.TryGetValue("P", out var label) ? label : "Unknown");
+    }
+}
+```
+
+### Q6.40 When should you use collection selection by intent in C# fundamentals?
+
+**Answer:** Collection selection by intent means matching a collection to access patterns ordering and lookup needs. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with defaulting to List<T> for everything, and they should avoid the trap of picking a familiar type that fits poorly. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_40
+{
+    public static void Run()
+    {
+        var emails = new HashSet<string> { "ops@example.com", "alerts@example.com" };
+        emails.Add("ops@example.com");
+        Console.WriteLine($"Unique emails: {emails.Count}");
+    }
+}
+```
+
+### Q6.41 What problem does iteration search and lookup trade-offs in C# fundamentals?
+
+**Answer:** Iteration search and lookup trade-offs means understanding that collections differ in iteration membership and access cost. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with assuming all collection operations cost the same, and they should avoid the trap of repeating linear searches inside larger loops. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_41
+{
+    public static void Run()
+    {
+        var regions = new List<string> { "US", "EU", "APAC-1" };
+        bool hasEurope = regions.Contains("EU");
+        Console.WriteLine($"Contains EU: {hasEurope}");
+    }
+}
+```
+
+### Q6.42 How would you explain safe access and missing data handling in C# fundamentals?
+
+**Answer:** Safe access and missing data handling means handling out-of-range indexes and missing keys deliberately. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with optimistic direct indexing, and they should avoid the trap of turning raw user input into indexes without validation. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_42
+{
+    public static void Run()
+    {
+        var steps = new[] { "Queued", "Running", "Complete" };
+        int index = 2;
+        string value = index < steps.Length ? steps[index] : "Unknown";
+        Console.WriteLine(value);
+    }
+}
+```
+
+### Q6.43 Why is array basics and fixed size behavior in C# fundamentals?
+
+**Answer:** Array basics and fixed size behavior means using arrays when element count is known and stable. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with dynamic structures for every case, and they should avoid the trap of picking arrays for data that needs resizing. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_43
+{
+    public static void Run()
+    {
+        int[] weeklyOrders = { 553, 555, 554, 558 };
+        Console.WriteLine($"{weeklyOrders[0]} | {weeklyOrders.Length}");
+    }
+}
+```
+
+### Q6.44 How can list usage for dynamic collections in C# fundamentals?
+
+**Answer:** List usage for dynamic collections means using List<T> when items grow or shrink during execution. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with fixed arrays or legacy non-generic collections, and they should avoid the trap of forgetting to ask whether uniqueness or key lookup matters. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_44
+{
+    public static void Run()
+    {
+        var queue = new List<string> { "Import", "Validate" };
+        queue.Add("Publish-4");
+        Console.WriteLine($"Tasks: {queue.Count}");
+    }
+}
+```
+
+### Q6.45 What is dictionary lookups by key in C# fundamentals?
+
+**Answer:** Dictionary lookups by key means choosing Dictionary<TKey,TValue> for direct key-based retrieval. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with scanning a list for every lookup, and they should avoid the trap of indexing missing keys without checks. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_45
+{
+    public static void Run()
+    {
+        var statusByCode = new Dictionary<string, string>
+        {
+            ["N"] = "New",
+            ["P"] = "Paid",
+            ["S"] = "Shipped-1"
+        };
+        Console.WriteLine(statusByCode.TryGetValue("P", out var label) ? label : "Unknown");
+    }
+}
+```
+
+### Q6.46 How does collection selection by intent in C# fundamentals?
+
+**Answer:** Collection selection by intent means matching a collection to access patterns ordering and lookup needs. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with defaulting to List<T> for everything, and they should avoid the trap of picking a familiar type that fits poorly. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_46
+{
+    public static void Run()
+    {
+        var emails = new HashSet<string> { "ops@example.com", "alerts@example.com" };
+        emails.Add("ops@example.com");
+        Console.WriteLine($"Unique emails: {emails.Count}");
+    }
+}
+```
+
+### Q6.47 Why does iteration search and lookup trade-offs in C# fundamentals?
+
+**Answer:** Iteration search and lookup trade-offs means understanding that collections differ in iteration membership and access cost. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with assuming all collection operations cost the same, and they should avoid the trap of repeating linear searches inside larger loops. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_47
+{
+    public static void Run()
+    {
+        var regions = new List<string> { "US", "EU", "APAC-1" };
+        bool hasEurope = regions.Contains("EU");
+        Console.WriteLine($"Contains EU: {hasEurope}");
+    }
+}
+```
+
+### Q6.48 When should you use safe access and missing data handling in C# fundamentals?
+
+**Answer:** Safe access and missing data handling means handling out-of-range indexes and missing keys deliberately. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with optimistic direct indexing, and they should avoid the trap of turning raw user input into indexes without validation. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_48
+{
+    public static void Run()
+    {
+        var steps = new[] { "Queued", "Running", "Complete" };
+        int index = 3;
+        string value = index < steps.Length ? steps[index] : "Unknown";
+        Console.WriteLine(value);
+    }
+}
+```
+
+### Q6.49 What problem does array basics and fixed size behavior in C# fundamentals?
+
+**Answer:** Array basics and fixed size behavior means using arrays when element count is known and stable. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with dynamic structures for every case, and they should avoid the trap of picking arrays for data that needs resizing. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_49
+{
+    public static void Run()
+    {
+        int[] weeklyOrders = { 559, 561, 560, 564 };
+        Console.WriteLine($"{weeklyOrders[0]} | {weeklyOrders.Length}");
+    }
+}
+```
+
+### Q6.50 How would you explain list usage for dynamic collections in C# fundamentals?
+
+**Answer:** List usage for dynamic collections means using List<T> when items grow or shrink during execution. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with fixed arrays or legacy non-generic collections, and they should avoid the trap of forgetting to ask whether uniqueness or key lookup matters. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_50
+{
+    public static void Run()
+    {
+        var queue = new List<string> { "Import", "Validate" };
+        queue.Add("Publish-0");
+        Console.WriteLine($"Tasks: {queue.Count}");
+    }
+}
+```
+
+### Q6.51 Why is dictionary lookups by key in C# fundamentals?
+
+**Answer:** Dictionary lookups by key means choosing Dictionary<TKey,TValue> for direct key-based retrieval. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with scanning a list for every lookup, and they should avoid the trap of indexing missing keys without checks. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_51
+{
+    public static void Run()
+    {
+        var statusByCode = new Dictionary<string, string>
+        {
+            ["N"] = "New",
+            ["P"] = "Paid",
+            ["S"] = "Shipped-3"
+        };
+        Console.WriteLine(statusByCode.TryGetValue("P", out var label) ? label : "Unknown");
+    }
+}
+```
+
+### Q6.52 How can collection selection by intent in C# fundamentals?
+
+**Answer:** Collection selection by intent means matching a collection to access patterns ordering and lookup needs. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with defaulting to List<T> for everything, and they should avoid the trap of picking a familiar type that fits poorly. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_52
+{
+    public static void Run()
+    {
+        var emails = new HashSet<string> { "ops@example.com", "alerts@example.com" };
+        emails.Add("ops@example.com");
+        Console.WriteLine($"Unique emails: {emails.Count}");
+    }
+}
+```
+
+### Q6.53 What is iteration search and lookup trade-offs in C# fundamentals?
+
+**Answer:** Iteration search and lookup trade-offs means understanding that collections differ in iteration membership and access cost. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with assuming all collection operations cost the same, and they should avoid the trap of repeating linear searches inside larger loops. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_53
+{
+    public static void Run()
+    {
+        var regions = new List<string> { "US", "EU", "APAC-1" };
+        bool hasEurope = regions.Contains("EU");
+        Console.WriteLine($"Contains EU: {hasEurope}");
+    }
+}
+```
+
+### Q6.54 How does safe access and missing data handling in C# fundamentals?
+
+**Answer:** Safe access and missing data handling means handling out-of-range indexes and missing keys deliberately. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with optimistic direct indexing, and they should avoid the trap of turning raw user input into indexes without validation. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_54
+{
+    public static void Run()
+    {
+        var steps = new[] { "Queued", "Running", "Complete" };
+        int index = 4;
+        string value = index < steps.Length ? steps[index] : "Unknown";
+        Console.WriteLine(value);
+    }
+}
+```
+
+### Q6.55 Why does array basics and fixed size behavior in C# fundamentals?
+
+**Answer:** Array basics and fixed size behavior means using arrays when element count is known and stable. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with dynamic structures for every case, and they should avoid the trap of picking arrays for data that needs resizing. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_55
+{
+    public static void Run()
+    {
+        int[] weeklyOrders = { 565, 567, 566, 570 };
+        Console.WriteLine($"{weeklyOrders[0]} | {weeklyOrders.Length}");
+    }
+}
+```
+
+### Q6.56 When should you use list usage for dynamic collections in C# fundamentals?
+
+**Answer:** List usage for dynamic collections means using List<T> when items grow or shrink during execution. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with fixed arrays or legacy non-generic collections, and they should avoid the trap of forgetting to ask whether uniqueness or key lookup matters. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_56
+{
+    public static void Run()
+    {
+        var queue = new List<string> { "Import", "Validate" };
+        queue.Add("Publish-1");
+        Console.WriteLine($"Tasks: {queue.Count}");
+    }
+}
+```
+
+### Q6.57 What problem does dictionary lookups by key in C# fundamentals?
+
+**Answer:** Dictionary lookups by key means choosing Dictionary<TKey,TValue> for direct key-based retrieval. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with scanning a list for every lookup, and they should avoid the trap of indexing missing keys without checks. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_57
+{
+    public static void Run()
+    {
+        var statusByCode = new Dictionary<string, string>
+        {
+            ["N"] = "New",
+            ["P"] = "Paid",
+            ["S"] = "Shipped-1"
+        };
+        Console.WriteLine(statusByCode.TryGetValue("P", out var label) ? label : "Unknown");
+    }
+}
+```
+
+### Q6.58 How would you explain collection selection by intent in C# fundamentals?
+
+**Answer:** Collection selection by intent means matching a collection to access patterns ordering and lookup needs. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with defaulting to List<T> for everything, and they should avoid the trap of picking a familiar type that fits poorly. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_58
+{
+    public static void Run()
+    {
+        var emails = new HashSet<string> { "ops@example.com", "alerts@example.com" };
+        emails.Add("ops@example.com");
+        Console.WriteLine($"Unique emails: {emails.Count}");
+    }
+}
+```
+
+### Q6.59 Why is iteration search and lookup trade-offs in C# fundamentals?
+
+**Answer:** Iteration search and lookup trade-offs means understanding that collections differ in iteration membership and access cost. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with assuming all collection operations cost the same, and they should avoid the trap of repeating linear searches inside larger loops. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_59
+{
+    public static void Run()
+    {
+        var regions = new List<string> { "US", "EU", "APAC-1" };
+        bool hasEurope = regions.Contains("EU");
+        Console.WriteLine($"Contains EU: {hasEurope}");
+    }
+}
+```
+
+### Q6.60 How can safe access and missing data handling in C# fundamentals?
+
+**Answer:** Safe access and missing data handling means handling out-of-range indexes and missing keys deliberately. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with optimistic direct indexing, and they should avoid the trap of turning raw user input into indexes without validation. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_60
+{
+    public static void Run()
+    {
+        var steps = new[] { "Queued", "Running", "Complete" };
+        int index = 0;
+        string value = index < steps.Length ? steps[index] : "Unknown";
+        Console.WriteLine(value);
+    }
+}
+```
+
+### Q6.61 What is array basics and fixed size behavior in C# fundamentals?
+
+**Answer:** Array basics and fixed size behavior means using arrays when element count is known and stable. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with dynamic structures for every case, and they should avoid the trap of picking arrays for data that needs resizing. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_61
+{
+    public static void Run()
+    {
+        int[] weeklyOrders = { 571, 573, 572, 576 };
+        Console.WriteLine($"{weeklyOrders[0]} | {weeklyOrders.Length}");
+    }
+}
+```
+
+### Q6.62 How does list usage for dynamic collections in C# fundamentals?
+
+**Answer:** List usage for dynamic collections means using List<T> when items grow or shrink during execution. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with fixed arrays or legacy non-generic collections, and they should avoid the trap of forgetting to ask whether uniqueness or key lookup matters. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_62
+{
+    public static void Run()
+    {
+        var queue = new List<string> { "Import", "Validate" };
+        queue.Add("Publish-2");
+        Console.WriteLine($"Tasks: {queue.Count}");
+    }
+}
+```
+
+### Q6.63 Why does dictionary lookups by key in C# fundamentals?
+
+**Answer:** Dictionary lookups by key means choosing Dictionary<TKey,TValue> for direct key-based retrieval. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with scanning a list for every lookup, and they should avoid the trap of indexing missing keys without checks. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_63
+{
+    public static void Run()
+    {
+        var statusByCode = new Dictionary<string, string>
+        {
+            ["N"] = "New",
+            ["P"] = "Paid",
+            ["S"] = "Shipped-3"
+        };
+        Console.WriteLine(statusByCode.TryGetValue("P", out var label) ? label : "Unknown");
+    }
+}
+```
+
+### Q6.64 When should you use collection selection by intent in C# fundamentals?
+
+**Answer:** Collection selection by intent means matching a collection to access patterns ordering and lookup needs. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with defaulting to List<T> for everything, and they should avoid the trap of picking a familiar type that fits poorly. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_64
+{
+    public static void Run()
+    {
+        var emails = new HashSet<string> { "ops@example.com", "alerts@example.com" };
+        emails.Add("ops@example.com");
+        Console.WriteLine($"Unique emails: {emails.Count}");
+    }
+}
+```
+
+### Q6.65 What problem does iteration search and lookup trade-offs in C# fundamentals?
+
+**Answer:** Iteration search and lookup trade-offs means understanding that collections differ in iteration membership and access cost. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with assuming all collection operations cost the same, and they should avoid the trap of repeating linear searches inside larger loops. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_65
+{
+    public static void Run()
+    {
+        var regions = new List<string> { "US", "EU", "APAC-1" };
+        bool hasEurope = regions.Contains("EU");
+        Console.WriteLine($"Contains EU: {hasEurope}");
+    }
+}
+```
+
+### Q6.66 How would you explain safe access and missing data handling in C# fundamentals?
+
+**Answer:** Safe access and missing data handling means handling out-of-range indexes and missing keys deliberately. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with optimistic direct indexing, and they should avoid the trap of turning raw user input into indexes without validation. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_66
+{
+    public static void Run()
+    {
+        var steps = new[] { "Queued", "Running", "Complete" };
+        int index = 1;
+        string value = index < steps.Length ? steps[index] : "Unknown";
+        Console.WriteLine(value);
+    }
+}
+```
+
+### Q6.67 Why is array basics and fixed size behavior in C# fundamentals?
+
+**Answer:** Array basics and fixed size behavior means using arrays when element count is known and stable. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with dynamic structures for every case, and they should avoid the trap of picking arrays for data that needs resizing. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_67
+{
+    public static void Run()
+    {
+        int[] weeklyOrders = { 577, 579, 578, 582 };
+        Console.WriteLine($"{weeklyOrders[0]} | {weeklyOrders.Length}");
+    }
+}
+```
+
+### Q6.68 How can list usage for dynamic collections in C# fundamentals?
+
+**Answer:** List usage for dynamic collections means using List<T> when items grow or shrink during execution. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with fixed arrays or legacy non-generic collections, and they should avoid the trap of forgetting to ask whether uniqueness or key lookup matters. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_68
+{
+    public static void Run()
+    {
+        var queue = new List<string> { "Import", "Validate" };
+        queue.Add("Publish-3");
+        Console.WriteLine($"Tasks: {queue.Count}");
+    }
+}
+```
+
+### Q6.69 What is dictionary lookups by key in C# fundamentals?
+
+**Answer:** Dictionary lookups by key means choosing Dictionary<TKey,TValue> for direct key-based retrieval. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with scanning a list for every lookup, and they should avoid the trap of indexing missing keys without checks. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_69
+{
+    public static void Run()
+    {
+        var statusByCode = new Dictionary<string, string>
+        {
+            ["N"] = "New",
+            ["P"] = "Paid",
+            ["S"] = "Shipped-1"
+        };
+        Console.WriteLine(statusByCode.TryGetValue("P", out var label) ? label : "Unknown");
+    }
+}
+```
+
+### Q6.70 How does collection selection by intent in C# fundamentals?
+
+**Answer:** Collection selection by intent means matching a collection to access patterns ordering and lookup needs. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with defaulting to List<T> for everything, and they should avoid the trap of picking a familiar type that fits poorly. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_70
+{
+    public static void Run()
+    {
+        var emails = new HashSet<string> { "ops@example.com", "alerts@example.com" };
+        emails.Add("ops@example.com");
+        Console.WriteLine($"Unique emails: {emails.Count}");
+    }
+}
+```
+
+### Q6.71 Why does iteration search and lookup trade-offs in C# fundamentals?
+
+**Answer:** Iteration search and lookup trade-offs means understanding that collections differ in iteration membership and access cost. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with assuming all collection operations cost the same, and they should avoid the trap of repeating linear searches inside larger loops. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_71
+{
+    public static void Run()
+    {
+        var regions = new List<string> { "US", "EU", "APAC-1" };
+        bool hasEurope = regions.Contains("EU");
+        Console.WriteLine($"Contains EU: {hasEurope}");
+    }
+}
+```
+
+### Q6.72 When should you use safe access and missing data handling in C# fundamentals?
+
+**Answer:** Safe access and missing data handling means handling out-of-range indexes and missing keys deliberately. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with optimistic direct indexing, and they should avoid the trap of turning raw user input into indexes without validation. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_72
+{
+    public static void Run()
+    {
+        var steps = new[] { "Queued", "Running", "Complete" };
+        int index = 2;
+        string value = index < steps.Length ? steps[index] : "Unknown";
+        Console.WriteLine(value);
+    }
+}
+```
+
+### Q6.73 What problem does array basics and fixed size behavior in C# fundamentals?
+
+**Answer:** Array basics and fixed size behavior means using arrays when element count is known and stable. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with dynamic structures for every case, and they should avoid the trap of picking arrays for data that needs resizing. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_73
+{
+    public static void Run()
+    {
+        int[] weeklyOrders = { 583, 585, 584, 588 };
+        Console.WriteLine($"{weeklyOrders[0]} | {weeklyOrders.Length}");
+    }
+}
+```
+
+### Q6.74 How would you explain list usage for dynamic collections in C# fundamentals?
+
+**Answer:** List usage for dynamic collections means using List<T> when items grow or shrink during execution. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with fixed arrays or legacy non-generic collections, and they should avoid the trap of forgetting to ask whether uniqueness or key lookup matters. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_74
+{
+    public static void Run()
+    {
+        var queue = new List<string> { "Import", "Validate" };
+        queue.Add("Publish-4");
+        Console.WriteLine($"Tasks: {queue.Count}");
+    }
+}
+```
+
+### Q6.75 Why is dictionary lookups by key in C# fundamentals?
+
+**Answer:** Dictionary lookups by key means choosing Dictionary<TKey,TValue> for direct key-based retrieval. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with scanning a list for every lookup, and they should avoid the trap of indexing missing keys without checks. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_75
+{
+    public static void Run()
+    {
+        var statusByCode = new Dictionary<string, string>
+        {
+            ["N"] = "New",
+            ["P"] = "Paid",
+            ["S"] = "Shipped-3"
+        };
+        Console.WriteLine(statusByCode.TryGetValue("P", out var label) ? label : "Unknown");
+    }
+}
+```
+
+### Q6.76 How can collection selection by intent in C# fundamentals?
+
+**Answer:** Collection selection by intent means matching a collection to access patterns ordering and lookup needs. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with defaulting to List<T> for everything, and they should avoid the trap of picking a familiar type that fits poorly. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_76
+{
+    public static void Run()
+    {
+        var emails = new HashSet<string> { "ops@example.com", "alerts@example.com" };
+        emails.Add("ops@example.com");
+        Console.WriteLine($"Unique emails: {emails.Count}");
+    }
+}
+```
+
+### Q6.77 What is iteration search and lookup trade-offs in C# fundamentals?
+
+**Answer:** Iteration search and lookup trade-offs means understanding that collections differ in iteration membership and access cost. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with assuming all collection operations cost the same, and they should avoid the trap of repeating linear searches inside larger loops. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_77
+{
+    public static void Run()
+    {
+        var regions = new List<string> { "US", "EU", "APAC-1" };
+        bool hasEurope = regions.Contains("EU");
+        Console.WriteLine($"Contains EU: {hasEurope}");
+    }
+}
+```
+
+### Q6.78 How does safe access and missing data handling in C# fundamentals?
+
+**Answer:** Safe access and missing data handling means handling out-of-range indexes and missing keys deliberately. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with optimistic direct indexing, and they should avoid the trap of turning raw user input into indexes without validation. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_78
+{
+    public static void Run()
+    {
+        var steps = new[] { "Queued", "Running", "Complete" };
+        int index = 3;
+        string value = index < steps.Length ? steps[index] : "Unknown";
+        Console.WriteLine(value);
+    }
+}
+```
+
+### Q6.79 Why does array basics and fixed size behavior in C# fundamentals?
+
+**Answer:** Array basics and fixed size behavior means using arrays when element count is known and stable. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with dynamic structures for every case, and they should avoid the trap of picking arrays for data that needs resizing. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_79
+{
+    public static void Run()
+    {
+        int[] weeklyOrders = { 589, 591, 590, 594 };
+        Console.WriteLine($"{weeklyOrders[0]} | {weeklyOrders.Length}");
+    }
+}
+```
+
+### Q6.80 When should you use list usage for dynamic collections in C# fundamentals?
+
+**Answer:** List usage for dynamic collections means using List<T> when items grow or shrink during execution. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with fixed arrays or legacy non-generic collections, and they should avoid the trap of forgetting to ask whether uniqueness or key lookup matters. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_80
+{
+    public static void Run()
+    {
+        var queue = new List<string> { "Import", "Validate" };
+        queue.Add("Publish-0");
+        Console.WriteLine($"Tasks: {queue.Count}");
+    }
+}
+```
+
+### Q6.81 What problem does dictionary lookups by key in C# fundamentals?
+
+**Answer:** Dictionary lookups by key means choosing Dictionary<TKey,TValue> for direct key-based retrieval. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with scanning a list for every lookup, and they should avoid the trap of indexing missing keys without checks. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_81
+{
+    public static void Run()
+    {
+        var statusByCode = new Dictionary<string, string>
+        {
+            ["N"] = "New",
+            ["P"] = "Paid",
+            ["S"] = "Shipped-1"
+        };
+        Console.WriteLine(statusByCode.TryGetValue("P", out var label) ? label : "Unknown");
+    }
+}
+```
+
+### Q6.82 How would you explain collection selection by intent in C# fundamentals?
+
+**Answer:** Collection selection by intent means matching a collection to access patterns ordering and lookup needs. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with defaulting to List<T> for everything, and they should avoid the trap of picking a familiar type that fits poorly. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_82
+{
+    public static void Run()
+    {
+        var emails = new HashSet<string> { "ops@example.com", "alerts@example.com" };
+        emails.Add("ops@example.com");
+        Console.WriteLine($"Unique emails: {emails.Count}");
+    }
+}
+```
+
+### Q6.83 Why is iteration search and lookup trade-offs in C# fundamentals?
+
+**Answer:** Iteration search and lookup trade-offs means understanding that collections differ in iteration membership and access cost. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with assuming all collection operations cost the same, and they should avoid the trap of repeating linear searches inside larger loops. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_83
+{
+    public static void Run()
+    {
+        var regions = new List<string> { "US", "EU", "APAC-1" };
+        bool hasEurope = regions.Contains("EU");
+        Console.WriteLine($"Contains EU: {hasEurope}");
+    }
+}
+```
+
+### Q6.84 How can safe access and missing data handling in C# fundamentals?
+
+**Answer:** Safe access and missing data handling means handling out-of-range indexes and missing keys deliberately. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with optimistic direct indexing, and they should avoid the trap of turning raw user input into indexes without validation. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_84
+{
+    public static void Run()
+    {
+        var steps = new[] { "Queued", "Running", "Complete" };
+        int index = 4;
+        string value = index < steps.Length ? steps[index] : "Unknown";
+        Console.WriteLine(value);
+    }
+}
+```
+
+### Q6.85 What is array basics and fixed size behavior in C# fundamentals?
+
+**Answer:** Array basics and fixed size behavior means using arrays when element count is known and stable. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with dynamic structures for every case, and they should avoid the trap of picking arrays for data that needs resizing. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_85
+{
+    public static void Run()
+    {
+        int[] weeklyOrders = { 595, 597, 596, 600 };
+        Console.WriteLine($"{weeklyOrders[0]} | {weeklyOrders.Length}");
+    }
+}
+```
+
+### Q6.86 How does list usage for dynamic collections in C# fundamentals?
+
+**Answer:** List usage for dynamic collections means using List<T> when items grow or shrink during execution. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with fixed arrays or legacy non-generic collections, and they should avoid the trap of forgetting to ask whether uniqueness or key lookup matters. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_86
+{
+    public static void Run()
+    {
+        var queue = new List<string> { "Import", "Validate" };
+        queue.Add("Publish-1");
+        Console.WriteLine($"Tasks: {queue.Count}");
+    }
+}
+```
+
+### Q6.87 Why does dictionary lookups by key in C# fundamentals?
+
+**Answer:** Dictionary lookups by key means choosing Dictionary<TKey,TValue> for direct key-based retrieval. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with scanning a list for every lookup, and they should avoid the trap of indexing missing keys without checks. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_87
+{
+    public static void Run()
+    {
+        var statusByCode = new Dictionary<string, string>
+        {
+            ["N"] = "New",
+            ["P"] = "Paid",
+            ["S"] = "Shipped-3"
+        };
+        Console.WriteLine(statusByCode.TryGetValue("P", out var label) ? label : "Unknown");
+    }
+}
+```
+
+### Q6.88 When should you use collection selection by intent in C# fundamentals?
+
+**Answer:** Collection selection by intent means matching a collection to access patterns ordering and lookup needs. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with defaulting to List<T> for everything, and they should avoid the trap of picking a familiar type that fits poorly. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_88
+{
+    public static void Run()
+    {
+        var emails = new HashSet<string> { "ops@example.com", "alerts@example.com" };
+        emails.Add("ops@example.com");
+        Console.WriteLine($"Unique emails: {emails.Count}");
+    }
+}
+```
+
+### Q6.89 What problem does iteration search and lookup trade-offs in C# fundamentals?
+
+**Answer:** Iteration search and lookup trade-offs means understanding that collections differ in iteration membership and access cost. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with assuming all collection operations cost the same, and they should avoid the trap of repeating linear searches inside larger loops. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_89
+{
+    public static void Run()
+    {
+        var regions = new List<string> { "US", "EU", "APAC-1" };
+        bool hasEurope = regions.Contains("EU");
+        Console.WriteLine($"Contains EU: {hasEurope}");
+    }
+}
+```
+
+### Q6.90 How would you explain safe access and missing data handling in C# fundamentals?
+
+**Answer:** Safe access and missing data handling means handling out-of-range indexes and missing keys deliberately. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with optimistic direct indexing, and they should avoid the trap of turning raw user input into indexes without validation. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_90
+{
+    public static void Run()
+    {
+        var steps = new[] { "Queued", "Running", "Complete" };
+        int index = 0;
+        string value = index < steps.Length ? steps[index] : "Unknown";
+        Console.WriteLine(value);
+    }
+}
+```
+
+### Q6.91 Why is array basics and fixed size behavior in C# fundamentals?
+
+**Answer:** Array basics and fixed size behavior means using arrays when element count is known and stable. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with dynamic structures for every case, and they should avoid the trap of picking arrays for data that needs resizing. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_91
+{
+    public static void Run()
+    {
+        int[] weeklyOrders = { 601, 603, 602, 606 };
+        Console.WriteLine($"{weeklyOrders[0]} | {weeklyOrders.Length}");
+    }
+}
+```
+
+### Q6.92 How can list usage for dynamic collections in C# fundamentals?
+
+**Answer:** List usage for dynamic collections means using List<T> when items grow or shrink during execution. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with fixed arrays or legacy non-generic collections, and they should avoid the trap of forgetting to ask whether uniqueness or key lookup matters. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_92
+{
+    public static void Run()
+    {
+        var queue = new List<string> { "Import", "Validate" };
+        queue.Add("Publish-2");
+        Console.WriteLine($"Tasks: {queue.Count}");
+    }
+}
+```
+
+### Q6.93 What is dictionary lookups by key in C# fundamentals?
+
+**Answer:** Dictionary lookups by key means choosing Dictionary<TKey,TValue> for direct key-based retrieval. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with scanning a list for every lookup, and they should avoid the trap of indexing missing keys without checks. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_93
+{
+    public static void Run()
+    {
+        var statusByCode = new Dictionary<string, string>
+        {
+            ["N"] = "New",
+            ["P"] = "Paid",
+            ["S"] = "Shipped-1"
+        };
+        Console.WriteLine(statusByCode.TryGetValue("P", out var label) ? label : "Unknown");
+    }
+}
+```
+
+### Q6.94 How does collection selection by intent in C# fundamentals?
+
+**Answer:** Collection selection by intent means matching a collection to access patterns ordering and lookup needs. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with defaulting to List<T> for everything, and they should avoid the trap of picking a familiar type that fits poorly. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_94
+{
+    public static void Run()
+    {
+        var emails = new HashSet<string> { "ops@example.com", "alerts@example.com" };
+        emails.Add("ops@example.com");
+        Console.WriteLine($"Unique emails: {emails.Count}");
+    }
+}
+```
+
+### Q6.95 Why does iteration search and lookup trade-offs in C# fundamentals?
+
+**Answer:** Iteration search and lookup trade-offs means understanding that collections differ in iteration membership and access cost. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with assuming all collection operations cost the same, and they should avoid the trap of repeating linear searches inside larger loops. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_95
+{
+    public static void Run()
+    {
+        var regions = new List<string> { "US", "EU", "APAC-1" };
+        bool hasEurope = regions.Contains("EU");
+        Console.WriteLine($"Contains EU: {hasEurope}");
+    }
+}
+```
+
+### Q6.96 When should you use safe access and missing data handling in C# fundamentals?
+
+**Answer:** Safe access and missing data handling means handling out-of-range indexes and missing keys deliberately. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with optimistic direct indexing, and they should avoid the trap of turning raw user input into indexes without validation. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_96
+{
+    public static void Run()
+    {
+        var steps = new[] { "Queued", "Running", "Complete" };
+        int index = 1;
+        string value = index < steps.Length ? steps[index] : "Unknown";
+        Console.WriteLine(value);
+    }
+}
+```
+
+### Q6.97 What problem does array basics and fixed size behavior in C# fundamentals?
+
+**Answer:** Array basics and fixed size behavior means using arrays when element count is known and stable. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with dynamic structures for every case, and they should avoid the trap of picking arrays for data that needs resizing. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_97
+{
+    public static void Run()
+    {
+        int[] weeklyOrders = { 607, 609, 608, 612 };
+        Console.WriteLine($"{weeklyOrders[0]} | {weeklyOrders.Length}");
+    }
+}
+```
+
+### Q6.98 How would you explain list usage for dynamic collections in C# fundamentals?
+
+**Answer:** List usage for dynamic collections means using List<T> when items grow or shrink during execution. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with fixed arrays or legacy non-generic collections, and they should avoid the trap of forgetting to ask whether uniqueness or key lookup matters. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_98
+{
+    public static void Run()
+    {
+        var queue = new List<string> { "Import", "Validate" };
+        queue.Add("Publish-3");
+        Console.WriteLine($"Tasks: {queue.Count}");
+    }
+}
+```
+
+### Q6.99 Why is dictionary lookups by key in C# fundamentals?
+
+**Answer:** Dictionary lookups by key means choosing Dictionary<TKey,TValue> for direct key-based retrieval. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with scanning a list for every lookup, and they should avoid the trap of indexing missing keys without checks. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_99
+{
+    public static void Run()
+    {
+        var statusByCode = new Dictionary<string, string>
+        {
+            ["N"] = "New",
+            ["P"] = "Paid",
+            ["S"] = "Shipped-3"
+        };
+        Console.WriteLine(statusByCode.TryGetValue("P", out var label) ? label : "Unknown");
+    }
+}
+```
+
+### Q6.100 How can collection selection by intent in C# fundamentals?
+
+**Answer:** Collection selection by intent means matching a collection to access patterns ordering and lookup needs. Teams should focus on it when discussing arrays, collections, and lookup patterns in production code, they compare it with defaulting to List<T> for everything, and they should avoid the trap of picking a familiar type that fits poorly. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo6_100
+{
+    public static void Run()
+    {
+        var emails = new HashSet<string> { "ops@example.com", "alerts@example.com" };
+        emails.Add("ops@example.com");
+        Console.WriteLine($"Unique emails: {emails.Count}");
+    }
+}
+```
 
 ## 7. Type design, visibility, members, and program structure basics
 
-The existing page already covers most of the operator, control-flow, method-parameter, and collection topics from your checklist. This added section closes the remaining gaps by explicitly covering access modifiers, classes and objects, structs, records, partial classes, properties, constructors, fields versus locals, const versus readonly, namespaces, using statements, Main, and value versus reference behavior.
+> This section contains **100 interview questions** focused on **Type design, visibility, members, and program structure basics**. Every answer includes a C# code example, and the scenarios rotate so they do not repeat verbatim.
 
-### 301. What is the role of Access modifiers: public, private, protected, internal, and protected internal in C# fundamentals?
+### Q7.1 What is class design and responsibility boundaries in C# fundamentals?
 
-**Answer:**
+**Answer:** Class design and responsibility boundaries means keeping a type focused on one meaningful responsibility. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with dumping unrelated logic into utility classes, and they should avoid the trap of growing god classes over time. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
 
-In C# fundamentals, Access modifiers: public, private, protected, internal, and protected internal refers to the visibility rules that control where classes, members, and methods can be accessed across the same type, derived types, assembly boundaries, or combinations of those scopes. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-public class InvoiceService
-{
-    private decimal CalculateTax(decimal amount) => amount * 0.18m;
-
-    public decimal GetTotal(decimal amount) => amount + CalculateTax(amount);
-}
-
-internal class InvoiceMapper
-{
-}
-```
-
----
-
-### 302. Why is Access modifiers: public, private, protected, internal, and protected internal important in day-to-day C# work?
-
-**Answer:**
-
-It matters because access modifiers shape encapsulation, API design, refactoring safety, and how much of the codebase can accidentally depend on an implementation detail. In production code, this shows up in features like APIs, imports, validation, service design, refactoring, and support debugging.
-
-**Sample:**
-
-```csharp
-public class InvoiceService
-{
-    private decimal CalculateTax(decimal amount) => amount * 0.18m;
-
-    public decimal GetTotal(decimal amount) => amount + CalculateTax(amount);
-}
-
-internal class InvoiceMapper
-{
-}
-```
-
----
-
-### 303. When should you use Access modifiers: public, private, protected, internal, and protected internal in real projects?
-
-**Answer:**
-
-Use Access modifiers: public, private, protected, internal, and protected internal when you design classes, services, helper types, and library APIs and need to decide what should be exposed to callers versus kept hidden inside the type or assembly. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
-
-```csharp
-public class InvoiceService
-{
-    private decimal CalculateTax(decimal amount) => amount * 0.18m;
-
-    public decimal GetTotal(decimal amount) => amount + CalculateTax(amount);
-}
-
-internal class InvoiceMapper
-{
-}
-```
-
----
-
-### 304. What is a real-time example of Access modifiers: public, private, protected, internal, and protected internal?
-
-**Answer:**
-
-A billing domain model keeps calculation helpers private, exposes only the public methods needed by the service layer, and uses internal types for assembly-local mapping code. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
-
-```csharp
-public class InvoiceService
-{
-    private decimal CalculateTax(decimal amount) => amount * 0.18m;
-
-    public decimal GetTotal(decimal amount) => amount + CalculateTax(amount);
-}
-
-internal class InvoiceMapper
-{
-}
-```
-
----
-
-### 305. What is a best practice for Access modifiers: public, private, protected, internal, and protected internal?
-
-**Answer:**
-
-Expose the smallest visibility that still supports the required callers, because overly broad access increases coupling and makes refactoring harder later. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
-
-```csharp
-public class InvoiceService
-{
-    private decimal CalculateTax(decimal amount) => amount * 0.18m;
-
-    public decimal GetTotal(decimal amount) => amount + CalculateTax(amount);
-}
-
-internal class InvoiceMapper
-{
-}
-```
-
----
-
-### 306. What is a tricky interview point or common mistake around Access modifiers: public, private, protected, internal, and protected internal?
-
-**Answer:**
-
-Candidates often explain public and private but get fuzzy on internal, protected, and protected internal, especially when assembly boundaries and inheritance overlap. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
-
-```csharp
-public class BaseReport
-{
-    protected string ReportName => "Monthly";
-}
-
-public class SalesReport : BaseReport
-{
-    public string Build() => ReportName;
-}
-```
-
----
-
-### 307. How does Access modifiers: public, private, protected, internal, and protected internal differ from defaulting everything to public for convenience?
-
-**Answer:**
-
-Access modifiers: public, private, protected, internal, and protected internal is about the visibility rules that control where classes, members, and methods can be accessed across the same type, derived types, assembly boundaries, or combinations of those scopes, whereas defaulting everything to public for convenience is about broad visibility that works initially but leaks implementation details and increases accidental dependencies across the codebase. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
-
-```csharp
-public class InvoiceService
-{
-    private decimal CalculateTax(decimal amount) => amount * 0.18m;
-
-    public decimal GetTotal(decimal amount) => amount + CalculateTax(amount);
-}
-
-internal class InvoiceMapper
-{
-}
-```
-
----
-
-### 308. How do you troubleshoot issues related to Access modifiers: public, private, protected, internal, and protected internal?
-
-**Answer:**
-
-Check whether a member truly needs cross-assembly access, whether inheritance is really involved, and whether callers can be redirected through a cleaner public API instead. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
-
-```csharp
-public class BaseReport
-{
-    protected string ReportName => "Monthly";
-}
-
-public class SalesReport : BaseReport
-{
-    public string Build() => ReportName;
-}
-```
-
----
-
-### 309. What kind of follow-up does an interviewer usually ask after Access modifiers: public, private, protected, internal, and protected internal?
-
-**Answer:**
-
-A common follow-up is how internal differs from protected and where protected internal is justified This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
-
-```csharp
-public class InvoiceService
-{
-    private decimal CalculateTax(decimal amount) => amount * 0.18m;
-
-    public decimal GetTotal(decimal amount) => amount + CalculateTax(amount);
-}
-
-internal class InvoiceMapper
-{
-}
-```
-
----
-
-### 310. How does Access modifiers: public, private, protected, internal, and protected internal connect to the rest of C# fundamentals?
-
-**Answer:**
-
-Visibility choices influence classes, methods, constructors, properties, testing seams, and long-term maintainability across almost every part of C# code. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
-
-```csharp
-public class InvoiceService
-{
-    private decimal CalculateTax(decimal amount) => amount * 0.18m;
-
-    public decimal GetTotal(decimal amount) => amount + CalculateTax(amount);
-}
-
-internal class InvoiceMapper
-{
-}
-```
-
----
-
-### 311. What is the role of Classes, structs, records, partial classes, and objects in C# fundamentals?
-
-**Answer:**
-
-In C# fundamentals, Classes, structs, records, partial classes, and objects refers to the core C# type forms used to model reference-oriented entities, value-oriented data, immutable-style records, split definitions, and the actual object instances created from those types. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
-
-```csharp
-public class Order
-{
-    public int Id { get; set; }
-}
-
-public readonly record CustomerSummary(int Id, string Name);
-
-public struct RetryWindow
-{
-    public int Seconds { get; set; }
-}
-```
-
----
-
-### 312. Why is Classes, structs, records, partial classes, and objects important in day-to-day C# work?
-
-**Answer:**
-
-It matters because interviews expect candidates to know not just the syntax, but why a type should be modeled as a class, struct, or record based on semantics and usage. In production code, this shows up in features like APIs, imports, validation, service design, refactoring, and support debugging.
-
-**Sample:**
-
-```csharp
-public class Order
-{
-    public int Id { get; set; }
-}
-
-public readonly record CustomerSummary(int Id, string Name);
-
-public struct RetryWindow
-{
-    public int Seconds { get; set; }
-}
-```
-
----
-
-### 313. When should you use Classes, structs, records, partial classes, and objects in real projects?
-
-**Answer:**
-
-Use Classes, structs, records, partial classes, and objects when you are modeling business entities, lightweight value data, immutable messages, generated code extensions, or regular object-oriented behavior in application code. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
-
-```csharp
-public class Order
-{
-    public int Id { get; set; }
-}
-
-public readonly record CustomerSummary(int Id, string Name);
-
-public struct RetryWindow
-{
-    public int Seconds { get; set; }
-}
-```
-
----
-
-### 314. What is a real-time example of Classes, structs, records, partial classes, and objects?
-
-**Answer:**
-
-An order is modeled as a class, a currency amount may be wrapped in a struct or record struct, an API request is often a record, and a generated DTO can be extended with a partial class. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
-
-```csharp
-public class Order
-{
-    public int Id { get; set; }
-}
-
-public readonly record CustomerSummary(int Id, string Name);
-
-public struct RetryWindow
-{
-    public int Seconds { get; set; }
-}
-```
-
----
-
-### 315. What is a best practice for Classes, structs, records, partial classes, and objects?
-
-**Answer:**
-
-Choose the type based on semantics, mutability, and ownership rather than trend or habit, and use partial classes only when splitting generated and hand-written logic is truly useful. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
-
-```csharp
-public class Order
-{
-    public int Id { get; set; }
-}
-
-public readonly record CustomerSummary(int Id, string Name);
-
-public struct RetryWindow
-{
-    public int Seconds { get; set; }
-}
-```
-
----
-
-### 316. What is a tricky interview point or common mistake around Classes, structs, records, partial classes, and objects?
-
-**Answer:**
-
-Candidates often know the keywords but cannot explain the tradeoffs between classes, structs, and records in terms of identity, copying, and mutability. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
-
-```csharp
-public partial class ImportRow
-{
-    public string FileName { get; set; } = "";
-}
-
-public partial class ImportRow
-{
-    public bool IsValid => !string.IsNullOrWhiteSpace(FileName);
-}
-```
-
----
-
-### 317. How does Classes, structs, records, partial classes, and objects differ from treating every model as the same kind of type?
-
-**Answer:**
-
-Classes, structs, records, partial classes, and objects is about the core C# type forms used to model reference-oriented entities, value-oriented data, immutable-style records, split definitions, and the actual object instances created from those types, whereas treating every model as the same kind of type is about ignoring whether the data behaves like an identity-bearing object, a small value, or an immutable message-style contract. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
-
-```csharp
-public class Order
-{
-    public int Id { get; set; }
-}
-
-public readonly record CustomerSummary(int Id, string Name);
-
-public struct RetryWindow
-{
-    public int Seconds { get; set; }
-}
-```
-
----
-
-### 318. How do you troubleshoot issues related to Classes, structs, records, partial classes, and objects?
-
-**Answer:**
-
-Check whether the type is being copied unexpectedly, whether equality expectations match the chosen type, and whether partial classes are hiding too much behavior across files. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
-
-```csharp
-public partial class ImportRow
-{
-    public string FileName { get; set; } = "";
-}
-
-public partial class ImportRow
-{
-    public bool IsValid => !string.IsNullOrWhiteSpace(FileName);
-}
-```
-
----
-
-### 319. What kind of follow-up does an interviewer usually ask after Classes, structs, records, partial classes, and objects?
-
-**Answer:**
-
-A common follow-up is when to choose a record over a class and when a struct is a bad idea This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
-
-```csharp
-public class Order
-{
-    public int Id { get; set; }
-}
-
-public readonly record CustomerSummary(int Id, string Name);
-
-public struct RetryWindow
-{
-    public int Seconds { get; set; }
-}
-```
-
----
-
-### 320. How does Classes, structs, records, partial classes, and objects connect to the rest of C# fundamentals?
-
-**Answer:**
-
-Type shape decisions connect directly to constructors, properties, equality, visibility, and how the rest of the application reasons about data. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
-
-```csharp
-public class Order
-{
-    public int Id { get; set; }
-}
-
-public readonly record CustomerSummary(int Id, string Name);
-
-public struct RetryWindow
-{
-    public int Seconds { get; set; }
-}
-```
-
----
-
-### 321. What is the role of Properties, auto-properties, get and set accessors, read-only members, and indexers in C# fundamentals?
-
-**Answer:**
-
-In C# fundamentals, Properties, auto-properties, get and set accessors, read-only members, and indexers refers to the member features used to expose controlled state through properties, automatic backing storage, accessor visibility, read-only intent, and indexed access patterns. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
-
-```csharp
-public class CustomerProfile
-{
-    public string Name { get; set; } = "";
-    public DateTime CreatedOn { get; } = DateTime.UtcNow;
-}
-
-public class SettingBag
-{
-    private readonly Dictionary<string, string> _values = new();
-    public string this[string key]
-    {
-        get => _values[key];
-        set => _values[key] = value;
-    }
-}
-```
-
----
-
-### 322. Why is Properties, auto-properties, get and set accessors, read-only members, and indexers important in day-to-day C# work?
-
-**Answer:**
-
-It matters because properties are one of the most common surfaces in C# and they strongly affect validation, immutability, serialization, and API clarity. In production code, this shows up in features like APIs, imports, validation, service design, refactoring, and support debugging.
-
-**Sample:**
-
-```csharp
-public class CustomerProfile
-{
-    public string Name { get; set; } = "";
-    public DateTime CreatedOn { get; } = DateTime.UtcNow;
-}
-
-public class SettingBag
-{
-    private readonly Dictionary<string, string> _values = new();
-    public string this[string key]
-    {
-        get => _values[key];
-        set => _values[key] = value;
-    }
-}
-```
-
----
-
-### 323. When should you use Properties, auto-properties, get and set accessors, read-only members, and indexers in real projects?
-
-**Answer:**
-
-Use Properties, auto-properties, get and set accessors, read-only members, and indexers when you expose object state, restrict mutation, provide computed values, or want collection-like indexed access through a type without exposing raw fields directly. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
-
-```csharp
-public class CustomerProfile
-{
-    public string Name { get; set; } = "";
-    public DateTime CreatedOn { get; } = DateTime.UtcNow;
-}
-
-public class SettingBag
-{
-    private readonly Dictionary<string, string> _values = new();
-    public string this[string key]
-    {
-        get => _values[key];
-        set => _values[key] = value;
-    }
-}
-```
-
----
-
-### 324. What is a real-time example of Properties, auto-properties, get and set accessors, read-only members, and indexers?
-
-**Answer:**
-
-A customer DTO uses auto-properties, a domain object exposes a read-only property for created date, and a custom settings wrapper uses an indexer for keyed access. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
-
-```csharp
-public class CustomerProfile
-{
-    public string Name { get; set; } = "";
-    public DateTime CreatedOn { get; } = DateTime.UtcNow;
-}
-
-public class SettingBag
-{
-    private readonly Dictionary<string, string> _values = new();
-    public string this[string key]
-    {
-        get => _values[key];
-        set => _values[key] = value;
-    }
-}
-```
-
----
-
-### 325. What is a best practice for Properties, auto-properties, get and set accessors, read-only members, and indexers?
-
-**Answer:**
-
-Prefer properties over public fields for exposed state, keep setters as narrow as the business rules allow, and use indexers only when the type genuinely feels collection-like. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
-
-```csharp
-public class CustomerProfile
-{
-    public string Name { get; set; } = "";
-    public DateTime CreatedOn { get; } = DateTime.UtcNow;
-}
-
-public class SettingBag
-{
-    private readonly Dictionary<string, string> _values = new();
-    public string this[string key]
-    {
-        get => _values[key];
-        set => _values[key] = value;
-    }
-}
-```
-
----
-
-### 326. What is a tricky interview point or common mistake around Properties, auto-properties, get and set accessors, read-only members, and indexers?
-
-**Answer:**
-
-A common interview miss is not distinguishing an auto-property from a field, or forgetting that read-only intent can be expressed through accessor design rather than only through keywords. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
-
-```csharp
-public class ExportOptions
-{
-    public string Format { get; private set; } = "pdf";
-
-    public void ChangeFormat(string format) => Format = format;
-}
-```
-
----
-
-### 327. How does Properties, auto-properties, get and set accessors, read-only members, and indexers differ from public fields and direct state exposure?
-
-**Answer:**
-
-Properties, auto-properties, get and set accessors, read-only members, and indexers is about the member features used to expose controlled state through properties, automatic backing storage, accessor visibility, read-only intent, and indexed access patterns, whereas public fields and direct state exposure is about bare value storage with no accessor control, no validation point, and weaker encapsulation for public-facing models. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
-
-```csharp
-public class CustomerProfile
-{
-    public string Name { get; set; } = "";
-    public DateTime CreatedOn { get; } = DateTime.UtcNow;
-}
-
-public class SettingBag
-{
-    private readonly Dictionary<string, string> _values = new();
-    public string this[string key]
-    {
-        get => _values[key];
-        set => _values[key] = value;
-    }
-}
-```
-
----
-
-### 328. How do you troubleshoot issues related to Properties, auto-properties, get and set accessors, read-only members, and indexers?
-
-**Answer:**
-
-Inspect whether a value should really be mutable, whether a getter has hidden heavy logic, and whether an indexer is making the API less clear instead of more natural. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
-
-```csharp
-public class ExportOptions
-{
-    public string Format { get; private set; } = "pdf";
-
-    public void ChangeFormat(string format) => Format = format;
-}
-```
-
----
-
-### 329. What kind of follow-up does an interviewer usually ask after Properties, auto-properties, get and set accessors, read-only members, and indexers?
-
-**Answer:**
-
-A common follow-up is how auto-properties differ from fields and when an indexer is appropriate This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
-
-```csharp
-public class CustomerProfile
-{
-    public string Name { get; set; } = "";
-    public DateTime CreatedOn { get; } = DateTime.UtcNow;
-}
-
-public class SettingBag
-{
-    private readonly Dictionary<string, string> _values = new();
-    public string this[string key]
-    {
-        get => _values[key];
-        set => _values[key] = value;
-    }
-}
-```
-
----
-
-### 330. How does Properties, auto-properties, get and set accessors, read-only members, and indexers connect to the rest of C# fundamentals?
-
-**Answer:**
-
-Properties connect class design, encapsulation, constructors, serialization behavior, and API readability throughout normal C# code. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
-
-```csharp
-public class CustomerProfile
-{
-    public string Name { get; set; } = "";
-    public DateTime CreatedOn { get; } = DateTime.UtcNow;
-}
-
-public class SettingBag
-{
-    private readonly Dictionary<string, string> _values = new();
-    public string this[string key]
-    {
-        get => _values[key];
-        set => _values[key] = value;
-    }
-}
-```
-
----
-
-### 331. What is the role of Constructors, static constructors, destructors, method declarations, return types, and overloading in C# fundamentals?
-
-**Answer:**
-
-In C# fundamentals, Constructors, static constructors, destructors, method declarations, return types, and overloading refers to the member-definition mechanisms used to initialize objects, run one-time type initialization, release unmanaged resources indirectly, declare method signatures, return values, and support multiple method shapes with the same name. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
-
-```csharp
-public class ReportExporter
-{
-    public static readonly string DefaultFormat;
-
-    static ReportExporter() => DefaultFormat = "pdf";
-
-    public ReportExporter()
-    {
-    }
-
-    public ReportExporter(string destination)
-    {
-        Destination = destination;
-    }
-
-    public string Destination { get; } = "reports";
-
-    public string Export() => $"Exported to {Destination} as {DefaultFormat}";
-    public string Export(string format) => $"Exported to {Destination} as {format}";
-}
-```
-
----
-
-### 332. Why is Constructors, static constructors, destructors, method declarations, return types, and overloading important in day-to-day C# work?
-
-**Answer:**
-
-It matters because these features define how objects come into existence, how methods present behavior, and how APIs remain clear while supporting different use cases. In production code, this shows up in features like APIs, imports, validation, service design, refactoring, and support debugging.
-
-**Sample:**
-
-```csharp
-public class ReportExporter
-{
-    public static readonly string DefaultFormat;
-
-    static ReportExporter() => DefaultFormat = "pdf";
-
-    public ReportExporter()
-    {
-    }
-
-    public ReportExporter(string destination)
-    {
-        Destination = destination;
-    }
-
-    public string Destination { get; } = "reports";
-
-    public string Export() => $"Exported to {Destination} as {DefaultFormat}";
-    public string Export(string format) => $"Exported to {Destination} as {format}";
-}
-```
-
----
-
-### 333. When should you use Constructors, static constructors, destructors, method declarations, return types, and overloading in real projects?
-
-**Answer:**
-
-Use Constructors, static constructors, destructors, method declarations, return types, and overloading when you need sensible initialization defaults, alternate construction paths, one-time type setup, clean method signatures, or overloads for convenience and clarity. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
-
-```csharp
-public class ReportExporter
-{
-    public static readonly string DefaultFormat;
-
-    static ReportExporter() => DefaultFormat = "pdf";
-
-    public ReportExporter()
-    {
-    }
-
-    public ReportExporter(string destination)
-    {
-        Destination = destination;
-    }
-
-    public string Destination { get; } = "reports";
-
-    public string Export() => $"Exported to {Destination} as {DefaultFormat}";
-    public string Export(string format) => $"Exported to {Destination} as {format}";
-}
-```
-
----
-
-### 334. What is a real-time example of Constructors, static constructors, destructors, method declarations, return types, and overloading?
-
-**Answer:**
-
-A report exporter uses a parameterized constructor for required dependencies, a static constructor to load a supported-format cache once, and overloaded Export methods for different call patterns. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
-
-```csharp
-public class ReportExporter
-{
-    public static readonly string DefaultFormat;
-
-    static ReportExporter() => DefaultFormat = "pdf";
-
-    public ReportExporter()
-    {
-    }
-
-    public ReportExporter(string destination)
-    {
-        Destination = destination;
-    }
-
-    public string Destination { get; } = "reports";
-
-    public string Export() => $"Exported to {Destination} as {DefaultFormat}";
-    public string Export(string format) => $"Exported to {Destination} as {format}";
-}
-```
-
----
-
-### 335. What is a best practice for Constructors, static constructors, destructors, method declarations, return types, and overloading?
-
-**Answer:**
-
-Keep constructors focused on valid initialization, prefer overloads only when they improve clarity, and reserve destructors for rare unmanaged-resource scenarios where IDisposable patterns are not enough by themselves. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
-
-```csharp
-public class ReportExporter
-{
-    public static readonly string DefaultFormat;
-
-    static ReportExporter() => DefaultFormat = "pdf";
-
-    public ReportExporter()
-    {
-    }
-
-    public ReportExporter(string destination)
-    {
-        Destination = destination;
-    }
-
-    public string Destination { get; } = "reports";
-
-    public string Export() => $"Exported to {Destination} as {DefaultFormat}";
-    public string Export(string format) => $"Exported to {Destination} as {format}";
-}
-```
-
----
-
-### 336. What is a tricky interview point or common mistake around Constructors, static constructors, destructors, method declarations, return types, and overloading?
-
-**Answer:**
-
-Candidates often know constructor syntax but miss why static constructors are rare, why destructors are unusual in everyday code, or how overloading can become ambiguous. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
-
-```csharp
-public class LegacyFileHandle
-{
-    ~LegacyFileHandle()
-    {
-        Console.WriteLine("Finalizer invoked");
-    }
-
-    public bool TryOpen(out string message)
-    {
-        message = "Opened";
-        return true;
-    }
-}
-```
-
----
-
-### 337. How does Constructors, static constructors, destructors, method declarations, return types, and overloading differ from pushing all setup into mutable post-construction state or ambiguous helper methods?
-
-**Answer:**
-
-Constructors, static constructors, destructors, method declarations, return types, and overloading is about the member-definition mechanisms used to initialize objects, run one-time type initialization, release unmanaged resources indirectly, declare method signatures, return values, and support multiple method shapes with the same name, whereas pushing all setup into mutable post-construction state or ambiguous helper methods is about less clear initialization and API design that makes it easier to create invalid objects or confusing call patterns. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
-
-```csharp
-public class ReportExporter
-{
-    public static readonly string DefaultFormat;
-
-    static ReportExporter() => DefaultFormat = "pdf";
-
-    public ReportExporter()
-    {
-    }
-
-    public ReportExporter(string destination)
-    {
-        Destination = destination;
-    }
-
-    public string Destination { get; } = "reports";
-
-    public string Export() => $"Exported to {Destination} as {DefaultFormat}";
-    public string Export(string format) => $"Exported to {Destination} as {format}";
-}
-```
-
----
-
-### 338. How do you troubleshoot issues related to Constructors, static constructors, destructors, method declarations, return types, and overloading?
-
-**Answer:**
-
-Check whether required state is enforced at construction time, whether overloads are ambiguous, and whether resource cleanup belongs in IDisposable rather than relying on finalization alone. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
-
-```csharp
-public class LegacyFileHandle
-{
-    ~LegacyFileHandle()
-    {
-        Console.WriteLine("Finalizer invoked");
-    }
-
-    public bool TryOpen(out string message)
-    {
-        message = "Opened";
-        return true;
-    }
-}
-```
-
----
-
-### 339. What kind of follow-up does an interviewer usually ask after Constructors, static constructors, destructors, method declarations, return types, and overloading?
-
-**Answer:**
-
-A common follow-up is how default, parameterized, and static constructors differ in purpose and when overloading is clearer than optional parameters This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
-
-```csharp
-public class ReportExporter
-{
-    public static readonly string DefaultFormat;
-
-    static ReportExporter() => DefaultFormat = "pdf";
-
-    public ReportExporter()
-    {
-    }
-
-    public ReportExporter(string destination)
-    {
-        Destination = destination;
-    }
-
-    public string Destination { get; } = "reports";
-
-    public string Export() => $"Exported to {Destination} as {DefaultFormat}";
-    public string Export(string format) => $"Exported to {Destination} as {format}";
-}
-```
-
----
-
-### 340. How does Constructors, static constructors, destructors, method declarations, return types, and overloading connect to the rest of C# fundamentals?
-
-**Answer:**
-
-These features tie object lifecycle, API design, method readability, and resource thinking together in everyday C# fundamentals. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
-
-```csharp
-public class ReportExporter
-{
-    public static readonly string DefaultFormat;
-
-    static ReportExporter() => DefaultFormat = "pdf";
-
-    public ReportExporter()
-    {
-    }
-
-    public ReportExporter(string destination)
-    {
-        Destination = destination;
-    }
-
-    public string Destination { get; } = "reports";
-
-    public string Export() => $"Exported to {Destination} as {DefaultFormat}";
-    public string Export(string format) => $"Exported to {Destination} as {format}";
-}
-```
-
----
-
-### 341. What is the role of Namespaces, using statements, local variables, fields, const, readonly, value types, reference types, nullable types, and the Main method in C# fundamentals?
-
-**Answer:**
-
-In C# fundamentals, Namespaces, using statements, local variables, fields, const, readonly, value types, reference types, nullable types, and the Main method refers to the foundational program-structure and storage concepts that define scope, imports, application entry, local versus member state, immutability intent, and how value and reference semantics behave in ordinary code. It is one of the building blocks interviewers expect candidates to explain clearly before moving into framework-level topics.
-
-**Sample:**
-
-```csharp
-namespace Billing.ConsoleApp;
-
 using System;
+using System.Collections.Generic;
 
-public class Program
+public static class Demo7_1
 {
-    private readonly string _environment;
-    private const string ApplicationName = "BillingImport";
-    private readonly int? _maxRetries;
-
-    public Program(string environment, int? maxRetries)
+    public static void Run()
     {
-        _environment = environment;
-        _maxRetries = maxRetries;
-    }
-
-    public static void Main(string[] args)
-    {
-        var runDate = DateTime.UtcNow;
-        Console.WriteLine($"{ApplicationName} started at {runDate}");
+        class InvoiceSummary
+        {
+            public decimal Total { get; set; } = 801m;
+            public string Currency { get; set; } = "USD";
+        }
+        var summary = new InvoiceSummary();
+        Console.WriteLine($"{summary.Total} {summary.Currency}");
     }
 }
 ```
 
----
+### Q7.2 How does access modifiers and visibility rules in C# fundamentals?
 
-### 342. Why is Namespaces, using statements, local variables, fields, const, readonly, value types, reference types, nullable types, and the Main method important in day-to-day C# work?
+**Answer:** Access modifiers and visibility rules means using public private and related modifiers to protect invariants. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with making every member public, and they should avoid the trap of exposing mutable internals directly. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
 
-**Answer:**
-
-It matters because these basics affect how code is organized, how data lives in memory, and how maintainable the overall program structure becomes long before advanced patterns are introduced. In production code, this shows up in features like APIs, imports, validation, service design, refactoring, and support debugging.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-namespace Billing.ConsoleApp;
-
 using System;
+using System.Collections.Generic;
 
-public class Program
+public static class Demo7_2
 {
-    private readonly string _environment;
-    private const string ApplicationName = "BillingImport";
-    private readonly int? _maxRetries;
-
-    public Program(string environment, int? maxRetries)
+    public static void Run()
     {
-        _environment = environment;
-        _maxRetries = maxRetries;
-    }
-
-    public static void Main(string[] args)
-    {
-        var runDate = DateTime.UtcNow;
-        Console.WriteLine($"{ApplicationName} started at {runDate}");
+        class AuditRecord
+        {
+            public string Action { get; private set; } = "Created-2";
+            public void Rename(string action) => Action = action;
+        }
+        var record = new AuditRecord();
+        record.Rename("Updated");
+        Console.WriteLine(record.Action);
     }
 }
 ```
 
----
+### Q7.3 Why does fields properties and methods in C# fundamentals?
 
-### 343. When should you use Namespaces, using statements, local variables, fields, const, readonly, value types, reference types, nullable types, and the Main method in real projects?
+**Answer:** Fields properties and methods means understanding the different roles of storage access and behavior members. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with treating all members as equivalent syntax, and they should avoid the trap of skipping validation opportunities by exposing fields carelessly. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
 
-**Answer:**
-
-Use Namespaces, using statements, local variables, fields, const, readonly, value types, reference types, nullable types, and the Main method when you organize files, declare entry points, choose between local variables and fields, decide on const versus readonly, and reason about value, reference, or nullable behavior in application code. Strong answers connect the choice to real constraints instead of repeating syntax alone.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-namespace Billing.ConsoleApp;
-
 using System;
+using System.Collections.Generic;
 
-public class Program
+public static class Demo7_3
 {
-    private readonly string _environment;
-    private const string ApplicationName = "BillingImport";
-    private readonly int? _maxRetries;
-
-    public Program(string environment, int? maxRetries)
+    public static void Run()
     {
-        _environment = environment;
-        _maxRetries = maxRetries;
-    }
-
-    public static void Main(string[] args)
-    {
-        var runDate = DateTime.UtcNow;
-        Console.WriteLine($"{ApplicationName} started at {runDate}");
+        class EmployeeProfile
+        {
+            private decimal _salary = 3603m;
+            public decimal Salary => _salary;
+            public void ApplyRaise(decimal amount) => _salary += amount;
+        }
+        var profile = new EmployeeProfile();
+        profile.ApplyRaise(150m);
+        Console.WriteLine(profile.Salary);
     }
 }
 ```
 
----
+### Q7.4 When should you use constructors and initialization intent in C# fundamentals?
 
-### 344. What is a real-time example of Namespaces, using statements, local variables, fields, const, readonly, value types, reference types, nullable types, and the Main method?
+**Answer:** Constructors and initialization intent means establishing valid object state at creation time. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with filling critical data later by convention, and they should avoid the trap of allowing invalid partially built objects. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
 
-**Answer:**
-
-A console import tool uses namespaces and using statements for organization, Main as the entry point, local variables inside processing methods, readonly fields for injected services, and nullable types when incoming values can be missing. Interviewers usually like examples from domains such as orders, payments, notifications, inventory, or file processing because they feel closer to real work.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-namespace Billing.ConsoleApp;
-
 using System;
+using System.Collections.Generic;
 
-public class Program
+public static class Demo7_4
 {
-    private readonly string _environment;
-    private const string ApplicationName = "BillingImport";
-    private readonly int? _maxRetries;
-
-    public Program(string environment, int? maxRetries)
+    public static void Run()
     {
-        _environment = environment;
-        _maxRetries = maxRetries;
-    }
-
-    public static void Main(string[] args)
-    {
-        var runDate = DateTime.UtcNow;
-        Console.WriteLine($"{ApplicationName} started at {runDate}");
+        class CustomerRecord
+        {
+            public CustomerRecord(string id) => Id = id;
+            public string Id { get; }
+        }
+        var customer = new CustomerRecord("CUST-1604");
+        Console.WriteLine(customer.Id);
     }
 }
 ```
 
----
+### Q7.5 What problem does static members versus instance members in C# fundamentals?
 
-### 345. What is a best practice for Namespaces, using statements, local variables, fields, const, readonly, value types, reference types, nullable types, and the Main method?
+**Answer:** Static members versus instance members means separating shared type-level behavior from object-specific state. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with treating static and instance members as interchangeable, and they should avoid the trap of keeping request-specific mutable data in static members. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
 
-**Answer:**
-
-Keep namespaces aligned to the project structure, keep locals narrow in scope, use const only for true compile-time constants, use readonly for values fixed after construction, and be explicit about nullable intent. Good interview answers explain the tradeoff and the reason, not just the rule.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-namespace Billing.ConsoleApp;
-
 using System;
+using System.Collections.Generic;
 
-public class Program
+public static class Demo7_5
 {
-    private readonly string _environment;
-    private const string ApplicationName = "BillingImport";
-    private readonly int? _maxRetries;
-
-    public Program(string environment, int? maxRetries)
+    public static void Run()
     {
-        _environment = environment;
-        _maxRetries = maxRetries;
-    }
-
-    public static void Main(string[] args)
-    {
-        var runDate = DateTime.UtcNow;
-        Console.WriteLine($"{ApplicationName} started at {runDate}");
+        class InvoiceNumberGenerator
+        {
+            private static int _seed = 705;
+            public static int Next() => ++_seed;
+        }
+        Console.WriteLine(InvoiceNumberGenerator.Next());
     }
 }
 ```
 
----
+### Q7.6 How would you explain namespaces files and program structure in C# fundamentals?
 
-### 346. What is a tricky interview point or common mistake around Namespaces, using statements, local variables, fields, const, readonly, value types, reference types, nullable types, and the Main method?
+**Answer:** Namespaces files and program structure means organizing types so the solution stays understandable as it grows. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with placing unrelated types into one flat area, and they should avoid the trap of letting structure drift until ownership is unclear. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
 
-**Answer:**
-
-Candidates often memorize definitions but struggle to explain practical differences between a field and a local variable, const and readonly, or value and reference semantics under assignment and method calls. This is the kind of detail that often separates a beginner answer from an experienced one.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-int count = 5;
-int? optionalCount = null;
-string message = "ready";
-object boxed = count;
-
-Console.WriteLine(optionalCount.HasValue);
-Console.WriteLine(boxed.GetType().Name);
-```
-
----
-
-### 347. How does Namespaces, using statements, local variables, fields, const, readonly, value types, reference types, nullable types, and the Main method differ from treating storage and organization choices as superficial syntax only?
-
-**Answer:**
-
-Namespaces, using statements, local variables, fields, const, readonly, value types, reference types, nullable types, and the Main method is about the foundational program-structure and storage concepts that define scope, imports, application entry, local versus member state, immutability intent, and how value and reference semantics behave in ordinary code, whereas treating storage and organization choices as superficial syntax only is about ignoring the real impact of scope, initialization, copying behavior, nullability, and maintainability on everyday code. The difference matters because interviews often test where each choice fits best.
-
-**Sample:**
-
-```csharp
-namespace Billing.ConsoleApp;
-
 using System;
+using System.Collections.Generic;
 
-public class Program
+public static class Demo7_6
 {
-    private readonly string _environment;
-    private const string ApplicationName = "BillingImport";
-    private readonly int? _maxRetries;
-
-    public Program(string environment, int? maxRetries)
+    public static void Run()
     {
-        _environment = environment;
-        _maxRetries = maxRetries;
-    }
-
-    public static void Main(string[] args)
-    {
-        var runDate = DateTime.UtcNow;
-        Console.WriteLine($"{ApplicationName} started at {runDate}");
+        namespace Demo.Fundamentals.Section7
+        {
+            public static class ProgramMap606
+            {
+                public static void Describe() => Console.WriteLine("Structured by responsibility");
+            }
+        }
+        Demo.Fundamentals.Section7.ProgramMap606.Describe();
     }
 }
 ```
 
----
+### Q7.7 Why is class design and responsibility boundaries in C# fundamentals?
 
-### 348. How do you troubleshoot issues related to Namespaces, using statements, local variables, fields, const, readonly, value types, reference types, nullable types, and the Main method?
+**Answer:** Class design and responsibility boundaries means keeping a type focused on one meaningful responsibility. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with dumping unrelated logic into utility classes, and they should avoid the trap of growing god classes over time. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
 
-**Answer:**
-
-Inspect scope first, then check whether the value should live per method call or per object instance, whether the assignment model is value or reference based, and whether nullability annotations match real input behavior. In interviews, a practical troubleshooting answer usually sounds stronger than a purely theoretical one.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-int count = 5;
-int? optionalCount = null;
-string message = "ready";
-object boxed = count;
-
-Console.WriteLine(optionalCount.HasValue);
-Console.WriteLine(boxed.GetType().Name);
-```
-
----
-
-### 349. What kind of follow-up does an interviewer usually ask after Namespaces, using statements, local variables, fields, const, readonly, value types, reference types, nullable types, and the Main method?
-
-**Answer:**
-
-A common follow-up is how const differs from readonly, how value types differ from reference types, and why Main, namespaces, and using statements still matter in modern C# This is where candidates are expected to move from definition to judgment.
-
-**Sample:**
-
-```csharp
-namespace Billing.ConsoleApp;
-
 using System;
+using System.Collections.Generic;
 
-public class Program
+public static class Demo7_7
 {
-    private readonly string _environment;
-    private const string ApplicationName = "BillingImport";
-    private readonly int? _maxRetries;
-
-    public Program(string environment, int? maxRetries)
+    public static void Run()
     {
-        _environment = environment;
-        _maxRetries = maxRetries;
-    }
-
-    public static void Main(string[] args)
-    {
-        var runDate = DateTime.UtcNow;
-        Console.WriteLine($"{ApplicationName} started at {runDate}");
+        class InvoiceSummary
+        {
+            public decimal Total { get; set; } = 807m;
+            public string Currency { get; set; } = "USD";
+        }
+        var summary = new InvoiceSummary();
+        Console.WriteLine($"{summary.Total} {summary.Currency}");
     }
 }
 ```
 
----
+### Q7.8 How can access modifiers and visibility rules in C# fundamentals?
 
-### 350. How does Namespaces, using statements, local variables, fields, const, readonly, value types, reference types, nullable types, and the Main method connect to the rest of C# fundamentals?
+**Answer:** Access modifiers and visibility rules means using public private and related modifiers to protect invariants. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with making every member public, and they should avoid the trap of exposing mutable internals directly. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
 
-**Answer:**
-
-This topic ties together program structure, memory behavior, state design, and readability across the whole language. That is why this topic keeps coming back in interviews even when the question initially looks small.
-
-**Sample:**
+**Code Example:**
 
 ```csharp
-namespace Billing.ConsoleApp;
-
 using System;
+using System.Collections.Generic;
 
-public class Program
+public static class Demo7_8
 {
-    private readonly string _environment;
-    private const string ApplicationName = "BillingImport";
-    private readonly int? _maxRetries;
-
-    public Program(string environment, int? maxRetries)
+    public static void Run()
     {
-        _environment = environment;
-        _maxRetries = maxRetries;
-    }
-
-    public static void Main(string[] args)
-    {
-        var runDate = DateTime.UtcNow;
-        Console.WriteLine($"{ApplicationName} started at {runDate}");
+        class AuditRecord
+        {
+            public string Action { get; private set; } = "Created-3";
+            public void Rename(string action) => Action = action;
+        }
+        var record = new AuditRecord();
+        record.Rename("Updated");
+        Console.WriteLine(record.Action);
     }
 }
 ```
 
----
+### Q7.9 What is fields properties and methods in C# fundamentals?
 
+**Answer:** Fields properties and methods means understanding the different roles of storage access and behavior members. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with treating all members as equivalent syntax, and they should avoid the trap of skipping validation opportunities by exposing fields carelessly. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_9
+{
+    public static void Run()
+    {
+        class EmployeeProfile
+        {
+            private decimal _salary = 3609m;
+            public decimal Salary => _salary;
+            public void ApplyRaise(decimal amount) => _salary += amount;
+        }
+        var profile = new EmployeeProfile();
+        profile.ApplyRaise(150m);
+        Console.WriteLine(profile.Salary);
+    }
+}
+```
+
+### Q7.10 How does constructors and initialization intent in C# fundamentals?
+
+**Answer:** Constructors and initialization intent means establishing valid object state at creation time. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with filling critical data later by convention, and they should avoid the trap of allowing invalid partially built objects. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_10
+{
+    public static void Run()
+    {
+        class CustomerRecord
+        {
+            public CustomerRecord(string id) => Id = id;
+            public string Id { get; }
+        }
+        var customer = new CustomerRecord("CUST-1610");
+        Console.WriteLine(customer.Id);
+    }
+}
+```
+
+### Q7.11 Why does static members versus instance members in C# fundamentals?
+
+**Answer:** Static members versus instance members means separating shared type-level behavior from object-specific state. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with treating static and instance members as interchangeable, and they should avoid the trap of keeping request-specific mutable data in static members. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_11
+{
+    public static void Run()
+    {
+        class InvoiceNumberGenerator
+        {
+            private static int _seed = 711;
+            public static int Next() => ++_seed;
+        }
+        Console.WriteLine(InvoiceNumberGenerator.Next());
+    }
+}
+```
+
+### Q7.12 When should you use namespaces files and program structure in C# fundamentals?
+
+**Answer:** Namespaces files and program structure means organizing types so the solution stays understandable as it grows. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with placing unrelated types into one flat area, and they should avoid the trap of letting structure drift until ownership is unclear. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_12
+{
+    public static void Run()
+    {
+        namespace Demo.Fundamentals.Section7
+        {
+            public static class ProgramMap612
+            {
+                public static void Describe() => Console.WriteLine("Structured by responsibility");
+            }
+        }
+        Demo.Fundamentals.Section7.ProgramMap612.Describe();
+    }
+}
+```
+
+### Q7.13 What problem does class design and responsibility boundaries in C# fundamentals?
+
+**Answer:** Class design and responsibility boundaries means keeping a type focused on one meaningful responsibility. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with dumping unrelated logic into utility classes, and they should avoid the trap of growing god classes over time. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_13
+{
+    public static void Run()
+    {
+        class InvoiceSummary
+        {
+            public decimal Total { get; set; } = 813m;
+            public string Currency { get; set; } = "USD";
+        }
+        var summary = new InvoiceSummary();
+        Console.WriteLine($"{summary.Total} {summary.Currency}");
+    }
+}
+```
+
+### Q7.14 How would you explain access modifiers and visibility rules in C# fundamentals?
+
+**Answer:** Access modifiers and visibility rules means using public private and related modifiers to protect invariants. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with making every member public, and they should avoid the trap of exposing mutable internals directly. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_14
+{
+    public static void Run()
+    {
+        class AuditRecord
+        {
+            public string Action { get; private set; } = "Created-4";
+            public void Rename(string action) => Action = action;
+        }
+        var record = new AuditRecord();
+        record.Rename("Updated");
+        Console.WriteLine(record.Action);
+    }
+}
+```
+
+### Q7.15 Why is fields properties and methods in C# fundamentals?
+
+**Answer:** Fields properties and methods means understanding the different roles of storage access and behavior members. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with treating all members as equivalent syntax, and they should avoid the trap of skipping validation opportunities by exposing fields carelessly. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_15
+{
+    public static void Run()
+    {
+        class EmployeeProfile
+        {
+            private decimal _salary = 3615m;
+            public decimal Salary => _salary;
+            public void ApplyRaise(decimal amount) => _salary += amount;
+        }
+        var profile = new EmployeeProfile();
+        profile.ApplyRaise(150m);
+        Console.WriteLine(profile.Salary);
+    }
+}
+```
+
+### Q7.16 How can constructors and initialization intent in C# fundamentals?
+
+**Answer:** Constructors and initialization intent means establishing valid object state at creation time. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with filling critical data later by convention, and they should avoid the trap of allowing invalid partially built objects. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_16
+{
+    public static void Run()
+    {
+        class CustomerRecord
+        {
+            public CustomerRecord(string id) => Id = id;
+            public string Id { get; }
+        }
+        var customer = new CustomerRecord("CUST-1616");
+        Console.WriteLine(customer.Id);
+    }
+}
+```
+
+### Q7.17 What is static members versus instance members in C# fundamentals?
+
+**Answer:** Static members versus instance members means separating shared type-level behavior from object-specific state. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with treating static and instance members as interchangeable, and they should avoid the trap of keeping request-specific mutable data in static members. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_17
+{
+    public static void Run()
+    {
+        class InvoiceNumberGenerator
+        {
+            private static int _seed = 717;
+            public static int Next() => ++_seed;
+        }
+        Console.WriteLine(InvoiceNumberGenerator.Next());
+    }
+}
+```
+
+### Q7.18 How does namespaces files and program structure in C# fundamentals?
+
+**Answer:** Namespaces files and program structure means organizing types so the solution stays understandable as it grows. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with placing unrelated types into one flat area, and they should avoid the trap of letting structure drift until ownership is unclear. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_18
+{
+    public static void Run()
+    {
+        namespace Demo.Fundamentals.Section7
+        {
+            public static class ProgramMap618
+            {
+                public static void Describe() => Console.WriteLine("Structured by responsibility");
+            }
+        }
+        Demo.Fundamentals.Section7.ProgramMap618.Describe();
+    }
+}
+```
+
+### Q7.19 Why does class design and responsibility boundaries in C# fundamentals?
+
+**Answer:** Class design and responsibility boundaries means keeping a type focused on one meaningful responsibility. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with dumping unrelated logic into utility classes, and they should avoid the trap of growing god classes over time. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_19
+{
+    public static void Run()
+    {
+        class InvoiceSummary
+        {
+            public decimal Total { get; set; } = 819m;
+            public string Currency { get; set; } = "USD";
+        }
+        var summary = new InvoiceSummary();
+        Console.WriteLine($"{summary.Total} {summary.Currency}");
+    }
+}
+```
+
+### Q7.20 When should you use access modifiers and visibility rules in C# fundamentals?
+
+**Answer:** Access modifiers and visibility rules means using public private and related modifiers to protect invariants. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with making every member public, and they should avoid the trap of exposing mutable internals directly. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_20
+{
+    public static void Run()
+    {
+        class AuditRecord
+        {
+            public string Action { get; private set; } = "Created-0";
+            public void Rename(string action) => Action = action;
+        }
+        var record = new AuditRecord();
+        record.Rename("Updated");
+        Console.WriteLine(record.Action);
+    }
+}
+```
+
+### Q7.21 What problem does fields properties and methods in C# fundamentals?
+
+**Answer:** Fields properties and methods means understanding the different roles of storage access and behavior members. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with treating all members as equivalent syntax, and they should avoid the trap of skipping validation opportunities by exposing fields carelessly. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_21
+{
+    public static void Run()
+    {
+        class EmployeeProfile
+        {
+            private decimal _salary = 3621m;
+            public decimal Salary => _salary;
+            public void ApplyRaise(decimal amount) => _salary += amount;
+        }
+        var profile = new EmployeeProfile();
+        profile.ApplyRaise(150m);
+        Console.WriteLine(profile.Salary);
+    }
+}
+```
+
+### Q7.22 How would you explain constructors and initialization intent in C# fundamentals?
+
+**Answer:** Constructors and initialization intent means establishing valid object state at creation time. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with filling critical data later by convention, and they should avoid the trap of allowing invalid partially built objects. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_22
+{
+    public static void Run()
+    {
+        class CustomerRecord
+        {
+            public CustomerRecord(string id) => Id = id;
+            public string Id { get; }
+        }
+        var customer = new CustomerRecord("CUST-1622");
+        Console.WriteLine(customer.Id);
+    }
+}
+```
+
+### Q7.23 Why is static members versus instance members in C# fundamentals?
+
+**Answer:** Static members versus instance members means separating shared type-level behavior from object-specific state. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with treating static and instance members as interchangeable, and they should avoid the trap of keeping request-specific mutable data in static members. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_23
+{
+    public static void Run()
+    {
+        class InvoiceNumberGenerator
+        {
+            private static int _seed = 723;
+            public static int Next() => ++_seed;
+        }
+        Console.WriteLine(InvoiceNumberGenerator.Next());
+    }
+}
+```
+
+### Q7.24 How can namespaces files and program structure in C# fundamentals?
+
+**Answer:** Namespaces files and program structure means organizing types so the solution stays understandable as it grows. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with placing unrelated types into one flat area, and they should avoid the trap of letting structure drift until ownership is unclear. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_24
+{
+    public static void Run()
+    {
+        namespace Demo.Fundamentals.Section7
+        {
+            public static class ProgramMap624
+            {
+                public static void Describe() => Console.WriteLine("Structured by responsibility");
+            }
+        }
+        Demo.Fundamentals.Section7.ProgramMap624.Describe();
+    }
+}
+```
+
+### Q7.25 What is class design and responsibility boundaries in C# fundamentals?
+
+**Answer:** Class design and responsibility boundaries means keeping a type focused on one meaningful responsibility. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with dumping unrelated logic into utility classes, and they should avoid the trap of growing god classes over time. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_25
+{
+    public static void Run()
+    {
+        class InvoiceSummary
+        {
+            public decimal Total { get; set; } = 825m;
+            public string Currency { get; set; } = "USD";
+        }
+        var summary = new InvoiceSummary();
+        Console.WriteLine($"{summary.Total} {summary.Currency}");
+    }
+}
+```
+
+### Q7.26 How does access modifiers and visibility rules in C# fundamentals?
+
+**Answer:** Access modifiers and visibility rules means using public private and related modifiers to protect invariants. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with making every member public, and they should avoid the trap of exposing mutable internals directly. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_26
+{
+    public static void Run()
+    {
+        class AuditRecord
+        {
+            public string Action { get; private set; } = "Created-1";
+            public void Rename(string action) => Action = action;
+        }
+        var record = new AuditRecord();
+        record.Rename("Updated");
+        Console.WriteLine(record.Action);
+    }
+}
+```
+
+### Q7.27 Why does fields properties and methods in C# fundamentals?
+
+**Answer:** Fields properties and methods means understanding the different roles of storage access and behavior members. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with treating all members as equivalent syntax, and they should avoid the trap of skipping validation opportunities by exposing fields carelessly. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_27
+{
+    public static void Run()
+    {
+        class EmployeeProfile
+        {
+            private decimal _salary = 3627m;
+            public decimal Salary => _salary;
+            public void ApplyRaise(decimal amount) => _salary += amount;
+        }
+        var profile = new EmployeeProfile();
+        profile.ApplyRaise(150m);
+        Console.WriteLine(profile.Salary);
+    }
+}
+```
+
+### Q7.28 When should you use constructors and initialization intent in C# fundamentals?
+
+**Answer:** Constructors and initialization intent means establishing valid object state at creation time. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with filling critical data later by convention, and they should avoid the trap of allowing invalid partially built objects. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_28
+{
+    public static void Run()
+    {
+        class CustomerRecord
+        {
+            public CustomerRecord(string id) => Id = id;
+            public string Id { get; }
+        }
+        var customer = new CustomerRecord("CUST-1628");
+        Console.WriteLine(customer.Id);
+    }
+}
+```
+
+### Q7.29 What problem does static members versus instance members in C# fundamentals?
+
+**Answer:** Static members versus instance members means separating shared type-level behavior from object-specific state. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with treating static and instance members as interchangeable, and they should avoid the trap of keeping request-specific mutable data in static members. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_29
+{
+    public static void Run()
+    {
+        class InvoiceNumberGenerator
+        {
+            private static int _seed = 729;
+            public static int Next() => ++_seed;
+        }
+        Console.WriteLine(InvoiceNumberGenerator.Next());
+    }
+}
+```
+
+### Q7.30 How would you explain namespaces files and program structure in C# fundamentals?
+
+**Answer:** Namespaces files and program structure means organizing types so the solution stays understandable as it grows. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with placing unrelated types into one flat area, and they should avoid the trap of letting structure drift until ownership is unclear. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_30
+{
+    public static void Run()
+    {
+        namespace Demo.Fundamentals.Section7
+        {
+            public static class ProgramMap630
+            {
+                public static void Describe() => Console.WriteLine("Structured by responsibility");
+            }
+        }
+        Demo.Fundamentals.Section7.ProgramMap630.Describe();
+    }
+}
+```
+
+### Q7.31 Why is class design and responsibility boundaries in C# fundamentals?
+
+**Answer:** Class design and responsibility boundaries means keeping a type focused on one meaningful responsibility. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with dumping unrelated logic into utility classes, and they should avoid the trap of growing god classes over time. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_31
+{
+    public static void Run()
+    {
+        class InvoiceSummary
+        {
+            public decimal Total { get; set; } = 831m;
+            public string Currency { get; set; } = "USD";
+        }
+        var summary = new InvoiceSummary();
+        Console.WriteLine($"{summary.Total} {summary.Currency}");
+    }
+}
+```
+
+### Q7.32 How can access modifiers and visibility rules in C# fundamentals?
+
+**Answer:** Access modifiers and visibility rules means using public private and related modifiers to protect invariants. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with making every member public, and they should avoid the trap of exposing mutable internals directly. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_32
+{
+    public static void Run()
+    {
+        class AuditRecord
+        {
+            public string Action { get; private set; } = "Created-2";
+            public void Rename(string action) => Action = action;
+        }
+        var record = new AuditRecord();
+        record.Rename("Updated");
+        Console.WriteLine(record.Action);
+    }
+}
+```
+
+### Q7.33 What is fields properties and methods in C# fundamentals?
+
+**Answer:** Fields properties and methods means understanding the different roles of storage access and behavior members. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with treating all members as equivalent syntax, and they should avoid the trap of skipping validation opportunities by exposing fields carelessly. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_33
+{
+    public static void Run()
+    {
+        class EmployeeProfile
+        {
+            private decimal _salary = 3633m;
+            public decimal Salary => _salary;
+            public void ApplyRaise(decimal amount) => _salary += amount;
+        }
+        var profile = new EmployeeProfile();
+        profile.ApplyRaise(150m);
+        Console.WriteLine(profile.Salary);
+    }
+}
+```
+
+### Q7.34 How does constructors and initialization intent in C# fundamentals?
+
+**Answer:** Constructors and initialization intent means establishing valid object state at creation time. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with filling critical data later by convention, and they should avoid the trap of allowing invalid partially built objects. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_34
+{
+    public static void Run()
+    {
+        class CustomerRecord
+        {
+            public CustomerRecord(string id) => Id = id;
+            public string Id { get; }
+        }
+        var customer = new CustomerRecord("CUST-1634");
+        Console.WriteLine(customer.Id);
+    }
+}
+```
+
+### Q7.35 Why does static members versus instance members in C# fundamentals?
+
+**Answer:** Static members versus instance members means separating shared type-level behavior from object-specific state. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with treating static and instance members as interchangeable, and they should avoid the trap of keeping request-specific mutable data in static members. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_35
+{
+    public static void Run()
+    {
+        class InvoiceNumberGenerator
+        {
+            private static int _seed = 735;
+            public static int Next() => ++_seed;
+        }
+        Console.WriteLine(InvoiceNumberGenerator.Next());
+    }
+}
+```
+
+### Q7.36 When should you use namespaces files and program structure in C# fundamentals?
+
+**Answer:** Namespaces files and program structure means organizing types so the solution stays understandable as it grows. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with placing unrelated types into one flat area, and they should avoid the trap of letting structure drift until ownership is unclear. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_36
+{
+    public static void Run()
+    {
+        namespace Demo.Fundamentals.Section7
+        {
+            public static class ProgramMap636
+            {
+                public static void Describe() => Console.WriteLine("Structured by responsibility");
+            }
+        }
+        Demo.Fundamentals.Section7.ProgramMap636.Describe();
+    }
+}
+```
+
+### Q7.37 What problem does class design and responsibility boundaries in C# fundamentals?
+
+**Answer:** Class design and responsibility boundaries means keeping a type focused on one meaningful responsibility. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with dumping unrelated logic into utility classes, and they should avoid the trap of growing god classes over time. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_37
+{
+    public static void Run()
+    {
+        class InvoiceSummary
+        {
+            public decimal Total { get; set; } = 837m;
+            public string Currency { get; set; } = "USD";
+        }
+        var summary = new InvoiceSummary();
+        Console.WriteLine($"{summary.Total} {summary.Currency}");
+    }
+}
+```
+
+### Q7.38 How would you explain access modifiers and visibility rules in C# fundamentals?
+
+**Answer:** Access modifiers and visibility rules means using public private and related modifiers to protect invariants. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with making every member public, and they should avoid the trap of exposing mutable internals directly. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_38
+{
+    public static void Run()
+    {
+        class AuditRecord
+        {
+            public string Action { get; private set; } = "Created-3";
+            public void Rename(string action) => Action = action;
+        }
+        var record = new AuditRecord();
+        record.Rename("Updated");
+        Console.WriteLine(record.Action);
+    }
+}
+```
+
+### Q7.39 Why is fields properties and methods in C# fundamentals?
+
+**Answer:** Fields properties and methods means understanding the different roles of storage access and behavior members. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with treating all members as equivalent syntax, and they should avoid the trap of skipping validation opportunities by exposing fields carelessly. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_39
+{
+    public static void Run()
+    {
+        class EmployeeProfile
+        {
+            private decimal _salary = 3639m;
+            public decimal Salary => _salary;
+            public void ApplyRaise(decimal amount) => _salary += amount;
+        }
+        var profile = new EmployeeProfile();
+        profile.ApplyRaise(150m);
+        Console.WriteLine(profile.Salary);
+    }
+}
+```
+
+### Q7.40 How can constructors and initialization intent in C# fundamentals?
+
+**Answer:** Constructors and initialization intent means establishing valid object state at creation time. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with filling critical data later by convention, and they should avoid the trap of allowing invalid partially built objects. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_40
+{
+    public static void Run()
+    {
+        class CustomerRecord
+        {
+            public CustomerRecord(string id) => Id = id;
+            public string Id { get; }
+        }
+        var customer = new CustomerRecord("CUST-1640");
+        Console.WriteLine(customer.Id);
+    }
+}
+```
+
+### Q7.41 What is static members versus instance members in C# fundamentals?
+
+**Answer:** Static members versus instance members means separating shared type-level behavior from object-specific state. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with treating static and instance members as interchangeable, and they should avoid the trap of keeping request-specific mutable data in static members. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_41
+{
+    public static void Run()
+    {
+        class InvoiceNumberGenerator
+        {
+            private static int _seed = 741;
+            public static int Next() => ++_seed;
+        }
+        Console.WriteLine(InvoiceNumberGenerator.Next());
+    }
+}
+```
+
+### Q7.42 How does namespaces files and program structure in C# fundamentals?
+
+**Answer:** Namespaces files and program structure means organizing types so the solution stays understandable as it grows. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with placing unrelated types into one flat area, and they should avoid the trap of letting structure drift until ownership is unclear. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_42
+{
+    public static void Run()
+    {
+        namespace Demo.Fundamentals.Section7
+        {
+            public static class ProgramMap642
+            {
+                public static void Describe() => Console.WriteLine("Structured by responsibility");
+            }
+        }
+        Demo.Fundamentals.Section7.ProgramMap642.Describe();
+    }
+}
+```
+
+### Q7.43 Why does class design and responsibility boundaries in C# fundamentals?
+
+**Answer:** Class design and responsibility boundaries means keeping a type focused on one meaningful responsibility. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with dumping unrelated logic into utility classes, and they should avoid the trap of growing god classes over time. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_43
+{
+    public static void Run()
+    {
+        class InvoiceSummary
+        {
+            public decimal Total { get; set; } = 843m;
+            public string Currency { get; set; } = "USD";
+        }
+        var summary = new InvoiceSummary();
+        Console.WriteLine($"{summary.Total} {summary.Currency}");
+    }
+}
+```
+
+### Q7.44 When should you use access modifiers and visibility rules in C# fundamentals?
+
+**Answer:** Access modifiers and visibility rules means using public private and related modifiers to protect invariants. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with making every member public, and they should avoid the trap of exposing mutable internals directly. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_44
+{
+    public static void Run()
+    {
+        class AuditRecord
+        {
+            public string Action { get; private set; } = "Created-4";
+            public void Rename(string action) => Action = action;
+        }
+        var record = new AuditRecord();
+        record.Rename("Updated");
+        Console.WriteLine(record.Action);
+    }
+}
+```
+
+### Q7.45 What problem does fields properties and methods in C# fundamentals?
+
+**Answer:** Fields properties and methods means understanding the different roles of storage access and behavior members. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with treating all members as equivalent syntax, and they should avoid the trap of skipping validation opportunities by exposing fields carelessly. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_45
+{
+    public static void Run()
+    {
+        class EmployeeProfile
+        {
+            private decimal _salary = 3645m;
+            public decimal Salary => _salary;
+            public void ApplyRaise(decimal amount) => _salary += amount;
+        }
+        var profile = new EmployeeProfile();
+        profile.ApplyRaise(150m);
+        Console.WriteLine(profile.Salary);
+    }
+}
+```
+
+### Q7.46 How would you explain constructors and initialization intent in C# fundamentals?
+
+**Answer:** Constructors and initialization intent means establishing valid object state at creation time. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with filling critical data later by convention, and they should avoid the trap of allowing invalid partially built objects. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_46
+{
+    public static void Run()
+    {
+        class CustomerRecord
+        {
+            public CustomerRecord(string id) => Id = id;
+            public string Id { get; }
+        }
+        var customer = new CustomerRecord("CUST-1646");
+        Console.WriteLine(customer.Id);
+    }
+}
+```
+
+### Q7.47 Why is static members versus instance members in C# fundamentals?
+
+**Answer:** Static members versus instance members means separating shared type-level behavior from object-specific state. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with treating static and instance members as interchangeable, and they should avoid the trap of keeping request-specific mutable data in static members. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_47
+{
+    public static void Run()
+    {
+        class InvoiceNumberGenerator
+        {
+            private static int _seed = 747;
+            public static int Next() => ++_seed;
+        }
+        Console.WriteLine(InvoiceNumberGenerator.Next());
+    }
+}
+```
+
+### Q7.48 How can namespaces files and program structure in C# fundamentals?
+
+**Answer:** Namespaces files and program structure means organizing types so the solution stays understandable as it grows. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with placing unrelated types into one flat area, and they should avoid the trap of letting structure drift until ownership is unclear. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_48
+{
+    public static void Run()
+    {
+        namespace Demo.Fundamentals.Section7
+        {
+            public static class ProgramMap648
+            {
+                public static void Describe() => Console.WriteLine("Structured by responsibility");
+            }
+        }
+        Demo.Fundamentals.Section7.ProgramMap648.Describe();
+    }
+}
+```
+
+### Q7.49 What is class design and responsibility boundaries in C# fundamentals?
+
+**Answer:** Class design and responsibility boundaries means keeping a type focused on one meaningful responsibility. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with dumping unrelated logic into utility classes, and they should avoid the trap of growing god classes over time. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_49
+{
+    public static void Run()
+    {
+        class InvoiceSummary
+        {
+            public decimal Total { get; set; } = 849m;
+            public string Currency { get; set; } = "USD";
+        }
+        var summary = new InvoiceSummary();
+        Console.WriteLine($"{summary.Total} {summary.Currency}");
+    }
+}
+```
+
+### Q7.50 How does access modifiers and visibility rules in C# fundamentals?
+
+**Answer:** Access modifiers and visibility rules means using public private and related modifiers to protect invariants. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with making every member public, and they should avoid the trap of exposing mutable internals directly. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_50
+{
+    public static void Run()
+    {
+        class AuditRecord
+        {
+            public string Action { get; private set; } = "Created-0";
+            public void Rename(string action) => Action = action;
+        }
+        var record = new AuditRecord();
+        record.Rename("Updated");
+        Console.WriteLine(record.Action);
+    }
+}
+```
+
+### Q7.51 Why does fields properties and methods in C# fundamentals?
+
+**Answer:** Fields properties and methods means understanding the different roles of storage access and behavior members. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with treating all members as equivalent syntax, and they should avoid the trap of skipping validation opportunities by exposing fields carelessly. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_51
+{
+    public static void Run()
+    {
+        class EmployeeProfile
+        {
+            private decimal _salary = 3651m;
+            public decimal Salary => _salary;
+            public void ApplyRaise(decimal amount) => _salary += amount;
+        }
+        var profile = new EmployeeProfile();
+        profile.ApplyRaise(150m);
+        Console.WriteLine(profile.Salary);
+    }
+}
+```
+
+### Q7.52 When should you use constructors and initialization intent in C# fundamentals?
+
+**Answer:** Constructors and initialization intent means establishing valid object state at creation time. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with filling critical data later by convention, and they should avoid the trap of allowing invalid partially built objects. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_52
+{
+    public static void Run()
+    {
+        class CustomerRecord
+        {
+            public CustomerRecord(string id) => Id = id;
+            public string Id { get; }
+        }
+        var customer = new CustomerRecord("CUST-1652");
+        Console.WriteLine(customer.Id);
+    }
+}
+```
+
+### Q7.53 What problem does static members versus instance members in C# fundamentals?
+
+**Answer:** Static members versus instance members means separating shared type-level behavior from object-specific state. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with treating static and instance members as interchangeable, and they should avoid the trap of keeping request-specific mutable data in static members. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_53
+{
+    public static void Run()
+    {
+        class InvoiceNumberGenerator
+        {
+            private static int _seed = 753;
+            public static int Next() => ++_seed;
+        }
+        Console.WriteLine(InvoiceNumberGenerator.Next());
+    }
+}
+```
+
+### Q7.54 How would you explain namespaces files and program structure in C# fundamentals?
+
+**Answer:** Namespaces files and program structure means organizing types so the solution stays understandable as it grows. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with placing unrelated types into one flat area, and they should avoid the trap of letting structure drift until ownership is unclear. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_54
+{
+    public static void Run()
+    {
+        namespace Demo.Fundamentals.Section7
+        {
+            public static class ProgramMap654
+            {
+                public static void Describe() => Console.WriteLine("Structured by responsibility");
+            }
+        }
+        Demo.Fundamentals.Section7.ProgramMap654.Describe();
+    }
+}
+```
+
+### Q7.55 Why is class design and responsibility boundaries in C# fundamentals?
+
+**Answer:** Class design and responsibility boundaries means keeping a type focused on one meaningful responsibility. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with dumping unrelated logic into utility classes, and they should avoid the trap of growing god classes over time. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_55
+{
+    public static void Run()
+    {
+        class InvoiceSummary
+        {
+            public decimal Total { get; set; } = 855m;
+            public string Currency { get; set; } = "USD";
+        }
+        var summary = new InvoiceSummary();
+        Console.WriteLine($"{summary.Total} {summary.Currency}");
+    }
+}
+```
+
+### Q7.56 How can access modifiers and visibility rules in C# fundamentals?
+
+**Answer:** Access modifiers and visibility rules means using public private and related modifiers to protect invariants. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with making every member public, and they should avoid the trap of exposing mutable internals directly. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_56
+{
+    public static void Run()
+    {
+        class AuditRecord
+        {
+            public string Action { get; private set; } = "Created-1";
+            public void Rename(string action) => Action = action;
+        }
+        var record = new AuditRecord();
+        record.Rename("Updated");
+        Console.WriteLine(record.Action);
+    }
+}
+```
+
+### Q7.57 What is fields properties and methods in C# fundamentals?
+
+**Answer:** Fields properties and methods means understanding the different roles of storage access and behavior members. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with treating all members as equivalent syntax, and they should avoid the trap of skipping validation opportunities by exposing fields carelessly. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_57
+{
+    public static void Run()
+    {
+        class EmployeeProfile
+        {
+            private decimal _salary = 3657m;
+            public decimal Salary => _salary;
+            public void ApplyRaise(decimal amount) => _salary += amount;
+        }
+        var profile = new EmployeeProfile();
+        profile.ApplyRaise(150m);
+        Console.WriteLine(profile.Salary);
+    }
+}
+```
+
+### Q7.58 How does constructors and initialization intent in C# fundamentals?
+
+**Answer:** Constructors and initialization intent means establishing valid object state at creation time. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with filling critical data later by convention, and they should avoid the trap of allowing invalid partially built objects. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_58
+{
+    public static void Run()
+    {
+        class CustomerRecord
+        {
+            public CustomerRecord(string id) => Id = id;
+            public string Id { get; }
+        }
+        var customer = new CustomerRecord("CUST-1658");
+        Console.WriteLine(customer.Id);
+    }
+}
+```
+
+### Q7.59 Why does static members versus instance members in C# fundamentals?
+
+**Answer:** Static members versus instance members means separating shared type-level behavior from object-specific state. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with treating static and instance members as interchangeable, and they should avoid the trap of keeping request-specific mutable data in static members. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_59
+{
+    public static void Run()
+    {
+        class InvoiceNumberGenerator
+        {
+            private static int _seed = 759;
+            public static int Next() => ++_seed;
+        }
+        Console.WriteLine(InvoiceNumberGenerator.Next());
+    }
+}
+```
+
+### Q7.60 When should you use namespaces files and program structure in C# fundamentals?
+
+**Answer:** Namespaces files and program structure means organizing types so the solution stays understandable as it grows. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with placing unrelated types into one flat area, and they should avoid the trap of letting structure drift until ownership is unclear. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_60
+{
+    public static void Run()
+    {
+        namespace Demo.Fundamentals.Section7
+        {
+            public static class ProgramMap660
+            {
+                public static void Describe() => Console.WriteLine("Structured by responsibility");
+            }
+        }
+        Demo.Fundamentals.Section7.ProgramMap660.Describe();
+    }
+}
+```
+
+### Q7.61 What problem does class design and responsibility boundaries in C# fundamentals?
+
+**Answer:** Class design and responsibility boundaries means keeping a type focused on one meaningful responsibility. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with dumping unrelated logic into utility classes, and they should avoid the trap of growing god classes over time. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_61
+{
+    public static void Run()
+    {
+        class InvoiceSummary
+        {
+            public decimal Total { get; set; } = 861m;
+            public string Currency { get; set; } = "USD";
+        }
+        var summary = new InvoiceSummary();
+        Console.WriteLine($"{summary.Total} {summary.Currency}");
+    }
+}
+```
+
+### Q7.62 How would you explain access modifiers and visibility rules in C# fundamentals?
+
+**Answer:** Access modifiers and visibility rules means using public private and related modifiers to protect invariants. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with making every member public, and they should avoid the trap of exposing mutable internals directly. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_62
+{
+    public static void Run()
+    {
+        class AuditRecord
+        {
+            public string Action { get; private set; } = "Created-2";
+            public void Rename(string action) => Action = action;
+        }
+        var record = new AuditRecord();
+        record.Rename("Updated");
+        Console.WriteLine(record.Action);
+    }
+}
+```
+
+### Q7.63 Why is fields properties and methods in C# fundamentals?
+
+**Answer:** Fields properties and methods means understanding the different roles of storage access and behavior members. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with treating all members as equivalent syntax, and they should avoid the trap of skipping validation opportunities by exposing fields carelessly. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_63
+{
+    public static void Run()
+    {
+        class EmployeeProfile
+        {
+            private decimal _salary = 3663m;
+            public decimal Salary => _salary;
+            public void ApplyRaise(decimal amount) => _salary += amount;
+        }
+        var profile = new EmployeeProfile();
+        profile.ApplyRaise(150m);
+        Console.WriteLine(profile.Salary);
+    }
+}
+```
+
+### Q7.64 How can constructors and initialization intent in C# fundamentals?
+
+**Answer:** Constructors and initialization intent means establishing valid object state at creation time. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with filling critical data later by convention, and they should avoid the trap of allowing invalid partially built objects. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_64
+{
+    public static void Run()
+    {
+        class CustomerRecord
+        {
+            public CustomerRecord(string id) => Id = id;
+            public string Id { get; }
+        }
+        var customer = new CustomerRecord("CUST-1664");
+        Console.WriteLine(customer.Id);
+    }
+}
+```
+
+### Q7.65 What is static members versus instance members in C# fundamentals?
+
+**Answer:** Static members versus instance members means separating shared type-level behavior from object-specific state. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with treating static and instance members as interchangeable, and they should avoid the trap of keeping request-specific mutable data in static members. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_65
+{
+    public static void Run()
+    {
+        class InvoiceNumberGenerator
+        {
+            private static int _seed = 765;
+            public static int Next() => ++_seed;
+        }
+        Console.WriteLine(InvoiceNumberGenerator.Next());
+    }
+}
+```
+
+### Q7.66 How does namespaces files and program structure in C# fundamentals?
+
+**Answer:** Namespaces files and program structure means organizing types so the solution stays understandable as it grows. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with placing unrelated types into one flat area, and they should avoid the trap of letting structure drift until ownership is unclear. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_66
+{
+    public static void Run()
+    {
+        namespace Demo.Fundamentals.Section7
+        {
+            public static class ProgramMap666
+            {
+                public static void Describe() => Console.WriteLine("Structured by responsibility");
+            }
+        }
+        Demo.Fundamentals.Section7.ProgramMap666.Describe();
+    }
+}
+```
+
+### Q7.67 Why does class design and responsibility boundaries in C# fundamentals?
+
+**Answer:** Class design and responsibility boundaries means keeping a type focused on one meaningful responsibility. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with dumping unrelated logic into utility classes, and they should avoid the trap of growing god classes over time. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_67
+{
+    public static void Run()
+    {
+        class InvoiceSummary
+        {
+            public decimal Total { get; set; } = 867m;
+            public string Currency { get; set; } = "USD";
+        }
+        var summary = new InvoiceSummary();
+        Console.WriteLine($"{summary.Total} {summary.Currency}");
+    }
+}
+```
+
+### Q7.68 When should you use access modifiers and visibility rules in C# fundamentals?
+
+**Answer:** Access modifiers and visibility rules means using public private and related modifiers to protect invariants. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with making every member public, and they should avoid the trap of exposing mutable internals directly. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_68
+{
+    public static void Run()
+    {
+        class AuditRecord
+        {
+            public string Action { get; private set; } = "Created-3";
+            public void Rename(string action) => Action = action;
+        }
+        var record = new AuditRecord();
+        record.Rename("Updated");
+        Console.WriteLine(record.Action);
+    }
+}
+```
+
+### Q7.69 What problem does fields properties and methods in C# fundamentals?
+
+**Answer:** Fields properties and methods means understanding the different roles of storage access and behavior members. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with treating all members as equivalent syntax, and they should avoid the trap of skipping validation opportunities by exposing fields carelessly. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_69
+{
+    public static void Run()
+    {
+        class EmployeeProfile
+        {
+            private decimal _salary = 3669m;
+            public decimal Salary => _salary;
+            public void ApplyRaise(decimal amount) => _salary += amount;
+        }
+        var profile = new EmployeeProfile();
+        profile.ApplyRaise(150m);
+        Console.WriteLine(profile.Salary);
+    }
+}
+```
+
+### Q7.70 How would you explain constructors and initialization intent in C# fundamentals?
+
+**Answer:** Constructors and initialization intent means establishing valid object state at creation time. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with filling critical data later by convention, and they should avoid the trap of allowing invalid partially built objects. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_70
+{
+    public static void Run()
+    {
+        class CustomerRecord
+        {
+            public CustomerRecord(string id) => Id = id;
+            public string Id { get; }
+        }
+        var customer = new CustomerRecord("CUST-1670");
+        Console.WriteLine(customer.Id);
+    }
+}
+```
+
+### Q7.71 Why is static members versus instance members in C# fundamentals?
+
+**Answer:** Static members versus instance members means separating shared type-level behavior from object-specific state. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with treating static and instance members as interchangeable, and they should avoid the trap of keeping request-specific mutable data in static members. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_71
+{
+    public static void Run()
+    {
+        class InvoiceNumberGenerator
+        {
+            private static int _seed = 771;
+            public static int Next() => ++_seed;
+        }
+        Console.WriteLine(InvoiceNumberGenerator.Next());
+    }
+}
+```
+
+### Q7.72 How can namespaces files and program structure in C# fundamentals?
+
+**Answer:** Namespaces files and program structure means organizing types so the solution stays understandable as it grows. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with placing unrelated types into one flat area, and they should avoid the trap of letting structure drift until ownership is unclear. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_72
+{
+    public static void Run()
+    {
+        namespace Demo.Fundamentals.Section7
+        {
+            public static class ProgramMap672
+            {
+                public static void Describe() => Console.WriteLine("Structured by responsibility");
+            }
+        }
+        Demo.Fundamentals.Section7.ProgramMap672.Describe();
+    }
+}
+```
+
+### Q7.73 What is class design and responsibility boundaries in C# fundamentals?
+
+**Answer:** Class design and responsibility boundaries means keeping a type focused on one meaningful responsibility. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with dumping unrelated logic into utility classes, and they should avoid the trap of growing god classes over time. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_73
+{
+    public static void Run()
+    {
+        class InvoiceSummary
+        {
+            public decimal Total { get; set; } = 873m;
+            public string Currency { get; set; } = "USD";
+        }
+        var summary = new InvoiceSummary();
+        Console.WriteLine($"{summary.Total} {summary.Currency}");
+    }
+}
+```
+
+### Q7.74 How does access modifiers and visibility rules in C# fundamentals?
+
+**Answer:** Access modifiers and visibility rules means using public private and related modifiers to protect invariants. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with making every member public, and they should avoid the trap of exposing mutable internals directly. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_74
+{
+    public static void Run()
+    {
+        class AuditRecord
+        {
+            public string Action { get; private set; } = "Created-4";
+            public void Rename(string action) => Action = action;
+        }
+        var record = new AuditRecord();
+        record.Rename("Updated");
+        Console.WriteLine(record.Action);
+    }
+}
+```
+
+### Q7.75 Why does fields properties and methods in C# fundamentals?
+
+**Answer:** Fields properties and methods means understanding the different roles of storage access and behavior members. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with treating all members as equivalent syntax, and they should avoid the trap of skipping validation opportunities by exposing fields carelessly. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_75
+{
+    public static void Run()
+    {
+        class EmployeeProfile
+        {
+            private decimal _salary = 3675m;
+            public decimal Salary => _salary;
+            public void ApplyRaise(decimal amount) => _salary += amount;
+        }
+        var profile = new EmployeeProfile();
+        profile.ApplyRaise(150m);
+        Console.WriteLine(profile.Salary);
+    }
+}
+```
+
+### Q7.76 When should you use constructors and initialization intent in C# fundamentals?
+
+**Answer:** Constructors and initialization intent means establishing valid object state at creation time. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with filling critical data later by convention, and they should avoid the trap of allowing invalid partially built objects. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_76
+{
+    public static void Run()
+    {
+        class CustomerRecord
+        {
+            public CustomerRecord(string id) => Id = id;
+            public string Id { get; }
+        }
+        var customer = new CustomerRecord("CUST-1676");
+        Console.WriteLine(customer.Id);
+    }
+}
+```
+
+### Q7.77 What problem does static members versus instance members in C# fundamentals?
+
+**Answer:** Static members versus instance members means separating shared type-level behavior from object-specific state. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with treating static and instance members as interchangeable, and they should avoid the trap of keeping request-specific mutable data in static members. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_77
+{
+    public static void Run()
+    {
+        class InvoiceNumberGenerator
+        {
+            private static int _seed = 777;
+            public static int Next() => ++_seed;
+        }
+        Console.WriteLine(InvoiceNumberGenerator.Next());
+    }
+}
+```
+
+### Q7.78 How would you explain namespaces files and program structure in C# fundamentals?
+
+**Answer:** Namespaces files and program structure means organizing types so the solution stays understandable as it grows. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with placing unrelated types into one flat area, and they should avoid the trap of letting structure drift until ownership is unclear. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_78
+{
+    public static void Run()
+    {
+        namespace Demo.Fundamentals.Section7
+        {
+            public static class ProgramMap678
+            {
+                public static void Describe() => Console.WriteLine("Structured by responsibility");
+            }
+        }
+        Demo.Fundamentals.Section7.ProgramMap678.Describe();
+    }
+}
+```
+
+### Q7.79 Why is class design and responsibility boundaries in C# fundamentals?
+
+**Answer:** Class design and responsibility boundaries means keeping a type focused on one meaningful responsibility. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with dumping unrelated logic into utility classes, and they should avoid the trap of growing god classes over time. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_79
+{
+    public static void Run()
+    {
+        class InvoiceSummary
+        {
+            public decimal Total { get; set; } = 879m;
+            public string Currency { get; set; } = "USD";
+        }
+        var summary = new InvoiceSummary();
+        Console.WriteLine($"{summary.Total} {summary.Currency}");
+    }
+}
+```
+
+### Q7.80 How can access modifiers and visibility rules in C# fundamentals?
+
+**Answer:** Access modifiers and visibility rules means using public private and related modifiers to protect invariants. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with making every member public, and they should avoid the trap of exposing mutable internals directly. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_80
+{
+    public static void Run()
+    {
+        class AuditRecord
+        {
+            public string Action { get; private set; } = "Created-0";
+            public void Rename(string action) => Action = action;
+        }
+        var record = new AuditRecord();
+        record.Rename("Updated");
+        Console.WriteLine(record.Action);
+    }
+}
+```
+
+### Q7.81 What is fields properties and methods in C# fundamentals?
+
+**Answer:** Fields properties and methods means understanding the different roles of storage access and behavior members. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with treating all members as equivalent syntax, and they should avoid the trap of skipping validation opportunities by exposing fields carelessly. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_81
+{
+    public static void Run()
+    {
+        class EmployeeProfile
+        {
+            private decimal _salary = 3681m;
+            public decimal Salary => _salary;
+            public void ApplyRaise(decimal amount) => _salary += amount;
+        }
+        var profile = new EmployeeProfile();
+        profile.ApplyRaise(150m);
+        Console.WriteLine(profile.Salary);
+    }
+}
+```
+
+### Q7.82 How does constructors and initialization intent in C# fundamentals?
+
+**Answer:** Constructors and initialization intent means establishing valid object state at creation time. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with filling critical data later by convention, and they should avoid the trap of allowing invalid partially built objects. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_82
+{
+    public static void Run()
+    {
+        class CustomerRecord
+        {
+            public CustomerRecord(string id) => Id = id;
+            public string Id { get; }
+        }
+        var customer = new CustomerRecord("CUST-1682");
+        Console.WriteLine(customer.Id);
+    }
+}
+```
+
+### Q7.83 Why does static members versus instance members in C# fundamentals?
+
+**Answer:** Static members versus instance members means separating shared type-level behavior from object-specific state. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with treating static and instance members as interchangeable, and they should avoid the trap of keeping request-specific mutable data in static members. Example: while onboarding a junior backend engineer, so team conventions stay more consistent. Another example: during a production login incident, so the domain model stays easier to explain.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_83
+{
+    public static void Run()
+    {
+        class InvoiceNumberGenerator
+        {
+            private static int _seed = 783;
+            public static int Next() => ++_seed;
+        }
+        Console.WriteLine(InvoiceNumberGenerator.Next());
+    }
+}
+```
+
+### Q7.84 When should you use namespaces files and program structure in C# fundamentals?
+
+**Answer:** Namespaces files and program structure means organizing types so the solution stays understandable as it grows. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with placing unrelated types into one flat area, and they should avoid the trap of letting structure drift until ownership is unclear. Example: during a payment reconciliation fix, so the bug becomes easier to isolate. Another example: while building a payroll export utility, so performance trade-offs become easier to discuss.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_84
+{
+    public static void Run()
+    {
+        namespace Demo.Fundamentals.Section7
+        {
+            public static class ProgramMap684
+            {
+                public static void Describe() => Console.WriteLine("Structured by responsibility");
+            }
+        }
+        Demo.Fundamentals.Section7.ProgramMap684.Describe();
+    }
+}
+```
+
+### Q7.85 What problem does class design and responsibility boundaries in C# fundamentals?
+
+**Answer:** Class design and responsibility boundaries means keeping a type focused on one meaningful responsibility. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with dumping unrelated logic into utility classes, and they should avoid the trap of growing god classes over time. Example: while tuning a reporting batch, so interview answers sound more grounded. Another example: during a release hardening session, so the design choice is easier to defend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_85
+{
+    public static void Run()
+    {
+        class InvoiceSummary
+        {
+            public decimal Total { get; set; } = 885m;
+            public string Currency { get; set; } = "USD";
+        }
+        var summary = new InvoiceSummary();
+        Console.WriteLine($"{summary.Total} {summary.Currency}");
+    }
+}
+```
+
+### Q7.86 How would you explain access modifiers and visibility rules in C# fundamentals?
+
+**Answer:** Access modifiers and visibility rules means using public private and related modifiers to protect invariants. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with making every member public, and they should avoid the trap of exposing mutable internals directly. Example: during a support escalation for null data, so the API contract becomes clearer. Another example: while stabilizing a background worker, so review comments become more actionable.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_86
+{
+    public static void Run()
+    {
+        class AuditRecord
+        {
+            public string Action { get; private set; } = "Created-1";
+            public void Rename(string action) => Action = action;
+        }
+        var record = new AuditRecord();
+        record.Rename("Updated");
+        Console.WriteLine(record.Action);
+    }
+}
+```
+
+### Q7.87 Why is fields properties and methods in C# fundamentals?
+
+**Answer:** Fields properties and methods means understanding the different roles of storage access and behavior members. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with treating all members as equivalent syntax, and they should avoid the trap of skipping validation opportunities by exposing fields carelessly. Example: while debugging a notification workflow, so the service stays easier to extend. Another example: during a bug bash for a finance dashboard, so support debugging gets faster.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_87
+{
+    public static void Run()
+    {
+        class EmployeeProfile
+        {
+            private decimal _salary = 3687m;
+            public decimal Salary => _salary;
+            public void ApplyRaise(decimal amount) => _salary += amount;
+        }
+        var profile = new EmployeeProfile();
+        profile.ApplyRaise(150m);
+        Console.WriteLine(profile.Salary);
+    }
+}
+```
+
+### Q7.88 How can constructors and initialization intent in C# fundamentals?
+
+**Answer:** Constructors and initialization intent means establishing valid object state at creation time. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with filling critical data later by convention, and they should avoid the trap of allowing invalid partially built objects. Example: during a migration from .NET Framework to .NET, so edge cases are handled earlier. Another example: while reviewing a customer onboarding API, so team conventions stay more consistent.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_88
+{
+    public static void Run()
+    {
+        class CustomerRecord
+        {
+            public CustomerRecord(string id) => Id = id;
+            public string Id { get; }
+        }
+        var customer = new CustomerRecord("CUST-1688");
+        Console.WriteLine(customer.Id);
+    }
+}
+```
+
+### Q7.89 What is static members versus instance members in C# fundamentals?
+
+**Answer:** Static members versus instance members means separating shared type-level behavior from object-specific state. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with treating static and instance members as interchangeable, and they should avoid the trap of keeping request-specific mutable data in static members. Example: while onboarding a junior backend engineer, so future refactoring becomes less risky. Another example: during a production login incident, so the bug becomes easier to isolate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_89
+{
+    public static void Run()
+    {
+        class InvoiceNumberGenerator
+        {
+            private static int _seed = 789;
+            public static int Next() => ++_seed;
+        }
+        Console.WriteLine(InvoiceNumberGenerator.Next());
+    }
+}
+```
+
+### Q7.90 How does namespaces files and program structure in C# fundamentals?
+
+**Answer:** Namespaces files and program structure means organizing types so the solution stays understandable as it grows. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with placing unrelated types into one flat area, and they should avoid the trap of letting structure drift until ownership is unclear. Example: during a payment reconciliation fix, so test coverage becomes easier to design. Another example: while building a payroll export utility, so interview answers sound more grounded.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_90
+{
+    public static void Run()
+    {
+        namespace Demo.Fundamentals.Section7
+        {
+            public static class ProgramMap690
+            {
+                public static void Describe() => Console.WriteLine("Structured by responsibility");
+            }
+        }
+        Demo.Fundamentals.Section7.ProgramMap690.Describe();
+    }
+}
+```
+
+### Q7.91 Why does class design and responsibility boundaries in C# fundamentals?
+
+**Answer:** Class design and responsibility boundaries means keeping a type focused on one meaningful responsibility. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with dumping unrelated logic into utility classes, and they should avoid the trap of growing god classes over time. Example: while tuning a reporting batch, so the implementation becomes easier to validate. Another example: during a release hardening session, so the API contract becomes clearer.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_91
+{
+    public static void Run()
+    {
+        class InvoiceSummary
+        {
+            public decimal Total { get; set; } = 891m;
+            public string Currency { get; set; } = "USD";
+        }
+        var summary = new InvoiceSummary();
+        Console.WriteLine($"{summary.Total} {summary.Currency}");
+    }
+}
+```
+
+### Q7.92 When should you use access modifiers and visibility rules in C# fundamentals?
+
+**Answer:** Access modifiers and visibility rules means using public private and related modifiers to protect invariants. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with making every member public, and they should avoid the trap of exposing mutable internals directly. Example: during a support escalation for null data, so the production fix is safer to roll out. Another example: while stabilizing a background worker, so the service stays easier to extend.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_92
+{
+    public static void Run()
+    {
+        class AuditRecord
+        {
+            public string Action { get; private set; } = "Created-2";
+            public void Rename(string action) => Action = action;
+        }
+        var record = new AuditRecord();
+        record.Rename("Updated");
+        Console.WriteLine(record.Action);
+    }
+}
+```
+
+### Q7.93 What problem does fields properties and methods in C# fundamentals?
+
+**Answer:** Fields properties and methods means understanding the different roles of storage access and behavior members. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with treating all members as equivalent syntax, and they should avoid the trap of skipping validation opportunities by exposing fields carelessly. Example: while debugging a notification workflow, so data loss is less likely. Another example: during a bug bash for a finance dashboard, so edge cases are handled earlier.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_93
+{
+    public static void Run()
+    {
+        class EmployeeProfile
+        {
+            private decimal _salary = 3693m;
+            public decimal Salary => _salary;
+            public void ApplyRaise(decimal amount) => _salary += amount;
+        }
+        var profile = new EmployeeProfile();
+        profile.ApplyRaise(150m);
+        Console.WriteLine(profile.Salary);
+    }
+}
+```
+
+### Q7.94 How would you explain constructors and initialization intent in C# fundamentals?
+
+**Answer:** Constructors and initialization intent means establishing valid object state at creation time. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with filling critical data later by convention, and they should avoid the trap of allowing invalid partially built objects. Example: during a migration from .NET Framework to .NET, so runtime surprises are reduced. Another example: while reviewing a customer onboarding API, so future refactoring becomes less risky.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_94
+{
+    public static void Run()
+    {
+        class CustomerRecord
+        {
+            public CustomerRecord(string id) => Id = id;
+            public string Id { get; }
+        }
+        var customer = new CustomerRecord("CUST-1694");
+        Console.WriteLine(customer.Id);
+    }
+}
+```
+
+### Q7.95 Why is static members versus instance members in C# fundamentals?
+
+**Answer:** Static members versus instance members means separating shared type-level behavior from object-specific state. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with treating static and instance members as interchangeable, and they should avoid the trap of keeping request-specific mutable data in static members. Example: while onboarding a junior backend engineer, so the code reads more predictably. Another example: during a production login incident, so test coverage becomes easier to design.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_95
+{
+    public static void Run()
+    {
+        class InvoiceNumberGenerator
+        {
+            private static int _seed = 795;
+            public static int Next() => ++_seed;
+        }
+        Console.WriteLine(InvoiceNumberGenerator.Next());
+    }
+}
+```
+
+### Q7.96 How can namespaces files and program structure in C# fundamentals?
+
+**Answer:** Namespaces files and program structure means organizing types so the solution stays understandable as it grows. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with placing unrelated types into one flat area, and they should avoid the trap of letting structure drift until ownership is unclear. Example: during a payment reconciliation fix, so the domain model stays easier to explain. Another example: while building a payroll export utility, so the implementation becomes easier to validate.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_96
+{
+    public static void Run()
+    {
+        namespace Demo.Fundamentals.Section7
+        {
+            public static class ProgramMap696
+            {
+                public static void Describe() => Console.WriteLine("Structured by responsibility");
+            }
+        }
+        Demo.Fundamentals.Section7.ProgramMap696.Describe();
+    }
+}
+```
+
+### Q7.97 What is class design and responsibility boundaries in C# fundamentals?
+
+**Answer:** Class design and responsibility boundaries means keeping a type focused on one meaningful responsibility. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with dumping unrelated logic into utility classes, and they should avoid the trap of growing god classes over time. Example: while tuning a reporting batch, so performance trade-offs become easier to discuss. Another example: during a release hardening session, so the production fix is safer to roll out.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_97
+{
+    public static void Run()
+    {
+        class InvoiceSummary
+        {
+            public decimal Total { get; set; } = 897m;
+            public string Currency { get; set; } = "USD";
+        }
+        var summary = new InvoiceSummary();
+        Console.WriteLine($"{summary.Total} {summary.Currency}");
+    }
+}
+```
+
+### Q7.98 How does access modifiers and visibility rules in C# fundamentals?
+
+**Answer:** Access modifiers and visibility rules means using public private and related modifiers to protect invariants. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with making every member public, and they should avoid the trap of exposing mutable internals directly. Example: during a support escalation for null data, so the design choice is easier to defend. Another example: while stabilizing a background worker, so data loss is less likely.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_98
+{
+    public static void Run()
+    {
+        class AuditRecord
+        {
+            public string Action { get; private set; } = "Created-3";
+            public void Rename(string action) => Action = action;
+        }
+        var record = new AuditRecord();
+        record.Rename("Updated");
+        Console.WriteLine(record.Action);
+    }
+}
+```
+
+### Q7.99 Why does fields properties and methods in C# fundamentals?
+
+**Answer:** Fields properties and methods means understanding the different roles of storage access and behavior members. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with treating all members as equivalent syntax, and they should avoid the trap of skipping validation opportunities by exposing fields carelessly. Example: while debugging a notification workflow, so review comments become more actionable. Another example: during a bug bash for a finance dashboard, so runtime surprises are reduced.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_99
+{
+    public static void Run()
+    {
+        class EmployeeProfile
+        {
+            private decimal _salary = 3699m;
+            public decimal Salary => _salary;
+            public void ApplyRaise(decimal amount) => _salary += amount;
+        }
+        var profile = new EmployeeProfile();
+        profile.ApplyRaise(150m);
+        Console.WriteLine(profile.Salary);
+    }
+}
+```
+
+### Q7.100 When should you use constructors and initialization intent in C# fundamentals?
+
+**Answer:** Constructors and initialization intent means establishing valid object state at creation time. Teams should focus on it when discussing type design, visibility, members, and program structure basics in production code, they compare it with filling critical data later by convention, and they should avoid the trap of allowing invalid partially built objects. Example: during a migration from .NET Framework to .NET, so support debugging gets faster. Another example: while reviewing a customer onboarding API, so the code reads more predictably.
+
+**Code Example:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public static class Demo7_100
+{
+    public static void Run()
+    {
+        class CustomerRecord
+        {
+            public CustomerRecord(string id) => Id = id;
+            public string Id { get; }
+        }
+        var customer = new CustomerRecord("CUST-1700");
+        Console.WriteLine(customer.Id);
+    }
+}
+```

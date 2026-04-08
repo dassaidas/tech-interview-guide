@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="560" viewBox="0 0 1180 560" role="img" aria-label="Node.js memory management overview">
+<defs>
+<style>
+.bg { fill: #f7fafc; }
+.title { font: 700 30px Segoe UI, Arial, sans-serif; fill: #2d5d8a; }
+.subtitle { font: 600 16px Segoe UI, Arial, sans-serif; fill: #4a5568; }
+.box { fill: #ffffff; stroke: #2d5d8a; stroke-width: 2.4; rx: 18; ry: 18; }
+.boxAlt { fill: #edf6ff; stroke: #2d5d8a; stroke-width: 2.4; rx: 18; ry: 18; }
+.text { font: 700 18px Segoe UI, Arial, sans-serif; fill: #2d5d8a; }
+.small { font: 600 14px Segoe UI, Arial, sans-serif; fill: #4a5568; }
+.line { stroke: #2d5d8a; stroke-width: 3; fill: none; }
+</style>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0,0 L0,6 L9,3 z" fill="#2d5d8a" />
+</marker>
+</defs>
+<rect class="bg" width="1180" height="560" />
+<text x="40" y="54" class="title">Node.js Memory Management</text>
+<text x="40" y="84" class="subtitle">V8 heap spaces, GC behavior, leak sources, profiling, buffers, and production diagnostics</text>
+
+<rect x="50" y="130" width="170" height="110" class="boxAlt" />
+<text x="135" y="168" text-anchor="middle" class="text">Stack</text>
+<text x="135" y="194" text-anchor="middle" class="small">call frames, primitives,</text>
+<text x="135" y="216" text-anchor="middle" class="small">execution context</text>
+
+<rect x="260" y="130" width="180" height="110" class="box" />
+<text x="350" y="168" text-anchor="middle" class="text">V8 Heap</text>
+<text x="350" y="194" text-anchor="middle" class="small">new, old, LOS, code,</text>
+<text x="350" y="216" text-anchor="middle" class="small">map space</text>
+
+<rect x="480" y="130" width="180" height="110" class="boxAlt" />
+<text x="570" y="168" text-anchor="middle" class="text">Garbage Collection</text>
+<text x="570" y="194" text-anchor="middle" class="small">minor, major,</text>
+<text x="570" y="216" text-anchor="middle" class="small">incremental, concurrent</text>
+
+<rect x="700" y="130" width="180" height="110" class="box" />
+<text x="790" y="168" text-anchor="middle" class="text">Leaks</text>
+<text x="790" y="194" text-anchor="middle" class="small">closures, timers,</text>
+<text x="790" y="216" text-anchor="middle" class="small">listeners, caches</text>
+
+<rect x="920" y="130" width="200" height="110" class="boxAlt" />
+<text x="1020" y="168" text-anchor="middle" class="text">Profiling</text>
+<text x="1020" y="194" text-anchor="middle" class="small">heap snapshots, DevTools,</text>
+<text x="1020" y="216" text-anchor="middle" class="small">heapdump, Clinic.js</text>
+
+<rect x="140" y="330" width="210" height="120" class="box" />
+<text x="245" y="370" text-anchor="middle" class="text">Buffers / External</text>
+<text x="245" y="396" text-anchor="middle" class="small">binary memory, pooling,</text>
+<text x="245" y="418" text-anchor="middle" class="small">native memory</text>
+
+<rect x="400" y="330" width="210" height="120" class="boxAlt" />
+<text x="505" y="370" text-anchor="middle" class="text">Streams / Reuse</text>
+<text x="505" y="396" text-anchor="middle" class="small">chunking, backpressure,</text>
+<text x="505" y="418" text-anchor="middle" class="small">avoid full buffering</text>
+
+<rect x="660" y="330" width="210" height="120" class="box" />
+<text x="765" y="370" text-anchor="middle" class="text">Weak References</text>
+<text x="765" y="396" text-anchor="middle" class="small">WeakMap, WeakRef,</text>
+<text x="765" y="418" text-anchor="middle" class="small">FinalizationRegistry</text>
+
+<rect x="920" y="330" width="210" height="120" class="boxAlt" />
+<text x="1025" y="370" text-anchor="middle" class="text">Production Ops</text>
+<text x="1025" y="396" text-anchor="middle" class="small">limits, Docker/K8s,</text>
+<text x="1025" y="418" text-anchor="middle" class="small">spikes, leak tests</text>
+
+<path class="line" marker-end="url(#arrow)" d="M220 185 H260" />
+<path class="line" marker-end="url(#arrow)" d="M440 185 H480" />
+<path class="line" marker-end="url(#arrow)" d="M660 185 H700" />
+<path class="line" marker-end="url(#arrow)" d="M880 185 H920" />
+<path class="line" marker-end="url(#arrow)" d="M350 240 V310" />
+<path class="line" marker-end="url(#arrow)" d="M570 240 V310" />
+<path class="line" marker-end="url(#arrow)" d="M790 240 V310" />
+<path class="line" marker-end="url(#arrow)" d="M1020 240 V310" />
+</svg>

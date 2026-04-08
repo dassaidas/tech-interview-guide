@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Express.js Request Lifecycle</title>
+  <desc id="desc">A diagram showing Express.js request flow through middleware, routing, controllers, error handling, and infrastructure concerns.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f7fafc"/>
+      <stop offset="100%" stop-color="#e6f0fb"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2d5d8a"/>
+      <stop offset="100%" stop-color="#4a7fb8"/>
+    </linearGradient>
+    <style>
+      .title { font: 700 30px 'Segoe UI', Arial, sans-serif; fill: #16324f; }
+      .subtitle { font: 400 15px 'Segoe UI', Arial, sans-serif; fill: #35516b; }
+      .box { fill: #ffffff; stroke: #2d5d8a; stroke-width: 2; rx: 18; ry: 18; }
+      .header { fill: url(#accent); rx: 18; ry: 18; }
+      .label { font: 700 18px 'Segoe UI', Arial, sans-serif; fill: #ffffff; }
+      .text { font: 400 15px 'Segoe UI', Arial, sans-serif; fill: #213547; }
+      .note { font: 600 14px 'Segoe UI', Arial, sans-serif; fill: #2d5d8a; }
+      .line { stroke: #6c8fb2; stroke-width: 2.5; stroke-linecap: round; fill: none; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="760" fill="url(#bg)"/>
+
+  <text x="600" y="54" text-anchor="middle" class="title">Express.js</text>
+  <text x="600" y="82" text-anchor="middle" class="subtitle">Middleware pipeline, routing, controllers, error handling, observability, and production scaling</text>
+
+  <rect x="80" y="140" width="210" height="120" class="box"/>
+  <rect x="80" y="140" width="210" height="38" class="header"/>
+  <text x="185" y="165" text-anchor="middle" class="label">Incoming Request</text>
+  <text x="100" y="204" class="text">• Method, URL, headers</text>
+  <text x="100" y="228" class="text">• Body, params, query</text>
+
+  <rect x="340" y="140" width="230" height="120" class="box"/>
+  <rect x="340" y="140" width="230" height="38" class="header"/>
+  <text x="455" y="165" text-anchor="middle" class="label">Global Middleware</text>
+  <text x="360" y="204" class="text">• JSON parsing</text>
+  <text x="360" y="228" class="text">• CORS, Helmet, logging</text>
+
+  <rect x="620" y="140" width="220" height="120" class="box"/>
+  <rect x="620" y="140" width="220" height="38" class="header"/>
+  <text x="730" y="165" text-anchor="middle" class="label">Router Match</text>
+  <text x="640" y="204" class="text">• Path and method lookup</text>
+  <text x="640" y="228" class="text">• Router / Layer stack</text>
+
+  <rect x="890" y="140" width="230" height="120" class="box"/>
+  <rect x="890" y="140" width="230" height="38" class="header"/>
+  <text x="1005" y="165" text-anchor="middle" class="label">Route Middleware</text>
+  <text x="910" y="204" class="text">• Auth, validation</text>
+  <text x="910" y="228" class="text">• Per-route policy</text>
+
+  <rect x="160" y="360" width="250" height="150" class="box"/>
+  <rect x="160" y="360" width="250" height="38" class="header"/>
+  <text x="285" y="385" text-anchor="middle" class="label">Controller & Service</text>
+  <text x="180" y="424" class="text">• Business logic</text>
+  <text x="180" y="448" class="text">• DB / cache / upstream calls</text>
+  <text x="180" y="472" class="note">Keep controllers thin</text>
+
+  <rect x="470" y="360" width="250" height="150" class="box"/>
+  <rect x="470" y="360" width="250" height="38" class="header"/>
+  <text x="595" y="385" text-anchor="middle" class="label">Response Layer</text>
+  <text x="490" y="424" class="text">• res.json, res.send</text>
+  <text x="490" y="448" class="text">• Status, headers, cookies</text>
+  <text x="490" y="472" class="note">Send once, end cleanly</text>
+
+  <rect x="780" y="360" width="260" height="150" class="box"/>
+  <rect x="780" y="360" width="260" height="38" class="header"/>
+  <text x="910" y="385" text-anchor="middle" class="label">Error Middleware</text>
+  <text x="800" y="424" class="text">• Centralized handling</text>
+  <text x="800" y="448" class="text">• Logging and safe responses</text>
+  <text x="800" y="472" class="note">Last in the chain</text>
+
+  <rect x="220" y="580" width="300" height="110" class="box"/>
+  <rect x="220" y="580" width="300" height="38" class="header"/>
+  <text x="370" y="605" text-anchor="middle" class="label">Observability</text>
+  <text x="240" y="644" class="text">• Morgan / Pino / metrics</text>
+  <text x="240" y="668" class="text">• Tracing and alerting</text>
+
+  <rect x="620" y="580" width="350" height="110" class="box"/>
+  <rect x="620" y="580" width="350" height="38" class="header"/>
+  <text x="795" y="605" text-anchor="middle" class="label">Production Operations</text>
+  <text x="640" y="644" class="text">• Graceful shutdown, clustering, load balancing</text>
+  <text x="640" y="668" class="text">• Stateless scaling and reverse proxies</text>
+
+  <path d="M290 200 H340" class="line"/>
+  <path d="M570 200 H620" class="line"/>
+  <path d="M840 200 H890" class="line"/>
+  <path d="M1005 260 V320 H285 V360" class="line"/>
+  <path d="M410 435 H470" class="line"/>
+  <path d="M720 435 H780" class="line"/>
+  <path d="M595 510 V560 H370 V580" class="line"/>
+  <path d="M910 510 V580" class="line"/>
+
+  <text x="600" y="724" text-anchor="middle" class="subtitle">Senior interview point: Express feels simple because it is mostly middleware composition, but real mastery shows up in ordering, async safety, structure, and production behavior.</text>
+</svg>

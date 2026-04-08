@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Node.js HTTP and Networking Overview</title>
+  <desc id="desc">Diagram showing clients, Node HTTP server, routing, headers, streaming, TLS, proxies, and upstream services.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f5fbff"/>
+      <stop offset="100%" stop-color="#e7f3ea"/>
+    </linearGradient>
+    <linearGradient id="node" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1f6f5c"/>
+      <stop offset="100%" stop-color="#2d9c6a"/>
+    </linearGradient>
+    <style>
+      .label { font: 700 24px 'Segoe UI', Arial, sans-serif; fill: #173a2e; }
+      .text { font: 500 17px 'Segoe UI', Arial, sans-serif; fill: #204336; }
+      .small { font: 500 15px 'Segoe UI', Arial, sans-serif; fill: #35594b; }
+      .box { fill: #ffffff; stroke: #8db7a2; stroke-width: 2; rx: 18; }
+      .nodebox { fill: url(#node); stroke: #12513f; stroke-width: 2; rx: 22; }
+      .nodetext { font: 700 22px 'Segoe UI', Arial, sans-serif; fill: #ffffff; }
+      .arrow { stroke: #2b6f5a; stroke-width: 3; fill: none; marker-end: url(#m); }
+      .dash { stroke-dasharray: 8 8; }
+    </style>
+    <marker id="m" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2b6f5a"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="760" fill="url(#bg)"/>
+
+  <text x="600" y="58" text-anchor="middle" class="label">Node.js HTTP and Networking</text>
+  <text x="600" y="88" text-anchor="middle" class="small">Requests, routing, headers, sockets, TLS, proxies, and streaming in one flow</text>
+
+  <rect x="70" y="170" width="220" height="120" class="box"/>
+  <text x="180" y="210" text-anchor="middle" class="label" font-size="20">Clients</text>
+  <text x="180" y="240" text-anchor="middle" class="text">Browsers</text>
+  <text x="180" y="265" text-anchor="middle" class="text">Mobile apps</text>
+  <text x="180" y="290" text-anchor="middle" class="text">Internal services</text>
+
+  <rect x="350" y="140" width="500" height="190" class="nodebox"/>
+  <text x="600" y="185" text-anchor="middle" class="nodetext">Node.js HTTP Server</text>
+  <text x="600" y="220" text-anchor="middle" class="nodetext" font-size="18">`http` / frameworks / middleware / routing</text>
+  <text x="600" y="255" text-anchor="middle" class="nodetext" font-size="18">Methods, URLs, headers, body parsing, status codes</text>
+  <text x="600" y="290" text-anchor="middle" class="nodetext" font-size="18">Keep-alive, sockets, backpressure, streaming responses</text>
+
+  <rect x="920" y="130" width="220" height="105" class="box"/>
+  <text x="1030" y="170" text-anchor="middle" class="label" font-size="20">Proxy / LB</text>
+  <text x="1030" y="198" text-anchor="middle" class="text">Nginx / Ingress</text>
+  <text x="1030" y="223" text-anchor="middle" class="text">Forwarded headers</text>
+
+  <rect x="920" y="260" width="220" height="105" class="box"/>
+  <text x="1030" y="300" text-anchor="middle" class="label" font-size="20">TLS / HTTPS</text>
+  <text x="1030" y="328" text-anchor="middle" class="text">Certificates</text>
+  <text x="1030" y="353" text-anchor="middle" class="text">Secure transport</text>
+
+  <rect x="180" y="430" width="250" height="120" class="box"/>
+  <text x="305" y="470" text-anchor="middle" class="label" font-size="20">Request Flow</text>
+  <text x="305" y="500" text-anchor="middle" class="text">URL + method</text>
+  <text x="305" y="525" text-anchor="middle" class="text">Query params + body</text>
+  <text x="305" y="550" text-anchor="middle" class="text">Auth + validation</text>
+
+  <rect x="475" y="430" width="250" height="120" class="box"/>
+  <text x="600" y="470" text-anchor="middle" class="label" font-size="20">Response Flow</text>
+  <text x="600" y="500" text-anchor="middle" class="text">Headers + status code</text>
+  <text x="600" y="525" text-anchor="middle" class="text">JSON / file / stream</text>
+  <text x="600" y="550" text-anchor="middle" class="text">Errors + retries + timeouts</text>
+
+  <rect x="770" y="430" width="280" height="120" class="box"/>
+  <text x="910" y="470" text-anchor="middle" class="label" font-size="20">Upstream Systems</text>
+  <text x="910" y="500" text-anchor="middle" class="text">APIs, caches, storage</text>
+  <text x="910" y="525" text-anchor="middle" class="text">Databases, queues</text>
+  <text x="910" y="550" text-anchor="middle" class="text">Streaming file sources</text>
+
+  <rect x="370" y="610" width="470" height="90" class="box"/>
+  <text x="605" y="645" text-anchor="middle" class="label" font-size="20">Key Interview Areas</text>
+  <text x="605" y="675" text-anchor="middle" class="text">HTTP semantics, headers, status codes, sockets, keep-alive, TLS, proxies, streaming, backpressure</text>
+
+  <path d="M290 230 L350 230" class="arrow"/>
+  <path d="M850 190 L920 180" class="arrow"/>
+  <path d="M850 270 L920 305" class="arrow dash"/>
+  <path d="M305 430 L430 330" class="arrow"/>
+  <path d="M600 330 L600 430" class="arrow"/>
+  <path d="M795 430 L730 330" class="arrow"/>
+</svg>

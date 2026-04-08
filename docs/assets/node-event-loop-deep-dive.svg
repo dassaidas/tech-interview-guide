@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1140" height="520" viewBox="0 0 1140 520" role="img" aria-label="Node.js event loop deep dive">
+<defs>
+<style>
+.bg { fill: #f7fafc; }
+.title { font: 700 30px Segoe UI, Arial, sans-serif; fill: #2d5d8a; }
+.subtitle { font: 600 16px Segoe UI, Arial, sans-serif; fill: #4a5568; }
+.box { fill: #ffffff; stroke: #2d5d8a; stroke-width: 2.4; rx: 18; ry: 18; }
+.boxAlt { fill: #edf6ff; stroke: #2d5d8a; stroke-width: 2.4; rx: 18; ry: 18; }
+.text { font: 700 18px Segoe UI, Arial, sans-serif; fill: #2d5d8a; }
+.small { font: 600 14px Segoe UI, Arial, sans-serif; fill: #4a5568; }
+.line { stroke: #2d5d8a; stroke-width: 3; fill: none; }
+</style>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0,0 L0,6 L9,3 z" fill="#2d5d8a" />
+</marker>
+</defs>
+<rect class="bg" width="1140" height="520" />
+<text x="40" y="54" class="title">Node.js Event Loop Deep Dive</text>
+<text x="40" y="84" class="subtitle">Tick order, timers, poll, check, close callbacks, nextTick, and promise microtasks</text>
+
+<rect x="50" y="130" width="170" height="95" class="box" />
+<text x="135" y="165" text-anchor="middle" class="text">Timers</text>
+<text x="135" y="190" text-anchor="middle" class="small">setTimeout / setInterval</text>
+
+<rect x="250" y="130" width="170" height="95" class="box" />
+<text x="335" y="165" text-anchor="middle" class="text">Pending</text>
+<text x="335" y="190" text-anchor="middle" class="small">system callbacks</text>
+
+<rect x="450" y="130" width="170" height="95" class="box" />
+<text x="535" y="165" text-anchor="middle" class="text">Idle/Prepare</text>
+<text x="535" y="190" text-anchor="middle" class="small">internal setup</text>
+
+<rect x="650" y="130" width="170" height="95" class="boxAlt" />
+<text x="735" y="165" text-anchor="middle" class="text">Poll</text>
+<text x="735" y="190" text-anchor="middle" class="small">I/O callbacks and waiting</text>
+
+<rect x="850" y="130" width="170" height="95" class="box" />
+<text x="935" y="165" text-anchor="middle" class="text">Check</text>
+<text x="935" y="190" text-anchor="middle" class="small">setImmediate</text>
+
+<rect x="450" y="270" width="240" height="95" class="box" />
+<text x="570" y="305" text-anchor="middle" class="text">Close Callbacks</text>
+<text x="570" y="330" text-anchor="middle" class="small">socket and handle close events</text>
+
+<rect x="70" y="390" width="230" height="90" class="boxAlt" />
+<text x="185" y="423" text-anchor="middle" class="text">process.nextTick()</text>
+<text x="185" y="447" text-anchor="middle" class="small">runs before promise microtasks</text>
+
+<rect x="340" y="390" width="220" height="90" class="boxAlt" />
+<text x="450" y="423" text-anchor="middle" class="text">Promise Queue</text>
+<text x="450" y="447" text-anchor="middle" class="small">then / catch / finally</text>
+
+<rect x="610" y="390" width="220" height="90" class="boxAlt" />
+<text x="720" y="423" text-anchor="middle" class="text">One Tick</text>
+<text x="720" y="447" text-anchor="middle" class="small">run phase, drain microtasks</text>
+
+<rect x="870" y="390" width="220" height="90" class="boxAlt" />
+<text x="980" y="423" text-anchor="middle" class="text">Starvation Risk</text>
+<text x="980" y="447" text-anchor="middle" class="small">unbounded nextTick recursion</text>
+
+<path class="line" marker-end="url(#arrow)" d="M220 178 H250" />
+<path class="line" marker-end="url(#arrow)" d="M420 178 H450" />
+<path class="line" marker-end="url(#arrow)" d="M620 178 H650" />
+<path class="line" marker-end="url(#arrow)" d="M820 178 H850" />
+<path class="line" marker-end="url(#arrow)" d="M935 225 V255 H690" />
+<path class="line" marker-end="url(#arrow)" d="M570 365 V390" />
+<path class="line" marker-end="url(#arrow)" d="M300 435 H340" />
+<path class="line" marker-end="url(#arrow)" d="M560 435 H610" />
+<path class="line" marker-end="url(#arrow)" d="M830 435 H870" />
+</svg>

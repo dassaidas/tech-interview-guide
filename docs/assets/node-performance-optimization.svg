@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="560" viewBox="0 0 1180 560" role="img" aria-label="Node.js performance optimization map">
+<defs>
+<style>
+.bg { fill: #f7fafc; }
+.title { font: 700 30px Segoe UI, Arial, sans-serif; fill: #2d5d8a; }
+.subtitle { font: 600 16px Segoe UI, Arial, sans-serif; fill: #4a5568; }
+.box { fill: #ffffff; stroke: #2d5d8a; stroke-width: 2.4; rx: 18; ry: 18; }
+.boxAlt { fill: #edf6ff; stroke: #2d5d8a; stroke-width: 2.4; rx: 18; ry: 18; }
+.text { font: 700 18px Segoe UI, Arial, sans-serif; fill: #2d5d8a; }
+.small { font: 600 14px Segoe UI, Arial, sans-serif; fill: #4a5568; }
+.line { stroke: #2d5d8a; stroke-width: 3; fill: none; }
+</style>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0,0 L0,6 L9,3 z" fill="#2d5d8a" />
+</marker>
+</defs>
+<rect class="bg" width="1180" height="560" />
+<text x="40" y="54" class="title">Node.js Performance Optimization</text>
+<text x="40" y="84" class="subtitle">Event loop health, parallelism, caching, streaming, observability, and scaling patterns</text>
+
+<rect x="50" y="130" width="200" height="110" class="boxAlt" />
+<text x="150" y="165" text-anchor="middle" class="text">Event Loop</text>
+<text x="150" y="190" text-anchor="middle" class="small">timers, poll, check,</text>
+<text x="150" y="212" text-anchor="middle" class="small">microtasks, backpressure</text>
+
+<rect x="300" y="130" width="200" height="110" class="box" />
+<text x="400" y="165" text-anchor="middle" class="text">CPU Scaling</text>
+<text x="400" y="190" text-anchor="middle" class="small">worker threads, cluster,</text>
+<text x="400" y="212" text-anchor="middle" class="small">thread pool tuning</text>
+
+<rect x="550" y="130" width="200" height="110" class="boxAlt" />
+<text x="650" y="165" text-anchor="middle" class="text">Data Flow</text>
+<text x="650" y="190" text-anchor="middle" class="small">streams, buffers,</text>
+<text x="650" y="212" text-anchor="middle" class="small">compression, chunking</text>
+
+<rect x="800" y="130" width="200" height="110" class="box" />
+<text x="900" y="165" text-anchor="middle" class="text">Caching</text>
+<text x="900" y="190" text-anchor="middle" class="small">memory, Redis, CDN,</text>
+<text x="900" y="212" text-anchor="middle" class="small">invalidation</text>
+
+<rect x="50" y="320" width="200" height="110" class="box" />
+<text x="150" y="355" text-anchor="middle" class="text">Horizontal Scale</text>
+<text x="150" y="380" text-anchor="middle" class="small">Nginx, PM2, K8s,</text>
+<text x="150" y="402" text-anchor="middle" class="small">health checks</text>
+
+<rect x="300" y="320" width="200" height="110" class="boxAlt" />
+<text x="400" y="355" text-anchor="middle" class="text">Memory</text>
+<text x="400" y="380" text-anchor="middle" class="small">heap, GC, leaks,</text>
+<text x="400" y="402" text-anchor="middle" class="small">retained objects</text>
+
+<rect x="550" y="320" width="200" height="110" class="box" />
+<text x="650" y="355" text-anchor="middle" class="text">Profiling</text>
+<text x="650" y="380" text-anchor="middle" class="small">Clinic.js, DevTools,</text>
+<text x="650" y="402" text-anchor="middle" class="small">Benchmark.js</text>
+
+<rect x="800" y="320" width="200" height="110" class="boxAlt" />
+<text x="900" y="355" text-anchor="middle" class="text">Observability</text>
+<text x="900" y="380" text-anchor="middle" class="small">logs, metrics, APM,</text>
+<text x="900" y="402" text-anchor="middle" class="small">load testing</text>
+
+<rect x="1030" y="220" width="110" height="120" class="box" />
+<text x="1085" y="258" text-anchor="middle" class="text">CMS</text>
+<text x="1085" y="284" text-anchor="middle" class="small">reports, Redis,</text>
+<text x="1085" y="306" text-anchor="middle" class="small">queues, uploads</text>
+
+<path class="line" marker-end="url(#arrow)" d="M250 185 H300" />
+<path class="line" marker-end="url(#arrow)" d="M500 185 H550" />
+<path class="line" marker-end="url(#arrow)" d="M750 185 H800" />
+<path class="line" marker-end="url(#arrow)" d="M150 240 V300" />
+<path class="line" marker-end="url(#arrow)" d="M400 240 V300" />
+<path class="line" marker-end="url(#arrow)" d="M650 240 V300" />
+<path class="line" marker-end="url(#arrow)" d="M900 240 V300" />
+<path class="line" marker-end="url(#arrow)" d="M1000 185 H1030" />
+<path class="line" marker-end="url(#arrow)" d="M1000 375 H1030" />
+</svg>
