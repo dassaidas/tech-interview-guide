@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="430" viewBox="0 0 1200 430" role="img" aria-labelledby="title desc">
+  <title id="title">C# Multithreading and Async Programming Interview Map</title>
+  <desc id="desc">A visual map of threads, tasks, async await, TPL, synchronization, and concurrency bugs.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#1f2937"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="430" fill="url(#bg)"/>
+  <text x="54" y="64" fill="#f9fafb" font-family="Segoe UI, Arial, sans-serif" font-size="30" font-weight="700">
+    C# Multithreading, Async, TPL, Parallel Programming
+  </text>
+  <text x="54" y="102" fill="#d1d5db" font-family="Segoe UI, Arial, sans-serif" font-size="18">
+    Practical interview guide from thread basics to deadlocks, race conditions, and production tuning
+  </text>
+
+  <rect x="48" y="148" width="180" height="190" rx="18" fill="#1d4ed8"/>
+  <text x="72" y="188" fill="#eff6ff" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Threads</text>
+  <text x="72" y="218" fill="#dbeafe" font-family="Segoe UI, Arial, sans-serif" font-size="16">OS threads</text>
+  <text x="72" y="242" fill="#dbeafe" font-family="Segoe UI, Arial, sans-serif" font-size="16">Tasks vs threads</text>
+  <text x="72" y="266" fill="#dbeafe" font-family="Segoe UI, Arial, sans-serif" font-size="16">ThreadPool</text>
+  <text x="72" y="290" fill="#dbeafe" font-family="Segoe UI, Arial, sans-serif" font-size="16">Scheduling</text>
+
+  <rect x="246" y="148" width="180" height="190" rx="18" fill="#0f766e"/>
+  <text x="270" y="188" fill="#ecfeff" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">async/await</text>
+  <text x="270" y="218" fill="#ccfbf1" font-family="Segoe UI, Arial, sans-serif" font-size="16">I/O bound work</text>
+  <text x="270" y="242" fill="#ccfbf1" font-family="Segoe UI, Arial, sans-serif" font-size="16">Await flow</text>
+  <text x="270" y="266" fill="#ccfbf1" font-family="Segoe UI, Arial, sans-serif" font-size="16">Context capture</text>
+  <text x="270" y="290" fill="#ccfbf1" font-family="Segoe UI, Arial, sans-serif" font-size="16">Exceptions</text>
+
+  <rect x="444" y="148" width="180" height="190" rx="18" fill="#7c3aed"/>
+  <text x="468" y="188" fill="#f5f3ff" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">TPL</text>
+  <text x="468" y="218" fill="#ede9fe" font-family="Segoe UI, Arial, sans-serif" font-size="16">Task.Run</text>
+  <text x="468" y="242" fill="#ede9fe" font-family="Segoe UI, Arial, sans-serif" font-size="16">WhenAll</text>
+  <text x="468" y="266" fill="#ede9fe" font-family="Segoe UI, Arial, sans-serif" font-size="16">Cancellation</text>
+  <text x="468" y="290" fill="#ede9fe" font-family="Segoe UI, Arial, sans-serif" font-size="16">Composition</text>
+
+  <rect x="642" y="148" width="180" height="190" rx="18" fill="#b45309"/>
+  <text x="666" y="188" fill="#fff7ed" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Parallel</text>
+  <text x="666" y="218" fill="#ffedd5" font-family="Segoe UI, Arial, sans-serif" font-size="16">CPU bound work</text>
+  <text x="666" y="242" fill="#ffedd5" font-family="Segoe UI, Arial, sans-serif" font-size="16">Parallel.ForEach</text>
+  <text x="666" y="266" fill="#ffedd5" font-family="Segoe UI, Arial, sans-serif" font-size="16">PLINQ</text>
+  <text x="666" y="290" fill="#ffedd5" font-family="Segoe UI, Arial, sans-serif" font-size="16">Partitioning</text>
+
+  <rect x="840" y="148" width="180" height="190" rx="18" fill="#be123c"/>
+  <text x="864" y="188" fill="#fff1f2" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Sync</text>
+  <text x="864" y="218" fill="#ffe4e6" font-family="Segoe UI, Arial, sans-serif" font-size="16">lock</text>
+  <text x="864" y="242" fill="#ffe4e6" font-family="Segoe UI, Arial, sans-serif" font-size="16">Monitor</text>
+  <text x="864" y="266" fill="#ffe4e6" font-family="Segoe UI, Arial, sans-serif" font-size="16">Semaphore</text>
+  <text x="864" y="290" fill="#ffe4e6" font-family="Segoe UI, Arial, sans-serif" font-size="16">Interlocked</text>
+
+  <rect x="1038" y="148" width="120" height="190" rx="18" fill="#334155"/>
+  <text x="1058" y="188" fill="#f8fafc" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700">Bugs</text>
+  <text x="1058" y="218" fill="#e2e8f0" font-family="Segoe UI, Arial, sans-serif" font-size="15">Deadlocks</text>
+  <text x="1058" y="242" fill="#e2e8f0" font-family="Segoe UI, Arial, sans-serif" font-size="15">Races</text>
+  <text x="1058" y="266" fill="#e2e8f0" font-family="Segoe UI, Arial, sans-serif" font-size="15">Contention</text>
+  <text x="1058" y="290" fill="#e2e8f0" font-family="Segoe UI, Arial, sans-serif" font-size="15">Starvation</text>
+</svg>

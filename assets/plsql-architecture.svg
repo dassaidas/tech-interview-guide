@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="300" viewBox="0 0 900 300" role="img" aria-label="PL/SQL Execution Architecture">
+<defs>
+<style>
+.bg { fill: #fbfbf6; }
+.box { fill: #ffffff; stroke: #7d6b18; stroke-width: 2.4; rx: 18; ry: 18; }
+.line { stroke: #7d6b18; stroke-width: 3; fill: none; }
+.title { font: 700 28px Segoe UI, Arial, sans-serif; fill: #7d6b18; }
+.text { font: 700 16px Segoe UI, Arial, sans-serif; fill: #7d6b18; }
+</style>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#7d6b18" /></marker>
+</defs>
+<rect class="bg" width="900" height="300" />
+<text x="40" y="48" class="title">PL/SQL Execution Architecture</text>
+<rect x="40" y="118" width="140" height="92" class="box" />
+<text x="110" y="152" text-anchor="middle" class="text">Client</text>
+<rect x="267" y="118" width="140" height="92" class="box" />
+<text x="337" y="152" text-anchor="middle" class="text">PL/SQL Engine</text>
+<rect x="493" y="118" width="140" height="92" class="box" />
+<text x="563" y="152" text-anchor="middle" class="text">SQL Engine</text>
+<rect x="720" y="118" width="140" height="92" class="box" />
+<text x="790" y="152" text-anchor="middle" class="text">Oracle DB</text>
+<path class="line" marker-end="url(#arrow)" d="M180 164 H267" />
+<path class="line" marker-end="url(#arrow)" d="M407 164 H493" />
+<path class="line" marker-end="url(#arrow)" d="M633 164 H720" />
+</svg>

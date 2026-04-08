@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Node.js Logging and Monitoring Architecture</title>
+  <desc id="desc">Diagram showing structured logging, metrics, traces, alerting, and dashboards for a Node.js service and related microservices.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f7fbff"/>
+      <stop offset="100%" stop-color="#eef7f4"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f6fafc"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#19324d" flood-opacity="0.14"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 z" fill="#2f5c8a"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="760" fill="url(#bg)"/>
+  <text x="60" y="70" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="700" fill="#17324d">Node.js Logging and Monitoring</text>
+  <text x="60" y="106" font-family="Segoe UI, Arial, sans-serif" font-size="18" fill="#47627d">Structured logs, metrics, traces, health checks, dashboards, and alerts across APIs and microservices</text>
+
+  <rect x="60" y="145" rx="24" ry="24" width="220" height="120" fill="url(#panel)" stroke="#8cb3d9" stroke-width="2" filter="url(#shadow)"/>
+  <text x="170" y="192" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">Node.js Service</text>
+  <text x="170" y="224" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">API / Worker / Gateway</text>
+
+  <rect x="350" y="115" rx="24" ry="24" width="250" height="150" fill="url(#panel)" stroke="#79a66a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="475" y="160" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">Structured Logging</text>
+  <text x="475" y="192" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Pino / Winston</text>
+  <text x="475" y="220" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Correlation ID, service, tenant</text>
+
+  <rect x="660" y="115" rx="24" ry="24" width="220" height="150" fill="url(#panel)" stroke="#d8a24a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="770" y="160" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">Metrics</text>
+  <text x="770" y="192" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Prometheus / prom-client</text>
+  <text x="770" y="220" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Latency, errors, throughput</text>
+
+  <rect x="940" y="115" rx="24" ry="24" width="200" height="150" fill="url(#panel)" stroke="#9f7cd6" stroke-width="2" filter="url(#shadow)"/>
+  <text x="1040" y="160" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">Tracing</text>
+  <text x="1040" y="192" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">OpenTelemetry</text>
+  <text x="1040" y="220" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Trace ID / Span ID</text>
+
+  <rect x="120" y="430" rx="28" ry="28" width="280" height="190" fill="url(#panel)" stroke="#79a66a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="260" y="477" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">Centralized Logs</text>
+  <text x="260" y="510" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">ELK / Datadog / Azure Monitor</text>
+  <text x="260" y="538" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Search by correlation or tenant</text>
+  <text x="260" y="566" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Retention and alert context</text>
+
+  <rect x="460" y="430" rx="28" ry="28" width="280" height="190" fill="url(#panel)" stroke="#d8a24a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="600" y="477" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">Dashboards</text>
+  <text x="600" y="510" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Grafana / APM UI</text>
+  <text x="600" y="538" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">p95 latency, error rate, queue lag</text>
+  <text x="600" y="566" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Service health trends</text>
+
+  <rect x="800" y="430" rx="28" ry="28" width="300" height="190" fill="url(#panel)" stroke="#8cb3d9" stroke-width="2" filter="url(#shadow)"/>
+  <text x="950" y="477" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">Alerts and Health</text>
+  <text x="950" y="510" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">SLOs, readiness, liveness</text>
+  <text x="950" y="538" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Latency, failure, memory, lag alerts</text>
+  <text x="950" y="566" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Worker and dependency visibility</text>
+
+  <path d="M280 205 H350" stroke="#2f5c8a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M280 230 H660" stroke="#2f5c8a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M280 255 H940" stroke="#2f5c8a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M475 265 V350 H260 V430" stroke="#2f5c8a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M770 265 V350 H600 V430" stroke="#2f5c8a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M1040 265 V350 H950 V430" stroke="#2f5c8a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+
+  <rect x="60" y="660" rx="18" ry="18" width="1080" height="62" fill="#17324d" opacity="0.92"/>
+  <text x="90" y="700" font-family="Segoe UI, Arial, sans-serif" font-size="18" fill="#ffffff">Flow: service emits logs, metrics, and traces → centralized platforms visualize health → alerts fire on SLO breaches and hidden worker issues</text>
+</svg>

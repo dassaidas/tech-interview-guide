@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="560" viewBox="0 0 1180 560" role="img" aria-label="Node.js error handling overview">
+<defs>
+<style>
+.bg { fill: #f7fafc; }
+.title { font: 700 30px Segoe UI, Arial, sans-serif; fill: #2d5d8a; }
+.subtitle { font: 600 16px Segoe UI, Arial, sans-serif; fill: #4a5568; }
+.box { fill: #ffffff; stroke: #2d5d8a; stroke-width: 2.4; rx: 18; ry: 18; }
+.boxAlt { fill: #edf6ff; stroke: #2d5d8a; stroke-width: 2.4; rx: 18; ry: 18; }
+.text { font: 700 18px Segoe UI, Arial, sans-serif; fill: #2d5d8a; }
+.small { font: 600 14px Segoe UI, Arial, sans-serif; fill: #4a5568; }
+.line { stroke: #2d5d8a; stroke-width: 3; fill: none; }
+</style>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0,0 L0,6 L9,3 z" fill="#2d5d8a" />
+</marker>
+</defs>
+<rect class="bg" width="1180" height="560" />
+<text x="40" y="54" class="title">Node.js Error Handling</text>
+<text x="40" y="84" class="subtitle">Operational vs programmer errors, async propagation, middleware, process safety, and observability</text>
+
+<rect x="50" y="130" width="190" height="110" class="boxAlt" />
+<text x="145" y="166" text-anchor="middle" class="text">Error Sources</text>
+<text x="145" y="192" text-anchor="middle" class="small">validation, DB, APIs,</text>
+<text x="145" y="214" text-anchor="middle" class="small">logic bugs, streams</text>
+
+<rect x="290" y="130" width="190" height="110" class="box" />
+<text x="385" y="166" text-anchor="middle" class="text">Local Handling</text>
+<text x="385" y="192" text-anchor="middle" class="small">try/catch, callbacks,</text>
+<text x="385" y="214" text-anchor="middle" class="small">promise catch</text>
+
+<rect x="530" y="130" width="200" height="110" class="boxAlt" />
+<text x="630" y="166" text-anchor="middle" class="text">Centralized API</text>
+<text x="630" y="192" text-anchor="middle" class="small">Express middleware,</text>
+<text x="630" y="214" text-anchor="middle" class="small">custom errors</text>
+
+<rect x="780" y="130" width="190" height="110" class="box" />
+<text x="875" y="166" text-anchor="middle" class="text">Process Safety</text>
+<text x="875" y="192" text-anchor="middle" class="small">uncaughtException,</text>
+<text x="875" y="214" text-anchor="middle" class="small">unhandledRejection</text>
+
+<rect x="1010" y="130" width="120" height="110" class="boxAlt" />
+<text x="1070" y="166" text-anchor="middle" class="text">Recovery</text>
+<text x="1070" y="192" text-anchor="middle" class="small">retry, breaker,</text>
+<text x="1070" y="214" text-anchor="middle" class="small">fallback</text>
+
+<rect x="110" y="330" width="230" height="120" class="box" />
+<text x="225" y="370" text-anchor="middle" class="text">Callbacks / Streams / Events</text>
+<text x="225" y="396" text-anchor="middle" class="small">error-first callbacks, pipeline,</text>
+<text x="225" y="418" text-anchor="middle" class="small">EventEmitter error</text>
+
+<rect x="390" y="330" width="220" height="120" class="boxAlt" />
+<text x="500" y="370" text-anchor="middle" class="text">Logging</text>
+<text x="500" y="396" text-anchor="middle" class="small">Pino, Winston, traces,</text>
+<text x="500" y="418" text-anchor="middle" class="small">structured context</text>
+
+<rect x="660" y="330" width="220" height="120" class="box" />
+<text x="770" y="370" text-anchor="middle" class="text">Monitoring</text>
+<text x="770" y="396" text-anchor="middle" class="small">ELK, Datadog, New Relic,</text>
+<text x="770" y="418" text-anchor="middle" class="small">distributed tracing</text>
+
+<rect x="930" y="330" width="200" height="120" class="boxAlt" />
+<text x="1030" y="370" text-anchor="middle" class="text">Graceful Shutdown</text>
+<text x="1030" y="396" text-anchor="middle" class="small">SIGTERM, drain work,</text>
+<text x="1030" y="418" text-anchor="middle" class="small">restart safely</text>
+
+<path class="line" marker-end="url(#arrow)" d="M240 185 H290" />
+<path class="line" marker-end="url(#arrow)" d="M480 185 H530" />
+<path class="line" marker-end="url(#arrow)" d="M730 185 H780" />
+<path class="line" marker-end="url(#arrow)" d="M970 185 H1010" />
+<path class="line" marker-end="url(#arrow)" d="M385 240 V310" />
+<path class="line" marker-end="url(#arrow)" d="M630 240 V310" />
+<path class="line" marker-end="url(#arrow)" d="M875 240 V310" />
+</svg>

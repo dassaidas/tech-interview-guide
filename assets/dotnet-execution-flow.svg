@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="300" viewBox="0 0 1160 300" role="img" aria-label=".NET Execution Flow">
+<defs>
+<style>
+.bg { fill: #f5f8fc; }
+.box { fill: #ffffff; stroke: #2c5ea8; stroke-width: 2.4; rx: 18; ry: 18; }
+.line { stroke: #2c5ea8; stroke-width: 3; fill: none; }
+.title { font: 700 28px Segoe UI, Arial, sans-serif; fill: #2c5ea8; }
+.text { font: 700 16px Segoe UI, Arial, sans-serif; fill: #2c5ea8; }
+</style>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#2c5ea8" /></marker>
+</defs>
+<rect class="bg" width="1160" height="300" />
+<text x="40" y="48" class="title">.NET Execution Flow</text>
+<rect x="40" y="118" width="140" height="92" class="box" />
+<text x="110" y="152" text-anchor="middle" class="text">C# Code</text>
+<rect x="228" y="118" width="140" height="92" class="box" />
+<text x="298" y="152" text-anchor="middle" class="text">Compiler</text>
+<rect x="416" y="118" width="140" height="92" class="box" />
+<text x="486" y="152" text-anchor="middle" class="text">IL + Metadata</text>
+<rect x="604" y="118" width="140" height="92" class="box" />
+<text x="674" y="152" text-anchor="middle" class="text">CLR</text>
+<rect x="792" y="118" width="140" height="92" class="box" />
+<text x="862" y="152" text-anchor="middle" class="text">JIT</text>
+<rect x="980" y="118" width="140" height="92" class="box" />
+<text x="1050" y="152" text-anchor="middle" class="text">CPU</text>
+<path class="line" marker-end="url(#arrow)" d="M180 164 H228" />
+<path class="line" marker-end="url(#arrow)" d="M368 164 H416" />
+<path class="line" marker-end="url(#arrow)" d="M556 164 H604" />
+<path class="line" marker-end="url(#arrow)" d="M744 164 H792" />
+<path class="line" marker-end="url(#arrow)" d="M932 164 H980" />
+</svg>

@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">Node.js Database Integration Overview</title>
+  <desc id="desc">Diagram showing Node.js API layer, ORM and query builder paths, connection pooling, transactions, indexing, caching, replicas, migrations, and monitoring.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#0f1826"/>
+      <stop offset="100%" stop-color="#1f2f45"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#245b73"/>
+      <stop offset="100%" stop-color="#3a7a95"/>
+    </linearGradient>
+    <style>
+      .title { font: 700 34px 'Segoe UI', Arial, sans-serif; fill: #eef8ff; }
+      .subtitle { font: 500 18px 'Segoe UI', Arial, sans-serif; fill: #b8d5e8; }
+      .box { fill: url(#card); stroke: #9fd3ea; stroke-width: 2; rx: 18; }
+      .label { font: 700 20px 'Segoe UI', Arial, sans-serif; fill: #f4fbff; }
+      .body { font: 500 15px 'Segoe UI', Arial, sans-serif; fill: #e0f0f8; }
+      .arrow { stroke: #ffd166; stroke-width: 4; fill: none; marker-end: url(#arrowHead); }
+      .mini { fill: #122132; stroke: #8dc3de; stroke-width: 1.5; rx: 12; }
+      .miniText { font: 600 14px 'Segoe UI', Arial, sans-serif; fill: #eef8ff; }
+    </style>
+    <marker id="arrowHead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#ffd166"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="720" fill="url(#bg)"/>
+
+  <text x="66" y="70" class="title">Node.js Database Integration</text>
+  <text x="66" y="104" class="subtitle">ORM vs query builder, pooling, transactions, indexing, tuning, scaling, and observability</text>
+
+  <rect x="66" y="170" width="170" height="116" class="box"/>
+  <text x="96" y="212" class="label">Node API</text>
+  <text x="96" y="244" class="body">Express / Fastify</text>
+  <text x="96" y="270" class="body">Validation / DTOs</text>
+  <text x="96" y="296" class="body">Controllers / Services</text>
+
+  <rect x="296" y="136" width="240" height="150" class="box"/>
+  <text x="328" y="178" class="label">Access Layer</text>
+  <text x="328" y="210" class="body">ORM: Prisma / Sequelize</text>
+  <text x="328" y="236" class="body">Query Builder: Knex</text>
+  <text x="328" y="262" class="body">Raw SQL when needed</text>
+
+  <rect x="296" y="346" width="240" height="150" class="box"/>
+  <text x="328" y="388" class="label">Connection Layer</text>
+  <text x="328" y="420" class="body">Pooling / Timeouts</text>
+  <text x="328" y="446" class="body">Transactions / Retries</text>
+  <text x="328" y="472" class="body">Leak prevention</text>
+
+  <rect x="596" y="136" width="250" height="150" class="box"/>
+  <text x="628" y="178" class="label">Primary Database</text>
+  <text x="628" y="210" class="body">Tables / Partitions</text>
+  <text x="628" y="236" class="body">Indexes / Query plans</text>
+  <text x="628" y="262" class="body">Read-write traffic</text>
+
+  <rect x="596" y="346" width="250" height="150" class="box"/>
+  <text x="628" y="388" class="label">Scaling Strategy</text>
+  <text x="628" y="420" class="body">Read replicas / Sharding</text>
+  <text x="628" y="446" class="body">Caching / Pagination</text>
+  <text x="628" y="472" class="body">Async processing</text>
+
+  <rect x="906" y="136" width="228" height="150" class="box"/>
+  <text x="938" y="178" class="label">Governance</text>
+  <text x="938" y="210" class="body">Migrations</text>
+  <text x="938" y="236" class="body">Schema versioning</text>
+  <text x="938" y="262" class="body">Isolation levels</text>
+
+  <rect x="906" y="346" width="228" height="150" class="box"/>
+  <text x="938" y="388" class="label">Observability</text>
+  <text x="938" y="420" class="body">Slow query logs</text>
+  <text x="938" y="446" class="body">Pool metrics / Errors</text>
+  <text x="938" y="472" class="body">Capacity alerts</text>
+
+  <path d="M 236 228 L 296 228" class="arrow"/>
+  <path d="M 536 228 L 596 228" class="arrow"/>
+  <path d="M 536 420 L 596 420" class="arrow"/>
+  <path d="M 846 228 L 906 228" class="arrow"/>
+  <path d="M 846 420 L 906 420" class="arrow"/>
+  <path d="M 416 286 L 416 346" class="arrow"/>
+  <path d="M 721 286 L 721 346" class="arrow"/>
+
+  <rect x="66" y="394" width="170" height="52" class="mini"/>
+  <text x="98" y="426" class="miniText">Validation</text>
+  <rect x="66" y="458" width="170" height="52" class="mini"/>
+  <text x="94" y="490" class="miniText">Idempotency</text>
+  <rect x="66" y="522" width="170" height="52" class="mini"/>
+  <text x="90" y="554" class="miniText">Backpressure</text>
+
+  <rect x="944" y="564" width="190" height="56" class="mini"/>
+  <text x="972" y="598" class="miniText">Explain / Analyze</text>
+
+  <text x="66" y="680" class="subtitle">Interview focus: control vs productivity, query efficiency, pool tuning, ACID flows, safe retries, and real production diagnostics</text>
+</svg>

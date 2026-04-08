@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="990" height="300" viewBox="0 0 990 300" role="img" aria-label="Configuration Layering">
+<defs>
+<style>
+.bg { fill: #f8fbf7; }
+.box { fill: #ffffff; stroke: #3c7a43; stroke-width: 2.4; rx: 18; ry: 18; }
+.line { stroke: #3c7a43; stroke-width: 3; fill: none; }
+.title { font: 700 28px Segoe UI, Arial, sans-serif; fill: #3c7a43; }
+.text { font: 700 16px Segoe UI, Arial, sans-serif; fill: #3c7a43; }
+</style>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#3c7a43" /></marker>
+</defs>
+<rect class="bg" width="990" height="300" />
+<text x="40" y="48" class="title">Configuration Layering</text>
+<rect x="40" y="118" width="140" height="92" class="box" />
+<text x="110" y="152" text-anchor="middle" class="text">appsettings.json</text>
+<rect x="232" y="118" width="140" height="92" class="box" />
+<text x="302" y="152" text-anchor="middle" class="text">Environment File</text>
+<rect x="425" y="118" width="140" height="92" class="box" />
+<text x="495" y="152" text-anchor="middle" class="text">User Secrets</text>
+<rect x="618" y="118" width="140" height="92" class="box" />
+<text x="688" y="152" text-anchor="middle" class="text">Env Vars</text>
+<rect x="810" y="118" width="140" height="92" class="box" />
+<text x="880" y="152" text-anchor="middle" class="text">Command Line</text>
+<path class="line" marker-end="url(#arrow)" d="M180 164 H232" />
+<path class="line" marker-end="url(#arrow)" d="M372 164 H425" />
+<path class="line" marker-end="url(#arrow)" d="M565 164 H618" />
+<path class="line" marker-end="url(#arrow)" d="M758 164 H810" />
+</svg>

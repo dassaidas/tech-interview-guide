@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="470" viewBox="0 0 1120 470" role="img" aria-label="Node.js asynchronous programming flow">
+<defs>
+<style>
+.bg { fill: #f7fafc; }
+.title { font: 700 30px Segoe UI, Arial, sans-serif; fill: #2d5d8a; }
+.subtitle { font: 600 16px Segoe UI, Arial, sans-serif; fill: #4a5568; }
+.box { fill: #ffffff; stroke: #2d5d8a; stroke-width: 2.4; rx: 18; ry: 18; }
+.boxAlt { fill: #edf6ff; stroke: #2d5d8a; stroke-width: 2.4; rx: 18; ry: 18; }
+.text { font: 700 18px Segoe UI, Arial, sans-serif; fill: #2d5d8a; }
+.small { font: 600 14px Segoe UI, Arial, sans-serif; fill: #4a5568; }
+.line { stroke: #2d5d8a; stroke-width: 3; fill: none; }
+</style>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0,0 L0,6 L9,3 z" fill="#2d5d8a" />
+</marker>
+</defs>
+<rect class="bg" width="1120" height="470" />
+<text x="40" y="54" class="title">Node.js Asynchronous Programming</text>
+<text x="40" y="84" class="subtitle">Callbacks, promises, async/await, event emitters, streams, and concurrency tools</text>
+
+<rect x="50" y="130" width="180" height="100" class="boxAlt" />
+<text x="140" y="165" text-anchor="middle" class="text">Application Code</text>
+<text x="140" y="190" text-anchor="middle" class="small">routes, jobs, scripts</text>
+
+<rect x="280" y="130" width="180" height="100" class="box" />
+<text x="370" y="165" text-anchor="middle" class="text">Async API Call</text>
+<text x="370" y="190" text-anchor="middle" class="small">fs, http, db, timers</text>
+
+<rect x="510" y="130" width="180" height="100" class="box" />
+<text x="600" y="165" text-anchor="middle" class="text">libuv / OS</text>
+<text x="600" y="190" text-anchor="middle" class="small">I/O readiness, thread pool</text>
+
+<rect x="740" y="130" width="160" height="100" class="boxAlt" />
+<text x="820" y="165" text-anchor="middle" class="text">Event Loop</text>
+<text x="820" y="190" text-anchor="middle" class="small">runs callbacks</text>
+
+<rect x="940" y="110" width="140" height="70" class="box" />
+<text x="1010" y="140" text-anchor="middle" class="text">nextTick</text>
+<text x="1010" y="160" text-anchor="middle" class="small">highest priority</text>
+
+<rect x="940" y="195" width="140" height="70" class="box" />
+<text x="1010" y="225" text-anchor="middle" class="text">Promises</text>
+<text x="1010" y="245" text-anchor="middle" class="small">microtasks</text>
+
+<rect x="130" y="300" width="200" height="110" class="box" />
+<text x="230" y="338" text-anchor="middle" class="text">Callbacks</text>
+<text x="230" y="362" text-anchor="middle" class="small">error-first style</text>
+<text x="230" y="384" text-anchor="middle" class="small">legacy but common</text>
+
+<rect x="370" y="300" width="200" height="110" class="box" />
+<text x="470" y="338" text-anchor="middle" class="text">Promises</text>
+<text x="470" y="362" text-anchor="middle" class="small">then, catch, finally</text>
+<text x="470" y="384" text-anchor="middle" class="small">composition and chaining</text>
+
+<rect x="610" y="300" width="200" height="110" class="box" />
+<text x="710" y="338" text-anchor="middle" class="text">Async/Await</text>
+<text x="710" y="362" text-anchor="middle" class="small">readable promise syntax</text>
+<text x="710" y="384" text-anchor="middle" class="small">try/catch, Promise.all</text>
+
+<rect x="850" y="300" width="200" height="110" class="box" />
+<text x="950" y="338" text-anchor="middle" class="text">Streams / Workers</text>
+<text x="950" y="362" text-anchor="middle" class="small">backpressure, CPU offload</text>
+<text x="950" y="384" text-anchor="middle" class="small">parallel tools</text>
+
+<path class="line" marker-end="url(#arrow)" d="M230 180 H280" />
+<path class="line" marker-end="url(#arrow)" d="M460 180 H510" />
+<path class="line" marker-end="url(#arrow)" d="M690 180 H740" />
+<path class="line" marker-end="url(#arrow)" d="M900 145 H940" />
+<path class="line" marker-end="url(#arrow)" d="M900 230 H940" />
+<path class="line" marker-end="url(#arrow)" d="M820 230 V280" />
+<path class="line" marker-end="url(#arrow)" d="M820 320 H850" />
+<path class="line" marker-end="url(#arrow)" d="M820 320 H610" />
+<path class="line" marker-end="url(#arrow)" d="M610 320 H570" />
+<path class="line" marker-end="url(#arrow)" d="M370 320 H330" />
+</svg>

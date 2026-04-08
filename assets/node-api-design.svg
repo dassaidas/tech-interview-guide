@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">Node.js API Design Overview</title>
+  <desc id="desc">Diagram showing clients, API gateway, Express routes, validation, services, data stores, auth, rate limiting, logging, and webhooks in a Node.js API design flow.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#0b1f2a"/>
+      <stop offset="100%" stop-color="#15384a"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#1f4f63"/>
+      <stop offset="100%" stop-color="#2a6a82"/>
+    </linearGradient>
+    <style>
+      .title { font: 700 34px 'Segoe UI', Arial, sans-serif; fill: #eef8fb; }
+      .subtitle { font: 500 18px 'Segoe UI', Arial, sans-serif; fill: #b9d9e3; }
+      .box { fill: url(#card); stroke: #9fd4e5; stroke-width: 2; rx: 18; }
+      .label { font: 700 20px 'Segoe UI', Arial, sans-serif; fill: #eef8fb; }
+      .body { font: 500 15px 'Segoe UI', Arial, sans-serif; fill: #dbeff5; }
+      .arrow { stroke: #ffd166; stroke-width: 4; fill: none; marker-end: url(#arrowHead); }
+      .mini { fill: #0f2732; stroke: #8dc9dc; stroke-width: 1.5; rx: 12; }
+      .miniText { font: 600 14px 'Segoe UI', Arial, sans-serif; fill: #eef8fb; }
+    </style>
+    <marker id="arrowHead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#ffd166"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="720" fill="url(#bg)"/>
+
+  <text x="70" y="72" class="title">Node.js API Design</text>
+  <text x="70" y="106" class="subtitle">REST, validation, auth, pagination, webhooks, monitoring, performance, and architecture flow</text>
+
+  <rect x="72" y="170" width="170" height="118" class="box"/>
+  <text x="100" y="212" class="label">Clients</text>
+  <text x="100" y="244" class="body">Web</text>
+  <text x="100" y="270" class="body">Mobile</text>
+  <text x="100" y="296" class="body">3rd-party apps</text>
+
+  <rect x="300" y="152" width="220" height="150" class="box"/>
+  <text x="332" y="196" class="label">API Edge</text>
+  <text x="332" y="228" class="body">HTTPS / CORS / Rate limiting</text>
+  <text x="332" y="254" class="body">Versioning / Headers</text>
+  <text x="332" y="280" class="body">Request size limits</text>
+
+  <rect x="582" y="118" width="250" height="220" class="box"/>
+  <text x="614" y="162" class="label">Express / Fastify Layer</text>
+  <text x="614" y="194" class="body">Routes / Controllers</text>
+  <text x="614" y="220" class="body">Validation / Sanitization</text>
+  <text x="614" y="246" class="body">Auth / Authorization</text>
+  <text x="614" y="272" class="body">Error middleware</text>
+  <text x="614" y="298" class="body">Response shaping</text>
+
+  <rect x="892" y="170" width="236" height="118" class="box"/>
+  <text x="924" y="212" class="label">API Consumers</text>
+  <text x="924" y="244" class="body">Swagger / OpenAPI</text>
+  <text x="924" y="270" class="body">SDKs / Partners / BFF</text>
+  <text x="924" y="296" class="body">GraphQL / REST clients</text>
+
+  <rect x="292" y="406" width="236" height="152" class="box"/>
+  <text x="324" y="450" class="label">Services</text>
+  <text x="324" y="482" class="body">Business logic</text>
+  <text x="324" y="508" class="body">DTO / Mapper / Rules</text>
+  <text x="324" y="534" class="body">Idempotency / Retry handling</text>
+
+  <rect x="582" y="394" width="250" height="176" class="box"/>
+  <text x="614" y="438" class="label">Data & Async Layer</text>
+  <text x="614" y="470" class="body">DB queries / caching</text>
+  <text x="614" y="496" class="body">Pagination / filtering / sorting</text>
+  <text x="614" y="522" class="body">Queues / webhooks / file uploads</text>
+  <text x="614" y="548" class="body">Streaming / large payloads</text>
+
+  <rect x="892" y="406" width="236" height="152" class="box"/>
+  <text x="924" y="450" class="label">Observability</text>
+  <text x="924" y="482" class="body">Correlation IDs</text>
+  <text x="924" y="508" class="body">Request logs / metrics</text>
+  <text x="924" y="534" class="body">Alerts / tracing / audits</text>
+
+  <path d="M 242 228 L 300 228" class="arrow"/>
+  <path d="M 520 228 L 582 228" class="arrow"/>
+  <path d="M 832 228 L 892 228" class="arrow"/>
+  <path d="M 410 302 L 410 406" class="arrow"/>
+  <path d="M 706 338 L 706 394" class="arrow"/>
+  <path d="M 832 482 L 892 482" class="arrow"/>
+  <path d="M 528 482 L 582 482" class="arrow"/>
+
+  <rect x="84" y="382" width="150" height="52" class="mini"/>
+  <text x="108" y="414" class="miniText">Status codes</text>
+  <rect x="84" y="446" width="150" height="52" class="mini"/>
+  <text x="104" y="478" class="miniText">Versioning</text>
+  <rect x="84" y="510" width="150" height="52" class="mini"/>
+  <text x="100" y="542" class="miniText">Input rules</text>
+
+  <rect x="952" y="604" width="176" height="58" class="mini"/>
+  <text x="978" y="639" class="miniText">Retries / Alerts</text>
+
+  <text x="72" y="678" class="subtitle">Interview focus: route design, validation, response consistency, security, performance, webhook reliability, and production diagnostics</text>
+</svg>

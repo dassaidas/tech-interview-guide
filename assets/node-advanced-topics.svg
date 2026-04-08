@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Node.js Advanced Topics Architecture</title>
+  <desc id="desc">Diagram showing advanced runtime topics such as async hooks, worker pools, event loop internals, V8 optimization, diagnostics, and low-level concurrency in Node.js.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f7fbff"/>
+      <stop offset="100%" stop-color="#eef6ff"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f6f9fc"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#19324d" flood-opacity="0.14"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 z" fill="#2f5c8a"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="760" fill="url(#bg)"/>
+  <text x="60" y="70" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="700" fill="#17324d">Node.js Advanced Topics</text>
+  <text x="60" y="106" font-family="Segoe UI, Arial, sans-serif" font-size="18" fill="#47627d">Async lifecycle, event loop internals, V8 behavior, diagnostics, worker models, and low-level runtime patterns</text>
+
+  <rect x="70" y="145" rx="24" ry="24" width="220" height="120" fill="url(#panel)" stroke="#8cb3d9" stroke-width="2" filter="url(#shadow)"/>
+  <text x="180" y="192" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">Async Lifecycle</text>
+  <text x="180" y="224" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Async Hooks / AsyncLocalStorage</text>
+
+  <rect x="340" y="125" rx="24" ry="24" width="240" height="150" fill="url(#panel)" stroke="#79a66a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="460" y="170" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">Scheduling Core</text>
+  <text x="460" y="200" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Event loop / libuv / task queues</text>
+  <text x="460" y="228" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">nextTick, microtasks, macrotasks</text>
+
+  <rect x="640" y="125" rx="24" ry="24" width="220" height="150" fill="url(#panel)" stroke="#d8a24a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="750" y="170" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">V8 + Memory</text>
+  <text x="750" y="200" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Hidden classes / inline cache / GC</text>
+  <text x="750" y="228" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Optimization and deopt behavior</text>
+
+  <rect x="920" y="125" rx="24" ry="24" width="220" height="150" fill="url(#panel)" stroke="#9f7cd6" stroke-width="2" filter="url(#shadow)"/>
+  <text x="1030" y="170" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">Concurrency Primitives</text>
+  <text x="1030" y="200" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Worker pool / cluster / IPC</text>
+  <text x="1030" y="228" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Shared memory and coordination</text>
+
+  <rect x="120" y="430" rx="28" ry="28" width="280" height="190" fill="url(#panel)" stroke="#79a66a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="260" y="478" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">Native Boundaries</text>
+  <text x="260" y="510" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Native addons / Node-API</text>
+  <text x="260" y="538" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">CPU and system-level extensions</text>
+
+  <rect x="470" y="430" rx="28" ry="28" width="280" height="190" fill="url(#panel)" stroke="#d8a24a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="610" y="478" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">Diagnostics</text>
+  <text x="610" y="510" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Async stacks / reports / dumps</text>
+  <text x="610" y="538" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Crash and runtime forensics</text>
+
+  <rect x="820" y="430" rx="28" ry="28" width="300" height="190" fill="url(#panel)" stroke="#8cb3d9" stroke-width="2" filter="url(#shadow)"/>
+  <text x="970" y="478" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">Production Interpretation</text>
+  <text x="970" y="510" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Lag, leaks, optimization, failure modes</text>
+  <text x="970" y="538" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Measure before changing code</text>
+
+  <path d="M290 205 H340" stroke="#2f5c8a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M580 205 H640" stroke="#2f5c8a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M860 205 H920" stroke="#2f5c8a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M460 275 V350 H260 V430" stroke="#2f5c8a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M750 275 V350 H610 V430" stroke="#2f5c8a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M1030 275 V350 H970 V430" stroke="#2f5c8a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+
+  <rect x="60" y="660" rx="18" ry="18" width="1080" height="62" fill="#17324d" opacity="0.92"/>
+  <text x="90" y="700" font-family="Segoe UI, Arial, sans-serif" font-size="18" fill="#ffffff">Flow: understand the runtime boundary first → observe async and scheduling behavior → inspect memory and diagnostics safely → choose the right low-level tool for the symptom</text>
+</svg>

@@ -1,0 +1,40 @@
+<svg width="1200" height="420" viewBox="0 0 1200 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="420" fill="#F4F1EA"/>
+  <rect x="40" y="40" width="1120" height="340" rx="28" fill="#FFFDF8" stroke="#D9D0C3" stroke-width="2"/>
+  <text x="80" y="110" fill="#1E293B" font-family="Segoe UI, Arial, sans-serif" font-size="40" font-weight="700">
+    C# Fundamentals Interview Map
+  </text>
+  <text x="80" y="150" fill="#475569" font-family="Segoe UI, Arial, sans-serif" font-size="20">
+    From basic syntax to tricky day-to-day scenarios
+  </text>
+
+  <rect x="80" y="195" width="180" height="110" rx="18" fill="#D7EAF5"/>
+  <text x="102" y="235" fill="#0F172A" font-family="Consolas, monospace" font-size="18" font-weight="700">Variables</text>
+  <text x="102" y="265" fill="#334155" font-family="Segoe UI, Arial, sans-serif" font-size="16">int, string, var,</text>
+  <text x="102" y="287" fill="#334155" font-family="Segoe UI, Arial, sans-serif" font-size="16">dynamic, parsing</text>
+
+  <rect x="290" y="195" width="180" height="110" rx="18" fill="#F8E3C7"/>
+  <text x="312" y="235" fill="#0F172A" font-family="Consolas, monospace" font-size="18" font-weight="700">Operators</text>
+  <text x="312" y="265" fill="#334155" font-family="Segoe UI, Arial, sans-serif" font-size="16">Arithmetic, logical,</text>
+  <text x="312" y="287" fill="#334155" font-family="Segoe UI, Arial, sans-serif" font-size="16">bitwise, null checks</text>
+
+  <rect x="500" y="195" width="180" height="110" rx="18" fill="#DDF2D6"/>
+  <text x="522" y="235" fill="#0F172A" font-family="Consolas, monospace" font-size="18" font-weight="700">Control Flow</text>
+  <text x="522" y="265" fill="#334155" font-family="Segoe UI, Arial, sans-serif" font-size="16">if, switch, loops,</text>
+  <text x="522" y="287" fill="#334155" font-family="Segoe UI, Arial, sans-serif" font-size="16">guards, branching</text>
+
+  <rect x="710" y="195" width="180" height="110" rx="18" fill="#F7D9E4"/>
+  <text x="732" y="235" fill="#0F172A" font-family="Consolas, monospace" font-size="18" font-weight="700">Methods</text>
+  <text x="732" y="265" fill="#334155" font-family="Segoe UI, Arial, sans-serif" font-size="16">ref, out, params,</text>
+  <text x="732" y="287" fill="#334155" font-family="Segoe UI, Arial, sans-serif" font-size="16">overloads, defaults</text>
+
+  <rect x="920" y="195" width="180" height="110" rx="18" fill="#E6E0FA"/>
+  <text x="942" y="235" fill="#0F172A" font-family="Consolas, monospace" font-size="18" font-weight="700">Collections</text>
+  <text x="942" y="265" fill="#334155" font-family="Segoe UI, Arial, sans-serif" font-size="16">Arrays, List&lt;T&gt;,</text>
+  <text x="942" y="287" fill="#334155" font-family="Segoe UI, Arial, sans-serif" font-size="16">Dictionary, traps</text>
+
+  <path d="M260 250H290" stroke="#64748B" stroke-width="3" stroke-linecap="round"/>
+  <path d="M470 250H500" stroke="#64748B" stroke-width="3" stroke-linecap="round"/>
+  <path d="M680 250H710" stroke="#64748B" stroke-width="3" stroke-linecap="round"/>
+  <path d="M890 250H920" stroke="#64748B" stroke-width="3" stroke-linecap="round"/>
+</svg>

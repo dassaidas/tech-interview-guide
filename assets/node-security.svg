@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Node.js Security Architecture</title>
+  <desc id="desc">A diagram showing layered Node.js security controls including authentication, validation, HTTP protections, authorization, secrets, monitoring, and production hardening.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f7fafc" />
+      <stop offset="100%" stop-color="#e6f0fb" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2d5d8a" />
+      <stop offset="100%" stop-color="#4a7fb8" />
+    </linearGradient>
+    <style>
+      .title { font: 700 30px 'Segoe UI', Arial, sans-serif; fill: #16324f; }
+      .subtitle { font: 400 15px 'Segoe UI', Arial, sans-serif; fill: #35516b; }
+      .box { fill: #ffffff; stroke: #2d5d8a; stroke-width: 2; rx: 18; ry: 18; }
+      .header { fill: url(#accent); rx: 18; ry: 18; }
+      .label { font: 700 18px 'Segoe UI', Arial, sans-serif; fill: #ffffff; }
+      .text { font: 400 15px 'Segoe UI', Arial, sans-serif; fill: #213547; }
+      .note { font: 600 14px 'Segoe UI', Arial, sans-serif; fill: #2d5d8a; }
+      .line { stroke: #6c8fb2; stroke-width: 2.5; stroke-linecap: round; }
+      .shield { fill: #d9e8f7; stroke: #2d5d8a; stroke-width: 2; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="760" fill="url(#bg)" />
+
+  <text x="600" y="56" text-anchor="middle" class="title">Node.js Security</text>
+  <text x="600" y="84" text-anchor="middle" class="subtitle">Defense-in-depth for APIs, background jobs, file handling, secrets, and production runtime operations</text>
+
+  <path class="shield" d="M600 118 L646 136 L646 194 C646 236 620 270 600 284 C580 270 554 236 554 194 L554 136 Z" />
+  <path d="M600 142 L600 228" class="line" />
+  <path d="M574 186 L600 212 L626 186" class="line" fill="none" />
+
+  <rect x="70" y="140" width="260" height="160" class="box" />
+  <rect x="70" y="140" width="260" height="40" class="header" />
+  <text x="200" y="166" text-anchor="middle" class="label">Identity Layer</text>
+  <text x="92" y="208" class="text">• JWT, OAuth 2.0, OIDC</text>
+  <text x="92" y="234" class="text">• Access vs refresh tokens</text>
+  <text x="92" y="260" class="text">• Cookie vs token storage tradeoffs</text>
+  <text x="92" y="286" class="note">Goal: confirm who the caller is</text>
+
+  <rect x="350" y="140" width="260" height="160" class="box" />
+  <rect x="350" y="140" width="260" height="40" class="header" />
+  <text x="480" y="166" text-anchor="middle" class="label">Input Defense</text>
+  <text x="372" y="208" class="text">• Joi / Zod / express-validator</text>
+  <text x="372" y="234" class="text">• Sanitize and normalize input</text>
+  <text x="372" y="260" class="text">• Prevent SQL / NoSQL injection</text>
+  <text x="372" y="286" class="note">Goal: reject hostile or malformed data</text>
+
+  <rect x="630" y="140" width="240" height="160" class="box" />
+  <rect x="630" y="140" width="240" height="40" class="header" />
+  <text x="750" y="166" text-anchor="middle" class="label">HTTP Protections</text>
+  <text x="652" y="208" class="text">• Helmet and CSP</text>
+  <text x="652" y="234" class="text">• CORS policy</text>
+  <text x="652" y="260" class="text">• Rate limiting and CSRF controls</text>
+  <text x="652" y="286" class="note">Goal: reduce browser and API abuse</text>
+
+  <rect x="890" y="140" width="240" height="160" class="box" />
+  <rect x="890" y="140" width="240" height="40" class="header" />
+  <text x="1010" y="166" text-anchor="middle" class="label">Access Control</text>
+  <text x="912" y="208" class="text">• RBAC and ABAC</text>
+  <text x="912" y="234" class="text">• Route permission middleware</text>
+  <text x="912" y="260" class="text">• Least privilege</text>
+  <text x="912" y="286" class="note">Goal: control what a user can do</text>
+
+  <rect x="90" y="360" width="280" height="160" class="box" />
+  <rect x="90" y="360" width="280" height="40" class="header" />
+  <text x="230" y="386" text-anchor="middle" class="label">Runtime & Data Safety</text>
+  <text x="112" y="428" class="text">• bcrypt / Argon2 password hashing</text>
+  <text x="112" y="454" class="text">• Secure file uploads and virus scanning</text>
+  <text x="112" y="480" class="text">• HTTPS, TLS, and encryption in transit</text>
+  <text x="112" y="506" class="note">Goal: protect credentials and payloads</text>
+
+  <rect x="400" y="360" width="280" height="160" class="box" />
+  <rect x="400" y="360" width="280" height="40" class="header" />
+  <text x="540" y="386" text-anchor="middle" class="label">Secrets & Dependencies</text>
+  <text x="422" y="428" class="text">• .env hygiene and secret managers</text>
+  <text x="422" y="454" class="text">• npm audit and lockfiles</text>
+  <text x="422" y="480" class="text">• Package review and updates</text>
+  <text x="422" y="506" class="note">Goal: reduce supply-chain risk</text>
+
+  <rect x="710" y="360" width="400" height="160" class="box" />
+  <rect x="710" y="360" width="400" height="40" class="header" />
+  <text x="910" y="386" text-anchor="middle" class="label">Detection & Response</text>
+  <text x="732" y="428" class="text">• Structured security logging and alerts</text>
+  <text x="732" y="454" class="text">• Generic client errors, detailed internal logs</text>
+  <text x="732" y="480" class="text">• Graceful shutdown, WAF, reverse proxy hardening</text>
+  <text x="732" y="506" class="note">Goal: detect attacks and recover safely</text>
+
+  <path d="M330 220 H350" class="line" />
+  <path d="M610 220 H630" class="line" />
+  <path d="M870 220 H890" class="line" />
+  <path d="M230 300 V360" class="line" />
+  <path d="M540 300 V360" class="line" />
+  <path d="M910 300 V360" class="line" />
+
+  <text x="600" y="620" text-anchor="middle" class="title" style="font-size:24px;">Senior Interview Lens</text>
+  <text x="600" y="650" text-anchor="middle" class="text">Security is not one middleware. It is identity, validation, least privilege, safe defaults, visibility, and operational discipline.</text>
+  <text x="600" y="678" text-anchor="middle" class="text">Strong Node.js answers connect code-level controls with browsers, proxies, packages, containers, and production incident response.</text>
+</svg>

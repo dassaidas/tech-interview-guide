@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">C# Unit Testing Interview Map</title>
+  <desc id="desc">A concept map covering test frameworks, mocking, assertions, test types, attributes, tooling, and common patterns.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f6fbff"/>
+      <stop offset="100%" stop-color="#eef6f2"/>
+    </linearGradient>
+    <style>
+      .title { font: 700 34px 'Segoe UI', Arial, sans-serif; fill: #183153; }
+      .label { font: 600 20px 'Segoe UI', Arial, sans-serif; fill: #14324a; }
+      .text { font: 400 15px 'Segoe UI', Arial, sans-serif; fill: #234; }
+      .box { rx: 24; ry: 24; stroke-width: 2.5; }
+      .line { stroke: #6c8aa3; stroke-width: 3; fill: none; opacity: 0.8; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="720" fill="url(#bg)"/>
+  <text x="600" y="60" text-anchor="middle" class="title">C# Unit Testing Interview Questions</text>
+
+  <path class="line" d="M600 110 L600 180"/>
+  <path class="line" d="M600 180 L230 180"/>
+  <path class="line" d="M600 180 L970 180"/>
+  <path class="line" d="M600 180 L600 300"/>
+  <path class="line" d="M230 180 L230 300"/>
+  <path class="line" d="M970 180 L970 300"/>
+  <path class="line" d="M600 300 L340 470"/>
+  <path class="line" d="M600 300 L600 470"/>
+  <path class="line" d="M600 300 L860 470"/>
+
+  <rect x="410" y="110" width="380" height="70" class="box" fill="#dceeff" stroke="#4a84c5"/>
+  <text x="600" y="152" text-anchor="middle" class="label">Frameworks and Test Design</text>
+
+  <rect x="70" y="180" width="320" height="100" class="box" fill="#fff2d9" stroke="#d89c2c"/>
+  <text x="230" y="215" text-anchor="middle" class="label">Frameworks</text>
+  <text x="230" y="242" text-anchor="middle" class="text">MSTest, NUnit, xUnit</text>
+  <text x="230" y="264" text-anchor="middle" class="text">Attributes, fixtures, runners</text>
+
+  <rect x="440" y="200" width="320" height="100" class="box" fill="#e1f5ea" stroke="#43a36a"/>
+  <text x="600" y="235" text-anchor="middle" class="label">Mocking and Assertions</text>
+  <text x="600" y="262" text-anchor="middle" class="text">Moq, NSubstitute, FakeItEasy, JustMock</text>
+  <text x="600" y="284" text-anchor="middle" class="text">FluentAssertions, Shouldly</text>
+
+  <rect x="810" y="180" width="320" height="100" class="box" fill="#fde4e8" stroke="#d26a7a"/>
+  <text x="970" y="215" text-anchor="middle" class="label">Test Types</text>
+  <text x="970" y="242" text-anchor="middle" class="text">Unit, Integration, Functional, E2E</text>
+  <text x="970" y="264" text-anchor="middle" class="text">Tradeoffs and test pyramid</text>
+
+  <rect x="140" y="320" width="300" height="110" class="box" fill="#efe6ff" stroke="#8a67d1"/>
+  <text x="290" y="357" text-anchor="middle" class="label">Core Concepts</text>
+  <text x="290" y="384" text-anchor="middle" class="text">AAA, DI, isolation, setup/teardown</text>
+  <text x="290" y="406" text-anchor="middle" class="text">Dummy, Stub, Mock, Fake, Spy</text>
+
+  <rect x="450" y="340" width="300" height="110" class="box" fill="#e6fbff" stroke="#3b9cb8"/>
+  <text x="600" y="377" text-anchor="middle" class="label">Coverage and Tools</text>
+  <text x="600" y="404" text-anchor="middle" class="text">Coverlet, dotnet test, Test Explorer</text>
+  <text x="600" y="426" text-anchor="middle" class="text">SonarQube and CI quality gates</text>
+
+  <rect x="760" y="320" width="300" height="110" class="box" fill="#f5f7d7" stroke="#9baa36"/>
+  <text x="910" y="357" text-anchor="middle" class="label">Common Patterns</text>
+  <text x="910" y="384" text-anchor="middle" class="text">Repository, Service, Controller</text>
+  <text x="910" y="406" text-anchor="middle" class="text">EF Core InMemory and API testing</text>
+
+  <rect x="170" y="500" width="340" height="110" class="box" fill="#fff4e7" stroke="#d38d45"/>
+  <text x="340" y="537" text-anchor="middle" class="label">Good Tests</text>
+  <text x="340" y="564" text-anchor="middle" class="text">Fast, independent, clear, maintainable</text>
+  <text x="340" y="586" text-anchor="middle" class="text">Naming, one intent, stable assertions</text>
+
+  <rect x="430" y="500" width="340" height="110" class="box" fill="#e8f0ff" stroke="#5b7fd6"/>
+  <text x="600" y="537" text-anchor="middle" class="label">Reliable Pipelines</text>
+  <text x="600" y="564" text-anchor="middle" class="text">Repeatable runs, diagnostics, confidence</text>
+  <text x="600" y="586" text-anchor="middle" class="text">Coverage with context, not vanity</text>
+
+  <rect x="690" y="500" width="340" height="110" class="box" fill="#e9fff5" stroke="#42a57c"/>
+  <text x="860" y="537" text-anchor="middle" class="label">Real-World Focus</text>
+  <text x="860" y="564" text-anchor="middle" class="text">Controllers, services, repositories, DB seams</text>
+  <text x="860" y="586" text-anchor="middle" class="text">CI, mocking, failure analysis, maintainability</text>
+</svg>

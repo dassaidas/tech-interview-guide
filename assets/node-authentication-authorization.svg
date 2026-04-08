@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Node.js Authentication and Authorization Architecture</title>
+  <desc id="desc">Diagram showing user login, session or JWT issuance, authorization checks, tenant validation, and protected service access in a Node.js system.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f6fbff"/>
+      <stop offset="100%" stop-color="#eef7f2"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f7fafc"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#19324d" flood-opacity="0.14"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 z" fill="#2e5b88"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="760" fill="url(#bg)"/>
+  <text x="60" y="70" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="700" fill="#17324d">Node.js Authentication and Authorization</text>
+  <text x="60" y="106" font-family="Segoe UI, Arial, sans-serif" font-size="18" fill="#47627d">Identity verification, token or session issuance, authorization rules, tenant checks, and protected API access</text>
+
+  <rect x="60" y="150" rx="24" ry="24" width="210" height="120" fill="url(#panel)" stroke="#8cb3d9" stroke-width="2" filter="url(#shadow)"/>
+  <text x="165" y="198" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">Client</text>
+  <text x="165" y="230" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Web / Mobile / SPA</text>
+
+  <rect x="340" y="120" rx="24" ry="24" width="260" height="160" fill="url(#panel)" stroke="#79a66a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="470" y="165" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">Auth API</text>
+  <text x="470" y="198" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Login / Refresh / Logout</text>
+  <text x="470" y="226" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Password Check, MFA, OIDC</text>
+  <text x="470" y="252" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Issues Session or JWT</text>
+
+  <rect x="680" y="105" rx="24" ry="24" width="220" height="95" fill="url(#panel)" stroke="#d8a24a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="790" y="150" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" fill="#17324d">Session Store</text>
+  <text x="790" y="178" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#47627d">Memory / Redis</text>
+
+  <rect x="680" y="220" rx="24" ry="24" width="220" height="95" fill="url(#panel)" stroke="#d97777" stroke-width="2" filter="url(#shadow)"/>
+  <text x="790" y="265" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" fill="#17324d">Token Store</text>
+  <text x="790" y="293" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#47627d">Refresh Tokens / Blacklist</text>
+
+  <rect x="950" y="150" rx="24" ry="24" width="190" height="120" fill="url(#panel)" stroke="#9f7cd6" stroke-width="2" filter="url(#shadow)"/>
+  <text x="1045" y="196" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" fill="#17324d">Identity Provider</text>
+  <text x="1045" y="226" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#47627d">OAuth 2.0 / OIDC / SSO</text>
+
+  <rect x="120" y="420" rx="28" ry="28" width="260" height="185" fill="url(#panel)" stroke="#79a66a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="250" y="468" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">Middleware Layer</text>
+  <text x="250" y="502" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Verify Session or JWT</text>
+  <text x="250" y="530" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Hydrate req.user</text>
+  <text x="250" y="558" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Check expiry / revocation</text>
+  <text x="250" y="586" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Attach tenant + claims</text>
+
+  <rect x="470" y="420" rx="28" ry="28" width="260" height="185" fill="url(#panel)" stroke="#d8a24a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="600" y="468" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">Authorization</text>
+  <text x="600" y="502" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">RBAC Roles</text>
+  <text x="600" y="530" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">ABAC Policies</text>
+  <text x="600" y="558" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Ownership Checks</text>
+  <text x="600" y="586" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Tenant Isolation</text>
+
+  <rect x="820" y="420" rx="28" ry="28" width="280" height="185" fill="url(#panel)" stroke="#8cb3d9" stroke-width="2" filter="url(#shadow)"/>
+  <text x="960" y="468" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">Protected Services</text>
+  <text x="960" y="502" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Admin APIs / Billing / Reporting</text>
+  <text x="960" y="530" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Access granted or denied</text>
+  <text x="960" y="558" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Audit and trace identity claims</text>
+  <text x="960" y="586" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Enforce least privilege</text>
+
+  <path d="M270 210 H340" stroke="#2e5b88" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M600 170 H680" stroke="#2e5b88" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M600 250 H680" stroke="#2e5b88" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M900 190 H950" stroke="#2e5b88" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M470 280 V355 H250 V420" stroke="#2e5b88" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M380 512 H470" stroke="#2e5b88" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M730 512 H820" stroke="#2e5b88" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+
+  <rect x="60" y="650" rx="18" ry="18" width="1080" height="72" fill="#17324d" opacity="0.92"/>
+  <text x="90" y="694" font-family="Segoe UI, Arial, sans-serif" font-size="18" fill="#ffffff">Flow: Login or SSO → issue session/JWT → verify claims → apply RBAC/ABAC/tenant checks → allow protected action or return 401/403</text>
+</svg>

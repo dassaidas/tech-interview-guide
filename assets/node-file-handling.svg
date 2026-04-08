@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Node.js File Handling Architecture</title>
+  <desc id="desc">Diagram showing upload validation, local or cloud storage, metadata persistence, streaming downloads, and cleanup workflows in Node.js.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f7fbff"/>
+      <stop offset="100%" stop-color="#eef7fb"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f5f9fc"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#18334d" flood-opacity="0.14"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 z" fill="#2f5c8a"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="760" fill="url(#bg)"/>
+  <text x="60" y="70" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="700" fill="#17324d">Node.js File Handling</text>
+  <text x="60" y="106" font-family="Segoe UI, Arial, sans-serif" font-size="18" fill="#4a637c">Upload validation, streams, local or cloud storage, metadata persistence, secure downloads, and cleanup</text>
+
+  <rect x="60" y="150" rx="24" ry="24" width="210" height="120" fill="url(#panel)" stroke="#8bb4d9" stroke-width="2" filter="url(#shadow)"/>
+  <text x="165" y="198" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">Client</text>
+  <text x="165" y="230" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Upload / Download</text>
+
+  <rect x="340" y="120" rx="24" ry="24" width="290" height="160" fill="url(#panel)" stroke="#79a66a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="485" y="164" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">Node.js API</text>
+  <text x="485" y="196" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Multer / fs / streams</text>
+  <text x="485" y="224" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Validate size, MIME, filename</text>
+  <text x="485" y="252" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Choose local or cloud path</text>
+
+  <rect x="720" y="105" rx="24" ry="24" width="220" height="95" fill="url(#panel)" stroke="#d7a34c" stroke-width="2" filter="url(#shadow)"/>
+  <text x="830" y="150" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" fill="#17324d">Local Storage</text>
+  <text x="830" y="178" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#47627d">Temp / Internal Files</text>
+
+  <rect x="720" y="220" rx="24" ry="24" width="220" height="95" fill="url(#panel)" stroke="#d87a7a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="830" y="265" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" fill="#17324d">Cloud Storage</text>
+  <text x="830" y="293" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#47627d">S3 / Azure Blob</text>
+
+  <rect x="980" y="150" rx="24" ry="24" width="160" height="120" fill="url(#panel)" stroke="#9f7cd6" stroke-width="2" filter="url(#shadow)"/>
+  <text x="1060" y="196" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" fill="#17324d">Metadata DB</text>
+  <text x="1060" y="226" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#47627d">Path / URL / size</text>
+
+  <rect x="100" y="420" rx="28" ry="28" width="270" height="185" fill="url(#panel)" stroke="#79a66a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="235" y="468" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">Upload Controls</text>
+  <text x="235" y="502" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">File limits</text>
+  <text x="235" y="530" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">MIME and name checks</text>
+  <text x="235" y="558" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Virus / malware scan</text>
+  <text x="235" y="586" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Rate limiting</text>
+
+  <rect x="470" y="420" rx="28" ry="28" width="270" height="185" fill="url(#panel)" stroke="#d7a34c" stroke-width="2" filter="url(#shadow)"/>
+  <text x="605" y="468" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">Streaming Layer</text>
+  <text x="605" y="502" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Large upload streams</text>
+  <text x="605" y="530" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Chunked processing</text>
+  <text x="605" y="558" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Backpressure-aware download</text>
+  <text x="605" y="586" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Low memory footprint</text>
+
+  <rect x="840" y="420" rx="28" ry="28" width="280" height="185" fill="url(#panel)" stroke="#8bb4d9" stroke-width="2" filter="url(#shadow)"/>
+  <text x="980" y="468" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#17324d">Download and Cleanup</text>
+  <text x="980" y="502" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Signed URLs / protected streams</text>
+  <text x="980" y="530" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Retention and delete jobs</text>
+  <text x="980" y="558" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Metadata consistency</text>
+  <text x="980" y="586" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#47627d">Auditability</text>
+
+  <path d="M270 210 H340" stroke="#2f5c8a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M630 170 H720" stroke="#2f5c8a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M630 250 H720" stroke="#2f5c8a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M940 210 H980" stroke="#2f5c8a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M485 280 V355 H235 V420" stroke="#2f5c8a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M370 512 H470" stroke="#2f5c8a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M740 512 H840" stroke="#2f5c8a" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+
+  <rect x="60" y="650" rx="18" ry="18" width="1080" height="72" fill="#17324d" opacity="0.92"/>
+  <text x="90" y="694" font-family="Segoe UI, Arial, sans-serif" font-size="18" fill="#ffffff">Flow: upload request → validate and sanitize → stream to local or cloud storage → save metadata → serve secure downloads → clean up safely</text>
+</svg>
